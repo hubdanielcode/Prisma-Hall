@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+/* - Habilitando o Tema Escuro - */
+
+@variant dark (&:where(.dark, .dark *));
+
+/* - Definindo os Breakpoints do Tailwind - */
+
+@theme {
+  --breakpoint-md: 1024px;
+  --breakpoint-lg: 1440px;
+  --breakpoint-xl: 1920px;
+}
+
+@custom-variant sm {
+  @media (min-width: 640px) and (max-width: 1023px) and (orientation: landscape) {
+    @slot;
+  }
+}
+
+/* - Tirando o css padrão do autocomplete - */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:active,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+  -webkit-text-fill-color: #ffffff99;
+  font-size: 14px;
+  font-weight: 400;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+html,
+body {
+  min-height: 100%;
+  max-width: 100%;
+  margin: 0;
+  overflow-x: hidden;
+}
+#root {
+  min-height: 100%;
+}
