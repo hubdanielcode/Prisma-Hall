@@ -5,6 +5,7 @@ import { ThemeProvider, MobileProvider } from "@/shared";
 import { CalendarProvider } from "@/features/events";
 import { BarProvider } from "@/features/bar";
 import { CartProvider } from "@/features/cart";
+import { BarManagementProvider } from "@/features/admin/bar-management/context/BarManagementContext";
 import type React from "react";
 
 const AppProviders = ({ children }: { children: React.ReactNode }) => {
@@ -14,11 +15,13 @@ const AppProviders = ({ children }: { children: React.ReactNode }) => {
         <ProfileProvider>
           <ThemeProvider>
             <CalendarProvider>
-              <BarProvider>
-                <CartProvider>
-                  <MobileProvider>{children}</MobileProvider>
-                </CartProvider>
-              </BarProvider>
+              <BarManagementProvider>
+                <BarProvider>
+                  <CartProvider>
+                    <MobileProvider>{children}</MobileProvider>
+                  </CartProvider>
+                </BarProvider>
+              </BarManagementProvider>
             </CalendarProvider>
           </ThemeProvider>
         </ProfileProvider>

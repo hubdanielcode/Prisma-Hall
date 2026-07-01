@@ -73,10 +73,10 @@ const ProfileSettingsSection = () => {
 
       {/* - Card principal - */}
 
-      <div className="flex flex-col w-full md:w-[65%] h-fit mx-auto mb-2 sm:mt-8 md:mt-4.5 bg-black border border-[#B6880B] rounded-lg">
+      <div className="flex flex-col w-full md:w-[65%] h-fit mx-auto mb-2 sm:mt-8 md:mt-4.5 bg-black border border-[#B8860B] rounded-lg">
         {/* - Seção 1: Minha conta - */}
 
-        <div className="flex flex-col p-6 gap-4 border-b border-[#B6880B60]">
+        <div className="flex flex-col p-6 gap-4 border-b border-[#B8860B60]">
           <span className="text-white font-semibold text-xl sm:text-2xl md:text-3xl mb-1">
             Minha Conta
           </span>
@@ -91,7 +91,7 @@ const ProfileSettingsSection = () => {
             </span>
 
             <motion.button
-              className="px-4 py-2 whitespace-nowrap sm:w-40 md:w-40 text-sm sm:text-base md:text-base font-semibold text-white bg-[#1A1A1A] border border-[#B6880B] rounded-lg cursor-pointer hover:shadow-xs shadow-[#B6880B]"
+              className="px-4 py-2 whitespace-nowrap sm:w-40 md:w-40 text-sm sm:text-base md:text-base font-semibold text-white bg-[#1A1A1A] border border-[#B8860B] rounded-lg cursor-pointer hover:shadow-xs shadow-[#B8860B]"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleChangePassword}
@@ -110,7 +110,7 @@ const ProfileSettingsSection = () => {
             </span>
 
             <motion.button
-              className="px-4 py-2 whitespace-nowrap sm:w-40 md:w-40 text-sm sm:text-base md:text-base font-semibold text-white bg-[#1A1A1A] border border-[#B6880B] rounded-lg cursor-pointer hover:shadow-xs shadow-[#B6880B]"
+              className="px-4 py-2 whitespace-nowrap sm:w-40 md:w-40 text-sm sm:text-base md:text-base font-semibold text-white bg-[#1A1A1A] border border-[#B8860B] rounded-lg cursor-pointer hover:shadow-xs shadow-[#B8860B]"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleSignOut}
@@ -122,7 +122,7 @@ const ProfileSettingsSection = () => {
 
         {/* - Seção 2: Notificações - */}
 
-        <div className="flex flex-col p-6 gap-4 border-b border-[#B6880B60]">
+        <div className="flex flex-col p-6 gap-4 border-b border-[#B8860B60]">
           <span className="text-white font-semibold text-xl sm:text-2xl md:text-3xl mb-1">
             Notificações
           </span>
@@ -196,7 +196,7 @@ const ProfileSettingsSection = () => {
 
         {/* - Seção 3: Zona de perigo - */}
 
-        <div className="flex flex-col p-6 gap-4 border-b border-[#B6880B60]">
+        <div className="flex flex-col p-6 gap-4 border-b border-[#B8860B60]">
           <span className="text-white font-semibold text-xl sm:text-2xl md:text-3xl mb-1">
             Zona de Perigo
           </span>
@@ -211,7 +211,7 @@ const ProfileSettingsSection = () => {
             </span>
 
             <motion.button
-              className="px-4 py-2 whitespace-nowrap sm:w-40 md:w-40 text-sm sm:text-base md:text-base font-semibold text-white bg-[#1A1A1A] border border-[#B6880B] rounded-lg cursor-pointer hover:shadow-xs shadow-[#B6880B]"
+              className="px-4 py-2 whitespace-nowrap sm:w-40 md:w-40 text-sm sm:text-base md:text-base font-semibold text-white bg-[#1A1A1A] border border-[#B8860B] rounded-lg cursor-pointer hover:shadow-xs shadow-[#B8860B]"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsDeleteModalOpen(true)}
@@ -231,7 +231,7 @@ const ProfileSettingsSection = () => {
       {isDeleteModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
           <motion.div
-            className="flex flex-col bg-black border border-[#B6880B] rounded-lg p-6 w-fit sm:w-100 gap-4"
+            className="flex flex-col bg-black border border-[#B8860B] rounded-lg p-6 w-fit sm:w-100 gap-4"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
@@ -247,7 +247,7 @@ const ProfileSettingsSection = () => {
 
             <div className="flex gap-3 mt-3 w-[35%] ml-auto">
               <motion.button
-                className="flex-1 px-4 py-2 text-sm font-semibold text-white bg-[#1A1A1A] border border-[#B6880B] rounded-lg cursor-pointer"
+                className="flex-1 px-4 py-2 text-sm font-semibold text-white bg-[#1A1A1A] border border-[#B8860B] rounded-lg cursor-pointer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setIsDeleteModalOpen(false)}

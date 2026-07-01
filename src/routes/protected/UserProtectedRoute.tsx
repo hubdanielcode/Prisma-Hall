@@ -1,7 +1,7 @@
 import { Outlet, Navigate } from "react-router-dom";
 import { type Session } from "@supabase/supabase-js";
 
-const ProtectedRoute = ({ session }: { session: Session | null }) => {
+const UserProtectedRoute = ({ session }: { session: Session | null }) => {
   if (!session) {
     return (
       <Navigate
@@ -14,4 +14,4 @@ const ProtectedRoute = ({ session }: { session: Session | null }) => {
   return <Outlet />;
 };
 
-export { ProtectedRoute };
+export { UserProtectedRoute };

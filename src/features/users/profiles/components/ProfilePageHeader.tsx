@@ -223,7 +223,7 @@ const ProfilePageHeader = ({
               {/* - Foto de perfil - */}
 
               <div className="absolute flex justify-center items-center right-2 sm:right-4">
-                <div className="relative w-15 h-15 rounded-full border border-[#B6880B]">
+                <div className="relative w-15 h-15 rounded-full border border-[#B8860B]">
                   {/* - Loading skeleton - */}
 
                   {isLoadingPhoto ? (
@@ -241,7 +241,7 @@ const ProfilePageHeader = ({
                   {/* - Botão de upload - */}
 
                   <button
-                    className="absolute flex items-center justify-center w-7 h-7 top-8 right-10 rounded-full text-[#B6880B] hover:text-[#DDAE56] border border-[#B6880B] bg-[#1A1A1A] hover:bg-[#333] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="absolute flex items-center justify-center w-7 h-7 top-8 right-10 rounded-full text-[#B8860B] hover:text-[#DDAE56] border border-[#B8860B] bg-[#1A1A1A] hover:bg-[#333] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                     onClick={() => ProfilePictureRef.current?.click()}
                     disabled={isUploadingPhoto}
                     aria-label="Alterar foto de perfil"

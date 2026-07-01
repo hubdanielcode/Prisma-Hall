@@ -157,16 +157,16 @@ const Header = () => {
 
             {isAuthenticated && (
               <div className="flex items-center justify-center">
-                <div className="relative bottom-4 left-11 sm:left-17 md:left-18 flex items-center justify-center bg-[#B6880B] w-4 h-4 md:w-5 md:h-5 rounded-full border border-black">
+                <div className="relative bottom-4 left-11 sm:left-17 md:left-18 flex items-center justify-center bg-[#B8860B] w-4 h-4 md:w-5 md:h-5 rounded-full border border-black">
                   <span className="text-xs text-black font-black">
                     {totalItems}
                   </span>
                 </div>
                 <button
-                  className="group mr-3 sm:mx-6 md:mx-6 border bg-[#0A0A0A] hover:bg-[#1A1A1A] border-[#B6880B] rounded-full p-2 cursor-pointer"
+                  className="group mr-3 sm:mx-6 md:mx-6 border bg-[#0A0A0A] hover:bg-[#1A1A1A] border-[#B8860B] rounded-full p-2 cursor-pointer"
                   onClick={handleOpenCart}
                 >
-                  <GiShoppingCart className="h-6 w-6 text-[#B6880B] group-hover:text-[#DDAE56]" />
+                  <GiShoppingCart className="h-6 w-6 text-[#B8860B] group-hover:text-[#DDAE56]" />
                 </button>
               </div>
             )}

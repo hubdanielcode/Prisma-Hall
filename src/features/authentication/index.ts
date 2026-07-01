@@ -1,7 +1,3 @@
-/* - Components - */
-
-export { ProtectedRoute } from "@/features/authentication/components/ProtectedRoute";
-
 /* - Context - */
 
 export {

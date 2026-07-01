@@ -69,7 +69,7 @@ const FirstTimeProfileModal = ({ onClose }: FirstTimeProfileModalProps) => {
 
   return (
     <div className="fixed inset-0 bg-black/90 backdrop:blur-sm flex items-center justify-center z-50 overflow-hidden">
-      <div className="flex w-full md:w-[65%] max-h-[90vh] sm:max-h-[90vh] overflow-y-auto mx-auto mt-7 bg-black border border-[#B6880B] rounded-lg">
+      <div className="flex w-full md:w-[65%] max-h-[90vh] sm:max-h-[90vh] overflow-y-auto mx-auto mt-7 bg-black border border-[#B8860B] rounded-lg">
         {/* - Card principal - */}
 
         <div className="flex flex-col w-full p-6 gap-2">
@@ -257,7 +257,7 @@ const FirstTimeProfileModal = ({ onClose }: FirstTimeProfileModalProps) => {
             {/* - Salvar - */}
 
             <motion.button
-              className="bg-[#1A1A1A] hover:bg-[#333] px-4 py-2 border border-[#B6880B] hover:shadow-sm hover:shadow-[#B6880B] rounded-lg cursor-pointer mr-10"
+              className="bg-[#1A1A1A] hover:bg-[#333] px-4 py-2 border border-[#B8860B] hover:shadow-sm hover:shadow-[#B8860B] rounded-lg cursor-pointer mr-10"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleSaveInfo}

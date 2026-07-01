@@ -1,14 +1,14 @@
 import { supabase, supabaseTemp } from "../../../../supabase/supabase";
 import { type ProductProps } from "@/features/bar";
 
-/* - Definições - */
+/* - Checa o rememberMe para decidir qual client usar - */
 
 const getClient = () => {
   const rememberMe = localStorage.getItem("rememberMe") === "true";
   return rememberMe ? supabase : supabaseTemp;
 };
 
-/* - Verificando se o usuário é administrador - */
+/* - Verificando se o usuário é um administrador - */
 
 const checkIsAdmin = async () => {
   const client = getClient();
@@ -17,7 +17,7 @@ const checkIsAdmin = async () => {
   } = await client.auth.getUser();
 
   if (!user) {
-    throw new Error("Usuário não autenticado");
+    throw new Error("Usuário não autenticado!");
   }
 
   const { data, error } = await client
@@ -36,7 +36,7 @@ const checkIsAdmin = async () => {
 // 1. Create
 
 const createProduct = async (
-  product: Omit<ProductProps, "created_at" | "id">,
+  product: Omit<ProductProps, "created_at" | "product_id">,
 ) => {
   await checkIsAdmin();
   const client = getClient();

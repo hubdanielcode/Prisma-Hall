@@ -1,7 +1,7 @@
 import { supabase, supabaseTemp } from "../../../../../supabase/supabase";
 import type { ReviewProps, ReviewWithDetails } from "../types/reviews";
 
-/* - Definições - */
+/* - Checa o rememberMe para decidir qual client usar - */
 
 const getClient = () => {
   const rememberMe = localStorage.getItem("rememberMe") === "true";

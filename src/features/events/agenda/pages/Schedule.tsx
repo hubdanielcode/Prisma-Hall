@@ -156,7 +156,7 @@ const Schedule = () => {
             <button
               key={tag.id}
               onClick={() => setSelectedCategory(tag.id)}
-              className={`flex items-center justify-center h-9 sm:h-10 px-3 sm:px-4 mt-2 border rounded-lg text-xs sm:text-sm font-semibold cursor-pointer transition-colors ${selectedCategory === tag.id ? "bg-[#B6880B] border-black text-black" : "bg-black border-[#B6880B] text-white hover:bg-[#333]"}`}
+              className={`flex items-center justify-center h-9 sm:h-10 px-3 sm:px-4 mt-2 border rounded-lg text-xs sm:text-sm font-semibold cursor-pointer transition-colors ${selectedCategory === tag.id ? "bg-[#B8860B] border-black text-black" : "bg-black border-[#B8860B] text-white hover:bg-[#333]"}`}
             >
               {tag.title}
             </button>
@@ -169,7 +169,7 @@ const Schedule = () => {
       {viewState === "Calendar" && (
         <>
           <motion.div
-            className="border border-[#B6880B] bg-black rounded-lg w-[60%]"
+            className="border border-[#B8860B] bg-black rounded-lg w-[60%]"
             initial={{ y: 20, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}

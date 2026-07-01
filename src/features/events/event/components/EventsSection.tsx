@@ -32,7 +32,7 @@ const EventsSection = () => {
       />
 
       <div
-        className="flex flex-col w-full h-fit items-center justify-center border-t border-[#B6880B60] p-12"
+        className="flex flex-col w-full h-fit items-center justify-center border-t border-[#B8860B60] p-12"
         id="events"
       >
         {/* - Tag de próximos eventos - */}

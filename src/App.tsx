@@ -1,5 +1,4 @@
 import { AppProviders } from "./providers/AppProviders";
-import { AuthenticationRoutes, FooterRoutes, GeneralRoutes } from "./routes";
 import { Footer, Header } from "./shared";
 import { motion } from "framer-motion";
 import { Routes, Outlet, useNavigate } from "react-router-dom";
@@ -7,12 +6,18 @@ import { supabase, supabaseTemp } from "../supabase/supabase";
 import { type AuthChangeEvent, type Session } from "@supabase/supabase-js";
 import { useAuthenticationContext } from "./features/authentication";
 import { useEffect, useState } from "react";
+import { AuthenticationRoutes, FooterRoutes, GeneralRoutes } from "./routes";
+import { AdminRoutes } from "./routes/public/AdminRoutes";
 
 const AppContent = () => {
   /* - Puxando do context - */
 
   const { session, setSession, setIsAuthenticated } =
     useAuthenticationContext();
+
+  /* - Estados do usuário - */
+
+  const [userRole, setUserRole] = useState<"admin" | "user">("user");
 
   /* - Estados de carregamento - */
 
@@ -24,37 +29,38 @@ const AppContent = () => {
 
   /* - Funções - */
 
-  // 1. Busca a sessão do usuário logado
+  // 1. Verifica se o usuário marcou o rememberMe para saber qual client usar
+
+  const getClient = () => {
+    const rememberMe = localStorage.getItem("rememberMe") === "true";
+    return rememberMe ? supabase : supabaseTemp;
+  };
+
+  // 2. Busca a sessão e a role do usuário logado
 
   const fetchSession = async () => {
+    const client = getClient();
     const {
-      data: { session: sessionWithRememberMe },
-    } = await supabase.auth.getSession();
+      data: { session },
+    } = await client.auth.getSession();
 
-    if (sessionWithRememberMe) {
-      setSession(sessionWithRememberMe);
+    if (session) {
+      setSession(session);
       setIsAuthenticated(true);
-      setIsLoading(false);
-      return;
+
+      const { data: userData } = await client
+        .from("users")
+        .select("role")
+        .eq("user_id", session.user.id)
+        .single();
+
+      setUserRole(userData?.role ?? "user");
+    } else {
+      setSession(null);
+      setIsAuthenticated(false);
+      setUserRole("user");
     }
 
-    const sessionWithoutRememberMe = sessionStorage.getItem("supabase_session");
-
-    if (sessionWithoutRememberMe) {
-      const savedSessionString = JSON.parse(sessionWithoutRememberMe);
-      const { data, error } =
-        await supabase.auth.setSession(savedSessionString);
-
-      if (!error && data.session) {
-        setSession(data.session);
-        setIsAuthenticated(true);
-        setIsLoading(false);
-        return;
-      }
-    }
-
-    setSession(null);
-    setIsAuthenticated(false);
     setIsLoading(false);
   };
 
@@ -105,6 +111,7 @@ const AppContent = () => {
 
   return (
     <Routes>
+      {AdminRoutes({ session, user_role: userRole, AdminLayout })}
       {AuthenticationRoutes()}
       {GeneralRoutes({ session, AppLayout })}
       {FooterRoutes({ session })}
@@ -113,6 +120,18 @@ const AppContent = () => {
 };
 
 const AppLayout = () => {
+  return (
+    <div className="select-none">
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
+const AdminLayout = () => {
   return (
     <div className="select-none">
       <Header />

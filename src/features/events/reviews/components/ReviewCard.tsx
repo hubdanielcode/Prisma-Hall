@@ -28,13 +28,13 @@ const ReviewCard = ({ review, index }: ReviewCardProps) => {
 
   return (
     <motion.div
-      className="flex flex-col justify-center items-center w-90 p-6 border border-[#B6880B] hover:border-[#DDAE56] rounded-lg hover:shadow-md hover:shadow-[#DDAE56] bg-[#0A0A0A] hover:-translate-y-2.5 transition-transform duration-200"
+      className="flex flex-col justify-center items-center w-90 p-6 border border-[#B8860B] hover:border-[#DDAE56] rounded-lg hover:shadow-md hover:shadow-[#DDAE56] bg-[#0A0A0A] hover:-translate-y-2.5 transition-transform duration-200"
       initial={{ y: 20, opacity: 0 }}
       whileInView={{ y: 0, opacity: 1 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.1 }}
     >
-      <Quote className="h-8 w-8 text-[#3D2B0A] fill-[#B6880B]" />
+      <Quote className="h-8 w-8 text-[#3D2B0A] fill-[#B8860B]" />
 
       <div className="flex gap-2 p-6">
         {/* - Nota da avaliação - */}
@@ -44,7 +44,7 @@ const ReviewCard = ({ review, index }: ReviewCardProps) => {
             key={index}
             className={`text-xl ${
               index < Math.floor(review.rating)
-                ? "text-[#B6880B] fill-current"
+                ? "text-[#B8860B] fill-current"
                 : "text-gray-600 fill-current"
             }`}
           />
@@ -59,7 +59,7 @@ const ReviewCard = ({ review, index }: ReviewCardProps) => {
 
       {/* - Nome do evento sendo avaliado - */}
 
-      <span className="text-sm font-semibold text-[#B6880B] pt-3 pb-5 mr-auto border-b border-[#B6880B60] w-full">
+      <span className="text-sm font-semibold text-[#B8860B] pt-3 pb-5 mr-auto border-b border-[#B8860B60] w-full">
         {review.event_name}
       </span>
 
@@ -87,7 +87,7 @@ const ReviewCard = ({ review, index }: ReviewCardProps) => {
         {/* - Badge de verificado - */}
 
         {review.verified && (
-          <div className="flex justify-center items-center h-5 w-5 bg-[#B6880B] mb-4 ml-2 border border-[#3D2B0A] rounded-full">
+          <div className="flex justify-center items-center h-5 w-5 bg-[#B8860B] mb-4 ml-2 border border-[#3D2B0A] rounded-full">
             <Check className="h-3 w-3 text-black" />
           </div>
         )}

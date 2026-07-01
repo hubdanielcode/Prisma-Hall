@@ -71,7 +71,7 @@ const CalendarGrid = () => {
         {calendarCells.map((day, index) => (
           <button
             key={index}
-            className={`relative w-full h-12 sm:h-16 md:h-20 bg-[#222] rounded-lg flex items-start justify-center p-1 sm:p-2 text-xs sm:text-sm font-semibold ${day && daysWithEvents.has(day) ? "cursor-pointer hover:bg-[#333]" : "cursor-default"} ${selectedDay === day ? "bg-[#B6880B] hover:bg-[#DDAE56] text-black" : "bg-[#0A0A0A] hover:bg-[#333] text-white"}`}
+            className={`relative w-full h-12 sm:h-16 md:h-20 bg-[#222] rounded-lg flex flex-col items-center justify-start p-1 sm:p-2 text-xs sm:text-sm font-semibold ${day && daysWithEvents.has(day) ? "cursor-pointer hover:bg-[#333]" : "cursor-default"} ${selectedDay === day ? "bg-[#B8860B] hover:bg-[#DDAE56] text-black" : "bg-[#0A0A0A] hover:bg-[#333] text-white"}`}
             onClick={() =>
               day && daysWithEvents.has(day) && setSelectedDay(day)
             }

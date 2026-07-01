@@ -1,6 +1,6 @@
 import { Route } from "react-router-dom";
 import { type Session } from "@supabase/supabase-js";
-import { ProtectedRoute } from "@/features/authentication";
+import { UserProtectedRoute } from "../protected/UserProtectedRoute";
 import {
   About,
   FrequentlyAskedQuestions,
@@ -9,47 +9,37 @@ import {
   TermsOfUse,
 } from "@/shared";
 
-type FooterRoutesProps = {
+interface FooterRoutesProps {
   session: Session | null;
-};
+}
 
 const FooterRoutes = ({ session }: FooterRoutesProps) => {
   return (
     <>
-      {/* - Rotas públicas: Não precisa de sessão ativa para acessar! - */}
-
-      {/* - Rota de termos de uso - */}
+      {/* - Rotas públicas: não precisa de sessão ativa para acessar! - */}
 
       <Route
         path="/termos-de-uso"
         element={<TermsOfUse />}
       />
 
-      {/* - Rota de políticas de privacidade - */}
-
       <Route
         path="/politicas-de-privacidade"
         element={<PrivacyPolicy />}
       />
 
-      {/* - Rotas protegidas: Precisa de sessão ativa para acessar! - */}
+      {/* - Rotas protegidas: precisa de sessão ativa para acessar! - */}
 
-      <Route element={<ProtectedRoute session={session} />}>
-        {/* - Rota de central de ajuda - */}
-
+      <Route element={<UserProtectedRoute session={session} />}>
         <Route
           path="/central-de-ajuda"
           element={<HelpingCentral />}
         />
 
-        {/* - Rota de sobre nós - */}
-
         <Route
           path="/sobre"
           element={<About />}
         />
-
-        {/* - Rota de perguntas frequentes - */}
 
         <Route
           path="/perguntas-frequentes"

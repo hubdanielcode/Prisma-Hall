@@ -24,7 +24,7 @@ export interface ProfileContextType {
 const ProfileContext = createContext<ProfileContextType | null>(null);
 
 const ProfileProvider = ({ children }: { children: ReactNode }) => {
-  /* - Dados do comprador - */
+  /* - Estados do comprador - */
 
   const [CPF, setCPF] = useState<string>("");
   const [birthDate, setBirthDate] = useState<string>("");

@@ -70,7 +70,7 @@ const ProfileEditModal = ({ onClose }: ProfileModalProps) => {
 
   return (
     <div className="fixed inset-0 bg-black/90 backdrop:blur-sm flex items-center justify-center z-50">
-      <div className="flex justify-center w-full md:w-[65%] max-h-[90vh] overflow-y-auto mx-auto mt-3 bg-black border border-[#B6880B] rounded-lg sm:mt-44 mb-2">
+      <div className="flex justify-center w-full md:w-[65%] max-h-[90vh] overflow-y-auto mx-auto mt-3 bg-black border border-[#B8860B] rounded-lg sm:mt-44 mb-2">
         {/* - Card principal - */}
 
         <div className="flex flex-col w-full p-6 gap-2">
@@ -84,7 +84,7 @@ const ProfileEditModal = ({ onClose }: ProfileModalProps) => {
             {/* - Botão de fechar - */}
 
             <motion.button
-              className="h-fit p-2 bg-[#1A1A1A] hover:bg-[#333] border border-[#B6880B] rounded-full cursor-pointer hover:shadow-xs shadow-[#B6880B]"
+              className="h-fit p-2 bg-[#1A1A1A] hover:bg-[#333] border border-[#B8860B] rounded-full cursor-pointer hover:shadow-xs shadow-[#B8860B]"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={onClose}
@@ -255,7 +255,7 @@ const ProfileEditModal = ({ onClose }: ProfileModalProps) => {
             {/* - Salvar Alterações - */}
 
             <motion.button
-              className="bg-[#1A1A1A] hover:bg-[#333] px-4 py-2 border border-[#B6880B] hover:shadow-sm hover:shadow-[#B6880B] rounded-lg cursor-pointer"
+              className="bg-[#1A1A1A] hover:bg-[#333] px-4 py-2 border border-[#B8860B] hover:shadow-sm hover:shadow-[#B8860B] rounded-lg cursor-pointer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleSaveInfo}
@@ -266,7 +266,7 @@ const ProfileEditModal = ({ onClose }: ProfileModalProps) => {
             {/* - Cancelar - */}
 
             <motion.button
-              className="bg-[#1A1A1A] hover:bg-[#333] px-4 py-2 border border-[#B6880B] hover:shadow-sm hover:shadow-[#B6880B] rounded-lg cursor-pointer mr-10"
+              className="bg-[#1A1A1A] hover:bg-[#333] px-4 py-2 border border-[#B8860B] hover:shadow-sm hover:shadow-[#B8860B] rounded-lg cursor-pointer mr-10"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleClearInfo}

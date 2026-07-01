@@ -116,10 +116,10 @@ const ProfileInformationsSection = () => {
 
       {/* - Card principal - */}
 
-      <div className="flex flex-col sm:flex-col md:flex-row justify-between w-full md:w-[65%] h-fit mx-auto mb-2 sm:mt-8 md:mt-4.5 bg-black border border-[#B6880B] rounded-lg">
+      <div className="flex flex-col sm:flex-col md:flex-row justify-between w-full md:w-[65%] h-fit mx-auto mb-2 sm:mt-8 md:mt-4.5 bg-black border border-[#B8860B] rounded-lg">
         {/* - Coluna Esquerda: Dados da conta - */}
 
-        <div className="flex flex-col border-b sm:border-b md:border-b-0 md:border-r border-[#B6880B60] w-full md:w-[35%] p-6 gap-2">
+        <div className="flex flex-col border-b sm:border-b md:border-b-0 md:border-r border-[#B8860B60] w-full md:w-[35%] p-6 gap-2">
           {/* - Título da coluna - */}
 
           <span className="text-white font-semibold text-xl sm:text-2xl md:text-3xl mb-3">
@@ -185,7 +185,7 @@ const ProfileInformationsSection = () => {
             {/* - Botão - */}
 
             <motion.button
-              className="flex justify-center items-center px-4 py-2 text-white bg-[#1A1A1A] border border-[#B6880B] rounded-lg cursor-pointer hover:shadow-xs shadow-[#B6880B]"
+              className="flex justify-center items-center px-4 py-2 text-white bg-[#1A1A1A] border border-[#B8860B] rounded-lg cursor-pointer hover:shadow-xs shadow-[#B8860B]"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsModalOpen(true)}

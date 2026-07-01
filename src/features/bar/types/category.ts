@@ -1,5 +1,5 @@
 export interface CategoryProps {
-  name: string;
   id: string;
+  name: string;
   icon: React.ElementType;
 }

@@ -32,7 +32,7 @@ const GalerySection = () => {
 
   return (
     <div
-      className="flex flex-col w-full h-fit items-center justify-center border-t border-[#B6880B60] p-12"
+      className="flex flex-col w-full h-fit items-center justify-center border-t border-[#B8860B60] p-12"
       id="galery"
     >
       {/* - Tag de galeria - */}
@@ -77,7 +77,7 @@ const GalerySection = () => {
       <div className="flex flex-wrap pb-6 gap-3 justify-center">
         {photosCategories.map((category) => (
           <button
-            className={`flex items-center justify-center w-40 h-12 px-4 py-2 border rounded-lg text-sm font-semibold cursor-pointer transition-colors ${selectedCategory === category.id ? "bg-[#B6880B] hover:bg-[#DDAE56] text-black border-black" : "bg-[#1A1A1A] hover:bg-[#333] text-white border-[#B6880B]"}`}
+            className={`flex items-center justify-center w-40 h-12 px-4 py-2 border rounded-lg text-sm font-semibold cursor-pointer transition-colors ${selectedCategory === category.id ? "bg-[#B8860B] hover:bg-[#DDAE56] text-black border-black" : "bg-[#1A1A1A] hover:bg-[#333] text-white border-[#B8860B]"}`}
             key={category.id}
             onClick={() => setSelectedCategory(category.id)}
           >
@@ -118,7 +118,7 @@ const GalerySection = () => {
                 </div>
 
                 <button
-                  className="flex justify-center items-center border border-[#B6880B60] px-4 py-2 rounded-lg ml-auto cursor-pointer"
+                  className="flex justify-center items-center border border-[#B8860B60] px-4 py-2 rounded-lg ml-auto cursor-pointer"
                   onClick={() => handleLikePicture(photo.id)}
                 >
                   {isLiked[photo.id] ? (
@@ -158,7 +158,7 @@ const GalerySection = () => {
             }
           }}
         >
-          <Image className="w-5 h-5 mr-2 text-[#B6880B]" />
+          <Image className="w-5 h-5 mr-2 text-[#B8860B]" />
 
           <span className="text-white">
             {showMore ? "Mostrar Menos" : "Carregar Mais Fotos"}

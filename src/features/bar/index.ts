@@ -10,7 +10,6 @@ export { BarContext, BarProvider } from "@/features/bar/context/BarContext";
 /* - Hooks - */
 
 export { useBarContext } from "@/features/bar/hooks/useBarContext";
-export { useProducts } from "@/features/bar/hooks/useProducts";
 
 /* - Services - */
 

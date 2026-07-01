@@ -1,11 +1,10 @@
 import { Beer, Coffee, Martini, Wine } from "lucide-react";
-import { createContext, useState } from "react";
-import { type ProductProps } from "../types/product";
-import { useProducts } from "../hooks/useProducts";
-import type { CategoryProps } from "../types/category";
+import { createContext, useState, useEffect } from "react";
+import { getProducts, type ProductProps } from "@/features/bar/";
+import { type CategoryProps } from "../types/category";
 
 interface BarContextType {
-  /* - Estados dos produtos - */
+  /* - Dados dos produtos - */
 
   products: ProductProps[];
   filteredProducts: ProductProps[];
@@ -17,38 +16,80 @@ interface BarContextType {
 
   selectedCategory: string;
   setSelectedCategory: (selectedCategory: string) => void;
+
+  /* - Estados de busca - */
+
+  searchQuery: string;
+  setSearchQuery: (searchQuery: string) => void;
 }
 
 const BarContext = createContext<BarContextType | null>(null);
 
 const BarProvider = ({ children }: { children: React.ReactNode }) => {
-  /* - Estados de produtos - */
+  /* - Estados dos produtos - */
 
-  const { products, isLoading, error } = useProducts();
+  const [products, setProducts] = useState<ProductProps[]>([]);
+
+  /* - Estados de carregamento - */
+
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  /* - Estados de erro - */
+
+  const [error, setError] = useState<string | null>(null);
 
   /* - Estados de categoria - */
 
-  const [selectedCategory, setSelectedCategory] = useState<string>("todos");
+  const [selectedCategory, setSelectedCategory] = useState<string>("Todos");
+
+  /* - Estados de busca - */
+
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   /* - Definições - */
 
   const productsCategories: CategoryProps[] = [
-    { id: "todos", name: "Todos", icon: Wine },
+    { id: "Todos", name: "Todos", icon: Wine },
     { id: "Coquetéis", name: "Coquetéis", icon: Martini },
     { id: "Cervejas", name: "Cervejas", icon: Beer },
     { id: "Drinks", name: "Drinks", icon: Wine },
     { id: "Sem Álcool", name: "Sem Álcool", icon: Coffee },
   ];
 
-  const filteredProducts =
-    selectedCategory === "todos"
-      ? products
-      : products.filter((product) => selectedCategory === product.category);
+  const filteredProducts = products.filter((product) => {
+    const matchingNames = product.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+
+    const matchingCategories =
+      selectedCategory === "Todos" || product.category === selectedCategory;
+
+    return matchingNames && matchingCategories;
+  });
+
+  /* - Funções - */
+
+  // 1. Busca os produtos na hora da renderização
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const data = (await getProducts()) as ProductProps[];
+        setProducts(data);
+      } catch (error) {
+        setError("Erro ao buscar produtos.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   return (
     <BarContext.Provider
       value={{
-        /* - Estados dos produtos - */
+        /* - Dados dos produtos - */
 
         products,
         filteredProducts,
@@ -60,6 +101,11 @@ const BarProvider = ({ children }: { children: React.ReactNode }) => {
 
         selectedCategory,
         setSelectedCategory,
+
+        /* - Estados de busca - */
+
+        searchQuery,
+        setSearchQuery,
       }}
     >
       {children}

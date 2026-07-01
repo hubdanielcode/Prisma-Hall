@@ -52,7 +52,7 @@ const CalendarHeader = () => {
 
   return (
     <motion.div
-      className="flex justify-around items-center w-full max-w-6xl pt-8 pb-4 bg-[#0A0A0A] rounded-t-lg border-b border-[#B6880B]"
+      className="flex justify-around items-center w-full max-w-6xl pt-8 pb-4 bg-[#0A0A0A] rounded-t-lg border-b border-[#B8860B]"
       initial={{ y: 20, opacity: 0 }}
       whileInView={{ y: 0, opacity: 1 }}
       viewport={{ once: true }}
@@ -61,7 +61,7 @@ const CalendarHeader = () => {
       {/* - Botão de mês anterior - */}
 
       <motion.button
-        className="text-[#B6880B] cursor-pointer bg-[#0A0A0A80]"
+        className="text-[#B8860B] cursor-pointer bg-[#0A0A0A80]"
         onClick={handlePreviousMonth}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
@@ -76,7 +76,7 @@ const CalendarHeader = () => {
           {selectedMonth} {selectedYear}
         </motion.span>
 
-        <motion.span className="text-[#B6880B] text-sm">
+        <motion.span className="text-[#B8860B] text-sm">
           {monthEvents.size} eventos este mês
         </motion.span>
       </div>
@@ -84,7 +84,7 @@ const CalendarHeader = () => {
       {/* - Botão de próximo mês - */}
 
       <motion.button
-        className="text-[#B6880B] cursor-pointer bg-[#0A0A0A80]"
+        className="text-[#B8860B] cursor-pointer bg-[#0A0A0A80]"
         onClick={handleNextMonth}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}

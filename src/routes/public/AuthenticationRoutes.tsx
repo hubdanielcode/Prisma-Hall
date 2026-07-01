@@ -8,23 +8,17 @@ import {
 const AuthenticationRoutes = () => {
   return (
     <>
-      {/* - Rotas públicas: Não precisa de sessão ativa para acessar! - */}
-
-      {/* - Rota de login  - */}
+      {/* - Rotas públicas: não precisa de sessão ativa para acessar! - */}
 
       <Route
         path="/login"
         element={<Login />}
       />
 
-      {/* - Rota de cadastro - */}
-
       <Route
         path="/cadastro"
         element={<Authentication />}
       />
-
-      {/* - Rota de recuperação de senha - */}
 
       <Route
         path="/recuperar-senha"

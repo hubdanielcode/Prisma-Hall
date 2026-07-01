@@ -67,7 +67,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
           {/* - Carrinho - */}
 
           <motion.div
-            className="fixed top-0 right-0 flex flex-col items-center min-h-screen w-85 bg-linear-to-t from-[#06080F] via-[#050505] to-[#06080F] border-l border-[#B6880B60] z-50"
+            className="fixed top-0 right-0 flex flex-col items-center min-h-screen w-85 bg-linear-to-t from-[#06080F] via-[#050505] to-[#06080F] border-l border-[#B8860B] z-50"
             ref={cartDrawerRef}
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
@@ -78,7 +78,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
 
             <div className="flex items-center justify-between w-full px-5 py-4 bg-black border-b border-[#B8860B60]">
               <div className="flex items-center gap-3 h-12">
-                <GiShoppingCart className="h-6 w-6 text-[#B6880B]" />
+                <GiShoppingCart className="h-6 w-6 text-[#B8860B]" />
 
                 <span className="text-lg text-white font-semibold">
                   Seu Carrinho
@@ -86,12 +86,12 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
               </div>
 
               <motion.button
-                className="group flex items-center justify-center bg-[#0A0A0A] hover:bg-[#1A1A1A] border border-[#B6880B60] rounded-full p-1 cursor-pointer"
+                className="group flex items-center justify-center bg-[#0A0A0A] hover:bg-[#1A1A1A] border border-[#B8860B] rounded-full p-1 cursor-pointer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={onClose}
               >
-                <X className="h-5 w-5 text-[#B6880B] group-hover:text-[#DDAE56]" />
+                <X className="h-5 w-5 text-[#B8860B] group-hover:text-[#DDAE56]" />
               </motion.button>
             </div>
 
@@ -99,7 +99,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
 
             {cartItems.length === 0 ? (
               <div className="flex flex-col items-center justify-center flex-1 gap-3">
-                <GiShoppingCart className="h-12 w-12 text-[#B6880B60]" />
+                <GiShoppingCart className="h-12 w-12 text-[#B8860B60]" />
 
                 <p className="text-white/40 font-semibold text-base">
                   Seu carrinho está vazio.
@@ -112,13 +112,13 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                 {tickets.length > 0 && (
                   <>
                     <div className="flex items-center gap-2 w-[90%]">
-                      <GiTicket className="h-4 w-4 text-[#B6880B]" />
+                      <GiTicket className="h-4 w-4 text-[#B8860B]" />
 
-                      <span className="text-xs font-bold text-[#B6880B] uppercase tracking-wider">
+                      <span className="text-xs font-bold text-[#B8860B] uppercase tracking-wider">
                         Ingressos
                       </span>
 
-                      <div className="flex-1 h-px bg-[#B6880B30]" />
+                      <div className="flex-1 h-px bg-[#B8860B30]" />
                     </div>
 
                     {tickets.map((item, id) => (
@@ -137,13 +137,13 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                 {drinks.length > 0 && (
                   <>
                     <div className="flex items-center gap-2 w-[90%]">
-                      <FaWineGlassAlt className="h-4 w-4 text-[#B6880B]" />
+                      <FaWineGlassAlt className="h-4 w-4 text-[#B8860B]" />
 
-                      <span className="text-xs font-bold text-[#B6880B] uppercase tracking-wider">
+                      <span className="text-xs font-bold text-[#B8860B] uppercase tracking-wider">
                         Drinks
                       </span>
 
-                      <div className="flex-1 h-px bg-[#B6880B30]" />
+                      <div className="flex-1 h-px bg-[#B8860B30]" />
                     </div>
 
                     {drinks.map((item) => (
@@ -169,7 +169,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
 
             {/* - Footer do carrinho - */}
 
-            <div className="flex flex-col p-4 justify-start w-full bg-black border-t border-[#B6880B60]">
+            <div className="flex flex-col p-4 justify-start w-full bg-black border-t border-[#B8860B60]">
               {/* - Subtotal - */}
 
               <div className="flex justify-between w-full">
@@ -200,11 +200,11 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
 
               {/* - Total - */}
 
-              <div className="flex py-4 justify-between w-full border-t border-[#B6880B60]">
+              <div className="flex py-4 justify-between w-full border-t border-[#B8860B60]">
                 <span className="text-white text-sm font-semibold">Total</span>
 
                 {cartItems.length >= 1 && (
-                  <span className="text-[#B6880B] text-sm font-semibold">
+                  <span className="text-[#B8860B] text-sm font-semibold">
                     R$ {totalPrice.toFixed(2).replace(".", ",")}
                   </span>
                 )}

@@ -5,6 +5,7 @@ export interface ProductProps {
   description: string;
   price: number;
   image: string;
+  status: "Ativo" | "Inativo";
 
   created_at: string;
 }

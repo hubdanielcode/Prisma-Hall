@@ -1,7 +1,7 @@
 import { supabase, supabaseTemp } from "../../../../supabase/supabase";
 import { type CartItem } from "../types/cartItem";
 
-/* - Definições - */
+/* - Checa o rememberMe para decidir qual client usar - */
 
 const getClient = () => {
   const rememberMe = localStorage.getItem("rememberMe") === "true";

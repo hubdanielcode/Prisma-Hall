@@ -26,7 +26,7 @@ const ReviewsSection = () => {
   ];
   return (
     <div
-      className="flex flex-col w-full h-fit items-center justify-center bg-[#1A1A1A] border-t border-[#B6880B60] p-12"
+      className="flex flex-col w-full h-fit items-center justify-center bg-[#1A1A1A] border-t border-[#B8860B60] p-12"
       id="about"
     >
       {/* - Tag de avaliações - */}
@@ -86,11 +86,11 @@ const ReviewsSection = () => {
 
             return (
               <div
-                className="flex flex-col justify-center items-center w-42 bg-[#0A0A0A] border border-[#B6880B] px-4 py-2 rounded-lg hover:border-[DDAE56] hover:shadow-md hover:shadow-[#DDAE56] whitespace-nowrap"
+                className="flex flex-col justify-center items-center w-42 bg-[#0A0A0A] border border-[#B8860B] px-4 py-2 rounded-lg hover:border-[DDAE56] hover:shadow-md hover:shadow-[#DDAE56] whitespace-nowrap"
                 key={badge.label}
               >
                 <div className="flex justify-center items-center mt-2">
-                  <Icon className="h-6 w-6 sm:h-7 sm:w-7 md:h-7 md:w-7 text-[#B6880B] fill-current mr-2" />
+                  <Icon className="h-6 w-6 sm:h-7 sm:w-7 md:h-7 md:w-7 text-[#B8860B] fill-current mr-2" />
 
                   <span className="text-xl text-white font-bold">
                     {badge.value}

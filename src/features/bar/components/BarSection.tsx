@@ -66,8 +66,8 @@ const BarSection = () => {
             <button
               className={`flex items-center justify-center h-12 px-4 py-2 border rounded-lg text-sm font-semibold cursor-pointer transition-colors ${
                 selectedCategory === category.id
-                  ? "bg-[#B6880B] hover:bg-[#DDAE56] text-black border-black"
-                  : "bg-[black] hover:bg-[#333] text-white border-[#B6880B]"
+                  ? "bg-[#B8860B] hover:bg-[#DDAE56] text-black border-black"
+                  : "bg-[black] hover:bg-[#333] text-white border-[#B8860B]"
               }`}
               key={category.id}
               onClick={() => setSelectedCategory(category.id)}

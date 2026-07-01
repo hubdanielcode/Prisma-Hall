@@ -1,4 +1,3 @@
-import { Footer } from "@/shared";
 import { useState } from "react";
 import { ProfilePageHeader } from "../components/ProfilePageHeader";
 import { ProfileTicketsSection } from "../components/ProfileTicketsSection";
@@ -28,8 +27,6 @@ const ProfilePage = () => {
       {/* - Área de configurações - */}
 
       {activeTab === "settings" && <ProfileSettingsSection />}
-
-      <Footer />
     </div>
   );
 };
