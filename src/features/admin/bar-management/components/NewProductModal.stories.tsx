@@ -1,5 +1,6 @@
 import { NewProductModal } from "@/features/admin/bar-management/components/NewProductModal";
 import { BarProvider } from "@/features/bar";
+import { MobileProvider } from "@/shared";
 
 export default {
   title: "Admin/Bar-Management",
@@ -9,10 +10,12 @@ export default {
 const Modal = () => {
   return (
     <BarProvider>
-      <NewProductModal
-        isOpen={true}
-        onClose={() => {}}
-      />
+      <MobileProvider>
+        <NewProductModal
+          isOpen={true}
+          onClose={() => {}}
+        />
+      </MobileProvider>
     </BarProvider>
   );
 };

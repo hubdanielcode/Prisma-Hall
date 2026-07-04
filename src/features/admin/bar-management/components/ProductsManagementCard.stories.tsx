@@ -1,5 +1,6 @@
 import { BarProvider } from "@/features/bar";
 import { ProductsManagementCard } from "./ProductsManagementCard";
+import { MobileProvider } from "@/shared";
 
 export default {
   title: "Admin/Bar-Management",
@@ -9,7 +10,9 @@ export default {
 const Cards = () => {
   return (
     <BarProvider>
-      <ProductsManagementCard />
+      <MobileProvider>
+        <ProductsManagementCard />
+      </MobileProvider>
     </BarProvider>
   );
 };

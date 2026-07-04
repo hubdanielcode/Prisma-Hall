@@ -1,5 +1,6 @@
 import { BarProvider } from "@/features/bar";
 import { ProductsManagementFilter } from "./ProductsManagementFilter";
+import { MobileProvider } from "@/shared";
 
 export default {
   title: "Admin/Bar-Management",
@@ -9,7 +10,9 @@ export default {
 const Filter = () => {
   return (
     <BarProvider>
-      <ProductsManagementFilter />
+      <MobileProvider>
+        <ProductsManagementFilter />
+      </MobileProvider>
     </BarProvider>
   );
 };

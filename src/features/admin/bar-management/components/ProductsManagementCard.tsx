@@ -1,10 +1,12 @@
 import { useBarContext } from "@/features/bar";
+import { useMobileContext } from "@/shared";
 import { Beer, Coffee, Martini, Wine } from "lucide-react";
 
 const ProductsManagementCard = () => {
   /* - Puxando do context - */
 
   const { products } = useBarContext();
+  const { isPortraitMobile, isLandscapeMobile } = useMobileContext();
 
   /* - Definições - */
 
@@ -49,26 +51,60 @@ const ProductsManagementCard = () => {
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-nowrap sm:items-stretch sm:gap-3 md:flex md:flex-nowrap md:items-stretch md:gap-4 w-full ">
+    <div
+      className={`w-full ${
+        isPortraitMobile
+          ? "grid grid-cols-2 gap-2"
+          : `flex flex-nowrap items-stretch ${
+              isLandscapeMobile ? "gap-3" : "gap-4"
+            }`
+      }`}
+    >
       {/* - Card de total de produtos - */}
 
-      <div className="col-span-2 sm:flex-1 md:flex-1 bg-black border border-[#B8860B] rounded-lg h-25 md:h-29 p-4">
+      <div
+        className={`bg-black border border-[#B8860B] rounded-lg p-4 ${
+          isPortraitMobile
+            ? "col-span-2 h-25"
+            : `flex-1 ${isLandscapeMobile ? "h-25" : "h-29"}`
+        }`}
+      >
         <div className="flex flex-col justify-center items-center">
-          <div className="flex gap-3 sm:gap-2 text-[#B8860B]">
+          <div
+            className={`flex text-[#B8860B] ${
+              isPortraitMobile ? "gap-3" : "gap-2"
+            }`}
+          >
             {/* - Ícone + título - */}
 
             <span>
               <Wine />
             </span>
 
-            <span className="text-white/60 font-semibold text-nowrap text-xs sm:text-[10px] md:text-xs tracking-wider uppercase pt-1">
+            <span
+              className={`text-white/60 font-semibold text-nowrap tracking-wider uppercase pt-1 ${
+                isPortraitMobile
+                  ? "text-xs"
+                  : isLandscapeMobile
+                    ? "text-[10px]"
+                    : "text-xs"
+              }`}
+            >
               Total de produtos
             </span>
           </div>
 
           {/* - Quantidade - */}
 
-          <span className="flex items-center justify-center text-white text-2xl sm:text-xl md:text-3xl font-bold pt-1">
+          <span
+            className={`flex items-center justify-center text-white font-bold pt-1 ${
+              isPortraitMobile
+                ? "text-2xl"
+                : isLandscapeMobile
+                  ? "text-xl"
+                  : "text-3xl"
+            }`}
+          >
             {products.length}
           </span>
         </div>
@@ -81,22 +117,48 @@ const ProductsManagementCard = () => {
 
         return (
           <div
-            className="col-span-1 sm:flex-1 md:flex-1 bg-black border border-[#B8860B] rounded-lg h-25 md:h-29 p-4 sm:p-3 md:p-6"
+            className={`bg-black border border-[#B8860B] rounded-lg ${
+              isPortraitMobile
+                ? "col-span-1 h-25 p-4"
+                : isLandscapeMobile
+                  ? "flex-1 h-25 p-3"
+                  : "flex-1 h-29 p-6"
+            }`}
             key={category}
           >
             <div className="flex flex-col justify-center items-center">
-              <div className="flex gap-3 sm:gap-2 text-[#B8860B]">
+              <div
+                className={`flex text-[#B8860B] ${
+                  isPortraitMobile ? "gap-3" : "gap-2"
+                }`}
+              >
                 {/* - Ícone + título - */}
 
                 {card.icon}
-                <span className="text-white/60 font-semibold text-nowrap text-xs sm:text-[10px] md:text-xs tracking-wider uppercase pt-1">
+                <span
+                  className={`text-white/60 font-semibold text-nowrap tracking-wider uppercase pt-1 ${
+                    isPortraitMobile
+                      ? "text-xs"
+                      : isLandscapeMobile
+                        ? "text-[10px]"
+                        : "text-xs"
+                  }`}
+                >
                   {card.title}
                 </span>
               </div>
 
               {/* - Quantidade - */}
 
-              <span className="flex items-center justify-center text-white text-2xl sm:text-xl md:text-3xl font-bold pt-1">
+              <span
+                className={`flex items-center justify-center text-white font-bold pt-1 ${
+                  isPortraitMobile
+                    ? "text-2xl"
+                    : isLandscapeMobile
+                      ? "text-xl"
+                      : "text-3xl"
+                }`}
+              >
                 {card.quantity}
               </span>
             </div>

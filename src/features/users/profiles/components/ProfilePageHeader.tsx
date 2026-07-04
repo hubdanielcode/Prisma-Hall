@@ -108,8 +108,8 @@ const ProfilePageHeader = ({
     try {
       setIsUploadingPhoto(true);
       await handleSaveProfilePicture(file);
-    } catch (err) {
-      console.error("Erro ao salvar foto:", err);
+    } catch (error) {
+      console.error("Erro ao salvar foto:", error);
     } finally {
       setIsUploadingPhoto(false);
     }

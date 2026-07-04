@@ -29,9 +29,10 @@ const Schedule = () => {
 
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
-  /* - Estado do evento selecionado no modal - */
+  /* - Estados do modal - */
 
   const [selectedEvent, setSelectedEvent] = useState<EventProps | null>(null);
+  const [isEventModalOpen, setIsEventModalOpen] = useState<boolean>(false);
 
   /* - Funções - */
 
@@ -187,7 +188,10 @@ const Schedule = () => {
                 <EventListItem
                   key={index}
                   event={event}
-                  onSelect={setSelectedEvent}
+                  onSelect={() => {
+                    setSelectedEvent(event);
+                    setIsEventModalOpen(true);
+                  }}
                 />
               ))}
             </div>
@@ -208,7 +212,10 @@ const Schedule = () => {
               <EventListItem
                 key={index}
                 event={event}
-                onSelect={setSelectedEvent}
+                onSelect={() => {
+                  setSelectedEvent(event);
+                  setIsEventModalOpen(true);
+                }}
               />
             ))
           ) : (
@@ -223,7 +230,11 @@ const Schedule = () => {
 
       <EventModal
         event={selectedEvent}
-        onClose={() => setSelectedEvent(null)}
+        isOpen={isEventModalOpen}
+        onClose={() => {
+          setSelectedEvent(null);
+          setIsEventModalOpen(false);
+        }}
       />
     </div>
   );

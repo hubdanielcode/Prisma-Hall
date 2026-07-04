@@ -5,8 +5,13 @@ import { ProductsManagementCard } from "../components/ProductsManagementCard";
 import { ProductsManagementFilter } from "../components/ProductsManagementFilter";
 import { useState } from "react";
 import { NewProductModal } from "../components/NewProductModal";
+import { useMobileContext } from "@/shared";
 
 const AdminPage = () => {
+  /* - Puxando do context - */
+
+  const { isPortraitMobile, isLandscapeMobile } = useMobileContext();
+
   /* - Estados dos modais - */
 
   const [isNewProductModalOpen, setIsNewProductModalOpen] =
@@ -14,13 +19,39 @@ const AdminPage = () => {
 
   return (
     <>
-      <div className="bg-[#1A1A1A] min-h-screen w-full pt-24 pb-10 sm:pt-28 sm:pb-12 sm:px-6 md:pt-32 md:pb-14 md:px-8">
+      <div
+        className={`bg-[#1A1A1A] min-h-screen w-full ${
+          isPortraitMobile
+            ? "pt-24 pb-10"
+            : isLandscapeMobile
+              ? "pt-28 pb-12 px-6"
+              : "pt-32 pb-14 px-8"
+        }`}
+      >
         <div className="flex flex-col max-w-4xl w-full mx-auto gap-6 px-4">
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-stretch md:flex-row md:justify-between md:items-stretch md:gap-0 ">
+          <div
+            className={`flex ${
+              isPortraitMobile
+                ? "flex-col"
+                : "flex-row justify-between items-stretch gap-0"
+            }`}
+          >
             {/* - Título - */}
 
-            <div className="flex flex-col items-start mb-4 sm:mb-0 md:mb-0">
-              <span className="text-lg sm:text-xl md:text-2xl text-white font-semibold">
+            <div
+              className={`flex flex-col items-start ${
+                isPortraitMobile ? "mb-4" : "mb-0"
+              }`}
+            >
+              <span
+                className={`text-white font-semibold ${
+                  isPortraitMobile
+                    ? "text-lg"
+                    : isLandscapeMobile
+                      ? "text-xl"
+                      : "text-2xl"
+                }`}
+              >
                 Gestão do Bar
               </span>
 
@@ -34,7 +65,13 @@ const AdminPage = () => {
             {/* - Botão de adicionar produto - */}
 
             <motion.button
-              className="flex justify-center items-center w-full sm:w-fit md:w-auto h-12 sm:h-15 md:h-fit bg-[#B8860B] hover:bg-[#7A5A08] shadow-[#B8860B] hover:shadow-[#7A5A08] text-black font-semibold px-4 py-2 rounded-lg cursor-pointer"
+              className={`flex justify-center items-center bg-[#B8860B] hover:bg-[#7A5A08] shadow-[#B8860B] hover:shadow-[#7A5A08] text-black font-semibold px-4 py-2 rounded-lg cursor-pointer ${
+                isPortraitMobile
+                  ? "w-full h-12"
+                  : isLandscapeMobile
+                    ? "w-fit h-15"
+                    : "w-auto h-fit"
+              }`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsNewProductModalOpen(true)}

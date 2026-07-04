@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ImagePlus, X } from "lucide-react";
 import { productCategoryBadges } from "../types/productCategoryBadges";
+import { useBlockScroll } from "@/shared/hooks/useBlockScroll";
+import { useMobileContext } from "@/shared";
 
 interface NewProductModalProps {
   isOpen: boolean;
@@ -9,10 +11,68 @@ interface NewProductModalProps {
 }
 
 const NewProductModal = ({ isOpen, onClose }: NewProductModalProps) => {
+  /* - Puxando do context - */
+
+  const { isPortraitMobile, isLandscapeMobile } = useMobileContext();
+
   /* - Estados dos produtos - */
 
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [isActive, setIsActive] = useState<boolean>(true);
+  const [productImage, setProductImage] = useState<string>("");
+
+  /* - Estados de erro - */
+
+  const [productImageError, setProductImageError] = useState<string>("");
+
+  /* - Definições - */
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  /* - Fuções - */
+
+  // 1. Impedindo o scroll enquanto o modal estiver aberto
+
+  useBlockScroll(isOpen);
+
+  // 2. Permite que o admin adicione a imagem do produto que será integrado ao cardápio
+
+  const handleAddProductImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (!file) {
+      return;
+    }
+
+    const maxSize = 5 * 1024 * 1024;
+
+    if (file.size > maxSize) {
+      setProductImageError("A imagem deve ter um tamanho de até 5 MB.");
+      return;
+    }
+
+    const allowedFileTypes = ["image/jpeg", "image/png", "image/webp"];
+
+    if (!allowedFileTypes.includes(file.type)) {
+      setProductImageError("Formato inválido. Use JPEG, PNG ou WEBP");
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      setProductImage(reader.result as string);
+      e.target.value = "";
+    };
+
+    reader.onerror = () => {
+      setProductImageError("Erro ao carregar a imagem.");
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  // 3. Cria o produto sem imagem
 
   return (
     <AnimatePresence>
@@ -31,7 +91,13 @@ const NewProductModal = ({ isOpen, onClose }: NewProductModalProps) => {
           {/* - Card do modal - */}
 
           <motion.div
-            className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md sm:max-w-lg md:max-w-xl mx-4 bg-black border border-[#B8860B] rounded-lg overflow-hidden max-h-[90vh] overflow-y-auto"
+            className={`fixed z-50 ${
+              isPortraitMobile
+                ? "top-5 w-full h-fit max-w-none mx-0"
+                : `inset-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-auto mx-4 ${
+                    isLandscapeMobile ? "max-w-lg" : "max-w-xl"
+                  }`
+            } bg-black border border-[#B8860B] rounded-lg overflow-hidden max-h-dh overflow-y-auto`}
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -39,7 +105,11 @@ const NewProductModal = ({ isOpen, onClose }: NewProductModalProps) => {
             {/* - Cabeçalho - */}
 
             <div className="flex items-center justify-between px-5 py-4 border-b border-[#B8860B60]">
-              <span className="text-lg sm:text-xl text-white font-semibold leading-none">
+              <span
+                className={`text-white font-semibold leading-none ${
+                  isPortraitMobile ? "text-lg" : "text-xl"
+                }`}
+              >
                 Adicionar Novo Produto
               </span>
 
@@ -57,15 +127,33 @@ const NewProductModal = ({ isOpen, onClose }: NewProductModalProps) => {
 
             <div className="flex items-center gap-4 px-5 py-4 border-b border-[#B8860B60]">
               <div className="flex justify-center items-center h-20 w-20 border border-dashed border-[#B8860B] rounded-lg shrink-0">
-                <ImagePlus className="text-[#B8860B] h-6 w-6" />
+                {productImage ? (
+                  <img
+                    className="w-full h-full object-cover rounded-lg"
+                    src={productImage}
+                    alt="Preview do produto"
+                  />
+                ) : (
+                  <ImagePlus className="text-[#B8860B] h-6 w-6" />
+                )}
               </div>
+
+              <input
+                className="hidden"
+                type="file"
+                ref={fileInputRef}
+                accept="image/jpeg,image/png,image/webp"
+                onChange={handleAddProductImage}
+              />
 
               <motion.button
                 className="flex items-center gap-2 border border-[#B8860B] px-4 py-2.5 rounded-lg cursor-pointer hover:bg-[#1A1A1A] transition-colors"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => fileInputRef.current?.click()}
               >
                 <ImagePlus className="text-[#B8860B] h-4 w-4" />
+
                 <span className="text-white/80 text-sm font-semibold">
                   Adicionar Imagem
                 </span>
@@ -76,7 +164,7 @@ const NewProductModal = ({ isOpen, onClose }: NewProductModalProps) => {
 
             <div className="flex flex-col gap-4 px-5 py-4">
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs text-[#B8860B] uppercase tracking-wide font-semibold">
+                <label className="text-xs text-[#B8860B] uppercase tracking-wide font-semibold mb-1.5">
                   Nome do Produto
                 </label>
 
@@ -88,7 +176,7 @@ const NewProductModal = ({ isOpen, onClose }: NewProductModalProps) => {
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs text-[#B8860B] uppercase tracking-wide font-semibold">
+                <label className="text-xs text-[#B8860B] uppercase tracking-wide font-semibold mb-1.5">
                   Descrição
                 </label>
 
@@ -101,9 +189,17 @@ const NewProductModal = ({ isOpen, onClose }: NewProductModalProps) => {
 
               {/* - Preço e Categoria - */}
 
-              <div className="flex flex-col sm:flex-row gap-4">
-                <div className="flex flex-col gap-1.5 w-full sm:w-28 shrink-0">
-                  <label className="text-xs text-[#B8860B] uppercase tracking-wide font-semibold">
+              <div
+                className={`flex gap-4 ${
+                  isPortraitMobile ? "flex-col" : "flex-row"
+                }`}
+              >
+                <div
+                  className={`flex flex-col gap-1.5 shrink-0 ${
+                    isPortraitMobile ? "w-full" : "w-28"
+                  }`}
+                >
+                  <label className="text-xs text-[#B8860B] uppercase tracking-wide font-semibold mb-1.5">
                     Preço
                   </label>
 
@@ -121,7 +217,7 @@ const NewProductModal = ({ isOpen, onClose }: NewProductModalProps) => {
                 </div>
 
                 <div className="flex flex-col gap-1.5 flex-1">
-                  <label className="text-xs text-[#B8860B] uppercase tracking-wide font-semibold">
+                  <label className="text-xs text-[#B8860B] uppercase tracking-wide font-semibold mb-1.5">
                     Categoria
                   </label>
 
@@ -155,7 +251,7 @@ const NewProductModal = ({ isOpen, onClose }: NewProductModalProps) => {
               {/* - Status - */}
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs text-[#B8860B] uppercase tracking-wide font-semibold">
+                <label className="text-xs text-[#B8860B] uppercase tracking-wide font-semibold mb-1.5">
                   Status
                 </label>
 
@@ -194,13 +290,23 @@ const NewProductModal = ({ isOpen, onClose }: NewProductModalProps) => {
               </div>
             </div>
 
+            {/* - Seção de erro - */}
+
+            <div className="min-h-20 w-full px-5">
+              {productImageError && (
+                <p className="flex items-center justify-center h-12 rounded-xl bg-red-100 border border-red-300 text-red-700 text-sm font-semibold px-4 text-center">
+                  {productImageError}
+                </p>
+              )}
+            </div>
+
             {/* - Ações - */}
 
             <div className="flex flex-wrap justify-end gap-3 px-5 py-4 border-t border-[#B8860B60]">
               <motion.button
                 className="px-4 py-2 text-sm text-white/60 font-semibold rounded-lg cursor-pointer hover:text-white transition-colors"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 Cancelar
               </motion.button>

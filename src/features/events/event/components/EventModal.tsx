@@ -5,13 +5,15 @@ import type { EventProps } from "@/features/events/event/types/event";
 import { useCartContext } from "@/features/cart";
 import { useNavigate } from "react-router-dom";
 import { useAuthenticationContext } from "@/features/authentication";
+import { useBlockScroll } from "@/shared/hooks/useBlockScroll";
 
 interface EventModalProps {
   event: EventProps | null;
+  isOpen: boolean;
   onClose: () => void;
 }
 
-const EventModal = ({ event, onClose }: EventModalProps) => {
+const EventModal = ({ event, isOpen, onClose }: EventModalProps) => {
   /* - Puxando do context - */
 
   const { handleAddToCart, setIsCartOpen } = useCartContext();
@@ -21,9 +23,13 @@ const EventModal = ({ event, onClose }: EventModalProps) => {
 
   const navigate = useNavigate();
 
+  /* - Impedindo o scroll enquanto o modal estiver aberto - */
+
+  useBlockScroll(isOpen);
+
   return (
     <AnimatePresence>
-      {event && (
+      {isOpen && event && (
         <>
           {/* - Fundo escuro - */}
 

@@ -1,4 +1,6 @@
 import { useBarContext } from "@/features/bar";
+import { useMobileContext } from "@/shared";
+
 import { FaSearch } from "react-icons/fa";
 
 const ProductsManagementFilter = () => {
@@ -11,12 +13,23 @@ const ProductsManagementFilter = () => {
     searchQuery,
     setSearchQuery,
   } = useBarContext();
+  const { isPortraitMobile } = useMobileContext();
 
   return (
-    <div className="flex flex-col gap-4 w-full md:flex-row md:items-center md:justify-between md:gap-3 lg:flex-row lg:items-center lg:justify-between lg:gap-3">
+    <div
+      className={`flex w-full gap-4 ${
+        isPortraitMobile
+          ? "flex-col"
+          : "flex-row items-center justify-between gap-3"
+      }`}
+    >
       {/* - Searchbar - */}
 
-      <div className="flex items-center bg-[#0A0A0A] border border-[#B8860B] w-full md:w-[35%] h-12 rounded-lg text-xs sm:text-sm text-white/60 outline-none p-2 shrink-0">
+      <div
+        className={`flex items-center bg-[#0A0A0A] border border-[#B8860B] h-12 rounded-lg text-xs sm:text-sm text-white/60 outline-none p-2 shrink-0 ${
+          isPortraitMobile ? "w-full" : "w-[35%]"
+        }`}
+      >
         <FaSearch className="my-auto mx-2 text-white/60 pointer-events-none" />
 
         <input
@@ -29,7 +42,11 @@ const ProductsManagementFilter = () => {
 
       {/* - Filtro - */}
 
-      <div className="flex flex-wrap items-center justify-start md:justify-end gap-2.5 md:flex-1 md:flex-nowrap lg:flex-1 lg:flex-nowrap">
+      <div
+        className={`flex flex-wrap items-center gap-2.5 ${
+          isPortraitMobile ? "justify-start" : "justify-end flex-1 flex-nowrap"
+        }`}
+      >
         {productsCategories.map((category) => {
           const Icon = category.icon;
           return (
