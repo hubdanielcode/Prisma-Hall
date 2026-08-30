@@ -1,0 +1,310 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// User enums
+
+enum UserRole {
+  user
+  admin
+}
+
+// Product enums
+
+enum ProductCategory {
+  beers
+  cocktails
+  drinks
+  no_alcohol
+}
+
+enum ProductStatus {
+  active
+  inactive
+}
+
+// Ticket enums
+
+enum TicketOrderStatus {
+  confirmed
+  pending
+  cancelled
+}
+
+// Event enums
+
+enum EventTag {
+  trap_and_hiphop
+  forro
+  samba_and_pagode
+  metal
+  eletronica
+  funk
+  rock
+}
+
+enum EventStatus {
+  happened
+  soon
+}
+
+// Shared enum
+
+enum ItemType {
+  drinks
+  tickets
+}
+
+enum PaymentMethod {
+  cash
+  pix
+  creditCard
+  debitCard
+}
+
+enum PaymentStatus {
+  confirmed
+  pending
+  failed
+}
+
+model Session {
+  id     String @id @default(uuid())
+  userId String @map("user_id")
+
+  createdAt      DateTime  @default(now()) @map("created_at")
+  revokedAt      DateTime? @map("revoked_at")
+  expiresAt      DateTime  @map("expires_at")
+  lastActivityAt DateTime  @default(now()) @map("last_activity_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("session")
+}
+
+model User {
+  id             String    @id @default(uuid())
+  name           String
+  email          String    @unique
+  password       String
+  photo          String
+  role           UserRole  @default(user)
+  verifiedBadge  Boolean   @map("verified_user")
+  token          String?
+  tokenExpiresAt DateTime? @map("token_expires_at")
+
+  createdAt   DateTime  @default(now()) @map("created_at")
+  validatedAt DateTime? @default(now()) @map("validated_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  carts           Cart[]
+  ticketOrders    TicketOrder[]
+  ticketPayments  TicketPayment[]
+  reviews         Review[]
+  galleries       Gallery[]
+  galleryLikes    GalleryLikes[]
+  tickets         Ticket[]
+  sessions        Session[]
+  profiles        Profile[]
+  productPayments ProductPayment[]
+
+  @@map("users")
+}
+
+model Profile {
+  id           String   @id @default(uuid())
+  userId       String   @unique @map("user_id")
+  phoneNumber  String   @map("phone_number")
+  cpf          String
+  birthDate    DateTime @map("birth_date")
+  cep          String
+  city         String
+  uf           String
+  neighborhood String
+  street       String
+  number       String
+  complement   String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("profiles")
+}
+
+model Cart {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  productId String?  @map("product_id")
+  eventId   String?  @map("event_id")
+  type      ItemType @map("item_type")
+  quantity  Int
+  price     Decimal
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user    User     @relation(fields: [userId], references: [id])
+  product Product? @relation(fields: [productId], references: [id])
+  event   Event?   @relation(fields: [eventId], references: [id])
+
+  @@map("cart")
+}
+
+model Product {
+  id          String          @id @default(uuid())
+  name        String          @unique
+  category    ProductCategory
+  description String
+  image       String
+  price       Decimal
+  status      ProductStatus
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  carts Cart[]
+
+  @@map("products")
+}
+
+model ProductPayment {
+  id         String        @id @default(uuid())
+  userId     String        @map("user_id")
+  method     PaymentMethod @map("payment_method")
+  status     PaymentStatus
+  totalValue Decimal       @map("total_value")
+
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+  pickedUpAt DateTime? @map("picked_up_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("product_payments")
+}
+
+model Ticket {
+  id       String @id @default(uuid())
+  orderId  String @default(uuid()) @map("order_id")
+  userId   String @map("user_id")
+  eventId  String @map("event_id")
+  quantity Int
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  order TicketOrder @relation(fields: [orderId], references: [id])
+  user  User        @relation(fields: [userId], references: [id])
+  event Event       @relation(fields: [eventId], references: [id])
+
+  @@map("tickets")
+}
+
+model TicketOrder {
+  id     String            @id @default(uuid())
+  userId String            @map("user_id")
+  status TicketOrderStatus
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user           User            @relation(fields: [userId], references: [id])
+  ticketPayments TicketPayment[]
+  tickets        Ticket[]
+
+  @@map("ticket_orders")
+}
+
+model TicketPayment {
+  id         String        @id @default(uuid())
+  userId     String        @map("user_id")
+  orderId    String        @map("order_id")
+  method     PaymentMethod @map("payment_method")
+  status     PaymentStatus
+  totalValue Decimal       @map("total_value")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user  User        @relation(fields: [userId], references: [id])
+  order TicketOrder @relation(fields: [orderId], references: [id])
+
+  @@map("ticket_payments")
+}
+
+model Event {
+  id          String      @id @default(uuid())
+  title       String
+  description String
+  tag         EventTag
+  artist      String
+  image       String
+  status      EventStatus
+  price       Decimal
+  startsAt    DateTime    @map("starts_at")
+  attendees   Int
+  rating      Decimal
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  carts     Cart[]
+  reviews   Review[]
+  galleries Gallery[]
+  tickets   Ticket[]
+
+  @@map("events")
+}
+
+model Review {
+  id      String  @id @default(uuid())
+  userId  String  @map("user_id")
+  eventId String  @map("event_id")
+  rating  Decimal
+  comment String? @default("")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user  User  @relation(fields: [userId], references: [id])
+  event Event @relation(fields: [eventId], references: [id])
+
+  @@map("reviews")
+}
+
+model Gallery {
+  id         String   @id @default(uuid())
+  userId     String   @map("user_id")
+  eventId    String   @map("event_id")
+  image      String
+  title      String
+  happenedAt DateTime @map("happened_at")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user  User  @relation(fields: [userId], references: [id])
+  event Event @relation(fields: [eventId], references: [id])
+
+  @@map("gallery")
+}
+
+model GalleryLikes {
+  userId  String @map("user_id")
+  imageId String @map("image_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@id([userId, imageId])
+  @@map("gallery_likes")
+}
