@@ -23,9 +23,7 @@ const AdminLayout = async ({ children }: { children: React.ReactNode }) => {
       });
 
       const isAdmin = await checkIsAdmin();
-      if (isAdmin) {
-        redirect("/admin");
-      } else {
+      if (!isAdmin) {
         redirect("/");
       }
     }
