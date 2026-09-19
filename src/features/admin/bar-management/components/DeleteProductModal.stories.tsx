@@ -1,7 +1,6 @@
 import { BarProvider } from "@/features/bar";
 import { DeleteProductModal } from "./DeleteProductModal";
 import { MobileProvider } from "@/shared";
-
 import { QueryProvider } from "@/shared/providers/QueryProvider";
 
 export default {

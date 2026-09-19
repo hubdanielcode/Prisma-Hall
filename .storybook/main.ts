@@ -22,8 +22,9 @@ const config: StorybookConfig = {
     viteConfig.resolve = {
       ...viteConfig.resolve,
       alias: [
+        { find: "bcrypt", replacement: path.resolve(dirname, "./mocks/bcrypt.ts") },
         { find: "@/lib/prisma", replacement: path.resolve(dirname, "./mocks/prisma.ts") },
-        { find: "@/features/bar/hooks/useProducts", replace: path.resolve(dirname, "./mocks/useProducts.ts") },
+        { find: "@/features/bar/hooks/useProducts", replacement: path.resolve(dirname, "./mocks/useProducts.ts") },
         ...normalizedAlias,
       ],
     };

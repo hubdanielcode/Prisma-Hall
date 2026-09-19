@@ -5,7 +5,7 @@ const countReturningMethods = new Set(["count"]);
 
 // 1. Interceptando o método chamado (findMany, findUnique, create, update...)
 
-const createModelMock = () =>
+const createModel = () =>
   new Proxy(
     {},
     {
@@ -32,7 +32,7 @@ const createModelMock = () =>
 const prisma = new Proxy(
   {},
   {
-    get: () => createModelMock(),
+    get: () => createModel(),
   },
 );
 

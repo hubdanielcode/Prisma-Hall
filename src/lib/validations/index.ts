@@ -24,7 +24,7 @@ export { editUserSchema } from "@/lib/validations/admin/user-management/editUser
 
 /* - Authentication - */
 
-export { resetPasswordSchema, resetPasswordRequestSchema } from "@/lib/validations/authentication/resetPasswordSchemas";
+export { passwordResetSchema, requestPasswordResetSchema } from "@/lib/validations/authentication/passwordResetSchemas";
 export { signInSchema } from "@/lib/validations/authentication/signInSchema";
 export { signUpSchema } from "@/lib/validations/authentication/signUpSchema";
 

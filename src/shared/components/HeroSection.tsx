@@ -6,8 +6,6 @@ import { Calendar, ChevronLeft, ChevronRight, Ticket } from "lucide-react";
 import { rotatingImages } from "@/shared/utils/rotatingImages";
 
 const HeroSection = () => {
-  /* - Estados das imagens - */
-
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [animationDirection, setAnimationDirection] = useState<string>("left");
 

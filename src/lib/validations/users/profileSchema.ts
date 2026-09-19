@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { regex } from "@/shared";
+import { parsedDate, regex } from "@/shared";
+import { imageFileSchema } from "../shared/imageFileSchema";
 
 const profileSchema = z.object({
   // 1. Nome
@@ -10,43 +11,59 @@ const profileSchema = z.object({
     .min(2, "Seu nome deve conter um mínimo de 2 caracteres.")
     .max(50, "Seu nome não deve ultrapassar um máximo de 50 caracteres."),
 
-  // 2. Telefone
+  // 2. Foto
 
-  phone: z.string().regex(regex.phoneNumber).min(15, "Digite um número de telefone válido.").max(15, "Digite um número de telefone válido."),
+  profilePicture: imageFileSchema,
 
-  // 3. CPF
+  // 3. Telefone
 
-  cpf: z.string().regex(regex.CPF).min(14, "Digite um CPF válido.").max(14, "Digite um CPF válido."),
+  phoneNumber: z.string().regex(regex.phoneNumber).min(15, "Digite um número de telefone válido.").max(15, "Digite um número de telefone válido."),
 
-  // 4. Data de nascimento
+  // 4. CPF
 
-  birthDate: z.coerce.date(),
+  socialSecurityNumber: z.string().regex(regex.socialSecurityNumber).min(14, "Digite um CPF válido.").max(14, "Digite um CPF válido."),
 
-  // 5. CEP
+  // 5. Data de nascimento
 
-  cep: z.string().regex(regex.CEP).min(9, "Digite um CEP válido.").max(9, "Digite um CEP válido."),
+  birthDate: z
+    .string()
+    .regex(regex.birthDate)
+    .transform((birthDate: string, zodValidationContext) => {
+      const parsedBirthDate = parsedDate(birthDate);
 
-  // 6. Cidade
+      if (isNaN(parsedBirthDate.getTime())) {
+        zodValidationContext.addIssue({ code: "custom", message: "Digite uma data válida." });
+        return z.NEVER;
+      } else {
+        return parsedBirthDate;
+      }
+    }),
+
+  // 6. CEP
+
+  zipCode: z.string().regex(regex.zipCode).min(9, "Digite um CEP válido.").max(9, "Digite um CEP válido."),
+
+  // 7. Cidade
 
   city: z.string().regex(regex.city).min(2, "Digite o nome de uma cidade válida.").max(50, "Digite o nome de uma cidade válida."),
 
-  // 7. UF
+  // 8. UF
 
-  uf: z.string().regex(regex.UF).min(2, "Digite uma sigla válida da sua UF.").max(2, "Digite uma sigla válida da sua UF."),
+  state: z.string().regex(regex.state).min(2, "Digite uma sigla válida da sua UF.").max(2, "Digite uma sigla válida da sua UF."),
 
-  // 8. Bairro
+  // 9. Bairro
 
   neighborhood: z.string().regex(regex.neighborhood).min(2, "Digite o nome de um bairro válido.").max(60, "Digite o nome de um bairro válido."),
 
-  // 9. Rua
+  // 10. Rua
 
   street: z.string().regex(regex.street).min(2, "Digite o nome de uma rua válida.").max(50, "Digite o nome de uma rua válida."),
 
-  // 10.Número
+  // 11.Número
 
   number: z.string().regex(regex.number).min(1, "Digite uma identificação válida.").max(7, "Digite uma identificação válida."),
 
-  // 11. Complemento
+  // 12. Complemento
 
   complement: z.string().regex(regex.complement).min(2, "Digite um complemento válido.").max(25, "Digite um complemento válido."),
 });

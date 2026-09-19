@@ -1,9 +1,9 @@
 import { AuthenticationProvider, useAuthenticationContext } from "@/features/authentication";
+import { CartProvider } from "@/features/cart";
 import { Header } from "./Header";
 import { MobileProvider } from "../context/MobileContext";
+import { QueryProvider } from "../providers/QueryProvider";
 import { useEffect } from "react";
-import { CartProvider } from "@/features/cart";
-import "../../app/globals.css";
 
 export default {
   title: "Layouts/Public/Home Page",
@@ -29,13 +29,15 @@ const GeneralPageHeader = () => {
   };
 
   return (
-    <AuthenticationProvider>
-      <CartProvider>
-        <MobileProvider>
-          <AuthenticationContextConsumer />
-        </MobileProvider>
-      </CartProvider>
-    </AuthenticationProvider>
+    <QueryProvider>
+      <AuthenticationProvider>
+        <CartProvider>
+          <MobileProvider>
+            <AuthenticationContextConsumer />
+          </MobileProvider>
+        </CartProvider>
+      </AuthenticationProvider>
+    </QueryProvider>
   );
 };
 

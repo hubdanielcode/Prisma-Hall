@@ -14,4 +14,9 @@ export { useAuthenticationContext } from "@/features/authentication/hooks/useAut
 
 export { Authentication } from "@/features/authentication/pages/Authentication";
 export { Login } from "@/features/authentication/pages/Login";
-export { RecoverPassword } from "@/features/authentication/pages/RecoverPassword";
+export { PasswordReset } from "@/features/authentication/pages/PasswordReset";
+
+/* - Pages - */
+
+export type { SessionUserProps } from "@/features/authentication/types/sessionUser";
+export type { ProfileProps } from "@/features/authentication/types/profile";

@@ -1,71 +1,42 @@
 "use client";
 
-import { createContext, useState, type ReactNode } from "react";
+import { createContext } from "react";
+import { updateProfileSchema } from "@/lib/validations";
+import { useProfile } from "../hooks/useProfile";
+import { z } from "zod";
+import type { ProfileProps } from "@/features/authentication/types/profile";
 
-export interface ProfileContextType {
-  /* - Dados do comprador - */
+interface ProfileContextType {
+  /* - Dados do perfil - */
 
-  phoneNumber: string;
-  setPhoneNumber: (phoneNumber: string) => void;
-  CPF: string;
-  setCPF: (CPF: string) => void;
-  birthDate: string;
-  setBirthDate: (birthDate: string) => void;
-  CEP: string;
-  setCEP: (CEP: string) => void;
-  city: string;
-  setCity: (city: string) => void;
-  UF: string;
-  setUF: (UF: string) => void;
-  neighborhood: string;
-  setNeighborhood: (neighborhood: string) => void;
-  street: string;
-  setStreet: (street: string) => void;
-  number: string;
-  setNumber: (number: string) => void;
-  complement: string;
-  setComplement: (complement: string) => void;
+  profile: ProfileProps | false | undefined;
+  isLoading: boolean;
+  error: Error | null;
+
+  /* - Mutations - */
+
+  updateProfileMutation: (newProfileData: z.infer<typeof updateProfileSchema>) => Promise<unknown>;
+  deleteProfileMutation: () => Promise<unknown>;
 }
 
 const ProfileContext = createContext<ProfileContextType | null>(null);
 
-const ProfileProvider = ({ children }: { children: ReactNode }) => {
-  /* - Estados do comprador - */
-
-  const [phoneNumber, setPhoneNumber] = useState<string>("");
-  const [CPF, setCPF] = useState<string>("");
-  const [birthDate, setBirthDate] = useState<string>("");
-  const [CEP, setCEP] = useState<string>("");
-  const [city, setCity] = useState<string>("");
-  const [UF, setUF] = useState<string>("");
-  const [neighborhood, setNeighborhood] = useState<string>("");
-  const [street, setStreet] = useState<string>("");
-  const [number, setNumber] = useState<string>("");
-  const [complement, setComplement] = useState<string>("");
+const ProfileProvider = ({ children }: { children: React.ReactNode }) => {
+  const { profile, isLoading, error, updateProfileMutation, deleteProfileMutation } = useProfile();
 
   return (
     <ProfileContext.Provider
       value={{
-        phoneNumber,
-        setPhoneNumber,
-        CPF,
-        setCPF,
-        birthDate,
-        setBirthDate,
-        CEP,
-        setCEP,
-        city,
-        setCity,
-        UF,
-        setUF,
-        neighborhood,
-        setNeighborhood,
-        street,
-        setStreet,
-        number,
-        setNumber,
-        complement,
-        setComplement,
+        /* - Dados do perfil - */
+
+        profile,
+        isLoading,
+        error,
+
+        /* - Mutations - */
+
+        updateProfileMutation,
+        deleteProfileMutation,
       }}
     >
       {children}

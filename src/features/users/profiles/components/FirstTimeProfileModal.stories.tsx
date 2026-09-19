@@ -1,6 +1,6 @@
 import { FirstTimeProfileModal } from "./FirstTimeProfileModal";
 import { ProfileProvider } from "../context/ProfileContext";
-import { AuthenticationProvider } from "@/features/authentication";
+import { QueryProvider } from "@/shared/providers/QueryProvider";
 
 export default {
   title: "Layouts/Protected/Profile/Modals",
@@ -9,14 +9,14 @@ export default {
 
 const FirstTimeModal = () => {
   return (
-    <AuthenticationProvider>
+    <QueryProvider>
       <ProfileProvider>
         <FirstTimeProfileModal
           onClose={() => {}}
           isOpen
         />
       </ProfileProvider>
-    </AuthenticationProvider>
+    </QueryProvider>
   );
 };
 

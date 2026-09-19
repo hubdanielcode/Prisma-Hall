@@ -28,9 +28,10 @@ export { createEvent } from "@/actions/admin/events-management/createEvent";
 
 /* - Authentication - */
 
-// export { resetPassword } from "@/actions/authentication/resetPassword";
-// export { signIn } from "@/actions/authentication/signIn";
-// export { signUp } from "@/actions/authentication/signUp";
+export { passwordReset } from "@/actions/authentication/passwordReset";
+export { requestPasswordReset } from "@/actions/authentication/requestPasswordReset";
+export { signIn } from "@/actions/authentication/signIn";
+export { signUp } from "@/actions/authentication/signUp";
 
 /* - Bar - */
 
@@ -61,16 +62,17 @@ export { getSingleProduct } from "@/actions/bar/getSingleProduct";
 
 /* - Session - */
 
-// export { createSession } from "@/actions/session/createSession";
-// export { revokeSession } from "@/actions/session/revokeSession";
-// export { validateSession } from "@/actions/session/validateSession";
+export { createSession } from "@/actions/session/createSession";
+export { revokeSession } from "@/actions/session/revokeSession";
+export { validateSession } from "@/actions/session/validateSession";
 
 /* - Users - */
 
 // export { getShoppingHistory } from "@/actions/users/getShoppingHistory";
 
-// export { deleteProfile } from "@/actions/users/profile/deleteProfile";
-// export { updateProfile } from "@/actions/users/profile/updateProfile";
+export { deleteProfile } from "@/actions/users/profile/deleteProfile";
+export { getProfile } from "@/actions/users/profile/getProfile";
+export { updateProfile } from "@/actions/users/profile/updateProfile";
 
 // export { buyTickets } from "@/actions/users/tickets/buyTickets";
 // export { cancelTicketOrders } from "@/actions/users/tickets/cancelTicketOrders";

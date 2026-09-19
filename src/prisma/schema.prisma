@@ -93,10 +93,10 @@ model User {
   name           String
   email          String    @unique
   password       String
-  photo          String
+  profilePicture String?
   role           UserRole  @default(user)
-  verifiedBadge  Boolean   @map("verified_user")
-  token          String?
+  verifiedBadge  Boolean   @default(false) @map("verified_user")
+  token          String?   @unique
   tokenExpiresAt DateTime? @map("token_expires_at")
 
   createdAt   DateTime  @default(now()) @map("created_at")
@@ -120,18 +120,18 @@ model User {
 }
 
 model Profile {
-  id           String   @id @default(uuid())
-  userId       String   @unique @map("user_id")
-  phoneNumber  String   @map("phone_number")
-  cpf          String
-  birthDate    DateTime @map("birth_date")
-  cep          String
-  city         String
-  uf           String
-  neighborhood String
-  street       String
-  number       String
-  complement   String
+  id                   String   @id @default(uuid())
+  userId               String   @unique @map("user_id")
+  phoneNumber          String   @map("phone_number")
+  socialSecurityNumber String
+  birthDate            DateTime @map("birth_date")
+  zipCode              String
+  city                 String
+  state                String
+  neighborhood         String
+  street               String
+  number               String
+  complement           String
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

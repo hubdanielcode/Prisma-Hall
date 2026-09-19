@@ -4,25 +4,36 @@ import { AuthenticationScreenShell } from "../components/AuthenticationScreenShe
 import { CustomTextInput, CustomPasswordInput, regex, masks } from "@/shared/index";
 import { MdAlternateEmail } from "react-icons/md";
 import { motion } from "motion/react";
-import { supabase, supabaseTemp } from "../../../../supabase/supabase";
-import { useAuthenticationContext } from "../hooks/useAuthenticationContext";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
+import { useSession } from "../hooks/useSession";
 
 const Login = () => {
-  const { setFullName, email, setEmail } = useAuthenticationContext();
+  /* - Puxando do context - */
 
+  const { signInMutation } = useSession();
+
+  /* - Estados de cadastro - */
+
+  const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
   const [rememberMe, setRememberMe] = useState<boolean>(false);
+
+  /* - Estados de erro - */
+
   const [signInError, setSignInError] = useState<string>("");
+
+  /* - Definições - */
 
   const router = useRouter();
   const searchParams = useSearchParams();
-
   const signInRef = useRef<HTMLDivElement | null>(null);
   const from = searchParams.get("from");
 
-  const client = rememberMe ? supabase : supabaseTemp;
+  /* - Funções - */
+
+  // 1. Faz o login do usuário
 
   const handleLoginWithAccount = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -42,27 +53,19 @@ const Login = () => {
       return;
     }
 
-    const { data, error } = await client.auth.signInWithPassword({ email, password });
+    const result = await signInMutation({ typedEmail: email, typedPassword: password, rememberMe });
 
-    if (error) {
+    if (!result) {
       setSignInError("Email ou senha inválidos.");
       return;
     }
 
-    if (data.session) {
-      if (rememberMe) {
-        localStorage.setItem("rememberedEmail", email);
-        localStorage.setItem("rememberMe", String(rememberMe));
-      } else {
-        localStorage.removeItem("rememberedEmail");
-        localStorage.removeItem("rememberMe");
-      }
-
-      const { data: userData } = await client.from("users").select("name").eq("user_id", data.user.id).single();
-
-      if (userData?.name) {
-        setFullName(userData.name);
-      }
+    if (rememberMe) {
+      localStorage.setItem("rememberedEmail", email);
+      localStorage.setItem("rememberMe", String(rememberMe));
+    } else {
+      localStorage.removeItem("rememberedEmail");
+      localStorage.removeItem("rememberMe");
     }
 
     setEmail("");
@@ -71,10 +74,16 @@ const Login = () => {
     router.replace(from || "/");
   };
 
+  // 2. Fecha o erro ao clicar fora
+
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const clickedInside = !signInRef.current || signInRef.current.contains(e.target as Node);
-      if (clickedInside) return;
+
+      if (clickedInside) {
+        return;
+      }
+
       setSignInError("");
     };
 
@@ -89,6 +98,8 @@ const Login = () => {
           <div className="bg-black/70 rounded-lg p-6 text-white w-[90%] md:w-[25%] border-2 border-[#B8860B] sm:max-h-[80vh] sm:overflow-y-auto sm:mt-auto">
             <p className="text-white text-2xl sm:text-lg font-bold text-center">Entrar</p>
 
+            {/* - Input de email - */}
+
             <CustomTextInput
               className="bg-black/80"
               type="email"
@@ -101,16 +112,20 @@ const Login = () => {
               readOnly={false}
             />
 
+            {/* - Input de senha - */}
+
             <CustomPasswordInput
               className="bg-black/80"
               label="Sua Senha"
               placeholder="•••••••••"
               value={password}
               onChange={setPassword}
-              maxLength={50}
+              maxLength={30}
             />
 
             <div className="flex items-center">
+              {/* - Checkbox - */}
+
               <input
                 className="appearance-none w-4 h-4 border border-[#B8860B] rounded-sm cursor-pointer bg-black/90 checked:bg-[#B8860B] checked:bg-center checked:bg-no-repeat checked:bg-[url(/checkbox/checkmark.svg)]"
                 type="checkbox"
@@ -127,6 +142,8 @@ const Login = () => {
               </span>
             </div>
 
+            {/* - Botão de login - */}
+
             <motion.button
               className="w-full h-fit px-4 py-2 rounded-lg bg-[#B8860B] text-white text-shadow-xs text-shadow-black font-semibold text-lg my-4 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
               onClick={handleLoginWithAccount}
@@ -135,6 +152,8 @@ const Login = () => {
             >
               Entrar
             </motion.button>
+
+            {/* - Seção de erro - */}
 
             <div
               className="min-h-20 w-full"
@@ -146,6 +165,8 @@ const Login = () => {
                 </p>
               )}
             </div>
+
+            {/* - Link para a página de cadastro - */}
 
             <div className="flex justify-center items-center text-sm text-white font-semibold">
               <span className="mr-2">Não possui cadastro?</span>

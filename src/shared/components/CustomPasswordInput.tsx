@@ -14,8 +14,6 @@ export interface PasswordInputProps {
 }
 
 const CustomPasswordInput = ({ className, label, placeholder, value, onChange, maxLength }: PasswordInputProps) => {
-  /* - Estados de privacidade - */
-
   const [isPasswordPrivate, setIsPasswordPrivate] = useState<boolean>(true);
 
   return (

@@ -16,7 +16,6 @@ const editProduct = async (product: z.infer<typeof editProductSchema>) => {
   const parsedProduct = editProductSchema.safeParse(product);
 
   if (!parsedProduct.success) {
-    console.log(parsedProduct.error.issues);
     return false;
   }
 

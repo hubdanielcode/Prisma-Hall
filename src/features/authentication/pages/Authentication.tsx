@@ -1,40 +1,53 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
+import { AuthenticationScreenShell } from "../components/AuthenticationScreenShell";
 import { CircleCheck } from "lucide-react";
 import { CustomTextInput, CustomPasswordInput } from "@/shared/index";
 import { FaUser } from "react-icons/fa";
 import { MdAlternateEmail } from "react-icons/md";
 import { regex, masks } from "@/shared/index";
-import { supabase } from "../../../../supabase/supabase";
-import { useAuthenticationContext } from "../hooks/useAuthenticationContext";
 import { useRouter } from "next/navigation";
+import { useSession } from "../hooks/useSession";
 import { useState, useRef, useEffect } from "react";
-import { AuthenticationScreenShell } from "../components/AuthenticationScreenShell";
 
 const Authentication = () => {
-  const { fullName, setFullName, email, setEmail } = useAuthenticationContext();
+  /* - Puxando do context - */
 
+  const { signUpMutation } = useSession();
+
+  /* - Estados de cadastro - */
+
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [confirmEmail, setConfirmEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [hasAcceptedTerms, setHasAcceptedTerms] = useState<boolean>(false);
 
+  /* - Estados de erro/sucesso - */
+
   const [signUpError, setSignUpError] = useState<string>("");
   const [signUpSuccess, setSignUpSuccess] = useState<boolean>(false);
+
+  /* - Definições - */
 
   const signUpRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
 
+  /* - Funções - */
+
+  // 1. Cria a conta do usuário
+
   const handleCreateAccount = async (e: React.MouseEvent) => {
     e.preventDefault();
 
-    if (!fullName.trim() || !email.trim() || !confirmEmail.trim() || !password.trim() || !confirmPassword.trim()) {
+    if (!name.trim() || !email.trim() || !confirmEmail.trim() || !password.trim() || !confirmPassword.trim()) {
       setSignUpError("Preencha todos os campos.");
       return;
     }
 
-    if (!regex.name.test(fullName)) {
+    if (!regex.name.test(name)) {
       setSignUpError("Nome inválido.");
       return;
     }
@@ -59,47 +72,40 @@ const Authentication = () => {
       return;
     }
 
-    const redirectUrl = process.env.NEXT_PUBLIC_REDIRECT_URL;
+    const result = await signUpMutation({ name, email, password, confirmPassword });
 
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          fullName: fullName,
-        },
-        emailRedirectTo: `${redirectUrl}/`,
-      },
-    });
-
-    if (error) {
-      setSignUpError("Email ou senha inválidos.");
+    if (!result) {
+      setSignUpError("Não foi possível criar a conta. Verifique os dados e tente novamente.");
       return;
-    }
-
-    if (data.user) {
-      await supabase.from("users").insert({
-        user_id: data.user.id,
-        email: data.user.email,
-        name: fullName,
-      });
     }
 
     setSignUpSuccess(true);
 
-    setFullName("");
+    setName("");
     setEmail("");
     setConfirmEmail("");
     setPassword("");
     setConfirmPassword("");
   };
 
-  useEffect(() => {
-    if (!signUpSuccess) return;
+  // 2. Redireciona para a página home depois que o usuário conseguir criar a conta
 
-    const timer = setTimeout(() => setSignUpSuccess(false), 3500);
-    return () => clearTimeout(timer);
-  }, [signUpSuccess]);
+  useEffect(() => {
+    if (!signUpSuccess) {
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      setSignUpSuccess(false);
+      router.replace("/");
+    }, 3500);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [signUpSuccess, router]);
+
+  // 3. Fecha o erro ao clicar fora
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -149,16 +155,20 @@ const Authentication = () => {
           <div className="bg-black/70 rounded-lg p-6 text-white w-[90%] md:w-[25%] border-2 border-[#B8860B] sm:max-h-[80vh] sm:overflow-y-auto sm:mt-auto">
             <p className="text-white text-2xl sm:text-lg font-bold text-center">Cadastre-se</p>
 
+            {/* - Input de nome - */}
+
             <CustomTextInput
               className="bg-black/80"
               icon={<FaUser />}
               label="Seu Nome"
               placeholder="Nome Completo"
-              value={fullName}
-              onChange={(value) => setFullName(masks.fullName(String(value)))}
+              value={name}
+              onChange={(value) => setName(masks.name(String(value)))}
               maxLength={50}
               readOnly={false}
             />
+
+            {/* - Input de email - */}
 
             <CustomTextInput
               className="bg-black/80"
@@ -172,6 +182,8 @@ const Authentication = () => {
               readOnly={false}
             />
 
+            {/* - Input de confirmação de email - */}
+
             <CustomTextInput
               className="bg-black/80"
               icon={<MdAlternateEmail />}
@@ -183,6 +195,8 @@ const Authentication = () => {
               readOnly={false}
             />
 
+            {/* - Input de senha - */}
+
             <CustomPasswordInput
               className="bg-black/80"
               label="Sua Senha"
@@ -191,6 +205,8 @@ const Authentication = () => {
               onChange={setPassword}
               maxLength={50}
             />
+
+            {/* - Input de confimação de senha - */}
 
             <CustomPasswordInput
               className="bg-black/80"
@@ -202,12 +218,16 @@ const Authentication = () => {
             />
 
             <div className="flex items-center">
+              {/* - Checkbox - */}
+
               <input
                 className="appearance-none w-4 h-4 border border-[#B8860B] rounded-sm cursor-pointer bg-black/90 checked:bg-[#B8860B] checked:bg-center checked:bg-no-repeat checked:bg-[url(/checkbox/checkmark.svg)]"
                 type="checkbox"
                 checked={hasAcceptedTerms}
                 onChange={() => setHasAcceptedTerms(!hasAcceptedTerms)}
               />
+
+              {/* - Termos de uso e políticas de privacidade - */}
 
               <p className="text-white text-sm ml-2">
                 Li e concordo com os{" "}
@@ -227,6 +247,8 @@ const Authentication = () => {
               </p>
             </div>
 
+            {/* - Botão de cadastro - */}
+
             <motion.button
               className="w-full h-fit px-4 py-2 rounded-lg bg-[#B8860B] text-white text-shadow-xs text-shadow-black font-semibold text-lg my-3 md:my-4 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
               disabled={!hasAcceptedTerms}
@@ -236,6 +258,8 @@ const Authentication = () => {
             >
               Cadastrar
             </motion.button>
+
+            {/* - Seção de erro - */}
 
             <div
               className="min-h-20"
@@ -247,6 +271,8 @@ const Authentication = () => {
                 </p>
               )}
             </div>
+
+            {/* - Link de para a página de login - */}
 
             <div className="flex justify-center items-center text-sm text-white font-semibold">
               <span className="mr-2">Já possui cadastro?</span>

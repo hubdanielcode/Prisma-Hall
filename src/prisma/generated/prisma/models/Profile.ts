@@ -28,11 +28,11 @@ export type ProfileMinAggregateOutputType = {
   id: string | null
   userId: string | null
   phoneNumber: string | null
-  cpf: string | null
+  socialSecurityNumber: string | null
   birthDate: Date | null
-  cep: string | null
+  zipCode: string | null
   city: string | null
-  uf: string | null
+  state: string | null
   neighborhood: string | null
   street: string | null
   number: string | null
@@ -45,11 +45,11 @@ export type ProfileMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   phoneNumber: string | null
-  cpf: string | null
+  socialSecurityNumber: string | null
   birthDate: Date | null
-  cep: string | null
+  zipCode: string | null
   city: string | null
-  uf: string | null
+  state: string | null
   neighborhood: string | null
   street: string | null
   number: string | null
@@ -62,11 +62,11 @@ export type ProfileCountAggregateOutputType = {
   id: number
   userId: number
   phoneNumber: number
-  cpf: number
+  socialSecurityNumber: number
   birthDate: number
-  cep: number
+  zipCode: number
   city: number
-  uf: number
+  state: number
   neighborhood: number
   street: number
   number: number
@@ -81,11 +81,11 @@ export type ProfileMinAggregateInputType = {
   id?: true
   userId?: true
   phoneNumber?: true
-  cpf?: true
+  socialSecurityNumber?: true
   birthDate?: true
-  cep?: true
+  zipCode?: true
   city?: true
-  uf?: true
+  state?: true
   neighborhood?: true
   street?: true
   number?: true
@@ -98,11 +98,11 @@ export type ProfileMaxAggregateInputType = {
   id?: true
   userId?: true
   phoneNumber?: true
-  cpf?: true
+  socialSecurityNumber?: true
   birthDate?: true
-  cep?: true
+  zipCode?: true
   city?: true
-  uf?: true
+  state?: true
   neighborhood?: true
   street?: true
   number?: true
@@ -115,11 +115,11 @@ export type ProfileCountAggregateInputType = {
   id?: true
   userId?: true
   phoneNumber?: true
-  cpf?: true
+  socialSecurityNumber?: true
   birthDate?: true
-  cep?: true
+  zipCode?: true
   city?: true
-  uf?: true
+  state?: true
   neighborhood?: true
   street?: true
   number?: true
@@ -205,11 +205,11 @@ export type ProfileGroupByOutputType = {
   id: string
   userId: string
   phoneNumber: string
-  cpf: string
+  socialSecurityNumber: string
   birthDate: Date
-  cep: string
+  zipCode: string
   city: string
-  uf: string
+  state: string
   neighborhood: string
   street: string
   number: string
@@ -243,11 +243,11 @@ export type ProfileWhereInput = {
   id?: Prisma.StringFilter<"Profile"> | string
   userId?: Prisma.StringFilter<"Profile"> | string
   phoneNumber?: Prisma.StringFilter<"Profile"> | string
-  cpf?: Prisma.StringFilter<"Profile"> | string
+  socialSecurityNumber?: Prisma.StringFilter<"Profile"> | string
   birthDate?: Prisma.DateTimeFilter<"Profile"> | Date | string
-  cep?: Prisma.StringFilter<"Profile"> | string
+  zipCode?: Prisma.StringFilter<"Profile"> | string
   city?: Prisma.StringFilter<"Profile"> | string
-  uf?: Prisma.StringFilter<"Profile"> | string
+  state?: Prisma.StringFilter<"Profile"> | string
   neighborhood?: Prisma.StringFilter<"Profile"> | string
   street?: Prisma.StringFilter<"Profile"> | string
   number?: Prisma.StringFilter<"Profile"> | string
@@ -261,11 +261,11 @@ export type ProfileOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
-  cpf?: Prisma.SortOrder
+  socialSecurityNumber?: Prisma.SortOrder
   birthDate?: Prisma.SortOrder
-  cep?: Prisma.SortOrder
+  zipCode?: Prisma.SortOrder
   city?: Prisma.SortOrder
-  uf?: Prisma.SortOrder
+  state?: Prisma.SortOrder
   neighborhood?: Prisma.SortOrder
   street?: Prisma.SortOrder
   number?: Prisma.SortOrder
@@ -282,11 +282,11 @@ export type ProfileWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ProfileWhereInput[]
   NOT?: Prisma.ProfileWhereInput | Prisma.ProfileWhereInput[]
   phoneNumber?: Prisma.StringFilter<"Profile"> | string
-  cpf?: Prisma.StringFilter<"Profile"> | string
+  socialSecurityNumber?: Prisma.StringFilter<"Profile"> | string
   birthDate?: Prisma.DateTimeFilter<"Profile"> | Date | string
-  cep?: Prisma.StringFilter<"Profile"> | string
+  zipCode?: Prisma.StringFilter<"Profile"> | string
   city?: Prisma.StringFilter<"Profile"> | string
-  uf?: Prisma.StringFilter<"Profile"> | string
+  state?: Prisma.StringFilter<"Profile"> | string
   neighborhood?: Prisma.StringFilter<"Profile"> | string
   street?: Prisma.StringFilter<"Profile"> | string
   number?: Prisma.StringFilter<"Profile"> | string
@@ -300,11 +300,11 @@ export type ProfileOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
-  cpf?: Prisma.SortOrder
+  socialSecurityNumber?: Prisma.SortOrder
   birthDate?: Prisma.SortOrder
-  cep?: Prisma.SortOrder
+  zipCode?: Prisma.SortOrder
   city?: Prisma.SortOrder
-  uf?: Prisma.SortOrder
+  state?: Prisma.SortOrder
   neighborhood?: Prisma.SortOrder
   street?: Prisma.SortOrder
   number?: Prisma.SortOrder
@@ -323,11 +323,11 @@ export type ProfileScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Profile"> | string
   userId?: Prisma.StringWithAggregatesFilter<"Profile"> | string
   phoneNumber?: Prisma.StringWithAggregatesFilter<"Profile"> | string
-  cpf?: Prisma.StringWithAggregatesFilter<"Profile"> | string
+  socialSecurityNumber?: Prisma.StringWithAggregatesFilter<"Profile"> | string
   birthDate?: Prisma.DateTimeWithAggregatesFilter<"Profile"> | Date | string
-  cep?: Prisma.StringWithAggregatesFilter<"Profile"> | string
+  zipCode?: Prisma.StringWithAggregatesFilter<"Profile"> | string
   city?: Prisma.StringWithAggregatesFilter<"Profile"> | string
-  uf?: Prisma.StringWithAggregatesFilter<"Profile"> | string
+  state?: Prisma.StringWithAggregatesFilter<"Profile"> | string
   neighborhood?: Prisma.StringWithAggregatesFilter<"Profile"> | string
   street?: Prisma.StringWithAggregatesFilter<"Profile"> | string
   number?: Prisma.StringWithAggregatesFilter<"Profile"> | string
@@ -339,11 +339,11 @@ export type ProfileScalarWhereWithAggregatesInput = {
 export type ProfileCreateInput = {
   id?: string
   phoneNumber: string
-  cpf: string
+  socialSecurityNumber: string
   birthDate: Date | string
-  cep: string
+  zipCode: string
   city: string
-  uf: string
+  state: string
   neighborhood: string
   street: string
   number: string
@@ -357,11 +357,11 @@ export type ProfileUncheckedCreateInput = {
   id?: string
   userId: string
   phoneNumber: string
-  cpf: string
+  socialSecurityNumber: string
   birthDate: Date | string
-  cep: string
+  zipCode: string
   city: string
-  uf: string
+  state: string
   neighborhood: string
   street: string
   number: string
@@ -373,11 +373,11 @@ export type ProfileUncheckedCreateInput = {
 export type ProfileUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  cpf?: Prisma.StringFieldUpdateOperationsInput | string
+  socialSecurityNumber?: Prisma.StringFieldUpdateOperationsInput | string
   birthDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  cep?: Prisma.StringFieldUpdateOperationsInput | string
+  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.StringFieldUpdateOperationsInput | string
-  uf?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
   neighborhood?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
@@ -391,11 +391,11 @@ export type ProfileUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  cpf?: Prisma.StringFieldUpdateOperationsInput | string
+  socialSecurityNumber?: Prisma.StringFieldUpdateOperationsInput | string
   birthDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  cep?: Prisma.StringFieldUpdateOperationsInput | string
+  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.StringFieldUpdateOperationsInput | string
-  uf?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
   neighborhood?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
@@ -408,11 +408,11 @@ export type ProfileCreateManyInput = {
   id?: string
   userId: string
   phoneNumber: string
-  cpf: string
+  socialSecurityNumber: string
   birthDate: Date | string
-  cep: string
+  zipCode: string
   city: string
-  uf: string
+  state: string
   neighborhood: string
   street: string
   number: string
@@ -424,11 +424,11 @@ export type ProfileCreateManyInput = {
 export type ProfileUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  cpf?: Prisma.StringFieldUpdateOperationsInput | string
+  socialSecurityNumber?: Prisma.StringFieldUpdateOperationsInput | string
   birthDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  cep?: Prisma.StringFieldUpdateOperationsInput | string
+  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.StringFieldUpdateOperationsInput | string
-  uf?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
   neighborhood?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
@@ -441,11 +441,11 @@ export type ProfileUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  cpf?: Prisma.StringFieldUpdateOperationsInput | string
+  socialSecurityNumber?: Prisma.StringFieldUpdateOperationsInput | string
   birthDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  cep?: Prisma.StringFieldUpdateOperationsInput | string
+  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.StringFieldUpdateOperationsInput | string
-  uf?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
   neighborhood?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
@@ -468,11 +468,11 @@ export type ProfileCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
-  cpf?: Prisma.SortOrder
+  socialSecurityNumber?: Prisma.SortOrder
   birthDate?: Prisma.SortOrder
-  cep?: Prisma.SortOrder
+  zipCode?: Prisma.SortOrder
   city?: Prisma.SortOrder
-  uf?: Prisma.SortOrder
+  state?: Prisma.SortOrder
   neighborhood?: Prisma.SortOrder
   street?: Prisma.SortOrder
   number?: Prisma.SortOrder
@@ -485,11 +485,11 @@ export type ProfileMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
-  cpf?: Prisma.SortOrder
+  socialSecurityNumber?: Prisma.SortOrder
   birthDate?: Prisma.SortOrder
-  cep?: Prisma.SortOrder
+  zipCode?: Prisma.SortOrder
   city?: Prisma.SortOrder
-  uf?: Prisma.SortOrder
+  state?: Prisma.SortOrder
   neighborhood?: Prisma.SortOrder
   street?: Prisma.SortOrder
   number?: Prisma.SortOrder
@@ -502,11 +502,11 @@ export type ProfileMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
-  cpf?: Prisma.SortOrder
+  socialSecurityNumber?: Prisma.SortOrder
   birthDate?: Prisma.SortOrder
-  cep?: Prisma.SortOrder
+  zipCode?: Prisma.SortOrder
   city?: Prisma.SortOrder
-  uf?: Prisma.SortOrder
+  state?: Prisma.SortOrder
   neighborhood?: Prisma.SortOrder
   street?: Prisma.SortOrder
   number?: Prisma.SortOrder
@@ -560,11 +560,11 @@ export type ProfileUncheckedUpdateManyWithoutUserNestedInput = {
 export type ProfileCreateWithoutUserInput = {
   id?: string
   phoneNumber: string
-  cpf: string
+  socialSecurityNumber: string
   birthDate: Date | string
-  cep: string
+  zipCode: string
   city: string
-  uf: string
+  state: string
   neighborhood: string
   street: string
   number: string
@@ -576,11 +576,11 @@ export type ProfileCreateWithoutUserInput = {
 export type ProfileUncheckedCreateWithoutUserInput = {
   id?: string
   phoneNumber: string
-  cpf: string
+  socialSecurityNumber: string
   birthDate: Date | string
-  cep: string
+  zipCode: string
   city: string
-  uf: string
+  state: string
   neighborhood: string
   street: string
   number: string
@@ -622,11 +622,11 @@ export type ProfileScalarWhereInput = {
   id?: Prisma.StringFilter<"Profile"> | string
   userId?: Prisma.StringFilter<"Profile"> | string
   phoneNumber?: Prisma.StringFilter<"Profile"> | string
-  cpf?: Prisma.StringFilter<"Profile"> | string
+  socialSecurityNumber?: Prisma.StringFilter<"Profile"> | string
   birthDate?: Prisma.DateTimeFilter<"Profile"> | Date | string
-  cep?: Prisma.StringFilter<"Profile"> | string
+  zipCode?: Prisma.StringFilter<"Profile"> | string
   city?: Prisma.StringFilter<"Profile"> | string
-  uf?: Prisma.StringFilter<"Profile"> | string
+  state?: Prisma.StringFilter<"Profile"> | string
   neighborhood?: Prisma.StringFilter<"Profile"> | string
   street?: Prisma.StringFilter<"Profile"> | string
   number?: Prisma.StringFilter<"Profile"> | string
@@ -638,11 +638,11 @@ export type ProfileScalarWhereInput = {
 export type ProfileCreateManyUserInput = {
   id?: string
   phoneNumber: string
-  cpf: string
+  socialSecurityNumber: string
   birthDate: Date | string
-  cep: string
+  zipCode: string
   city: string
-  uf: string
+  state: string
   neighborhood: string
   street: string
   number: string
@@ -654,11 +654,11 @@ export type ProfileCreateManyUserInput = {
 export type ProfileUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  cpf?: Prisma.StringFieldUpdateOperationsInput | string
+  socialSecurityNumber?: Prisma.StringFieldUpdateOperationsInput | string
   birthDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  cep?: Prisma.StringFieldUpdateOperationsInput | string
+  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.StringFieldUpdateOperationsInput | string
-  uf?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
   neighborhood?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
@@ -670,11 +670,11 @@ export type ProfileUpdateWithoutUserInput = {
 export type ProfileUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  cpf?: Prisma.StringFieldUpdateOperationsInput | string
+  socialSecurityNumber?: Prisma.StringFieldUpdateOperationsInput | string
   birthDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  cep?: Prisma.StringFieldUpdateOperationsInput | string
+  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.StringFieldUpdateOperationsInput | string
-  uf?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
   neighborhood?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
@@ -686,11 +686,11 @@ export type ProfileUncheckedUpdateWithoutUserInput = {
 export type ProfileUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  cpf?: Prisma.StringFieldUpdateOperationsInput | string
+  socialSecurityNumber?: Prisma.StringFieldUpdateOperationsInput | string
   birthDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  cep?: Prisma.StringFieldUpdateOperationsInput | string
+  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.StringFieldUpdateOperationsInput | string
-  uf?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
   neighborhood?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
@@ -705,11 +705,11 @@ export type ProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   id?: boolean
   userId?: boolean
   phoneNumber?: boolean
-  cpf?: boolean
+  socialSecurityNumber?: boolean
   birthDate?: boolean
-  cep?: boolean
+  zipCode?: boolean
   city?: boolean
-  uf?: boolean
+  state?: boolean
   neighborhood?: boolean
   street?: boolean
   number?: boolean
@@ -723,11 +723,11 @@ export type ProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   userId?: boolean
   phoneNumber?: boolean
-  cpf?: boolean
+  socialSecurityNumber?: boolean
   birthDate?: boolean
-  cep?: boolean
+  zipCode?: boolean
   city?: boolean
-  uf?: boolean
+  state?: boolean
   neighborhood?: boolean
   street?: boolean
   number?: boolean
@@ -741,11 +741,11 @@ export type ProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   userId?: boolean
   phoneNumber?: boolean
-  cpf?: boolean
+  socialSecurityNumber?: boolean
   birthDate?: boolean
-  cep?: boolean
+  zipCode?: boolean
   city?: boolean
-  uf?: boolean
+  state?: boolean
   neighborhood?: boolean
   street?: boolean
   number?: boolean
@@ -759,11 +759,11 @@ export type ProfileSelectScalar = {
   id?: boolean
   userId?: boolean
   phoneNumber?: boolean
-  cpf?: boolean
+  socialSecurityNumber?: boolean
   birthDate?: boolean
-  cep?: boolean
+  zipCode?: boolean
   city?: boolean
-  uf?: boolean
+  state?: boolean
   neighborhood?: boolean
   street?: boolean
   number?: boolean
@@ -772,7 +772,7 @@ export type ProfileSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "phoneNumber" | "cpf" | "birthDate" | "cep" | "city" | "uf" | "neighborhood" | "street" | "number" | "complement" | "createdAt" | "updatedAt", ExtArgs["result"]["profile"]>
+export type ProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "phoneNumber" | "socialSecurityNumber" | "birthDate" | "zipCode" | "city" | "state" | "neighborhood" | "street" | "number" | "complement" | "createdAt" | "updatedAt", ExtArgs["result"]["profile"]>
 export type ProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -792,11 +792,11 @@ export type $ProfilePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     id: string
     userId: string
     phoneNumber: string
-    cpf: string
+    socialSecurityNumber: string
     birthDate: Date
-    cep: string
+    zipCode: string
     city: string
-    uf: string
+    state: string
     neighborhood: string
     street: string
     number: string
@@ -1230,11 +1230,11 @@ export interface ProfileFieldRefs {
   readonly id: Prisma.FieldRef<"Profile", 'String'>
   readonly userId: Prisma.FieldRef<"Profile", 'String'>
   readonly phoneNumber: Prisma.FieldRef<"Profile", 'String'>
-  readonly cpf: Prisma.FieldRef<"Profile", 'String'>
+  readonly socialSecurityNumber: Prisma.FieldRef<"Profile", 'String'>
   readonly birthDate: Prisma.FieldRef<"Profile", 'DateTime'>
-  readonly cep: Prisma.FieldRef<"Profile", 'String'>
+  readonly zipCode: Prisma.FieldRef<"Profile", 'String'>
   readonly city: Prisma.FieldRef<"Profile", 'String'>
-  readonly uf: Prisma.FieldRef<"Profile", 'String'>
+  readonly state: Prisma.FieldRef<"Profile", 'String'>
   readonly neighborhood: Prisma.FieldRef<"Profile", 'String'>
   readonly street: Prisma.FieldRef<"Profile", 'String'>
   readonly number: Prisma.FieldRef<"Profile", 'String'>

@@ -4,12 +4,11 @@ import { FaCalendarAlt, FaCity, FaHome, FaIdCard, FaMapMarkerAlt, FaPhone, FaSor
 import { MdApartment, MdMyLocation } from "react-icons/md";
 import { AnimatePresence, motion } from "motion/react";
 import { X } from "lucide-react";
-import { masks } from "@/shared";
-import { useAuthenticationContext } from "@/features/authentication";
 import { useProfileContext } from "../hooks/useProfileContext";
-import { CustomTextInput } from "@/shared/index";
-import { supabase } from "../../../../../supabase/supabase";
+import { CustomTextInput, masks } from "@/shared/index";
 import { useBlockScroll } from "@/shared/hooks/useBlockScroll";
+import { useEffect, useRef, useState } from "react";
+import { updateProfileSchema } from "@/lib/validations";
 
 export interface EditProfileModalProps {
   isOpen: boolean;
@@ -19,30 +18,32 @@ export interface EditProfileModalProps {
 const EditProfileModal = ({ onClose, isOpen }: EditProfileModalProps) => {
   /* - Puxando do context - */
 
-  const { fullName, setFullName } = useAuthenticationContext();
+  const { profile, updateProfileMutation } = useProfileContext();
 
-  const {
-    phoneNumber,
-    setPhoneNumber,
-    CPF,
-    setCPF,
-    birthDate,
-    setBirthDate,
-    CEP,
-    setCEP,
-    city,
-    setCity,
-    UF,
-    setUF,
-    neighborhood,
-    setNeighborhood,
-    street,
-    setStreet,
-    number,
-    setNumber,
-    complement,
-    setComplement,
-  } = useProfileContext();
+  /* - Estados de usuário - */
+
+  const [name, setName] = useState<string>("");
+
+  /* - Estados de perfil - */
+
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [socialSecurityNumber, setSocialSecurityNumber] = useState<string | null>(null);
+  const [birthDate, setBirthDate] = useState<string | null>(null);
+  const [zipCode, setZipCode] = useState<string | null>(null);
+  const [city, setCity] = useState<string | null>(null);
+  const [state, setState] = useState<string | null>(null);
+  const [neighborhood, setNeighborhood] = useState<string | null>(null);
+  const [street, setStreet] = useState<string | null>(null);
+  const [number, setNumber] = useState<string | null>(null);
+  const [complement, setComplement] = useState<string | null>(null);
+
+  /* - Estados de erro - */
+
+  const [profileSubmitError, setProfileSubmitError] = useState<string>("");
+
+  /* - Definições - */
+
+  const profileSubmitRef = useRef<HTMLDivElement | null>(null);
 
   /* - Funções - */
 
@@ -50,37 +51,73 @@ const EditProfileModal = ({ onClose, isOpen }: EditProfileModalProps) => {
 
   useBlockScroll(isOpen);
 
-  // 2. Salva os dados digitados e fecha o modal
+  // 2. Preenche os campos com os dados originais do perfil no momento em que o mmodal abre
+
+  useEffect(() => {
+    if (!profile || !isOpen) {
+      return;
+    }
+
+    setName(profile.name);
+    setPhoneNumber(profile.phoneNumber ?? "");
+    setSocialSecurityNumber(profile.socialSecurityNumber ?? "");
+    setBirthDate(profile.birthDate?.toLocaleDateString("pt-BR") ?? "");
+    setZipCode(profile.zipCode ?? "");
+    setCity(profile.city ?? "");
+    setState(profile.state ?? "");
+    setNeighborhood(profile.neighborhood ?? "");
+    setStreet(profile.street ?? "");
+    setNumber(profile.number ?? "");
+    setComplement(profile.complement ?? "");
+    setProfileSubmitError("");
+  }, [isOpen, profile]);
+
+  // 3. Salva os dados digitados e fecha o modal
 
   const handleSaveInfo = async () => {
-    await supabase.auth.updateUser({
-      data: {
-        phoneNumber,
-        CPF,
-        birthDate,
-        CEP,
-        city,
-        UF,
-        neighborhood,
-        street,
-        number,
-        complement,
-      },
+    setProfileSubmitError("");
+
+    const parsedProfile = updateProfileSchema.safeParse({
+      name,
+      phoneNumber,
+      socialSecurityNumber,
+      birthDate,
+      zipCode,
+      city,
+      state,
+      neighborhood,
+      street,
+      number,
+      complement,
     });
+
+    if (!parsedProfile.success) {
+      setProfileSubmitError("Confira os dados digitados e tente novamente.");
+
+      return;
+    }
+
+    const updatedProfile = await updateProfileMutation(parsedProfile.data);
+
+    if (!updatedProfile) {
+      setProfileSubmitError("Não foi possível salvar as alterações.");
+
+      return;
+    }
 
     onClose();
   };
 
-  // 3. Limpa os valores digitados e fecha o modal
+  // 4. Limpa os valores digitados e fecha o modal
 
   const handleClearInfo = () => {
-    setFullName("");
+    setName("");
     setPhoneNumber("");
-    setCPF("");
+    setSocialSecurityNumber("");
     setBirthDate("");
-    setCEP("");
+    setZipCode("");
     setCity("");
-    setUF("");
+    setState("");
     setNeighborhood("");
     setStreet("");
     setNumber("");
@@ -88,9 +125,25 @@ const EditProfileModal = ({ onClose, isOpen }: EditProfileModalProps) => {
     onClose();
   };
 
+  // 5. Fecha o erro ao clicar fora
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const clickedInside = !profileSubmitRef.current || profileSubmitRef.current.contains(e.target as Node);
+
+      if (clickedInside) {
+        return;
+      }
+
+      setProfileSubmitError("");
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <AnimatePresence>
-      {" "}
       {isOpen && (
         <>
           <div className="fixed inset-0 bg-black/90 backdrop:blur-sm flex items-center justify-center z-50">
@@ -121,22 +174,22 @@ const EditProfileModal = ({ onClose, isOpen }: EditProfileModalProps) => {
                   label="Nome do Comprador"
                   icon={<FaUser />}
                   placeholder="Nome Completo"
-                  value={fullName}
-                  onChange={(value) => setFullName(masks.fullName(value as string))}
+                  value={name}
+                  onChange={(value) => setName(masks.name(value as string))}
                   maxLength={50}
                 />
 
-                {/* - Linha 2: Telefone, CPF e data de nascimento - */}
+                {/* - Linha 2: Telefone, socialSecurityNumber e data de nascimento - */}
 
                 <div className="flex flex-col md:flex-row w-full gap-4">
-                  <div className="flex-1">
-                    {/* - Input de telefone - */}
+                  {/* - Input de telefone - */}
 
+                  <div className="flex-1">
                     <CustomTextInput
                       label="Telefone"
                       icon={<FaPhone />}
                       placeholder="(00) 00000-0000"
-                      value={phoneNumber}
+                      value={profile ? (profile.phoneNumber ?? "") : ""}
                       onChange={(value) => setPhoneNumber(masks.phoneNumber(value as string))}
                       maxLength={15}
                     />
@@ -146,11 +199,11 @@ const EditProfileModal = ({ onClose, isOpen }: EditProfileModalProps) => {
 
                   <div className="flex-1">
                     <CustomTextInput
-                      label="CPF"
+                      label="socialSecurityNumber"
                       icon={<FaIdCard />}
                       placeholder="000.000.000-00"
-                      value={CPF}
-                      onChange={(value) => setCPF(masks.CPF(value as string))}
+                      value={profile ? (profile.socialSecurityNumber ?? "") : ""}
+                      onChange={(value) => setSocialSecurityNumber(masks.socialSecurityNumber(value as string))}
                       maxLength={14}
                     />
                   </div>
@@ -161,7 +214,7 @@ const EditProfileModal = ({ onClose, isOpen }: EditProfileModalProps) => {
                     <CustomTextInput
                       label="Data de Nascimento"
                       placeholder="DD/MM/AAAA"
-                      value={birthDate}
+                      value={profile ? (profile.birthDate?.toLocaleDateString("pt-BR") ?? "") : ""}
                       onChange={(value) => setBirthDate(masks.birthDate(value as string))}
                       icon={<FaCalendarAlt />}
                       maxLength={10}
@@ -169,27 +222,27 @@ const EditProfileModal = ({ onClose, isOpen }: EditProfileModalProps) => {
                   </div>
                 </div>
 
-                {/* - Linha 3: CEP, cidade/UF e bairro - */}
-
-                {/* - Input de CEP - */}
+                {/* - Linha 3: CEP, cidade/state e bairro - */}
 
                 <div className="flex flex-col md:flex-row w-full gap-4">
+                  {/* - Input de CEP - */}
+
                   <div className="flex-1">
                     <CustomTextInput
-                      label="CEP"
+                      label="zipCode"
                       icon={<MdMyLocation />}
                       placeholder="00000-000"
-                      value={CEP}
-                      onChange={(value) => setCEP(masks.CEP(value as string))}
+                      value={profile ? (profile.zipCode ?? "") : ""}
+                      onChange={(value) => setZipCode(masks.zipCode(value as string))}
                       maxLength={9}
                     />
                   </div>
 
-                  <div className="flex-1">
-                    {/* - Input de cidade/UF - */}
+                  {/* - Input de cidade/UF - */}
 
+                  <div className="flex-1">
                     <div className="flex flex-col justify-around">
-                      <span className="text-xs text-white/60 font-semibold mb-1 mt-2 md:mb-2 md:mt-4 uppercase">Cidade / UF</span>
+                      <span className="text-sm text-white/60 font-semibold mb-1 mt-2 md:mb-2 md:mt-4">Cidade / state</span>
 
                       <div className="flex bg-[#1A1A1A] w-full rounded-lg px-4 py-2">
                         <FaCity className="text-[#B8860B] mr-2 my-auto" />
@@ -197,18 +250,18 @@ const EditProfileModal = ({ onClose, isOpen }: EditProfileModalProps) => {
                         <input
                           className="flex justify-between bg-transparent outline-none font-normal text-white/60 placeholder:text-white/40 mr-auto w-full"
                           placeholder="Cidade"
-                          value={city}
+                          value={profile ? (profile.city ?? "") : ""}
                           onChange={(e) => setCity(masks.city(e.target.value))}
                           maxLength={50}
                         />
 
-                        <span className="bg-transparent outline-none text-white/40 w-5 ml-auto">/</span>
+                        <span className="bg-transparent outline-none text-sm text-white/40 w-5 ml-auto">/</span>
 
                         <input
                           className="flex justify-between bg-transparent w-12 outline-none font-normal text-white/60 placeholder:text-white/40"
-                          placeholder="UF"
-                          value={UF}
-                          onChange={(e) => setUF(masks.UF(e.target.value))}
+                          placeholder="state"
+                          value={profile ? (profile.state ?? "") : ""}
+                          onChange={(e) => setState(masks.state(e.target.value))}
                           maxLength={2}
                         />
                       </div>
@@ -221,7 +274,7 @@ const EditProfileModal = ({ onClose, isOpen }: EditProfileModalProps) => {
                     <CustomTextInput
                       label="Bairro"
                       placeholder="Nome do Bairro"
-                      value={neighborhood}
+                      value={profile ? (profile.neighborhood ?? "") : ""}
                       onChange={(value) => setNeighborhood(masks.neighborhood(value as string))}
                       icon={<FaMapMarkerAlt />}
                       maxLength={60}
@@ -232,13 +285,13 @@ const EditProfileModal = ({ onClose, isOpen }: EditProfileModalProps) => {
                 {/* - Linha 4: Rua, número e complemento - */}
 
                 <div className="flex flex-col md:flex-row w-full gap-4">
-                  <div className="flex-1">
-                    {/* - Input de rua - */}
+                  {/* - Input de rua - */}
 
+                  <div className="flex-1">
                     <CustomTextInput
                       label="Rua"
                       placeholder="Nome da Rua"
-                      value={street}
+                      value={profile ? (profile.street ?? "") : ""}
                       onChange={(value) => setStreet(masks.street(value as string))}
                       icon={<FaHome />}
                       maxLength={50}
@@ -251,7 +304,7 @@ const EditProfileModal = ({ onClose, isOpen }: EditProfileModalProps) => {
                     <CustomTextInput
                       label="Número"
                       placeholder="Número da Casa ou Prédio"
-                      value={number}
+                      value={profile ? (profile.number ?? "") : ""}
                       onChange={(value) => setNumber(masks.number(value as string))}
                       icon={<FaSortNumericUp />}
                       maxLength={7}
@@ -264,7 +317,7 @@ const EditProfileModal = ({ onClose, isOpen }: EditProfileModalProps) => {
                     <CustomTextInput
                       label="Complemento"
                       placeholder="Apto, Bloco..."
-                      value={complement}
+                      value={profile ? (profile.complement ?? "") : ""}
                       onChange={(value) => setComplement(masks.complement(value as string))}
                       icon={<MdApartment />}
                       maxLength={25}
@@ -272,29 +325,42 @@ const EditProfileModal = ({ onClose, isOpen }: EditProfileModalProps) => {
                   </div>
                 </div>
 
+                {/* - Seção de erro - */}
+
+                <div
+                  className="min-h-20 w-full mt-8"
+                  ref={profileSubmitRef}
+                >
+                  {profileSubmitError && (
+                    <p className="flex items-center justify-center h-12 rounded-xl bg-red-100 border border-red-300 text-red-700 text-sm font-semibold px-4 text-center">
+                      {profileSubmitError}
+                    </p>
+                  )}
+                </div>
+
                 {/* - Botões - */}
 
-                <div className="flex justify-end w-full py-6 gap-5">
-                  {/* - Salvar Alterações - */}
-
+                <div className="flex justify-end w-full pb-6 gap-5">
                   <motion.button
-                    className="bg-[#1A1A1A] hover:bg-[#333] px-4 py-2 border border-[#B8860B] hover:shadow-sm hover:shadow-[#B8860B] rounded-lg cursor-pointer"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={handleSaveInfo}
-                  >
-                    Salvar Alterações
-                  </motion.button>
+                    // 1. Cancelar
 
-                  {/* - Cancelar - */}
-
-                  <motion.button
-                    className="bg-[#1A1A1A] hover:bg-[#333] px-4 py-2 border border-[#B8860B] hover:shadow-sm hover:shadow-[#B8860B] rounded-lg cursor-pointer mr-10"
+                    className="text-white/60 hover:text-white text-sm font-semibold px-4 py-2 transition-colors rounded-lg cursor-pointer"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={handleClearInfo}
                   >
                     Cancelar
+                  </motion.button>
+
+                  <motion.button
+                    // 2. Salvar alterações
+
+                    className="text-white/60 hover:text-white text-sm font-semibold bg-[#1A1A1A] hover:bg-[#333] border border-[#B8860B] hover:shadow-sm hover:shadow-[#B8860B] px-4 py-2 rounded-lg cursor-pointer"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={handleSaveInfo}
+                  >
+                    Salvar Alterações
                   </motion.button>
                 </div>
               </div>

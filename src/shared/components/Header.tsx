@@ -6,7 +6,6 @@ import { FaSearch, FaUser } from "react-icons/fa";
 import { GiShoppingCart } from "react-icons/gi";
 import { ImExit } from "react-icons/im";
 import { Menu } from "lucide-react";
-import { supabase } from "../../../supabase/supabase";
 import { useAuthenticationContext } from "@/features/authentication";
 import { useCartContext } from "@/features/cart";
 import { useEffect, useState } from "react";
@@ -15,18 +14,12 @@ import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
 
 const Header = () => {
-  /* - Puxando do context - */
-
   const { isPortraitMobile, isLandscapeMobile } = useMobileContext();
-  const { isAuthenticated } = useAuthenticationContext();
+  const { isAuthenticated, revokeSessionMutation } = useAuthenticationContext();
   const { handleOpenCart, isCartOpen, setIsCartOpen, totalItems } = useCartContext();
-
-  /* - Estados do dropdown - */
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
-
-  /* - Definições - */
 
   const router = useRouter();
   const pathname = usePathname();
@@ -60,6 +53,7 @@ const Header = () => {
       .filter((link) => link.id !== "Agenda")
       .forEach((link) => {
         const section = document.getElementById(link.id);
+
         if (section) {
           observer.observe(section);
         }
@@ -67,10 +61,6 @@ const Header = () => {
 
     return () => observer.disconnect();
   }, [pathname]);
-
-  /* - Funções - */
-
-  // 1. Navega até o link clicado
 
   const navigateToActiveSection = (link: { title: string; id: string }) => {
     setSelectedCategory(link.id);
@@ -112,9 +102,9 @@ const Header = () => {
                   <Image
                     className="mx-auto"
                     src="/logo/ph-logo.png"
+                    alt="PrismaHall Logo"
                     width={50}
                     height={50}
-                    alt="PrismaHall Logo"
                   />
                 </div>
 
@@ -209,11 +199,12 @@ const Header = () => {
                 className="flex justify-center items-center w-full h-fit bg-[#B8860B] hover:bg-[#7A5A08] shadow-sm shadow-[#B8860B] hover:shadow-[#7A5A08] text-black font-semibold px-4 py-2 rounded-lg cursor-pointer"
                 onClick={() => {
                   if (isAuthenticated) {
-                    supabase.auth.signOut();
+                    revokeSessionMutation();
                   } else {
                     router.push(`/login?from=${encodeURIComponent(pathname)}`);
                   }
                 }}
+
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
