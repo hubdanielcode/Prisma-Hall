@@ -3,7 +3,7 @@ import { EventTag, ProductCategory } from "@/prisma/generated/prisma/enums";
 const masks = {
   /* - Autenticação - */
 
-  fullName: (value: string) =>
+  name: (value: string) =>
     value
       .replace(/[^\p{L} '-]/gu, "")
       .replace(/\s{2,}/g, " ")
@@ -33,7 +33,7 @@ const masks = {
     return digits.replace(/(\d{2})(\d)/, "($1) $2").replace(/(\d{4})(\d{1,4})$/, "$1-$2");
   },
 
-  CPF: (value: string) =>
+  socialSecurityNumber: (value: string) =>
     value
       .replace(/\D/g, "")
       .slice(0, 11)
@@ -48,7 +48,7 @@ const masks = {
       .replace(/(\d{2})(\d)/, "$1/$2")
       .replace(/(\d{2})(\d)/, "$1/$2"),
 
-  CEP: (value: string) =>
+  zipCode: (value: string) =>
     value
       .replace(/\D/g, "")
       .slice(0, 8)
@@ -56,7 +56,7 @@ const masks = {
 
   city: (value: string) => value.replace(/[^\p{L} '\-]/gu, "").slice(0, 50),
 
-  UF: (value: string) =>
+  state: (value: string) =>
     value
       .replace(/[^A-Za-z]/g, "")
       .toUpperCase()
@@ -102,10 +102,7 @@ const masks = {
 
   productCategory: (value: ProductCategory) =>
     value.replace("beers", "Cervejas").replace("cocktails", "Coquetéis").replace("drinks", "Drinks").replace("no_alcohol", "Sem Álcool") as
-      | "Cervejas"
-      | "Coquetéis"
-      | "Drinks"
-      | "Sem Álcool",
+      "Cervejas" | "Coquetéis" | "Drinks" | "Sem Álcool",
 
   /* - Evento - */
 

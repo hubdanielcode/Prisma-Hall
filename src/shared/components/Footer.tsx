@@ -1,30 +1,24 @@
 "use client";
 
-import { useAuthenticationContext } from "@/features/authentication";
-import { MdAlternateEmail } from "react-icons/md";
-import { motion } from "motion/react";
-import { masks } from "../utils/masks";
-import Link from "next/link";
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
-import { IoLocationOutline } from "react-icons/io5";
 import { FiPhone } from "react-icons/fi";
 import { GoMail } from "react-icons/go";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { IoLocationOutline } from "react-icons/io5";
+import { masks } from "../utils/masks";
+import { MdAlternateEmail } from "react-icons/md";
+import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 
 const Footer = () => {
-  /* - Puxando do context - */
-
-  const { email, setEmail } = useAuthenticationContext();
-
-  /* - Definições - */
+  const [email, setEmail] = useState<string>("");
 
   const router = useRouter();
   const pathname = usePathname();
   const appVersion = "v.1.0.0";
-
-  /* - Funções - */
 
   const year = new Date().getFullYear();
 
@@ -96,9 +90,9 @@ const Footer = () => {
               <Image
                 className="mx-auto"
                 src="/logo/ph-logo.png"
+                alt="PrismaHall Logo"
                 width={50}
                 height={50}
-                alt="PrismaHall Logo"
               />
             </div>
 

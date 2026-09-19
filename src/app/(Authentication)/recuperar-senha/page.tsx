@@ -1,7 +1,7 @@
-import { RecoverPassword } from "@/features/authentication";
+import { PasswordReset } from "@/features/authentication";
 
-const RecoverPasswordPage = () => {
-  return <RecoverPassword />;
+const PasswordResetPage = () => {
+  return <PasswordReset />;
 };
 
-export default RecoverPasswordPage;
+export default PasswordResetPage;

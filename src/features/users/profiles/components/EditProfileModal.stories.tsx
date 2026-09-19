@@ -1,4 +1,4 @@
-import { AuthenticationProvider } from "@/features/authentication";
+import { QueryProvider } from "@/shared/providers/QueryProvider";
 import { EditProfileModal } from "./EditProfileModal";
 import { ProfileProvider } from "../context/ProfileContext";
 
@@ -9,15 +9,14 @@ export default {
 
 const EditModal = () => {
   return (
-    <AuthenticationProvider>
+    <QueryProvider>
       <ProfileProvider>
         <EditProfileModal
           onClose={() => {}}
           isOpen
         />
-        ;
       </ProfileProvider>
-    </AuthenticationProvider>
+    </QueryProvider>
   );
 };
 

@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useMobileContext, AdminHeader } from "@/shared";
+import { useMobileContext, AdminHeader, Footer } from "@/shared";
 import { useBarContext } from "@/features/bar";
-import { AnalyticsManagement, BarManagement, EventsManagement } from "@/features/admin";
+import { AnalyticsManagement, BarManagement, EventsManagement, UsersManagement } from "@/features/admin";
 
 const Admin = () => {
   /* - Puxando do context - */
@@ -14,6 +14,9 @@ const Admin = () => {
   /* - Estados de paginação - */
 
   const [currentPage, setCurrentPage] = useState<number>(1);
+
+  /* - Estado da aba ativa - */
+
   const [activeTab, setActiveTab] = useState<string>("bar");
 
   /* - Definições - */
@@ -32,8 +35,6 @@ const Admin = () => {
     }
   }, [filteredProducts.length]);
 
-  console.log(activeTab);
-
   return (
     <>
       <AdminHeader
@@ -43,11 +44,7 @@ const Admin = () => {
 
       <div
         className={`bg-[#1A1A1A] min-h-screen w-full ${
-          isPortraitMobile
-            ? "pt-24 pb-10"
-            : isLandscapeMobile
-              ? "pt-28 pb-12 px-6"
-              : "pt-32 pb-14 px-8"
+          isPortraitMobile ? "pt-24 pb-10" : isLandscapeMobile ? "pt-28 pb-12 px-6" : "pt-32 pb-14 px-8"
         }`}
       >
         {/* - Área gestão do bar - */}
@@ -73,7 +70,17 @@ const Admin = () => {
             <AnalyticsManagement />
           </div>
         )}
+
+        {/* - Área de gestão dos usuários - */}
+
+        {activeTab === "users" && (
+          <div>
+            <UsersManagement />
+          </div>
+        )}
       </div>
+
+      <Footer />
     </>
   );
 };

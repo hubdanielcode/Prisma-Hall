@@ -29,7 +29,7 @@ export type UserMinAggregateOutputType = {
   name: string | null
   email: string | null
   password: string | null
-  photo: string | null
+  profilePicture: string | null
   role: $Enums.UserRole | null
   verifiedBadge: boolean | null
   token: string | null
@@ -44,7 +44,7 @@ export type UserMaxAggregateOutputType = {
   name: string | null
   email: string | null
   password: string | null
-  photo: string | null
+  profilePicture: string | null
   role: $Enums.UserRole | null
   verifiedBadge: boolean | null
   token: string | null
@@ -59,7 +59,7 @@ export type UserCountAggregateOutputType = {
   name: number
   email: number
   password: number
-  photo: number
+  profilePicture: number
   role: number
   verifiedBadge: number
   token: number
@@ -76,7 +76,7 @@ export type UserMinAggregateInputType = {
   name?: true
   email?: true
   password?: true
-  photo?: true
+  profilePicture?: true
   role?: true
   verifiedBadge?: true
   token?: true
@@ -91,7 +91,7 @@ export type UserMaxAggregateInputType = {
   name?: true
   email?: true
   password?: true
-  photo?: true
+  profilePicture?: true
   role?: true
   verifiedBadge?: true
   token?: true
@@ -106,7 +106,7 @@ export type UserCountAggregateInputType = {
   name?: true
   email?: true
   password?: true
-  photo?: true
+  profilePicture?: true
   role?: true
   verifiedBadge?: true
   token?: true
@@ -194,7 +194,7 @@ export type UserGroupByOutputType = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture: string | null
   role: $Enums.UserRole
   verifiedBadge: boolean
   token: string | null
@@ -230,7 +230,7 @@ export type UserWhereInput = {
   name?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
-  photo?: Prisma.StringFilter<"User"> | string
+  profilePicture?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFilter<"User"> | boolean
   token?: Prisma.StringNullableFilter<"User"> | string | null
@@ -257,7 +257,7 @@ export type UserOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  photo?: Prisma.SortOrder
+  profilePicture?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   verifiedBadge?: Prisma.SortOrder
   token?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -282,15 +282,15 @@ export type UserOrderByWithRelationInput = {
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   email?: string
+  token?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   name?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
-  photo?: Prisma.StringFilter<"User"> | string
+  profilePicture?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFilter<"User"> | boolean
-  token?: Prisma.StringNullableFilter<"User"> | string | null
   tokenExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   validatedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
@@ -307,14 +307,14 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   voucherPayments?: Prisma.VoucherPaymentListRelationFilter
   voucherOrders?: Prisma.VoucherOrderListRelationFilter
   vouchers?: Prisma.VoucherListRelationFilter
-}, "id" | "email">
+}, "id" | "email" | "token">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  photo?: Prisma.SortOrder
+  profilePicture?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   verifiedBadge?: Prisma.SortOrder
   token?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -335,7 +335,7 @@ export type UserScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
-  photo?: Prisma.StringWithAggregatesFilter<"User"> | string
+  profilePicture?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
   verifiedBadge?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   token?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
@@ -350,9 +350,9 @@ export type UserCreateInput = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture?: string | null
   role?: $Enums.UserRole
-  verifiedBadge: boolean
+  verifiedBadge?: boolean
   token?: string | null
   tokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -377,9 +377,9 @@ export type UserUncheckedCreateInput = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture?: string | null
   role?: $Enums.UserRole
-  verifiedBadge: boolean
+  verifiedBadge?: boolean
   token?: string | null
   tokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -404,7 +404,7 @@ export type UserUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -431,7 +431,7 @@ export type UserUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -458,9 +458,9 @@ export type UserCreateManyInput = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture?: string | null
   role?: $Enums.UserRole
-  verifiedBadge: boolean
+  verifiedBadge?: boolean
   token?: string | null
   tokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -473,7 +473,7 @@ export type UserUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -488,7 +488,7 @@ export type UserUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -508,7 +508,7 @@ export type UserCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  photo?: Prisma.SortOrder
+  profilePicture?: Prisma.SortOrder
   role?: Prisma.SortOrder
   verifiedBadge?: Prisma.SortOrder
   token?: Prisma.SortOrder
@@ -523,7 +523,7 @@ export type UserMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  photo?: Prisma.SortOrder
+  profilePicture?: Prisma.SortOrder
   role?: Prisma.SortOrder
   verifiedBadge?: Prisma.SortOrder
   token?: Prisma.SortOrder
@@ -538,7 +538,7 @@ export type UserMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  photo?: Prisma.SortOrder
+  profilePicture?: Prisma.SortOrder
   role?: Prisma.SortOrder
   verifiedBadge?: Prisma.SortOrder
   token?: Prisma.SortOrder
@@ -562,16 +562,16 @@ export type UserUpdateOneRequiredWithoutSessionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSessionsInput, Prisma.UserUpdateWithoutSessionsInput>, Prisma.UserUncheckedUpdateWithoutSessionsInput>
 }
 
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
 export type EnumUserRoleFieldUpdateOperationsInput = {
   set?: $Enums.UserRole
 }
 
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
-}
-
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
 }
 
 export type UserCreateNestedOneWithoutProfilesInput = {
@@ -733,9 +733,9 @@ export type UserCreateWithoutSessionsInput = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture?: string | null
   role?: $Enums.UserRole
-  verifiedBadge: boolean
+  verifiedBadge?: boolean
   token?: string | null
   tokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -759,9 +759,9 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture?: string | null
   role?: $Enums.UserRole
-  verifiedBadge: boolean
+  verifiedBadge?: boolean
   token?: string | null
   tokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -801,7 +801,7 @@ export type UserUpdateWithoutSessionsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -827,7 +827,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -853,9 +853,9 @@ export type UserCreateWithoutProfilesInput = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture?: string | null
   role?: $Enums.UserRole
-  verifiedBadge: boolean
+  verifiedBadge?: boolean
   token?: string | null
   tokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -879,9 +879,9 @@ export type UserUncheckedCreateWithoutProfilesInput = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture?: string | null
   role?: $Enums.UserRole
-  verifiedBadge: boolean
+  verifiedBadge?: boolean
   token?: string | null
   tokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -921,7 +921,7 @@ export type UserUpdateWithoutProfilesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -947,7 +947,7 @@ export type UserUncheckedUpdateWithoutProfilesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -973,9 +973,9 @@ export type UserCreateWithoutCartsInput = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture?: string | null
   role?: $Enums.UserRole
-  verifiedBadge: boolean
+  verifiedBadge?: boolean
   token?: string | null
   tokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -999,9 +999,9 @@ export type UserUncheckedCreateWithoutCartsInput = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture?: string | null
   role?: $Enums.UserRole
-  verifiedBadge: boolean
+  verifiedBadge?: boolean
   token?: string | null
   tokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -1041,7 +1041,7 @@ export type UserUpdateWithoutCartsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1067,7 +1067,7 @@ export type UserUncheckedUpdateWithoutCartsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1093,9 +1093,9 @@ export type UserCreateWithoutVoucherPaymentsInput = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture?: string | null
   role?: $Enums.UserRole
-  verifiedBadge: boolean
+  verifiedBadge?: boolean
   token?: string | null
   tokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -1119,9 +1119,9 @@ export type UserUncheckedCreateWithoutVoucherPaymentsInput = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture?: string | null
   role?: $Enums.UserRole
-  verifiedBadge: boolean
+  verifiedBadge?: boolean
   token?: string | null
   tokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -1161,7 +1161,7 @@ export type UserUpdateWithoutVoucherPaymentsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1187,7 +1187,7 @@ export type UserUncheckedUpdateWithoutVoucherPaymentsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1213,9 +1213,9 @@ export type UserCreateWithoutVoucherOrdersInput = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture?: string | null
   role?: $Enums.UserRole
-  verifiedBadge: boolean
+  verifiedBadge?: boolean
   token?: string | null
   tokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -1239,9 +1239,9 @@ export type UserUncheckedCreateWithoutVoucherOrdersInput = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture?: string | null
   role?: $Enums.UserRole
-  verifiedBadge: boolean
+  verifiedBadge?: boolean
   token?: string | null
   tokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -1281,7 +1281,7 @@ export type UserUpdateWithoutVoucherOrdersInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1307,7 +1307,7 @@ export type UserUncheckedUpdateWithoutVoucherOrdersInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1333,9 +1333,9 @@ export type UserCreateWithoutVouchersInput = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture?: string | null
   role?: $Enums.UserRole
-  verifiedBadge: boolean
+  verifiedBadge?: boolean
   token?: string | null
   tokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -1359,9 +1359,9 @@ export type UserUncheckedCreateWithoutVouchersInput = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture?: string | null
   role?: $Enums.UserRole
-  verifiedBadge: boolean
+  verifiedBadge?: boolean
   token?: string | null
   tokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -1401,7 +1401,7 @@ export type UserUpdateWithoutVouchersInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1427,7 +1427,7 @@ export type UserUncheckedUpdateWithoutVouchersInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1453,9 +1453,9 @@ export type UserCreateWithoutReviewsInput = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture?: string | null
   role?: $Enums.UserRole
-  verifiedBadge: boolean
+  verifiedBadge?: boolean
   token?: string | null
   tokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -1479,9 +1479,9 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture?: string | null
   role?: $Enums.UserRole
-  verifiedBadge: boolean
+  verifiedBadge?: boolean
   token?: string | null
   tokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -1521,7 +1521,7 @@ export type UserUpdateWithoutReviewsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1547,7 +1547,7 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1573,9 +1573,9 @@ export type UserCreateWithoutGalleriesInput = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture?: string | null
   role?: $Enums.UserRole
-  verifiedBadge: boolean
+  verifiedBadge?: boolean
   token?: string | null
   tokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -1599,9 +1599,9 @@ export type UserUncheckedCreateWithoutGalleriesInput = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture?: string | null
   role?: $Enums.UserRole
-  verifiedBadge: boolean
+  verifiedBadge?: boolean
   token?: string | null
   tokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -1641,7 +1641,7 @@ export type UserUpdateWithoutGalleriesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1667,7 +1667,7 @@ export type UserUncheckedUpdateWithoutGalleriesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1693,9 +1693,9 @@ export type UserCreateWithoutGalleryLikesInput = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture?: string | null
   role?: $Enums.UserRole
-  verifiedBadge: boolean
+  verifiedBadge?: boolean
   token?: string | null
   tokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -1719,9 +1719,9 @@ export type UserUncheckedCreateWithoutGalleryLikesInput = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture?: string | null
   role?: $Enums.UserRole
-  verifiedBadge: boolean
+  verifiedBadge?: boolean
   token?: string | null
   tokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -1761,7 +1761,7 @@ export type UserUpdateWithoutGalleryLikesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1787,7 +1787,7 @@ export type UserUncheckedUpdateWithoutGalleryLikesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1813,9 +1813,9 @@ export type UserCreateWithoutTicketsInput = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture?: string | null
   role?: $Enums.UserRole
-  verifiedBadge: boolean
+  verifiedBadge?: boolean
   token?: string | null
   tokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -1839,9 +1839,9 @@ export type UserUncheckedCreateWithoutTicketsInput = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture?: string | null
   role?: $Enums.UserRole
-  verifiedBadge: boolean
+  verifiedBadge?: boolean
   token?: string | null
   tokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -1881,7 +1881,7 @@ export type UserUpdateWithoutTicketsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1907,7 +1907,7 @@ export type UserUncheckedUpdateWithoutTicketsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1933,9 +1933,9 @@ export type UserCreateWithoutTicketOrdersInput = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture?: string | null
   role?: $Enums.UserRole
-  verifiedBadge: boolean
+  verifiedBadge?: boolean
   token?: string | null
   tokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -1959,9 +1959,9 @@ export type UserUncheckedCreateWithoutTicketOrdersInput = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture?: string | null
   role?: $Enums.UserRole
-  verifiedBadge: boolean
+  verifiedBadge?: boolean
   token?: string | null
   tokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -2001,7 +2001,7 @@ export type UserUpdateWithoutTicketOrdersInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2027,7 +2027,7 @@ export type UserUncheckedUpdateWithoutTicketOrdersInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2053,9 +2053,9 @@ export type UserCreateWithoutTicketPaymentsInput = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture?: string | null
   role?: $Enums.UserRole
-  verifiedBadge: boolean
+  verifiedBadge?: boolean
   token?: string | null
   tokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -2079,9 +2079,9 @@ export type UserUncheckedCreateWithoutTicketPaymentsInput = {
   name: string
   email: string
   password: string
-  photo: string
+  profilePicture?: string | null
   role?: $Enums.UserRole
-  verifiedBadge: boolean
+  verifiedBadge?: boolean
   token?: string | null
   tokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -2121,7 +2121,7 @@ export type UserUpdateWithoutTicketPaymentsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2147,7 +2147,7 @@ export type UserUncheckedUpdateWithoutTicketPaymentsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  photo?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2303,7 +2303,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   name?: boolean
   email?: boolean
   password?: boolean
-  photo?: boolean
+  profilePicture?: boolean
   role?: boolean
   verifiedBadge?: boolean
   token?: boolean
@@ -2331,7 +2331,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   email?: boolean
   password?: boolean
-  photo?: boolean
+  profilePicture?: boolean
   role?: boolean
   verifiedBadge?: boolean
   token?: boolean
@@ -2346,7 +2346,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   email?: boolean
   password?: boolean
-  photo?: boolean
+  profilePicture?: boolean
   role?: boolean
   verifiedBadge?: boolean
   token?: boolean
@@ -2361,7 +2361,7 @@ export type UserSelectScalar = {
   name?: boolean
   email?: boolean
   password?: boolean
-  photo?: boolean
+  profilePicture?: boolean
   role?: boolean
   verifiedBadge?: boolean
   token?: boolean
@@ -2371,7 +2371,7 @@ export type UserSelectScalar = {
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "photo" | "role" | "verifiedBadge" | "token" | "tokenExpiresAt" | "createdAt" | "validatedAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "profilePicture" | "role" | "verifiedBadge" | "token" | "tokenExpiresAt" | "createdAt" | "validatedAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   carts?: boolean | Prisma.User$cartsArgs<ExtArgs>
   ticketOrders?: boolean | Prisma.User$ticketOrdersArgs<ExtArgs>
@@ -2411,7 +2411,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     name: string
     email: string
     password: string
-    photo: string
+    profilePicture: string | null
     role: $Enums.UserRole
     verifiedBadge: boolean
     token: string | null
@@ -2858,7 +2858,7 @@ export interface UserFieldRefs {
   readonly name: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly password: Prisma.FieldRef<"User", 'String'>
-  readonly photo: Prisma.FieldRef<"User", 'String'>
+  readonly profilePicture: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'UserRole'>
   readonly verifiedBadge: Prisma.FieldRef<"User", 'Boolean'>
   readonly token: Prisma.FieldRef<"User", 'String'>

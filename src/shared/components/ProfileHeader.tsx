@@ -1,16 +1,14 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { Menu } from "lucide-react";
 import { FaCamera } from "react-icons/fa";
-import { useRef, useState, useEffect } from "react";
-import { useMobileContext } from "@/shared";
 import { ImExit } from "react-icons/im";
-import { useRouter } from "next/navigation";
-import { supabase, supabaseTemp } from "../../../supabase/supabase";
+import { Menu } from "lucide-react";
 import { useAuthenticationContext } from "@/features/authentication";
+import { useMobileContext } from "@/shared";
+import { useRef, useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { SupabaseClient } from "@supabase/supabase-js";
 
 interface ProfileHeaderProps {
   activeTab: string;
@@ -18,26 +16,14 @@ interface ProfileHeaderProps {
 }
 
 const ProfileHeader = ({ activeTab, setActiveTab }: ProfileHeaderProps) => {
-  /* - Puxando do context - */
-
   const { isPortraitMobile } = useMobileContext();
-  const { isAuthenticated } = useAuthenticationContext();
-
-  /* - Estados da foto - */
+  const { isAuthenticated, revokeSessionMutation } = useAuthenticationContext();
 
   const [profilePicture, setProfilePicture] = useState<string | null>(null);
-  const [isLoadingPhoto, setIsLoadingPhoto] = useState<boolean>(true);
-  const [isUploadingPhoto, setIsUploadingPhoto] = useState<boolean>(false);
-
-  /* - Estados de dropdown - */
+  const [isLoadingProfilePicture, setIsLoadingProfilePicture] = useState<boolean>(true);
+  const [isUploadingProfilePicture, setIsUploadingProfilePicture] = useState<boolean>(false);
 
   const [isDropdownOpen, setIsDropDownOpen] = useState<boolean>(false);
-
-  /* - Estados de Client - */
-
-  const [client, setClient] = useState<SupabaseClient>(supabaseTemp);
-
-  /* - Definições - */
 
   const navLinks = [
     { id: "tickets", title: "Meus Ingressos" },
@@ -48,11 +34,6 @@ const ProfileHeader = ({ activeTab, setActiveTab }: ProfileHeaderProps) => {
   const ProfilePictureRef = useRef<HTMLInputElement>(null);
 
   const router = useRouter();
-
-  useEffect(() => {
-    const rememberMe = localStorage.getItem("rememberMe");
-    setClient(rememberMe ? supabase : supabaseTemp);
-  }, []);
 
   /* - Funções - */
 
@@ -178,9 +159,9 @@ const ProfileHeader = ({ activeTab, setActiveTab }: ProfileHeaderProps) => {
                   <Image
                     className="mx-auto"
                     src="/logo/ph-logo.png"
+                    alt="PrismaHall Logo"
                     width={50}
                     height={50}
-                    alt="PrismaHall Logo"
                   />
                 </div>
 
@@ -269,7 +250,7 @@ const ProfileHeader = ({ activeTab, setActiveTab }: ProfileHeaderProps) => {
                 className="flex justify-center items-center w-fit h-fit bg-[#B8860B] hover:bg-[#7A5A08] shadow-sm shadow-[#B8860B] hover:shadow-[#7A5A08] text-black font-semibold px-4 py-2 rounded-lg cursor-pointer"
                 onClick={() => {
                   if (isAuthenticated) {
-                    supabase.auth.signOut();
+                    revokeSessionMutation();
                   } else {
                     router.replace("/login");
                   }
@@ -315,7 +296,7 @@ const ProfileHeader = ({ activeTab, setActiveTab }: ProfileHeaderProps) => {
                 <motion.button
                   className="flex justify-center items-center text-white font-semibold cursor-pointer"
                   onClick={() => {
-                    supabase.auth.signOut();
+                    revokeSessionMutation();
                     router.replace("/");
                   }}
                   whileHover={{ scale: 1.05 }}

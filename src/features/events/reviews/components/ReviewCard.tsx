@@ -14,11 +14,11 @@ interface ReviewCardProps {
 const ReviewCard = ({ review, index }: ReviewCardProps) => {
   /* - Definições - */
 
-  const reviewNameMask = (fullName?: string | null) => {
-    if (!fullName) {
+  const reviewNameMask = (name?: string | null) => {
+    if (!name) {
       return "Usuário PrismaHall";
     }
-    return fullName.split(" ").slice(0, 2).join(" ");
+    return name.split(" ").slice(0, 2).join(" ");
   };
 
   const elapsedTime = (date: string) => {

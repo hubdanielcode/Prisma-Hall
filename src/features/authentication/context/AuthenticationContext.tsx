@@ -1,57 +1,40 @@
 "use client";
 
-import { createContext, useState, type ReactNode } from "react";
-import type { Session } from "@supabase/supabase-js";
+import { createContext } from "react";
+import type { SessionUserProps } from "../types/sessionUser";
+import { useSession } from "../hooks/useSession";
 
-export interface AuthenticationContextType {
-  /* - Estados do usuário - */
+interface AuthenticationContextType {
+  /* - Dados da sessão - */
 
-  fullName: string;
-  setFullName: (fullName: string) => void;
-  email: string;
-  setEmail: (email: string) => void;
+  isLoading: boolean;
   isAuthenticated: boolean;
-  setIsAuthenticated: (isAuthenticated: boolean) => void;
+  user: SessionUserProps | null;
+  error: Error | null;
 
-  /* - Estados de sessão - */
+  /* - Mutations - */
 
-  session: Session | null;
-  setSession: (session: Session | null) => void;
+  revokeSessionMutation: () => Promise<boolean>;
 }
 
 const AuthenticationContext = createContext<AuthenticationContextType | null>(null);
 
-const AuthenticationProvider = ({ children }: { children: ReactNode }) => {
-  /* - Estados do usuário - */
-
-  const [fullName, setFullName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-
-  /* - Estados de sessão - */
-
-  const [session, setSession] = useState<Session | null>(null);
-
-  /* - Funções - */
-
-  // 1.
+const AuthenticationProvider = ({ children }: { children: React.ReactNode }) => {
+  const { isLoading, isAuthenticated, user, error, revokeSessionMutation } = useSession();
 
   return (
     <AuthenticationContext.Provider
       value={{
-        /* - Estados do usuário - */
+        /* - Dados da sessão - */
 
-        fullName,
-        setFullName,
-        email,
-        setEmail,
+        isLoading,
         isAuthenticated,
-        setIsAuthenticated,
+        user,
+        error,
 
-        /* - Estados de sessão - */
+        /* - Mutations - */
 
-        session,
-        setSession,
+        revokeSessionMutation,
       }}
     >
       {children}

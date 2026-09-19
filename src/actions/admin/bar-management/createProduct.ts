@@ -16,7 +16,6 @@ const createProduct = async (product: z.infer<typeof createProductSchema>) => {
   const parsedProduct = createProductSchema.safeParse(product);
 
   if (!parsedProduct.success) {
-    console.log(parsedProduct.error.issues);
     return false;
   }
 

@@ -1,6 +1,5 @@
 "use client";
 
-import { supabase } from "../../../supabase/supabase";
 import { AnimatePresence, motion } from "motion/react";
 import { FaSearch, FaUser } from "react-icons/fa";
 import { ImExit } from "react-icons/im";
@@ -17,16 +16,10 @@ interface AdminHeaderProps {
 }
 
 const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
-  /* - Puxando do context - */
-
   const { isPortraitMobile, isLandscapeMobile } = useMobileContext();
-  const { isAuthenticated } = useAuthenticationContext();
-
-  /* - Estados do dropdown - */
+  const { isAuthenticated, revokeSessionMutation } = useAuthenticationContext();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
-
-  /* - Definições - */
 
   const router = useRouter();
 
@@ -34,6 +27,7 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
     { title: "Bar", id: "bar" },
     { title: "Eventos", id: "events" },
     { title: "Estatísticas", id: "analytics" },
+    { title: "Usuários", id: "users" },
   ];
 
   return (
@@ -55,9 +49,9 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
                   <Image
                     className="mx-auto"
                     src="/logo/ph-logo.png"
+                    alt="PrismaHall Logo"
                     width={50}
                     height={50}
-                    alt="PrismaHall Logo"
                   />
                 </div>
 
@@ -118,11 +112,13 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
 
             <div className="hidden sm:flex md:flex gap-4">
               {isAuthenticated && (
+                // 1. Botão de Perfil do desktop
+
                 <motion.button
                   className="flex justify-center items-center w-fit bg-[#1A1A1A] hover:bg-[#333] shadow-sm shadow-[#1A1A1A] hover:shadow-md hover:shadow-[#333] text-white font-semibold px-4 py-2 rounded-lg cursor-pointer"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => router.push("/")}
+                  onClick={() => router.push("/perfil")}
                 >
                   <FaUser className="mr-2 h-4 w-4" />
                   Perfil
@@ -130,16 +126,18 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
               )}
 
               <motion.button
+                // 2. Botão de sair/entrar do desktop
+
                 className="flex justify-center items-center w-full h-fit bg-[#B8860B] hover:bg-[#7A5A08] shadow-sm shadow-[#B8860B] hover:shadow-[#7A5A08] text-black font-semibold px-4 py-2 rounded-lg cursor-pointer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => {
                   if (isAuthenticated) {
-                    supabase.auth.signOut();
+                    revokeSessionMutation();
                   } else {
                     router.replace("/login");
                   }
                 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
               >
                 <ImExit className="mr-2 h-4 w-4" />
 
@@ -162,8 +160,8 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
             <ul>
               {navLinks.map((link, index) => (
                 <li
-                  key={index}
                   className="px-6 py-4 text-white font-semibold border-b border-[#B8870B60] last:border-none cursor-pointer"
+                  key={index}
                   role="button"
                   onClick={() => {
                     if (link.title === "Bar") {
@@ -171,11 +169,15 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
                     }
 
                     if (link.title === "Eventos") {
-                      setActiveTab("bar");
+                      setActiveTab("events");
                     }
 
                     if (link.title === "Estatísticas") {
                       setActiveTab("analytics");
+                    }
+
+                    if (link.title === "Usuários") {
+                      setActiveTab("users");
                     }
                   }}
                 >
@@ -185,12 +187,21 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
 
               <li className="px-6 py-4">
                 <motion.button
+                  // 3. Botão de sair/entrar do mobile (portrait)
+
                   className="flex justify-center items-center text-white font-semibold cursor-pointer"
-                  onClick={() => router.replace("/login")}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  onClick={() => {
+                    if (isAuthenticated) {
+                      revokeSessionMutation();
+                    } else {
+                      router.replace("/login");
+                    }
+                  }}
                 >
                   <ImExit className="mr-2 h-4 w-4" />
+
                   {isAuthenticated ? "Sair" : "Entrar"}
                 </motion.button>
               </li>
@@ -209,8 +220,8 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
             <ul>
               {navLinks.map((link, index) => (
                 <li
-                  key={index}
                   className="px-6 py-4 text-white font-semibold border-b border-[#B8870B60] last:border-none cursor-pointer"
+                  key={index}
                   role="button"
                   onClick={() => {
                     if (link.title === "Bar") {
@@ -218,17 +229,42 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
                     }
 
                     if (link.title === "Eventos") {
-                      setActiveTab("bar");
+                      setActiveTab("events");
                     }
 
                     if (link.title === "Estatísticas") {
                       setActiveTab("analytics");
+                    }
+
+                    if (link.title === "Usuários") {
+                      setActiveTab("users");
                     }
                   }}
                 >
                   {link.title}
                 </li>
               ))}
+
+              <li className="px-6 py-4">
+                <motion.button
+                  // 4. Botão de sair/entrar do mobile (landscape)
+
+                  className="flex justify-center items-center text-white font-semibold cursor-pointer"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => {
+                    if (isAuthenticated) {
+                      revokeSessionMutation();
+                    } else {
+                      router.replace("/login");
+                    }
+                  }}
+                >
+                  <ImExit className="mr-2 h-4 w-4" />
+
+                  {isAuthenticated ? "Sair" : "Entrar"}
+                </motion.button>
+              </li>
             </ul>
           </motion.div>
         )}

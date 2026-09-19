@@ -8,9 +8,7 @@ interface SessionProps {
 }
 
 const createSession = async ({ userId, expiresAt }: SessionProps) => {
-  const newSession = await prisma.session.create({
-    data: { userId, expiresAt },
-  });
+  const newSession = await prisma.session.create({ data: { userId, expiresAt } });
 
   return newSession;
 };
