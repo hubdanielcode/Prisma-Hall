@@ -2,6 +2,7 @@ import { AuthenticationProvider, useAuthenticationContext } from "@/features/aut
 import { CartProvider } from "@/features/cart/context/CartContext";
 import { Footer } from "@/shared/components/layout/Footer";
 import { MobileProvider } from "../../context/MobileContext";
+import { QueryProvider } from "@/shared/providers/QueryProvider";
 import { useEffect } from "react";
 
 export default {
@@ -28,13 +29,15 @@ const GeneralFooter = () => {
   };
 
   return (
-    <AuthenticationProvider>
-      <CartProvider>
-        <MobileProvider>
-          <AuthenticationContextConsumer />
-        </MobileProvider>
-      </CartProvider>
-    </AuthenticationProvider>
+    <QueryProvider>
+      <AuthenticationProvider>
+        <CartProvider>
+          <MobileProvider>
+            <AuthenticationContextConsumer />
+          </MobileProvider>
+        </CartProvider>
+      </AuthenticationProvider>
+    </QueryProvider>
   );
 };
 
