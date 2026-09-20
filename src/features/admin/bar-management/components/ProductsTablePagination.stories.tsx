@@ -4,6 +4,9 @@ import { ProductsTablePagination } from "./ProductsTablePagination";
 export default {
   title: "Layouts/Admin/Bar Management/Table",
   component: ProductsTablePagination,
+  parameters: {
+    layout: "fullscreen",
+  },
 };
 
 const TablePagination = () => {

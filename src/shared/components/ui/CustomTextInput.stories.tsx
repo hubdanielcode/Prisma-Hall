@@ -1,5 +1,5 @@
-import { FaUser } from "react-icons/fa";
 import { CustomTextInput } from "./CustomTextInput";
+import { FaUser } from "react-icons/fa";
 
 export default {
   title: "Components/Shared/Inputs",

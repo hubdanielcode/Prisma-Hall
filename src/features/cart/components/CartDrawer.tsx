@@ -2,8 +2,7 @@
 
 import { CartItemCard } from "./CartItemCard";
 import { FaWineGlassAlt } from "react-icons/fa";
-import { GiShoppingCart } from "react-icons/gi";
-import { GiTicket } from "react-icons/gi";
+import { GiShoppingCart, GiTicket } from "react-icons/gi";
 import { motion, AnimatePresence } from "motion/react";
 import { useCartContext } from "../hooks/useCartContext";
 import { useEffect, useRef } from "react";
@@ -42,7 +41,10 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
     const handleClickOutside = (e: MouseEvent) => {
       const clickedInside = !isOpen || !cartDrawerRef.current || cartDrawerRef.current.contains(e.target as Node);
 
-      if (clickedInside) return;
+      if (clickedInside) {
+        return;
+      }
+
       setIsCartOpen(false);
     };
     document.addEventListener("mousedown", handleClickOutside);

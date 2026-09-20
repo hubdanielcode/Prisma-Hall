@@ -1,8 +1,8 @@
 "use client";
 
 import { Eye, EyeClosed } from "lucide-react";
-import { useState } from "react";
 import { RiLockPasswordFill } from "react-icons/ri";
+import { useState } from "react";
 
 export interface PasswordInputProps {
   className?: string;

@@ -1,6 +1,6 @@
-import { z } from "zod";
+import { atLeastOneFieldUpdated } from "@/shared/utils/functions/atLeastOneFieldUpdated";
 import { createEventSchema } from "./createEventSchema";
-import { atLeastOneFieldUpdated } from "../../../../shared/utils/atLeastOneFieldUpdated";
+import { z } from "zod";
 
 const editEventSchema = createEventSchema
   .partial()

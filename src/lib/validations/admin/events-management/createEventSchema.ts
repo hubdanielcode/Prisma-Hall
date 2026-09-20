@@ -1,7 +1,7 @@
-import { z } from "zod";
-import { regex } from "@/shared";
 import { imageFileSchema } from "../../shared/imageFileSchema";
+import { regex } from "@/shared/utils/constants/regex";
 import { tagSchema } from "../../shared/tagSchema";
+import { z } from "zod";
 
 const createEventSchema = z.object({
   // 1. Título

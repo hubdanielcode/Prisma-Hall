@@ -1,11 +1,11 @@
 "use client";
 
-import { motion } from "motion/react";
-import { Image } from "lucide-react";
-import { photos, photosCategories } from "../../../../shared/utils/photos";
-import { useState } from "react";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
-import { parsedDate } from "@/shared";
+import { Image } from "lucide-react";
+import { motion } from "motion/react";
+import { parsedDate } from "@/shared/utils/functions/dates";
+import { photos, photosCategories } from "@/shared/utils/constants/photos";
+import { useState } from "react";
 
 const GallerySection = () => {
   /* - Estados de categoria - */

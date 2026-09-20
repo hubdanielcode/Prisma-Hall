@@ -1,7 +1,7 @@
 "use server";
 
 import { checkIsAdmin } from "../checkIsAdmin";
-import { editProductSchema } from "@/lib/validations";
+import { editProductSchema } from "@/lib/validations/admin/bar-management/editProductSchema";
 import { prisma } from "@/lib/prisma";
 import { put } from "@vercel/blob";
 import z from "zod";

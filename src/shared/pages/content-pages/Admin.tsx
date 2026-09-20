@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useMobileContext, AdminHeader, Footer } from "@/shared";
-import { useBarContext } from "@/features/bar";
 import { AnalyticsManagement, BarManagement, EventsManagement, UsersManagement } from "@/features/admin";
+import { useBarContext } from "@/features/bar";
+import { useEffect, useState } from "react";
+import { useMobileContext } from "@/shared/hooks/useMobileContext";
+import { AdminHeader, Footer } from "@/shared/components";
 
 const Admin = () => {
   /* - Puxando do context - */

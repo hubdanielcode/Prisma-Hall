@@ -1,9 +1,10 @@
 "use client";
 
-import { motion } from "motion/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { monthNames, useCalendarContext, useEvents } from "@/features/events";
-import { formattedDate } from "@/shared";
+import { formattedDate } from "@/shared/utils/functions/dates";
+import { monthNames, useEvents } from "@/features/events/event";
+import { motion } from "motion/react";
+import { useCalendarContext } from "@/features/events/agenda/hooks/useCalendarContext";
 
 const CalendarHeader = () => {
   /* - Puxando do context - */

@@ -1,7 +1,7 @@
-import { masks } from "@/shared";
-import type { ProductProps } from "../types/product";
+import { masks } from "@/shared/utils/functions/masks";
 import { MotionCard } from "./MotionCard";
 import Image from "next/image";
+import type { ProductProps } from "../types/product";
 
 interface ProductCardProps {
   product: ProductProps;

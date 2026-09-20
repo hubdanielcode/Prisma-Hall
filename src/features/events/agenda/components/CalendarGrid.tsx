@@ -1,9 +1,9 @@
 "use client";
 
+import { formattedDate } from "@/shared/utils/functions/dates";
+import { monthNames, useEvents, dayNames } from "@/features/events/event";
 import { motion } from "motion/react";
 import { useCalendarContext } from "@/features/events/agenda/hooks/useCalendarContext";
-import { monthNames, useEvents, dayNames } from "@/features/events";
-import { formattedDate } from "@/shared";
 
 const CalendarGrid = () => {
   /* - Puxando do context - */

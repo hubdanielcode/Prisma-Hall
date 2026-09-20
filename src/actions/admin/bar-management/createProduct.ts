@@ -1,10 +1,10 @@
 "use server";
 
-import { createProductSchema } from "@/lib/validations";
-import z from "zod";
 import { checkIsAdmin } from "../checkIsAdmin";
-import { put } from "@vercel/blob";
+import { createProductSchema } from "@/lib/validations/admin/bar-management/createProductSchema";
 import { prisma } from "@/lib/prisma";
+import { put } from "@vercel/blob";
+import z from "zod";
 
 const createProduct = async (product: z.infer<typeof createProductSchema>) => {
   const isAdmin = await checkIsAdmin();

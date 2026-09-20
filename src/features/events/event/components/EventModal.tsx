@@ -1,13 +1,13 @@
 "use client";
 
-import { motion, AnimatePresence } from "motion/react";
 import { Clock, Star, Ticket, Users, X } from "lucide-react";
-import { formattedDate } from "@/shared";
-import type { EventProps } from "@/features/events/event/types/event";
-import { useCartContext } from "@/features/cart";
-import { useRouter } from "next/navigation";
-import { useAuthenticationContext } from "@/features/authentication";
+import { formattedDate } from "@/shared/utils/functions/dates";
+import { motion, AnimatePresence } from "motion/react";
+import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
 import { useBlockScroll } from "@/shared/hooks/useBlockScroll";
+import { useCartContext } from "@/features/cart/hooks/useCartContext";
+import { useRouter } from "next/navigation";
+import type { EventProps } from "@/features/events/event/types/event";
 
 interface EventModalProps {
   event: EventProps | null;

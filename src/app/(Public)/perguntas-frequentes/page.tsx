@@ -1,4 +1,4 @@
-import { FrequentlyAskedQuestions } from "@/shared";
+import { FrequentlyAskedQuestions } from "@/shared/pages/footer-links/FrequentlyAskedQuestions";
 
 const FrequentlyAskedQuestionsPage = () => {
   return <FrequentlyAskedQuestions />;

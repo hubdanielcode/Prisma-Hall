@@ -1,4 +1,4 @@
-import { About } from "@/shared";
+import { About } from "@/shared/pages/footer-links/About";
 
 const AboutPage = () => {
   return <About />;

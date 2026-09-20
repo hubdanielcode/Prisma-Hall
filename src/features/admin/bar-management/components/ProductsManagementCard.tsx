@@ -1,8 +1,8 @@
 "use client";
 
-import { useProducts } from "@/features/bar";
-import { useMobileContext } from "@/shared";
 import { Beer, Coffee, Martini, Wine } from "lucide-react";
+import { useMobileContext } from "@/shared/hooks/useMobileContext";
+import { useProducts } from "@/features/bar/hooks/useProducts";
 
 const ProductsManagementCard = () => {
   /* - Puxando do context - */

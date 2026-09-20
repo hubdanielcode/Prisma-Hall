@@ -1,4 +1,4 @@
-import { formattedDate } from "@/shared";
+import { formattedDate } from "@/shared/utils/functions/dates";
 import type { CartItem } from "../types/cartItem";
 
 interface CartItemCardProps {

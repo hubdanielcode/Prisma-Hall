@@ -1,4 +1,4 @@
-import { MainContent } from "@/shared";
+import { MainContent } from "@/shared/pages/content-pages/MainContent";
 
 const HomePage = () => {
   return (

@@ -1,17 +1,17 @@
 "use server";
 
+import { cookies } from "next/headers";
+import { createSession } from "../session/createSession";
+import { hash } from "bcrypt";
+import { prisma } from "@/lib/prisma";
+import { signUpSchema } from "@/lib/validations/authentication/signUpSchema";
+
 interface SignUpProps {
   name: string;
   email: string;
   password: string;
   confirmPassword: string;
 }
-
-import { prisma } from "@/lib/prisma";
-import { signUpSchema } from "@/lib/validations";
-import { createSession } from "../session/createSession";
-import { cookies } from "next/headers";
-import { hash } from "bcrypt";
 
 const signUp = async ({ name, email, password, confirmPassword }: SignUpProps) => {
   const parsedSignUpUser = signUpSchema.safeParse({ name, email, password, confirmPassword });

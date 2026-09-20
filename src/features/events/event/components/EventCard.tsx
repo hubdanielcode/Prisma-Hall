@@ -1,9 +1,9 @@
 "use client";
 
-import { motion } from "motion/react";
 import { Calendar, Star, Users } from "lucide-react";
-import { formattedDate } from "@/shared";
-import { type EventProps } from "../types/event";
+import { formattedDate } from "@/shared/utils/functions/dates";
+import { motion } from "motion/react";
+import type { EventProps } from "../types/event";
 
 interface EventCardProps {
   event: EventProps;

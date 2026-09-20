@@ -1,6 +1,7 @@
 "use client";
-import { useRouter } from "next/navigation";
+
 import { motion } from "motion/react";
+import { useRouter } from "next/navigation";
 
 const NotFound = () => {
   /* - Definições - */

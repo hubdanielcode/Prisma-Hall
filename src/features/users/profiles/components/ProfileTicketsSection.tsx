@@ -1,14 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { EventCard } from "@/features/events/event/components/EventCard";
 import { FaSearch } from "react-icons/fa";
-import { motion } from "motion/react";
-import { EventCard } from "@/features/events";
-import { useTickets } from "@/features/users/tickets/hooks/useTickets";
-import { type EventProps } from "@/features/events";
-import { MdOutlineCancel } from "react-icons/md";
 import { IoTicketOutline, IoHelp } from "react-icons/io5";
+import { MdOutlineCancel } from "react-icons/md";
+import { motion } from "motion/react";
+import { useEffect, useState } from "react";
+import { useTickets } from "@/features/users/tickets/hooks/useTickets";
 import Link from "next/link";
+import type { EventProps } from "@/features/events/event/types/event";
 
 const ProfileTicketsSection = () => {
   /* - Puxando do context - */

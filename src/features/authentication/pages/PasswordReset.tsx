@@ -4,10 +4,10 @@ import { AnimatePresence, motion } from "motion/react";
 import { AuthenticationScreenShell } from "../components/AuthenticationScreenShell";
 import { CircleCheck } from "lucide-react";
 import { MdAlternateEmail } from "react-icons/md";
-import { regex, masks, CustomTextInput, CustomPasswordInput } from "@/shared";
+import { CustomTextInput, CustomPasswordInput } from "@/shared/components";
+import { regex, masks } from "@/shared/utils";
 import { usePasswordReset } from "../hooks/usePasswordReset";
-import { useRouter } from "next/navigation";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 
 const PasswordReset = () => {

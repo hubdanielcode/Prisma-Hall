@@ -1,9 +1,9 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
 import { getResend } from "@/lib/resend";
-import { requestPasswordResetSchema } from "@/lib/validations";
 import { PasswordResetEmail } from "@/shared/emails/PasswordResetEmail";
+import { prisma } from "@/lib/prisma";
+import { requestPasswordResetSchema } from "@/lib/validations/authentication/passwordResetSchemas";
 import React from "react";
 
 const requestPasswordReset = async (email: string) => {

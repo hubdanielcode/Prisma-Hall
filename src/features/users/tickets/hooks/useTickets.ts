@@ -1,13 +1,13 @@
 "use client";
 
-import { useAuthenticationContext } from "@/features/authentication";
-import { getTickets, type TicketProps } from "@/features/users/tickets";
+import { getTickets, TicketProps } from "@/features/users/tickets";
+import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
 import { useState, useEffect } from "react";
 
 const useTickets = () => {
   /* - Puxando do context - */
 
-  const { session } = useAuthenticationContext();
+  const { isAuthenticated } = useAuthenticationContext();
 
   /* - Estados de tickets - */
 
@@ -26,7 +26,7 @@ const useTickets = () => {
   // 1. Busca a sessão do usuário na hora da renderização
 
   useEffect(() => {
-    if (!session) {
+    if (!isAuthenticated) {
       setIsLoading(false);
       return;
     }
@@ -45,7 +45,7 @@ const useTickets = () => {
     };
 
     fetchTickets();
-  }, [session]);
+  }, [isAuthenticated]);
 
   return { tickets, isLoading, error };
 };

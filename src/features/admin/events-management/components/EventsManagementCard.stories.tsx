@@ -1,4 +1,4 @@
-import { MobileProvider } from "@/shared";
+import { MobileProvider } from "@/shared/context/MobileContext";
 import { EventsManagementCard } from "./EventsManagementCard";
 
 export default {

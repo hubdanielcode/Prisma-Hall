@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { render } from "@react-email/components";
 import { PasswordResetEmail } from "./PasswordResetEmail";
+import { render } from "@react-email/components";
+import { useEffect, useState } from "react";
 
 export default {
   title: "Components/Emails/Templates",

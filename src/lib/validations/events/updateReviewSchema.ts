@@ -1,7 +1,6 @@
-import { z } from "zod";
-
+import { atLeastOneFieldUpdated } from "@/shared/utils/functions/atLeastOneFieldUpdated";
 import { createReviewSchema } from "./createReviewSchema";
-import { atLeastOneFieldUpdated } from "../../../shared/utils/atLeastOneFieldUpdated";
+import { z } from "zod";
 
 const updateReviewSchema = createReviewSchema
   .partial()

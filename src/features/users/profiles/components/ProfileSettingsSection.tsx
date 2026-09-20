@@ -1,17 +1,21 @@
 "use client";
 
-import { RiLockPasswordFill } from "react-icons/ri";
-import { motion } from "motion/react";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { ImExit } from "react-icons/im";
 import { IoNotifications } from "react-icons/io5";
-import { MdOutlineDeleteForever } from "react-icons/md";
-import { supabase, supabaseTemp } from "../../../../../supabase/supabase";
-import { SupabaseClient } from "@supabase/supabase-js";
+import { MdDeleteForever } from "react-icons/md";
+import { motion } from "motion/react";
+import { requestPasswordReset } from "@/actions/authentication/requestPasswordReset";
+import { RiLockPasswordFill } from "react-icons/ri";
+import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
+import { useEffect, useRef, useState } from "react";
+import { useProfileContext } from "../hooks/useProfileContext";
+import { useRouter } from "next/navigation";
 
 const ProfileSettingsSection = () => {
-  const [client, setClient] = useState<SupabaseClient>(supabaseTemp);
+  /* - Puxando do context - */
+
+  const { user, revokeSessionMutation } = useAuthenticationContext();
+  const { deleteProfileMutation } = useProfileContext();
 
   /* - Estados de notificação - */
 
@@ -23,14 +27,14 @@ const ProfileSettingsSection = () => {
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
 
+  /* - Estados de Erro - */
+
+  const [deleteAccountError, setDeleteAccountError] = useState<string>("");
+
   /* - Definições - */
 
   const router = useRouter();
-
-  useEffect(() => {
-    const rememberMe = localStorage.getItem("rememberMe");
-    setClient(rememberMe ? supabase : supabaseTemp);
-  }, []);
+  const deleteAccountRef = useRef<HTMLDivElement | null>(null);
 
   /* - Funções - */
 
@@ -42,30 +46,63 @@ const ProfileSettingsSection = () => {
 
   // 2. Redireciona o usuário para a página de recuperação de senha
 
-  const handleChangePassword = () => {
+  const handleChangePassword = async () => {
+    if (!user) {
+      return;
+    }
+
+    const result = await requestPasswordReset(user.email);
+
+    if (!result) {
+      return;
+    }
+
     router.replace("/recuperar-senha");
   };
 
-  // 3. Desconecta o usuário do aplicativo
+  // 3. Desconecta o usuário do aplicativo e redireciona para a home
 
   const handleSignOut = async () => {
-    await client.auth.signOut();
+    const result = await revokeSessionMutation();
+
+    if (!result) {
+      return;
+    }
+
     router.replace("/");
   };
+
   // 4. Redireciona o usuário para o modal de deletar a conta
 
   const handleDeleteAccount = async () => {
-    const {
-      data: { user },
-    } = await client.auth.getUser();
+    setDeleteAccountError("");
 
-    if (!user) return;
+    const result = await deleteProfileMutation();
 
-    await client.from("users").delete().eq("user_id", user.id);
-    await client.auth.signOut();
+    if (!result) {
+      setDeleteAccountError("Não foi possível deletar a conta. Tente novamente.");
+      return;
+    }
 
     router.replace("/");
   };
+
+  // 5. Fecha os erros ao clicar fora
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const clickedInsideDeleteAccountRef = !deleteAccountRef.current || deleteAccountRef.current.contains(e.target as Node);
+
+      if (clickedInsideDeleteAccountRef) {
+        return;
+      }
+
+      setDeleteAccountError("");
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <div className="flex flex-col min-h-screen max-w-full pt-32 px-4 sm:px-6 md:px-0">
@@ -192,9 +229,11 @@ const ProfileSettingsSection = () => {
           {/* - Excluir conta - */}
 
           <div className="flex items-center gap-3">
-            <MdOutlineDeleteForever className="h-5 w-5 text-[#B8860B]" />
+            <MdDeleteForever className="h-5 w-5 text-[#B8860B]" />
 
             <span className="text-white/60 font-semibold text-sm sm:text-base md:text-base mr-auto">Excluir Conta</span>
+
+            {/* - Seção de erro - */}
 
             <motion.button
               className="px-4 py-2 whitespace-nowrap sm:w-40 md:w-40 text-sm sm:text-base md:text-base font-semibold text-white bg-[#1A1A1A] border border-[#B8860B] rounded-lg cursor-pointer hover:shadow-xs shadow-[#B8860B]"
@@ -225,6 +264,19 @@ const ProfileSettingsSection = () => {
             <p className="text-white/60 text-sm">
               Tem certeza que deseja excluir sua conta? Todos os seus dados, ingressos e informações serão permanentemente removidos.
             </p>
+
+            {/* - Seção de Erro - */}
+
+            <div
+              className="min-h-20 w-full pt-5"
+              ref={deleteAccountRef}
+            >
+              {deleteAccountError && (
+                <p className="flex items-center justify-center h-12 rounded-xl bg-red-100 border border-red-300 text-red-700 text-sm font-semibold px-4 text-center">
+                  {deleteAccountError}
+                </p>
+              )}
+            </div>
 
             <div className="flex gap-3 mt-3 w-[35%] ml-auto">
               <motion.button

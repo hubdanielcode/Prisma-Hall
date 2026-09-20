@@ -1,11 +1,14 @@
+import { BarProvider } from "@/features/bar/context/BarContext";
 import { CreateProductModal } from "./CreateProductModal";
-import { BarProvider } from "@/features/bar";
-import { MobileProvider } from "@/shared";
+import { MobileProvider } from "@/shared/context/MobileContext";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
 
 export default {
   title: "Layouts/Admin/Bar Management/Modals",
   component: CreateProductModal,
+  parameters: {
+    layout: "fullscreen",
+  },
 };
 
 const CreateModal = () => {

@@ -1,10 +1,10 @@
 "use client";
 
-import { useBarContext } from "@/features/bar/hooks/useBarContext";
-import { useCartContext } from "@/features/cart";
-import { ProductCard } from "@/features/bar/components/ProductCard";
 import { motion } from "motion/react";
 import { Plus } from "lucide-react";
+import { ProductCard } from "./ProductCard";
+import { useBarContext } from "../hooks/useBarContext";
+import { useCartContext } from "@/features/cart/hooks/useCartContext";
 
 const BarSection = () => {
   /* - Puxando do context - */

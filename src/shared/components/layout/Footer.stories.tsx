@@ -1,12 +1,12 @@
-import { AdminHeader } from "@/shared/components/AdminHeader";
-import { MobileProvider } from "../context/MobileContext";
 import { AuthenticationProvider, useAuthenticationContext } from "@/features/authentication";
+import { CartProvider } from "@/features/cart/context/CartContext";
+import { Footer } from "@/shared/components/layout/Footer";
+import { MobileProvider } from "../../context/MobileContext";
 import { useEffect } from "react";
-import "../../app/globals.css";
 
 export default {
-  title: "Layouts/Admin",
-  component: AdminHeader,
+  title: "Components/Shared",
+  component: Footer,
   parameters: {
     nextjs: {
       appDirectory: true,
@@ -14,7 +14,7 @@ export default {
   },
 };
 
-const AdminPageHeader = () => {
+const GeneralFooter = () => {
   const AuthenticationContextConsumer = () => {
     const { isAuthenticated, setIsAuthenticated } = useAuthenticationContext();
 
@@ -22,23 +22,20 @@ const AdminPageHeader = () => {
       if (!isAuthenticated) {
         setIsAuthenticated(true);
       }
-    }, []);
+    }, [isAuthenticated, setIsAuthenticated]);
 
-    return (
-      <AdminHeader
-        activeTab=""
-        setActiveTab={() => {}}
-      />
-    );
+    return <Footer />;
   };
 
   return (
     <AuthenticationProvider>
-      <MobileProvider>
-        <AuthenticationContextConsumer />
-      </MobileProvider>
+      <CartProvider>
+        <MobileProvider>
+          <AuthenticationContextConsumer />
+        </MobileProvider>
+      </CartProvider>
     </AuthenticationProvider>
   );
 };
 
-export { AdminPageHeader as "Admin Page Header" };
+export { GeneralFooter as "Footer" };

@@ -1,10 +1,10 @@
 "use server";
 
-import { createEventSchema } from "@/lib/validations";
-import z from "zod";
 import { checkIsAdmin } from "../checkIsAdmin";
-import { put } from "@vercel/blob";
+import { createEventSchema } from "@/lib/validations/admin/events-management/createEventSchema";
 import { prisma } from "@/lib/prisma";
+import { put } from "@vercel/blob";
+import z from "zod";
 
 const createEvent = async (event: z.infer<typeof createEventSchema>) => {
   const isAdmin = await checkIsAdmin();

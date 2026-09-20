@@ -1,12 +1,12 @@
 "use client";
 
-import { Quote, Star, Users } from "lucide-react";
 import { motion } from "motion/react";
-import { useState } from "react";
-import { parsedDate } from "../../../../shared/utils/dates";
-import { useReviews } from "../hooks/useReviews";
+import { parsedDate } from "@/shared/utils/functions/dates";
+import { Quote, Star, Users } from "lucide-react";
 import { ReviewCard } from "./ReviewCard";
-import { useEvents } from "../..";
+import { useEvents } from "@/features/events/event/hooks/useEvents";
+import { useReviews } from "../hooks/useReviews";
+import { useState } from "react";
 
 const ReviewsSection = () => {
   /* - Puxando os reviews - */

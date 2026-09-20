@@ -1,5 +1,5 @@
-import { useContext } from "react";
 import { MobileContext } from "../context/MobileContext";
+import { useContext } from "react";
 
 const useMobileContext = () => {
   const context = useContext(MobileContext);

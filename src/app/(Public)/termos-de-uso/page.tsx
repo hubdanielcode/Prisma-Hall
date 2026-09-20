@@ -1,4 +1,4 @@
-import { TermsOfUse } from "@/shared";
+import { TermsOfUse } from "@/shared/pages/footer-links/TermsOfUse";
 
 const TermsOfUsePage = () => {
   return <TermsOfUse />;

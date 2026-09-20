@@ -1,8 +1,8 @@
 "use client";
 
-import { useBarContext } from "@/features/bar";
-import { useMobileContext } from "@/shared";
 import { FaSearch } from "react-icons/fa";
+import { useBarContext } from "@/features/bar/hooks/useBarContext";
+import { useMobileContext } from "@/shared/hooks/useMobileContext";
 
 interface ProductsManagementFilterProps {
   currentPage: number;

@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import { Calendar, ChevronLeft, ChevronRight, Ticket } from "lucide-react";
-import { rotatingImages } from "@/shared/utils/rotatingImages";
+import { motion, AnimatePresence } from "motion/react";
+import { rotatingImages } from "@/shared/utils/constants/rotatingImages";
+import { useEffect, useState } from "react";
 
 const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);

@@ -1,6 +1,6 @@
-import { z } from "zod";
+import { atLeastOneFieldUpdated } from "@/shared/utils/functions/atLeastOneFieldUpdated";
 import { createAttractionSchema } from "./createAttractionSchema";
-import { atLeastOneFieldUpdated } from "@/shared";
+import { z } from "zod";
 
 const editAttractionSchema = createAttractionSchema
   .partial()

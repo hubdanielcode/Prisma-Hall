@@ -3,9 +3,9 @@
 import { useBarContext, useProducts } from "@/features/bar";
 import { motion } from "motion/react";
 import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
-
 import { productCategoryBadges } from "../types/productCategoryBadges";
-import { masks, useMobileContext } from "@/shared";
+import { masks } from "@/shared/utils/functions/masks";
+import { useMobileContext } from "@/shared/hooks/useMobileContext";
 import { ProductsTablePagination } from "./ProductsTablePagination";
 
 interface ProductsManagementTableProps {

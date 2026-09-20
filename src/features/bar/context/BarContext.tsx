@@ -1,11 +1,11 @@
 "use client";
 
-import { productCategories } from "../utils/productCategories";
 import { createContext, useState } from "react";
-import { type CategoryProps } from "../types/category";
-import type { ProductProps } from "../types/product";
-import { useProducts } from "../hooks/useProducts";
-import { productCategoryIcons } from "../utils/productCategoryIcons";
+import { productCategories } from "@/features/bar/utils/productCategories";
+import { productCategoryIcons } from "@/features/bar/utils/productCategoryIcons";
+import { useProducts } from "@/features/bar/hooks/useProducts";
+import type { CategoryProps } from "@/features/bar/types/category";
+import type { ProductProps } from "@/features/bar/types/product";
 
 interface BarContextType {
   /* - Dados dos produtos - */

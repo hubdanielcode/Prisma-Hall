@@ -3,10 +3,10 @@
 import { AnimatePresence, motion } from "motion/react";
 import { AuthenticationScreenShell } from "../components/AuthenticationScreenShell";
 import { CircleCheck } from "lucide-react";
-import { CustomTextInput, CustomPasswordInput } from "@/shared/index";
+import { CustomTextInput, CustomPasswordInput } from "@/shared/components";
 import { FaUser } from "react-icons/fa";
 import { MdAlternateEmail } from "react-icons/md";
-import { regex, masks } from "@/shared/index";
+import { regex, masks } from "@/shared/utils";
 import { useRouter } from "next/navigation";
 import { useSession } from "../hooks/useSession";
 import { useState, useRef, useEffect } from "react";
@@ -111,7 +111,10 @@ const Authentication = () => {
     const handleClickOutside = (e: MouseEvent) => {
       const clickedInside = !signUpRef.current || signUpRef.current.contains(e.target as Node);
 
-      if (clickedInside) return;
+      if (clickedInside) {
+        return;
+      }
+
       setSignUpError("");
     };
 

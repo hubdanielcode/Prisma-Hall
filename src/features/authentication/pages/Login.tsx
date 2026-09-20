@@ -1,12 +1,13 @@
 "use client";
 
 import { AuthenticationScreenShell } from "../components/AuthenticationScreenShell";
-import { CustomTextInput, CustomPasswordInput, regex, masks } from "@/shared/index";
+import { CustomTextInput, CustomPasswordInput } from "@/shared/components";
 import { MdAlternateEmail } from "react-icons/md";
 import { motion } from "motion/react";
+import { regex, masks } from "@/shared/utils";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useRef, useEffect } from "react";
 import { useSession } from "../hooks/useSession";
+import { useState, useRef, useEffect } from "react";
 
 const Login = () => {
   /* - Puxando do context - */

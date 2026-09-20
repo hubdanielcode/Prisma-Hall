@@ -1,10 +1,9 @@
-import "./globals.css";
-import { AuthenticationProvider } from "@/features/authentication";
-import { BarProvider } from "@/features/bar";
-import { CalendarProvider } from "@/features/events";
-import { CartProvider } from "@/features/cart";
-import { MobileProvider, ThemeProvider } from "@/shared";
-import { ProfileProvider } from "@/features/users";
+import { AuthenticationProvider } from "@/features/authentication/context/AuthenticationContext";
+import { BarProvider } from "@/features/bar/context/BarContext";
+import { CalendarProvider } from "@/features/events/agenda/context/CalendarContext";
+import { CartProvider } from "@/features/cart/context/CartContext";
+import { MobileProvider, ThemeProvider } from "@/shared/context";
+import { ProfileProvider } from "@/features/users/profiles/context/ProfileContext";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
 import type { Metadata } from "next";
 

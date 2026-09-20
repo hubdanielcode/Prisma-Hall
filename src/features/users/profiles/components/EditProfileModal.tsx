@@ -1,14 +1,15 @@
 "use client";
 
-import { FaCalendarAlt, FaCity, FaHome, FaIdCard, FaMapMarkerAlt, FaPhone, FaSortNumericUp, FaUser } from "react-icons/fa";
-import { MdApartment, MdMyLocation } from "react-icons/md";
 import { AnimatePresence, motion } from "motion/react";
-import { X } from "lucide-react";
-import { useProfileContext } from "../hooks/useProfileContext";
-import { CustomTextInput, masks } from "@/shared/index";
+import { CustomTextInput } from "@/shared/components/ui/CustomTextInput";
+import { FaCalendarAlt, FaCity, FaHome, FaIdCard, FaMapMarkerAlt, FaPhone, FaSortNumericUp, FaUser } from "react-icons/fa";
+import { masks } from "@/shared/utils/functions/masks";
+import { MdApartment, MdMyLocation } from "react-icons/md";
+import { updateProfileSchema } from "@/lib/validations/users/updateProfileSchema";
 import { useBlockScroll } from "@/shared/hooks/useBlockScroll";
 import { useEffect, useRef, useState } from "react";
-import { updateProfileSchema } from "@/lib/validations";
+import { useProfileContext } from "../hooks/useProfileContext";
+import { X } from "lucide-react";
 
 export interface EditProfileModalProps {
   isOpen: boolean;

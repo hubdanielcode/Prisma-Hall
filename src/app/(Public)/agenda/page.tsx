@@ -1,4 +1,4 @@
-import { Schedule } from "@/features/events";
+import { Schedule } from "@/features/events/agenda/pages/Schedule";
 
 const SchedulePage = () => {
   return <Schedule />;

@@ -1,7 +1,7 @@
 "use client";
 
+import { applyTheme, getTheme, saveTheme, Theme } from "../utils/functions/theme";
 import { createContext, useEffect, useState } from "react";
-import { applyTheme, getTheme, saveTheme, Theme } from "../utils/theme";
 
 interface ThemeContextProps {
   theme: Theme;

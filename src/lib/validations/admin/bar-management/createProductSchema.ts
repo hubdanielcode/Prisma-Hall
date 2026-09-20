@@ -1,6 +1,6 @@
-import { z } from "zod";
-import { regex } from "@/shared";
 import { imageFileSchema } from "../../shared/imageFileSchema";
+import { regex } from "@/shared/utils/constants/regex";
+import { z } from "zod";
 
 const createProductSchema = z.object({
   // 1. Nome

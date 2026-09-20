@@ -4,14 +4,13 @@ import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { FiPhone } from "react-icons/fi";
 import { GoMail } from "react-icons/go";
 import { IoLocationOutline } from "react-icons/io5";
-import { masks } from "../utils/masks";
+import { masks } from "../../utils/functions/masks";
 import { MdAlternateEmail } from "react-icons/md";
 import { motion } from "motion/react";
-import { usePathname } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
 const Footer = () => {
   const [email, setEmail] = useState<string>("");

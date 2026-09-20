@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { type ReviewWithDetails } from "../types/reviews";
 import { getReviews } from "../services/reviewServices";
+import { useState, useEffect } from "react";
+import type { ReviewWithDetails } from "../types/reviews";
 
 const useReviews = () => {
   /* - Estados das avaliações - */

@@ -4,7 +4,7 @@ import { compare } from "bcrypt";
 import { cookies } from "next/headers";
 import { createSession } from "../session/createSession";
 import { prisma } from "@/lib/prisma";
-import { signInSchema } from "@/lib/validations";
+import { signInSchema } from "@/lib/validations/authentication/signInSchema";
 
 interface SignInProps {
   typedEmail: string;

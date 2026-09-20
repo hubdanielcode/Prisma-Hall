@@ -1,13 +1,13 @@
 "use client";
 
+import { CartDrawer } from "@/features/cart/components/CartDrawer";
 import { motion } from "motion/react";
 import { Ticket } from "lucide-react";
+import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
+import { useCartContext } from "@/features/cart/hooks/useCartContext";
 import { useEvents, EventCard } from "@/features/events";
-import { CartDrawer } from "@/features/cart/components/CartDrawer";
-import { useState } from "react";
-import { useCartContext } from "@/features/cart";
 import { useRouter } from "next/navigation";
-import { useAuthenticationContext } from "@/features/authentication";
+import { useState } from "react";
 
 const EventsSection = () => {
   /* - Puxando do context - */

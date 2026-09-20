@@ -1,4 +1,4 @@
-import { RefundPolicy } from "@/shared";
+import { RefundPolicy } from "@/shared/pages/footer-links/RefundPolicy";
 
 const RefundPolicyPage = () => {
   return <RefundPolicy />;

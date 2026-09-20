@@ -1,4 +1,4 @@
-import { Login } from "@/features/authentication";
+import { Login } from "@/features/authentication/pages/Login";
 import { Suspense } from "react";
 
 const LoginPage = () => {

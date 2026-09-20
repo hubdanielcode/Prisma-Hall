@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { ProfileHeader } from "../../../../shared/components/ProfileHeader";
-import { ProfileTicketsSection } from "../components/ProfileTicketsSection";
+import { ProfileHeader } from "@/shared/components/layout/ProfileHeader";
 import { ProfileInformationsSection } from "../components/ProfileInformationsSection";
 import { ProfileSettingsSection } from "../components/ProfileSettingsSection";
+import { ProfileTicketsSection } from "../components/ProfileTicketsSection";
+import { useState } from "react";
 
 const UserProfile = () => {
   /* - Estado da aba ativa - */

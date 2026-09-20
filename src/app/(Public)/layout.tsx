@@ -1,4 +1,4 @@
-import { Footer, Header } from "@/shared";
+import { Footer, Header } from "@/shared/components";
 
 const PublicLayout = ({ children }: { children: React.ReactNode }) => {
   return (

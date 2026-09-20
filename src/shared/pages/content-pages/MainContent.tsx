@@ -1,6 +1,6 @@
-import { GallerySection, EventsSection, ReviewsSection } from "@/features/events";
 import { BarSection } from "@/features/bar";
-import { HeroSection } from "@/shared";
+import { GallerySection, EventsSection, ReviewsSection } from "@/features/events";
+import { HeroSection } from "@/shared/components/layout/HeroSection";
 
 const MainContent = () => {
   return (

@@ -1,83 +1,34 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { CartDrawer } from "@/features/cart";
 import { FaSearch, FaUser } from "react-icons/fa";
-import { GiShoppingCart } from "react-icons/gi";
 import { ImExit } from "react-icons/im";
 import { Menu } from "lucide-react";
-import { useAuthenticationContext } from "@/features/authentication";
-import { useCartContext } from "@/features/cart";
-import { useEffect, useState } from "react";
-import { useMobileContext } from "../hooks/UseMobileContext";
-import { useRouter, usePathname } from "next/navigation";
+import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
+import { useMobileContext } from "../../hooks/useMobileContext";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import Image from "next/image";
 
-const Header = () => {
+interface AdminHeaderProps {
+  activeTab: string;
+  setActiveTab: (activeTab: string) => void;
+}
+
+const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
   const { isPortraitMobile, isLandscapeMobile } = useMobileContext();
   const { isAuthenticated, revokeSessionMutation } = useAuthenticationContext();
-  const { handleOpenCart, isCartOpen, setIsCartOpen, totalItems } = useCartContext();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
 
   const router = useRouter();
-  const pathname = usePathname();
 
   const navLinks = [
-    { title: "Agenda", id: "schedule" },
+    { title: "Bar", id: "bar" },
     { title: "Eventos", id: "events" },
-    { title: "Bar & Drinks", id: "bar" },
-    { title: "Galeria", id: "gallery" },
-    { title: "Sobre", id: "about" },
+    { title: "Estatísticas", id: "analytics" },
+    { title: "Usuários", id: "users" },
   ];
-
-  /* - Observando a sessão ativa enquanto o usuário scrolla na página - */
-
-  useEffect(() => {
-    const options = {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0.2,
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setSelectedCategory(entry.target.id);
-        }
-      });
-    }, options);
-
-    navLinks
-      .filter((link) => link.id !== "Agenda")
-      .forEach((link) => {
-        const section = document.getElementById(link.id);
-
-        if (section) {
-          observer.observe(section);
-        }
-      });
-
-    return () => observer.disconnect();
-  }, [pathname]);
-
-  const navigateToActiveSection = (link: { title: string; id: string }) => {
-    setSelectedCategory(link.id);
-    setIsCartOpen(false);
-
-    const destination = link.title === "Agenda" ? "/agenda" : "/";
-
-    if (pathname !== destination) {
-      router.push(destination);
-    }
-
-    if (link.title !== "Agenda") {
-      setTimeout(() => {
-        document.getElementById(link.id)?.scrollIntoView({ behavior: "smooth" });
-      }, 700);
-    }
-  };
 
   return (
     <>
@@ -92,11 +43,7 @@ const Header = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 role="button"
-                onClick={() => {
-                  if (pathname !== "/") {
-                    router.push("/");
-                  }
-                }}
+                onClick={() => router.replace("/")}
               >
                 <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-linear-to-tr from-yellow-500 via-black/60 to-yellow-700 rounded-lg flex items-center justify-between shadow-xs shadow-black">
                   <Image
@@ -136,14 +83,12 @@ const Header = () => {
                   {navLinks.map((link, index) => (
                     <motion.li
                       className={`my-auto font-semibold hover:bg-clip-text hover:text-transparent hover:bg-linear-to-br hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700 hover:underline cursor-pointer ${
-                        link.title === "Agenda" && pathname === "/agenda"
+                        link.id === activeTab
                           ? "bg-clip-text text-transparent bg-linear-to-br from-yellow-500 via-yellow-600 to-yellow-700 underline"
-                          : link.id === selectedCategory
-                            ? "bg-clip-text text-transparent bg-linear-to-br from-yellow-500 via-yellow-600 to-yellow-700 underline"
-                            : "text-white"
+                          : "text-white"
                       }`}
                       key={index}
-                      onClick={() => navigateToActiveSection(link)}
+                      onClick={() => setActiveTab(link.id)}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
@@ -153,23 +98,6 @@ const Header = () => {
                 </ul>
               </div>
             </div>
-
-            {/* - Carrinho - */}
-
-            {isAuthenticated && (
-              <div className="flex items-center justify-center">
-                <div className="relative bottom-4 left-11 sm:left-17 md:left-18 flex items-center justify-center bg-[#B8860B] w-4 h-4 md:w-5 md:h-5 rounded-full border border-black">
-                  <span className="text-xs text-black font-black">{totalItems}</span>
-                </div>
-
-                <button
-                  className="group mr-3 sm:mx-6 md:mx-6 border bg-[#0A0A0A] hover:bg-[#1A1A1A] border-[#B8860B] rounded-full p-2 cursor-pointer"
-                  onClick={handleOpenCart}
-                >
-                  <GiShoppingCart className="h-6 w-6 text-[#B8860B] group-hover:text-[#DDAE56]" />
-                </button>
-              </div>
-            )}
 
             {/* - Menu - */}
 
@@ -184,6 +112,8 @@ const Header = () => {
 
             <div className="hidden sm:flex md:flex gap-4">
               {isAuthenticated && (
+                // 1. Botão de Perfil do desktop
+
                 <motion.button
                   className="flex justify-center items-center w-fit bg-[#1A1A1A] hover:bg-[#333] shadow-sm shadow-[#1A1A1A] hover:shadow-md hover:shadow-[#333] text-white font-semibold px-4 py-2 rounded-lg cursor-pointer"
                   whileHover={{ scale: 1.05 }}
@@ -196,17 +126,18 @@ const Header = () => {
               )}
 
               <motion.button
+                // 2. Botão de sair/entrar do desktop
+
                 className="flex justify-center items-center w-full h-fit bg-[#B8860B] hover:bg-[#7A5A08] shadow-sm shadow-[#B8860B] hover:shadow-[#7A5A08] text-black font-semibold px-4 py-2 rounded-lg cursor-pointer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => {
                   if (isAuthenticated) {
                     revokeSessionMutation();
                   } else {
-                    router.push(`/login?from=${encodeURIComponent(pathname)}`);
+                    router.replace("/login");
                   }
                 }}
-
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
               >
                 <ImExit className="mr-2 h-4 w-4" />
 
@@ -216,13 +147,6 @@ const Header = () => {
           </div>
         </div>
       </header>
-
-      {/* - Drawer do carrinho - */}
-
-      <CartDrawer
-        isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-      />
 
       <AnimatePresence>
         {isPortraitMobile && isMobileMenuOpen && (
@@ -236,10 +160,26 @@ const Header = () => {
             <ul>
               {navLinks.map((link, index) => (
                 <li
-                  key={index}
                   className="px-6 py-4 text-white font-semibold border-b border-[#B8870B60] last:border-none cursor-pointer"
+                  key={index}
                   role="button"
-                  onClick={() => navigateToActiveSection(link)}
+                  onClick={() => {
+                    if (link.title === "Bar") {
+                      setActiveTab("bar");
+                    }
+
+                    if (link.title === "Eventos") {
+                      setActiveTab("events");
+                    }
+
+                    if (link.title === "Estatísticas") {
+                      setActiveTab("analytics");
+                    }
+
+                    if (link.title === "Usuários") {
+                      setActiveTab("users");
+                    }
+                  }}
                 >
                   {link.title}
                 </li>
@@ -247,12 +187,21 @@ const Header = () => {
 
               <li className="px-6 py-4">
                 <motion.button
+                  // 3. Botão de sair/entrar do mobile (portrait)
+
                   className="flex justify-center items-center text-white font-semibold cursor-pointer"
-                  onClick={() => router.push(`/login?from=${encodeURIComponent(pathname)}`)}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  onClick={() => {
+                    if (isAuthenticated) {
+                      revokeSessionMutation();
+                    } else {
+                      router.replace("/login");
+                    }
+                  }}
                 >
                   <ImExit className="mr-2 h-4 w-4" />
+
                   {isAuthenticated ? "Sair" : "Entrar"}
                 </motion.button>
               </li>
@@ -271,14 +220,51 @@ const Header = () => {
             <ul>
               {navLinks.map((link, index) => (
                 <li
-                  key={index}
                   className="px-6 py-4 text-white font-semibold border-b border-[#B8870B60] last:border-none cursor-pointer"
+                  key={index}
                   role="button"
-                  onClick={() => navigateToActiveSection(link)}
+                  onClick={() => {
+                    if (link.title === "Bar") {
+                      setActiveTab("bar");
+                    }
+
+                    if (link.title === "Eventos") {
+                      setActiveTab("events");
+                    }
+
+                    if (link.title === "Estatísticas") {
+                      setActiveTab("analytics");
+                    }
+
+                    if (link.title === "Usuários") {
+                      setActiveTab("users");
+                    }
+                  }}
                 >
                   {link.title}
                 </li>
               ))}
+
+              <li className="px-6 py-4">
+                <motion.button
+                  // 4. Botão de sair/entrar do mobile (landscape)
+
+                  className="flex justify-center items-center text-white font-semibold cursor-pointer"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => {
+                    if (isAuthenticated) {
+                      revokeSessionMutation();
+                    } else {
+                      router.replace("/login");
+                    }
+                  }}
+                >
+                  <ImExit className="mr-2 h-4 w-4" />
+
+                  {isAuthenticated ? "Sair" : "Entrar"}
+                </motion.button>
+              </li>
             </ul>
           </motion.div>
         )}
@@ -287,4 +273,4 @@ const Header = () => {
   );
 };
 
-export { Header };
+export { AdminHeader };

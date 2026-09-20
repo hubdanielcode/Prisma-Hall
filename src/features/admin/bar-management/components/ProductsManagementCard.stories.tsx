@@ -1,11 +1,14 @@
-import { BarProvider } from "@/features/bar";
+import { BarProvider } from "@/features/bar/context/BarContext";
+import { MobileProvider } from "@/shared/context/MobileContext";
 import { ProductsManagementCard } from "./ProductsManagementCard";
-import { MobileProvider } from "@/shared";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
 
 export default {
   title: "Layouts/Admin/Bar Management",
   component: ProductsManagementCard,
+  parameters: {
+    layout: "fullscreen",
+  },
 };
 
 const ProductCards = () => {

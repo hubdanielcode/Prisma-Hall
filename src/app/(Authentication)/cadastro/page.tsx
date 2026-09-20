@@ -1,4 +1,4 @@
-import { Authentication } from "@/features/authentication";
+import { Authentication } from "@/features/authentication/pages/Authentication";
 
 const AuthenticationPage = () => {
   return <Authentication />;

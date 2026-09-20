@@ -1,14 +1,14 @@
 "use client";
 
-import { useAuthenticationContext } from "@/features/authentication";
-import { useState, useEffect } from "react";
+import { CustomTextInput } from "@/shared/components/ui/CustomTextInput";
+import { EditProfileModal } from "@/features/users/profiles/components/EditProfileModal";
+import { FaUser, FaIdCard, FaCalendarAlt, FaPhone, FaMapMarkerAlt, FaCity, FaHome, FaSortNumericUp } from "react-icons/fa";
+import { FirstTimeProfileModal } from "./FirstTimeProfileModal";
 import { MdAlternateEmail, MdApartment, MdMyLocation } from "react-icons/md";
 import { motion } from "motion/react";
-import { FaUser, FaIdCard, FaCalendarAlt, FaPhone, FaMapMarkerAlt, FaCity, FaHome, FaSortNumericUp } from "react-icons/fa";
-import { CustomTextInput } from "@/shared/index";
-import { EditProfileModal } from "@/features/users/profiles/components/EditProfileModal";
-import { FirstTimeProfileModal } from "./FirstTimeProfileModal";
+import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
 import { useProfileContext } from "../hooks/useProfileContext";
+import { useState, useEffect } from "react";
 
 const ProfileInformationsSection = () => {
   /* - Puxando do context - */

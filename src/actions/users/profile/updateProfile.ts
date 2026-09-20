@@ -1,10 +1,10 @@
 "use server";
 
-import { validateSession } from "@/actions/session/validateSession";
 import { prisma } from "@/lib/prisma";
-import { updateProfileSchema } from "@/lib/validations";
-import z from "zod";
 import { put } from "@vercel/blob";
+import { updateProfileSchema } from "@/lib/validations/users/updateProfileSchema";
+import { validateSession } from "@/actions/session/validateSession";
+import z from "zod";
 
 const updateProfile = async (profile: z.infer<typeof updateProfileSchema>) => {
   const validSession = await validateSession();

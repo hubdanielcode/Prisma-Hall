@@ -1,11 +1,12 @@
 "use client";
 
-import { useMobileContext } from "@/shared";
+import { masks } from "@/shared/utils/functions/masks";
 import { motion, AnimatePresence } from "motion/react";
+import { productCategoryBadges } from "@/features/admin/bar-management/types/productCategoryBadges";
+import { useMobileContext } from "@/shared/hooks/useMobileContext";
+import { useProducts } from "@/features/bar/hooks/useProducts";
 import { X } from "lucide-react";
-import { masks } from "@/shared";
-import { productCategoryBadges } from "../types/productCategoryBadges";
-import { useProducts, type ProductProps } from "@/features/bar";
+import type { ProductProps } from "@/features/bar/types/product";
 
 interface DeleteProductModalProps {
   isOpen: boolean;

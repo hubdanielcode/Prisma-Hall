@@ -1,7 +1,7 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
 import { checkIsAdmin } from "../checkIsAdmin";
+import { prisma } from "@/lib/prisma";
 
 const deleteProduct = async (productId: string) => {
   const isAdmin = await checkIsAdmin();

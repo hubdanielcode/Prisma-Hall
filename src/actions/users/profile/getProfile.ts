@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { validateSession } from "@/actions/session/validateSession";
-import { type ProfileProps } from "@/features/authentication/types/profile";
+import type { ProfileProps } from "@/features/authentication/types/profile";
 
 const getProfile = async (): Promise<ProfileProps | false> => {
   const validSession = await validateSession();

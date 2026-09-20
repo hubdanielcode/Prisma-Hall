@@ -1,9 +1,8 @@
 /* - Components - */
 
-export { FirstTimeProfileModal } from "@/features/users/profiles/components/FirstTimeProfileModal";
 export { EditProfileModal } from "@/features/users/profiles/components/EditProfileModal";
+export { FirstTimeProfileModal } from "@/features/users/profiles/components/FirstTimeProfileModal";
 export { ProfileInformationsSection } from "@/features/users/profiles/components/ProfileInformationsSection";
-export { ProfileHeader } from "@/shared/components/ProfileHeader";
 export { ProfileSettingsSection } from "@/features/users/profiles/components/ProfileSettingsSection";
 export { ProfileTicketsSection } from "@/features/users/profiles/components/ProfileTicketsSection";
 
@@ -14,6 +13,7 @@ export { ProfileContext, ProfileProvider } from "@/features/users/profiles/conte
 /* - Hooks - */
 
 export { useProfileContext } from "@/features/users/profiles/hooks/useProfileContext";
+export { useProfile } from "@/features/users/profiles/hooks/useProfile";
 
 /* - Pages - */
 

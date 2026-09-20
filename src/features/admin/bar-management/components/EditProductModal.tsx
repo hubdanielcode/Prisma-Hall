@@ -1,12 +1,12 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { createProductSchema } from "@/lib/validations";
+import { createProductSchema } from "@/lib/validations/admin/bar-management/createProductSchema";
 import { ImagePlus, X } from "lucide-react";
-import { masks, useMobileContext } from "@/shared";
-import { productCategoryBadges } from "@/features/admin";
-import { useBlockScroll } from "@/shared/hooks/useBlockScroll";
-import { useProducts } from "@/features/bar";
+import { masks } from "@/shared/utils/functions/masks";
+import { productCategoryBadges } from "@/features/admin/bar-management/types/productCategoryBadges";
+import { useBlockScroll, useMobileContext } from "@/shared/hooks";
+import { useProducts } from "@/features/bar/hooks/useProducts";
 import { useRef, useState } from "react";
 import z from "zod";
 

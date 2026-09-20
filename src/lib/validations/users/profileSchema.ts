@@ -1,6 +1,6 @@
-import { z } from "zod";
-import { parsedDate, regex } from "@/shared";
 import { imageFileSchema } from "../shared/imageFileSchema";
+import { parsedDate, regex } from "@/shared/utils";
+import { z } from "zod";
 
 const profileSchema = z.object({
   // 1. Nome

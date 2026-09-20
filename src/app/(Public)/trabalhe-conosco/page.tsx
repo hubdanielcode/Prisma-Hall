@@ -1,4 +1,4 @@
-import { WorkWithUs } from "@/shared";
+import { WorkWithUs } from "@/shared/pages/footer-links/WorkWithUs";
 
 const WorkWithUsPage = () => {
   return <WorkWithUs />;

@@ -1,7 +1,7 @@
-import { ProfileInformationsSection } from "./ProfileInformationsSection";
-import { AuthenticationContext } from "@/features/authentication";
-import { ProfileContext } from "../context/ProfileContext";
+import { AuthenticationContext } from "@/features/authentication/context/AuthenticationContext";
 import { fn } from "storybook/test";
+import { ProfileContext } from "../context/ProfileContext";
+import { ProfileInformationsSection } from "./ProfileInformationsSection";
 
 export default {
   title: "Layouts/Protected/Profile",

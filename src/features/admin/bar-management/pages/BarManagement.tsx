@@ -1,18 +1,12 @@
 "use client";
 
-import { FaPlusCircle } from "react-icons/fa";
-import {
-  ProductsManagementTable,
-  ProductsManagementCard,
-  ProductsManagementFilter,
-  CreateProductModal,
-  EditProductModal,
-} from "@/features/admin/index";
-import { motion } from "motion/react";
-import { useEffect, useState } from "react";
-import { useMobileContext } from "@/shared";
-import { useBarContext, useProducts } from "@/features/bar";
 import { DeleteProductModal } from "../components/DeleteProductModal";
+import { FaPlusCircle } from "react-icons/fa";
+import { motion } from "motion/react";
+import { ProductsManagementTable, ProductsManagementCard, ProductsManagementFilter, CreateProductModal, EditProductModal } from "@/features/admin";
+import { useBarContext, useProducts } from "@/features/bar";
+import { useEffect, useState } from "react";
+import { useMobileContext } from "@/shared/hooks/useMobileContext";
 
 const BarManagement = () => {
   /* - Puxando do context - */

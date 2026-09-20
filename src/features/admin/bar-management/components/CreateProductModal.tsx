@@ -1,14 +1,14 @@
 "use client";
 
-import { useProducts } from "@/features/bar";
-import { createProductSchema } from "@/lib/validations";
-import { masks, useMobileContext } from "@/shared";
-import { useBlockScroll } from "@/shared/hooks/useBlockScroll";
+import { createProductSchema } from "@/lib/validations/admin/bar-management/createProductSchema";
+import { ImagePlus, X } from "lucide-react";
+import { masks } from "@/shared/utils/functions/masks";
+import { motion, AnimatePresence } from "motion/react";
+import { productCategoryBadges } from "../types/productCategoryBadges";
+import { useBlockScroll, useMobileContext } from "@/shared/hooks";
+import { useProducts } from "@/features/bar/hooks/useProducts";
 import { useRef, useState } from "react";
 import z from "zod";
-import { motion, AnimatePresence } from "motion/react";
-import { ImagePlus, X } from "lucide-react";
-import { productCategoryBadges } from "../types/productCategoryBadges";
 
 interface CreateProductModalProps {
   isOpen: boolean;

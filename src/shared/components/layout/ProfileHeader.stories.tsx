@@ -1,7 +1,8 @@
-import { AuthenticationProvider } from "@/features/authentication";
-import { MobileProvider, ProfileHeader } from "@/shared/index";
-import { ProfileProvider } from "@/features/users";
-import { QueryProvider } from "../providers/QueryProvider";
+import { AuthenticationProvider } from "@/features/authentication/context/AuthenticationContext";
+import { MobileProvider } from "@/shared/context/MobileContext";
+import { ProfileHeader } from "@/shared/components/layout/ProfileHeader";
+import { ProfileProvider } from "@/features/users/profiles/context/ProfileContext";
+import { QueryProvider } from "../../providers/QueryProvider";
 
 export default {
   title: "Layouts/Protected/Profile",

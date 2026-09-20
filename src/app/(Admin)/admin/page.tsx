@@ -1,4 +1,4 @@
-import { Admin } from "@/shared/pages/Admin";
+import { Admin } from "@/shared/pages/content-pages/Admin";
 
 const AdminPage = () => {
   return <Admin />;

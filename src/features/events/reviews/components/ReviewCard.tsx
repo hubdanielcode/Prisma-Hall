@@ -1,10 +1,10 @@
 "use client";
 
+import { formatDistanceToNow } from "date-fns";
 import { motion } from "motion/react";
+import { ptBR } from "date-fns/locale";
 import { Quote, Star, Check } from "lucide-react";
 import { type ReviewWithDetails } from "../types/reviews";
-import { formatDistanceToNow } from "date-fns";
-import { ptBR } from "date-fns/locale";
 
 interface ReviewCardProps {
   review: ReviewWithDetails;

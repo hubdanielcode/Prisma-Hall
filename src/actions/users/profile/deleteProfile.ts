@@ -1,7 +1,7 @@
 "use server";
 
-import { validateSession } from "@/actions/session/validateSession";
 import { prisma } from "@/lib/prisma";
+import { validateSession } from "@/actions/session/validateSession";
 
 const deleteProfile = async () => {
   const validSession = await validateSession();

@@ -1,5 +1,5 @@
+import { regex } from "@/shared/utils/constants/regex";
 import { z } from "zod";
-import { regex } from "@/shared";
 
 const createReviewSchema = z.object({
   // 1. ID do evento sendo avaliado

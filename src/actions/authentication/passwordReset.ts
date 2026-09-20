@@ -1,8 +1,8 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
-import { passwordResetSchema } from "@/lib/validations";
 import { hash } from "bcrypt";
+import { passwordResetSchema } from "@/lib/validations/authentication/passwordResetSchemas";
+import { prisma } from "@/lib/prisma";
 
 interface PasswordResetProps {
   token: string;
