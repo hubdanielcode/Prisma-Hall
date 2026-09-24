@@ -23,9 +23,9 @@ const EventListItem = ({ event, onSelect }: EventListItemProps) => {
       {/* - Data - */}
 
       <div className="flex flex-col items-center justify-center w-25 shrink-0 gap-2">
-        <span className="text-[#B8860B] font-bold text-lg leading-none">{formattedDate(event.starts_at).dayNumber}</span>
+        <span className="text-[#B8860B] font-bold text-lg leading-none">{formattedDate(event.startsAt).dayNumber}</span>
 
-        <span className="text-white/40 text-xs uppercase">{formattedDate(event.starts_at).dayName}</span>
+        <span className="text-white/40 text-xs uppercase">{formattedDate(event.startsAt).dayName}</span>
       </div>
 
       <div className="w-px h-10 bg-[#B8860B30] shrink-0" />
@@ -38,18 +38,18 @@ const EventListItem = ({ event, onSelect }: EventListItemProps) => {
         alt={event.title}
       />
 
-      {/* - Título e artista - */}
+      {/* - Título e attração - */}
 
       <div className="flex flex-col flex-1 min-w-0">
         <span className="text-white font-semibold text-sm sm:text-base truncate">{event.title}</span>
-        <span className="text-white/60 text-xs truncate">{event.artist}</span>
+        <span className="text-white/60 text-xs truncate">{event.attractionId}</span>
       </div>
 
       {/* - Horário - */}
 
       <div className="flex items-center text-white/60 text-xs sm:text-sm shrink-0 gap-1">
         <Clock className="h-3.5 w-3.5 text-[#B8860B]" />
-        {formattedDate(event.starts_at).time}
+        {formattedDate(event.startsAt).time}
       </div>
 
       {/* - Preço - */}

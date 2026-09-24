@@ -46,14 +46,14 @@ const EventCard = ({ event, index, footer }: EventCardProps) => {
       <div className="flex flex-col p-6">
         <span className="text-xl text-white font-bold p-1">{event.title}</span>
 
-        <span className="text-sm text-[#B8860B] font-bold p-1.5">{event.artist}</span>
+        <span className="text-sm text-[#B8860B] font-bold p-1.5">{event.attractionId}</span>
 
         <div className="flex items-center p-2">
           <Calendar className="w-3 h-3 sm:h-4 sm:w-4 md:h-5 md:w-5 mr-3 text-[#B8860B]" />
 
           <span className="text-white/60 text-sm font-semibold">
-            {formattedDate(event.starts_at).dayName}, {formattedDate(event.starts_at).dayNumber} de {formattedDate(event.starts_at).month} às{" "}
-            {formattedDate(event.starts_at).time}
+            {formattedDate(event.startsAt).dayName}, {formattedDate(event.startsAt).dayNumber} de {formattedDate(event.startsAt).month} às{" "}
+            {formattedDate(event.startsAt).time}
           </span>
         </div>
 

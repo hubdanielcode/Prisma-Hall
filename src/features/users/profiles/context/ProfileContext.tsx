@@ -15,7 +15,7 @@ interface ProfileContextType {
 
   /* - Mutations - */
 
-  updateProfileMutation: (newProfileData: z.infer<typeof updateProfileSchema>) => Promise<unknown>;
+  updateProfileMutation: (newProfileData: z.input<typeof updateProfileSchema>) => Promise<unknown>;
   deleteProfileMutation: () => Promise<unknown>;
 }
 

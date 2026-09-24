@@ -5,6 +5,9 @@ import { useEffect, useState } from "react";
 export default {
   title: "Components/Emails/Templates",
   components: PasswordResetEmail,
+  parameters: {
+    layout: "fullscreen",
+  },
 };
 
 const PasswordResetEmailTemplate = ({ resetLink }: { resetLink: string }) => {

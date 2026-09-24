@@ -46,7 +46,17 @@ const useProducts = () => {
   });
 
   return {
-    /* - Leitura - */
+    /* - Estados de edição- */
+
+    productBeingEdited,
+    setProductBeingEdited,
+
+    /* - Estados de deleção- */
+
+    productBeingDeleted,
+    setProductBeingDeleted,
+
+    /* - Query de leitura - */
 
     products,
     isLoading,
@@ -57,13 +67,6 @@ const useProducts = () => {
     createProductMutation,
     editProductMutation,
     deleteProductMutation,
-
-    /* - Estados - */
-
-    productBeingEdited,
-    setProductBeingEdited,
-    productBeingDeleted,
-    setProductBeingDeleted,
   };
 };
 

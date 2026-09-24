@@ -2,11 +2,15 @@
 
 import { prisma } from "@/lib/prisma";
 
-const getAllEvents = async () => {
+const getSingleEvent = async (eventId: string) => {
   try {
-    const events = await prisma.event.findMany();
+    const event = await prisma.event.findUnique({ where: { id: eventId } });
 
-    return events.map((event) => ({
+    if (!event) {
+      return false;
+    }
+
+    return {
       id: event.id,
       title: event.title,
       description: event.description,
@@ -15,16 +19,16 @@ const getAllEvents = async () => {
       image: event.image,
       status: event.status,
       price: event.price.toNumber(),
-      startsAt: event.startsAt.toISOString(),
+      startsAt: event.startsAt,
       attendees: event.attendees,
       rating: event.rating.toNumber(),
 
       createdAt: event.createdAt.toISOString(),
       updatedAt: event.updatedAt.toISOString(),
-    }));
+    };
   } catch {
-    throw new Error("Erro ao buscar eventos.");
+    throw new Error("Erro ao buscar evento.");
   }
 };
 
-export { getAllEvents };
+export { getSingleEvent };

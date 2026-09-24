@@ -6,6 +6,8 @@ import { rotatingImages } from "@/shared/utils/constants/rotatingImages";
 import { useEffect, useState } from "react";
 
 const HeroSection = () => {
+  /* - Estados da animação - */
+
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [animationDirection, setAnimationDirection] = useState<string>("left");
 

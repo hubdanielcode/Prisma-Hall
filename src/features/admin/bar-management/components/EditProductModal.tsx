@@ -6,7 +6,7 @@ import { ImagePlus, X } from "lucide-react";
 import { masks } from "@/shared/utils/functions/masks";
 import { productCategoryBadges } from "@/features/admin/bar-management/types/productCategoryBadges";
 import { useBlockScroll, useMobileContext } from "@/shared/hooks";
-import { useProducts } from "@/features/bar/hooks/useProducts";
+import { useBarContext } from "@/features/bar/hooks/useBarContext";
 import { useRef, useState } from "react";
 import z from "zod";
 
@@ -23,25 +23,29 @@ const EditProductModal = ({ isOpen, onClose }: EditProductModalProps) => {
   /* - Puxando do context - */
 
   const { isPortraitMobile, isLandscapeMobile } = useMobileContext();
-  const { editProductMutation, productBeingEdited } = useProducts();
+  const { editProductMutation, productBeingEdited } = useBarContext();
 
   /* - Estados dos produtos - */
 
   const [productImagePreview, setProductImagePreview] = useState<string>(productBeingEdited?.image ?? "");
   const [productImageFile, setProductImageFile] = useState<File | null>(null);
-
+  const [productQuantity, setProductQuantity] = useState<string>(productBeingEdited ? String(productBeingEdited.quantity) : "");
   const [productPrice, setProductPrice] = useState<string>(productBeingEdited ? productBeingEdited.price.toFixed(2).replace(".", ",") : "");
 
   const [newProduct, setNewProduct] = useState<EditableProductType>({
     name: productBeingEdited?.name ?? "",
     description: productBeingEdited?.description ?? "",
     category: productBeingEdited?.category === "all_categories" ? "beers" : (productBeingEdited?.category ?? "beers"),
+    quantity: productBeingEdited?.quantity ? Number(productBeingEdited.quantity) : 0,
     price: productBeingEdited ? Number(productBeingEdited.price) : 0,
     status: productBeingEdited?.status ?? "inactive",
   });
 
   /* - Estados de erro - */
 
+  const [productNameError, setProductNameError] = useState<string>("");
+  const [productDescriptionError, setProductDescriptionError] = useState<string>("");
+  const [productCategoryError, setProductCategoryError] = useState<string>("");
   const [productImageError, setProductImageError] = useState<string>("");
   const [productSubmitError, setProductSubmitError] = useState<string>("");
 
@@ -59,23 +63,21 @@ const EditProductModal = ({ isOpen, onClose }: EditProductModalProps) => {
   // 2. Permite que o admin altere a imagem do produto
 
   const handleChangeProductImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+    const selectedFile = e.target.files?.[0];
+    const maxFileSize = 4.5 * 1024 * 1024;
+    const allowedFileTypes = ["image/png", "image/jpg", "image/jpeg", "image/webp"];
 
-    if (!file) {
+    if (!selectedFile) {
       return;
     }
 
-    const maxFileSize = 4.5 * 1024 * 1024;
-
-    if (file.size > maxFileSize) {
+    if (maxFileSize < selectedFile.size) {
       setProductImageError("A imagem deve ter um tamanho de, no máximo, 4.5MB.");
       e.target.value = "";
       return;
     }
 
-    const allowedFileTypes = ["image/png", "image/jpg", "image/jpeg", "image/webp"];
-
-    if (!allowedFileTypes.includes(file.type)) {
+    if (!allowedFileTypes.includes(selectedFile.type)) {
       setProductImageError("Formato inválido. Escolha um arquivo com formato PNG, JPG ou WebP.");
       e.target.value = "";
       return;
@@ -87,46 +89,44 @@ const EditProductModal = ({ isOpen, onClose }: EditProductModalProps) => {
 
     reader.onload = () => {
       setProductImagePreview(reader.result as string);
-      setProductImageFile(file);
+      setProductImageFile(selectedFile);
     };
 
     reader.onerror = () => {
       setProductImageError("Erro ao carregar a imagem.");
     };
 
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(selectedFile);
     e.target.value = "";
   };
 
-  // 3. Reseta o formulário para os valores originais do produto
-
-  const handleResetForm = () => {
-    if (!productBeingEdited) {
-      return;
-    }
-
-    setNewProduct({
-      name: productBeingEdited.name,
-      description: productBeingEdited.description,
-      category: productBeingEdited.category === "all_categories" ? "beers" : productBeingEdited.category,
-      price: Number(productBeingEdited.price),
-      status: productBeingEdited.status,
-    });
-    setProductImagePreview(productBeingEdited.image);
-    setProductImageFile(null);
-    setProductPrice(productBeingEdited.price.toFixed(2).replace(".", ","));
-    setProductImageError("");
-    setProductSubmitError("");
-  };
-
-  // 4. Edita o produto
+  // 3. Edita o produto
 
   const handleEditProduct = async () => {
+    setProductNameError("");
+    setProductDescriptionError("");
+    setProductCategoryError("");
+    setProductImageError("");
+    setProductSubmitError("");
+
     if (!productBeingEdited) {
-      return;
+      return false;
     }
 
-    setProductSubmitError("");
+    if (!newProduct.name.trim()) {
+      setProductNameError("Insira um nome válido.");
+      return false;
+    }
+
+    if (!newProduct.description.trim()) {
+      setProductDescriptionError("Insira uma descrição válida.");
+      return false;
+    }
+
+    if (!newProduct.category) {
+      setProductCategoryError("Selecione uma categoria.");
+      return false;
+    }
 
     const productData = {
       productId: productBeingEdited.id,
@@ -138,10 +138,37 @@ const EditProductModal = ({ isOpen, onClose }: EditProductModalProps) => {
 
     if (!editedProduct) {
       setProductSubmitError("Não foi possível editar o produto. Tente novamente.");
+      return false;
+    }
+
+    return true;
+  };
+
+  // 4. Reseta o formulário para os valores originais do produto
+
+  const handleResetForm = () => {
+    if (!productBeingEdited) {
       return;
     }
 
-    onClose();
+    setProductNameError("");
+    setProductDescriptionError("");
+    setProductCategoryError("");
+    setProductImageError("");
+    setProductSubmitError("");
+
+    setNewProduct({
+      name: productBeingEdited.name,
+      description: productBeingEdited.description,
+      category: productBeingEdited.category === "all_categories" ? "beers" : productBeingEdited.category,
+      quantity: Number(productBeingEdited.quantity),
+      price: Number(productBeingEdited.price),
+      status: productBeingEdited.status,
+    });
+    setProductImagePreview(productBeingEdited.image);
+    setProductImageFile(null);
+    setProductQuantity(String(productBeingEdited.quantity));
+    setProductPrice(productBeingEdited.price.toFixed(2).replace(".", ","));
   };
 
   return (
@@ -161,11 +188,11 @@ const EditProductModal = ({ isOpen, onClose }: EditProductModalProps) => {
           {/* - Card do modal - */}
 
           <motion.div
-            className={`fixed z-50 ${
+            className={`fixed z-50 my-10 ${
               isPortraitMobile
-                ? "top-5 w-full h-fit max-w-none mx-0"
-                : `inset-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-auto mx-4 ${isLandscapeMobile ? "max-w-lg" : "max-w-xl"}`
-            } bg-black border border-[#B8860B] rounded-lg overflow-hidden max-h-dh overflow-y-auto`}
+                ? "top-14 left-4 w-[calc(100%-2rem)] h-fit max-w-none mx-0 max-h-[calc(100dvh-7rem)]"
+                : `inset-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-auto mx-4 max-h-[calc(100dvh-7rem)] ${isLandscapeMobile ? "max-w-lg" : "max-w-xl"}`
+            } bg-black border border-[#B8860B] rounded-lg overflow-hidden overflow-y-auto`}
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -257,10 +284,37 @@ const EditProductModal = ({ isOpen, onClose }: EditProductModalProps) => {
                 />
               </div>
 
-              {/* - Preço - */}
+              <div className="flex flex-row gap-4">
+                {/* - Quantidade - */}
 
-              <div className={`flex gap-4 ${isPortraitMobile ? "flex-col" : "flex-row"}`}>
-                <div className={`flex flex-col gap-1.5 shrink-0 ${isPortraitMobile ? "w-full" : "w-28"}`}>
+                <div className={`flex flex-col gap-1.5 ${isPortraitMobile ? "flex-1 min-w-0" : "shrink-0 w-28"}`}>
+                  <label className="text-xs text-[#B8860B] uppercase tracking-wide font-semibold mb-1.5">Quantidade</label>
+
+                  <div className="flex items-center bg-[#0A0A0A] border border-[#333] focus-within:border-[#B8860B] rounded-lg px-3 transition-colors">
+                    <span className="text-[#B8860B] text-sm font-bold mr-1">Qtd</span>
+
+                    <input
+                      type="text"
+                      placeholder="1"
+                      className="bg-transparent py-2.5 text-sm text-white placeholder:text-white/30 outline-none w-full min-w-0"
+                      value={productQuantity}
+                      onChange={(e) => {
+                        const maskedQuantityString = masks.productQuantity(e.target.value);
+                        setProductQuantity(maskedQuantityString);
+
+                        const maskedQuantityNumber = Number(maskedQuantityString.replace(",", "."));
+                        setNewProduct((prev) => ({
+                          ...prev,
+                          quantity: Number.isNaN(maskedQuantityNumber) ? 0 : maskedQuantityNumber,
+                        }));
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* - Preço - */}
+
+                <div className={`flex flex-col gap-1.5 ${isPortraitMobile ? "flex-1 min-w-0" : "shrink-0 w-28"}`}>
                   <label className="text-xs text-[#B8860B] uppercase tracking-wide font-semibold mb-1.5">Preço</label>
 
                   <div className="flex items-center bg-[#0A0A0A] border border-[#333] focus-within:border-[#B8860B] rounded-lg px-3 transition-colors">
@@ -269,7 +323,7 @@ const EditProductModal = ({ isOpen, onClose }: EditProductModalProps) => {
                     <input
                       type="text"
                       placeholder="0,00"
-                      className="bg-transparent py-2.5 text-sm text-white placeholder:text-white/30 outline-none w-full"
+                      className="bg-transparent py-2.5 text-sm text-white placeholder:text-white/30 outline-none w-full min-w-0"
                       value={productPrice}
                       onChange={(e) => {
                         const maskedPriceString = masks.productPrice(e.target.value);
@@ -284,41 +338,41 @@ const EditProductModal = ({ isOpen, onClose }: EditProductModalProps) => {
                     />
                   </div>
                 </div>
+              </div>
 
-                {/* - Categoria - */}
+              {/* - Categoria - */}
 
-                <div className="flex flex-col gap-1.5 flex-1">
-                  <label className="text-xs text-[#B8860B] uppercase tracking-wide font-semibold mb-1.5">Categoria</label>
+              <div className="flex flex-col gap-1.5 flex-1">
+                <label className="text-xs text-[#B8860B] uppercase tracking-wide font-semibold mb-1.5">Categoria</label>
 
-                  <div className="flex flex-wrap gap-2">
-                    {ProductCategories.map((category) => {
-                      const displayName = masks.productCategory(category);
-                      const badge = productCategoryBadges[displayName];
-                      const isSelected = newProduct.category === category;
+                <div className="flex flex-wrap gap-2">
+                  {ProductCategories.map((category) => {
+                    const displayName = masks.productCategory(category);
+                    const badge = productCategoryBadges[displayName];
+                    const isSelected = newProduct.category === category;
 
-                      return (
-                        <motion.button
-                          className={`px-3 py-1.5 text-xs font-semibold uppercase rounded-full border cursor-pointer transition-colors ${
-                            isSelected
-                              ? `${badge.background} ${badge.border} ${badge.text}`
-                              : "bg-transparent border-[#333] text-white/40 hover:border-white/30"
-                          }`}
-                          key={category}
-                          type="button"
-                          onClick={() => {
-                            setNewProduct((prev) => ({
-                              ...prev,
-                              category,
-                            }));
-                          }}
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          {displayName}
-                        </motion.button>
-                      );
-                    })}
-                  </div>
+                    return (
+                      <motion.button
+                        className={`px-3 py-1.5 text-xs font-semibold uppercase rounded-full border cursor-pointer transition-colors ${
+                          isSelected
+                            ? `${badge.background} ${badge.border} ${badge.text}`
+                            : "bg-transparent border-[#333] text-white/40 hover:border-white/30"
+                        }`}
+                        key={category}
+                        type="button"
+                        onClick={() => {
+                          setNewProduct((prev) => ({
+                            ...prev,
+                            category,
+                          }));
+                        }}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        {displayName}
+                      </motion.button>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -364,6 +418,24 @@ const EditProductModal = ({ isOpen, onClose }: EditProductModalProps) => {
             {/* - Seção de erro - */}
 
             <div className="min-h-20 w-full px-5">
+              {productNameError && (
+                <p className="flex items-center justify-center h-12 rounded-xl bg-red-100 border border-red-300 text-red-700 text-sm font-semibold px-4 text-center">
+                  {productNameError}
+                </p>
+              )}
+
+              {productDescriptionError && (
+                <p className="flex items-center justify-center h-12 rounded-xl bg-red-100 border border-red-300 text-red-700 text-sm font-semibold px-4 text-center">
+                  {productDescriptionError}
+                </p>
+              )}
+
+              {productCategoryError && (
+                <p className="flex items-center justify-center h-12 rounded-xl bg-red-100 border border-red-300 text-red-700 text-sm font-semibold px-4 text-center">
+                  {productCategoryError}
+                </p>
+              )}
+
               {productImageError && (
                 <p className="flex items-center justify-center h-12 rounded-xl bg-red-100 border border-red-300 text-red-700 text-sm font-semibold px-4 text-center">
                   {productImageError}
@@ -393,7 +465,13 @@ const EditProductModal = ({ isOpen, onClose }: EditProductModalProps) => {
                 className="px-5 py-2 text-sm text-[#B8860B] font-semibold bg-[#3D2B0A] border border-[#B8860B] rounded-lg cursor-pointer hover:shadow-sm shadow-[#DDAE56] transition-shadow"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={handleEditProduct}
+                onClick={async () => {
+                  const success = await handleEditProduct();
+
+                  if (success) {
+                    onClose();
+                  }
+                }}
               >
                 Editar Produto
               </motion.button>

@@ -4,7 +4,7 @@ import { ProfileContext } from "../context/ProfileContext";
 import { ProfileInformationsSection } from "./ProfileInformationsSection";
 
 export default {
-  title: "Layouts/Protected/Profile",
+  title: "Layouts/Protected/Profile/Sections",
   component: ProfileInformationsSection,
   parameters: {
     nextjs: {

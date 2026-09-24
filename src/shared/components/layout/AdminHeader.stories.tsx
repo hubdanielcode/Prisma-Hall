@@ -7,6 +7,7 @@ export default {
   title: "Layouts/Admin",
   component: AdminHeader,
   parameters: {
+    layout: "fullscreen",
     nextjs: {
       appDirectory: true,
     },

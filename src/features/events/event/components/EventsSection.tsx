@@ -5,9 +5,10 @@ import { motion } from "motion/react";
 import { Ticket } from "lucide-react";
 import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
 import { useCartContext } from "@/features/cart/hooks/useCartContext";
-import { useEvents, EventCard } from "@/features/events";
+import { useEvents } from "../hooks/useEvents";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { EventCard } from "./EventCard";
 
 const EventsSection = () => {
   /* - Puxando do context - */
@@ -75,12 +76,12 @@ const EventsSection = () => {
         {/* - Cards dos eventos - */}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {events
-            .sort((a, b) => new Date(a.starts_at).getTime() - new Date(b.starts_at).getTime())
-            .slice(0, showAll ? events.length : 6)
+          {(events ?? [])
+            .sort((a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime())
+            .slice(0, showAll ? (events ?? []).length : 6)
             .map((event, index) => (
               <EventCard
-                key={event.event_id}
+                key={event.id}
                 event={event}
                 index={index}
                 footer={
@@ -101,7 +102,7 @@ const EventsSection = () => {
                             ...event,
                             id: "",
                             type: "tickets",
-                            ticket_id: crypto.randomUUID(),
+                            ticketId: crypto.randomUUID(),
                             event_name: event.title,
                             quantity: 1,
                           });

@@ -26,7 +26,7 @@ const ProductsTablePagination = ({ currentPage, totalPages, onPageChange }: Prod
         {/* - Página anterior - */}
 
         <motion.button
-          className="flex justify-center items-center border border-[#B8860B] bg-black hover:bg-[#0A0A0A] rounded-lg w-8 h-8 cursor-pointer disabled:cursor-not-allowed"
+          className="flex justify-center items-center border border-[#B8860B] bg-black hover:bg-[#0A0A0A] rounded-lg w-8 h-8 cursor-pointer disabled:cursor-not-allowed disabled:opacity-30"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           disabled={currentPage === 1}
@@ -51,7 +51,7 @@ const ProductsTablePagination = ({ currentPage, totalPages, onPageChange }: Prod
         {/* - Próxima página - */}
 
         <motion.button
-          className="flex justify-center items-center border border-[#B8860B] bg-black hover:bg-[#0A0A0A] rounded-lg w-8 h-8 cursor-pointer disabled:cursor-not-allowed"
+          className="flex justify-center items-center border border-[#B8860B] bg-black hover:bg-[#0A0A0A] rounded-lg w-8 h-8 cursor-pointer disabled:cursor-not-allowed disabled:opacity-30"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           disabled={currentPage === totalPages || totalPages === 0}

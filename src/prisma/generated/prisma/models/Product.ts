@@ -27,10 +27,12 @@ export type AggregateProduct = {
 }
 
 export type ProductAvgAggregateOutputType = {
+  quantity: number | null
   price: runtime.Decimal | null
 }
 
 export type ProductSumAggregateOutputType = {
+  quantity: number | null
   price: runtime.Decimal | null
 }
 
@@ -39,6 +41,7 @@ export type ProductMinAggregateOutputType = {
   name: string | null
   description: string | null
   category: $Enums.ProductCategory | null
+  quantity: number | null
   image: string | null
   price: runtime.Decimal | null
   status: $Enums.ProductStatus | null
@@ -51,6 +54,7 @@ export type ProductMaxAggregateOutputType = {
   name: string | null
   description: string | null
   category: $Enums.ProductCategory | null
+  quantity: number | null
   image: string | null
   price: runtime.Decimal | null
   status: $Enums.ProductStatus | null
@@ -63,6 +67,7 @@ export type ProductCountAggregateOutputType = {
   name: number
   description: number
   category: number
+  quantity: number
   image: number
   price: number
   status: number
@@ -73,10 +78,12 @@ export type ProductCountAggregateOutputType = {
 
 
 export type ProductAvgAggregateInputType = {
+  quantity?: true
   price?: true
 }
 
 export type ProductSumAggregateInputType = {
+  quantity?: true
   price?: true
 }
 
@@ -85,6 +92,7 @@ export type ProductMinAggregateInputType = {
   name?: true
   description?: true
   category?: true
+  quantity?: true
   image?: true
   price?: true
   status?: true
@@ -97,6 +105,7 @@ export type ProductMaxAggregateInputType = {
   name?: true
   description?: true
   category?: true
+  quantity?: true
   image?: true
   price?: true
   status?: true
@@ -109,6 +118,7 @@ export type ProductCountAggregateInputType = {
   name?: true
   description?: true
   category?: true
+  quantity?: true
   image?: true
   price?: true
   status?: true
@@ -208,6 +218,7 @@ export type ProductGroupByOutputType = {
   name: string
   description: string
   category: $Enums.ProductCategory
+  quantity: number
   image: string
   price: runtime.Decimal
   status: $Enums.ProductStatus
@@ -243,6 +254,7 @@ export type ProductWhereInput = {
   name?: Prisma.StringFilter<"Product"> | string
   description?: Prisma.StringFilter<"Product"> | string
   category?: Prisma.EnumProductCategoryFilter<"Product"> | $Enums.ProductCategory
+  quantity?: Prisma.IntFilter<"Product"> | number
   image?: Prisma.StringFilter<"Product"> | string
   price?: Prisma.DecimalFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumProductStatusFilter<"Product"> | $Enums.ProductStatus
@@ -257,6 +269,7 @@ export type ProductOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
   category?: Prisma.SortOrder
+  quantity?: Prisma.SortOrder
   image?: Prisma.SortOrder
   price?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -274,6 +287,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ProductWhereInput[]
   NOT?: Prisma.ProductWhereInput | Prisma.ProductWhereInput[]
   category?: Prisma.EnumProductCategoryFilter<"Product"> | $Enums.ProductCategory
+  quantity?: Prisma.IntFilter<"Product"> | number
   image?: Prisma.StringFilter<"Product"> | string
   price?: Prisma.DecimalFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumProductStatusFilter<"Product"> | $Enums.ProductStatus
@@ -288,6 +302,7 @@ export type ProductOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
   category?: Prisma.SortOrder
+  quantity?: Prisma.SortOrder
   image?: Prisma.SortOrder
   price?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -308,6 +323,7 @@ export type ProductScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Product"> | string
   description?: Prisma.StringWithAggregatesFilter<"Product"> | string
   category?: Prisma.EnumProductCategoryWithAggregatesFilter<"Product"> | $Enums.ProductCategory
+  quantity?: Prisma.IntWithAggregatesFilter<"Product"> | number
   image?: Prisma.StringWithAggregatesFilter<"Product"> | string
   price?: Prisma.DecimalWithAggregatesFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumProductStatusWithAggregatesFilter<"Product"> | $Enums.ProductStatus
@@ -320,6 +336,7 @@ export type ProductCreateInput = {
   name: string
   description: string
   category: $Enums.ProductCategory
+  quantity: number
   image: string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   status: $Enums.ProductStatus
@@ -334,6 +351,7 @@ export type ProductUncheckedCreateInput = {
   name: string
   description: string
   category: $Enums.ProductCategory
+  quantity: number
   image: string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   status: $Enums.ProductStatus
@@ -348,6 +366,7 @@ export type ProductUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.EnumProductCategoryFieldUpdateOperationsInput | $Enums.ProductCategory
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
   image?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
@@ -362,6 +381,7 @@ export type ProductUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.EnumProductCategoryFieldUpdateOperationsInput | $Enums.ProductCategory
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
   image?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
@@ -376,6 +396,7 @@ export type ProductCreateManyInput = {
   name: string
   description: string
   category: $Enums.ProductCategory
+  quantity: number
   image: string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   status: $Enums.ProductStatus
@@ -388,6 +409,7 @@ export type ProductUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.EnumProductCategoryFieldUpdateOperationsInput | $Enums.ProductCategory
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
   image?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
@@ -400,6 +422,7 @@ export type ProductUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.EnumProductCategoryFieldUpdateOperationsInput | $Enums.ProductCategory
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
   image?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
@@ -417,6 +440,7 @@ export type ProductCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
   category?: Prisma.SortOrder
+  quantity?: Prisma.SortOrder
   image?: Prisma.SortOrder
   price?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -425,6 +449,7 @@ export type ProductCountOrderByAggregateInput = {
 }
 
 export type ProductAvgOrderByAggregateInput = {
+  quantity?: Prisma.SortOrder
   price?: Prisma.SortOrder
 }
 
@@ -433,6 +458,7 @@ export type ProductMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
   category?: Prisma.SortOrder
+  quantity?: Prisma.SortOrder
   image?: Prisma.SortOrder
   price?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -445,6 +471,7 @@ export type ProductMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
   category?: Prisma.SortOrder
+  quantity?: Prisma.SortOrder
   image?: Prisma.SortOrder
   price?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -453,6 +480,7 @@ export type ProductMinOrderByAggregateInput = {
 }
 
 export type ProductSumOrderByAggregateInput = {
+  quantity?: Prisma.SortOrder
   price?: Prisma.SortOrder
 }
 
@@ -504,6 +532,7 @@ export type ProductCreateWithoutCartsInput = {
   name: string
   description: string
   category: $Enums.ProductCategory
+  quantity: number
   image: string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   status: $Enums.ProductStatus
@@ -517,6 +546,7 @@ export type ProductUncheckedCreateWithoutCartsInput = {
   name: string
   description: string
   category: $Enums.ProductCategory
+  quantity: number
   image: string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   status: $Enums.ProductStatus
@@ -546,6 +576,7 @@ export type ProductUpdateWithoutCartsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.EnumProductCategoryFieldUpdateOperationsInput | $Enums.ProductCategory
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
   image?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
@@ -559,6 +590,7 @@ export type ProductUncheckedUpdateWithoutCartsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.EnumProductCategoryFieldUpdateOperationsInput | $Enums.ProductCategory
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
   image?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
@@ -572,6 +604,7 @@ export type ProductCreateWithoutVouchersInput = {
   name: string
   description: string
   category: $Enums.ProductCategory
+  quantity: number
   image: string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   status: $Enums.ProductStatus
@@ -585,6 +618,7 @@ export type ProductUncheckedCreateWithoutVouchersInput = {
   name: string
   description: string
   category: $Enums.ProductCategory
+  quantity: number
   image: string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   status: $Enums.ProductStatus
@@ -614,6 +648,7 @@ export type ProductUpdateWithoutVouchersInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.EnumProductCategoryFieldUpdateOperationsInput | $Enums.ProductCategory
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
   image?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
@@ -627,6 +662,7 @@ export type ProductUncheckedUpdateWithoutVouchersInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.EnumProductCategoryFieldUpdateOperationsInput | $Enums.ProductCategory
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
   image?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
@@ -680,6 +716,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   name?: boolean
   description?: boolean
   category?: boolean
+  quantity?: boolean
   image?: boolean
   price?: boolean
   status?: boolean
@@ -695,6 +732,7 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   name?: boolean
   description?: boolean
   category?: boolean
+  quantity?: boolean
   image?: boolean
   price?: boolean
   status?: boolean
@@ -707,6 +745,7 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   name?: boolean
   description?: boolean
   category?: boolean
+  quantity?: boolean
   image?: boolean
   price?: boolean
   status?: boolean
@@ -719,6 +758,7 @@ export type ProductSelectScalar = {
   name?: boolean
   description?: boolean
   category?: boolean
+  quantity?: boolean
   image?: boolean
   price?: boolean
   status?: boolean
@@ -726,7 +766,7 @@ export type ProductSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "category" | "image" | "price" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "category" | "quantity" | "image" | "price" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   carts?: boolean | Prisma.Product$cartsArgs<ExtArgs>
   vouchers?: boolean | Prisma.Product$vouchersArgs<ExtArgs>
@@ -746,6 +786,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     name: string
     description: string
     category: $Enums.ProductCategory
+    quantity: number
     image: string
     price: runtime.Decimal
     status: $Enums.ProductStatus
@@ -1180,6 +1221,7 @@ export interface ProductFieldRefs {
   readonly name: Prisma.FieldRef<"Product", 'String'>
   readonly description: Prisma.FieldRef<"Product", 'String'>
   readonly category: Prisma.FieldRef<"Product", 'ProductCategory'>
+  readonly quantity: Prisma.FieldRef<"Product", 'Int'>
   readonly image: Prisma.FieldRef<"Product", 'String'>
   readonly price: Prisma.FieldRef<"Product", 'Decimal'>
   readonly status: Prisma.FieldRef<"Product", 'ProductStatus'>

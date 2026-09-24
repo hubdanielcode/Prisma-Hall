@@ -1,6 +1,6 @@
 "use client";
 
-import { getReviews } from "../services/reviewServices";
+import { getReviews } from "../services/reviewsServices";
 import { useState, useEffect } from "react";
 import type { ReviewWithDetails } from "../types/reviews";
 

@@ -53,7 +53,7 @@ const getReviews = async () => {
     throw new Error("Erro ao buscar avaliações");
   }
 
-  return data.map((review) => ({
+  return data.map((review: any) => ({
     ...review,
     event_name: review.events?.title ?? null,
     user_name: review.users?.name ?? null,

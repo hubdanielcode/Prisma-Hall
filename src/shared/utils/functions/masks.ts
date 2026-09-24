@@ -1,4 +1,4 @@
-import { EventTag, ProductCategory } from "@/prisma/generated/prisma/enums";
+import { EventTag, ProductCategory, ProductStatus } from "@/prisma/generated/prisma/enums";
 
 const masks = {
   /* - Autenticação - */
@@ -10,6 +10,7 @@ const masks = {
       .slice(0, 50)
       .replace(/\b(\p{L}+)\b/gu, (word) => {
         const exceptions = new Set(["da", "de", "do", "das", "dos", "e"]);
+
         return exceptions.has(word.toLowerCase()) ? word.toLowerCase() : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
       }),
 
@@ -86,37 +87,63 @@ const masks = {
       .slice(0, 200)
       .replace(/(^\s*\w|[.!?]\s*\w)/g, (match) => match.toUpperCase()),
 
+  productQuantity: (value: string) => value.replace(/\D/g, "").slice(0, 4),
+
   productPrice: (value: string) => {
-    const onlyValid = value.replace(/[^\d,]/g, "");
+    const onlyValid = value.replace(/\./g, ",").replace(/[^\d,]/g, "");
 
     const [integerPart, ...rest] = onlyValid.split(",");
 
     if (rest.length === 0) {
-      return integerPart;
+      if (integerPart.length <= 4) {
+        return integerPart;
+      }
+
+      return `${integerPart.slice(0, 4)},${integerPart.slice(4, 6)}`;
     }
 
     const decimalPart = rest.join("").slice(0, 2);
 
-    return `${integerPart},${decimalPart}`;
+    return `${integerPart.slice(0, 4)},${decimalPart}`;
   },
 
-  productCategory: (value: ProductCategory) =>
-    value.replace("beers", "Cervejas").replace("cocktails", "Coquetéis").replace("drinks", "Drinks").replace("no_alcohol", "Sem Álcool") as
-      "Cervejas" | "Coquetéis" | "Drinks" | "Sem Álcool",
+  productCategory: (value: ProductCategory) => {
+    const productCategoryLabel = {
+      beers: "Cervejas",
+      cocktails: "Coquetéis",
+      drinks: "Drinks",
+      no_alcohol: "Sem Álcool",
+    } as Record<ProductCategory, "Cervejas" | "Coquetéis" | "Drinks" | "Sem Álcool">;
+
+    return productCategoryLabel[value];
+  },
+
+  productStatus: (value: ProductStatus) => {
+    const productStatusLabel = {
+      active: "Ativo",
+      inactive: "Inativo",
+    } as Record<ProductStatus, "Ativo" | "Inativo">;
+
+    return productStatusLabel[value];
+  },
 
   /* - Evento - */
 
-  eventTag: (value: EventTag) =>
-    value
-      .replace("trap_and_hiphop", "Trap & HipHop")
-      .replace("forro", "Forró")
-      .replace("samba_and_pagode", "Samba & Pagode")
-      .replace("metal", "Metal")
-      .replace("eletronica", "Eletrônica")
-      .replace("funk", "Funk")
-      .replace("rock", "Rock")
-      .replace("pop", "Pop")
-      .replace("all_tags", "Todos"),
+  eventTag: (value: EventTag) => {
+    const eventTagLabel = {
+      trap_and_hiphop: "Trap & HipHop",
+      forro: "Forró",
+      samba_and_pagode: "Samba & Pagode",
+      metal: "Metal",
+      eletronica: "Eletrônica",
+      funk: "Funk",
+      rock: "Rock",
+      pop: "Pop",
+      all_tags: "Todos",
+    };
+
+    return eventTagLabel[value];
+  },
 };
 
 export { masks };

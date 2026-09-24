@@ -1,9 +1,11 @@
 "use client";
 
 import { formattedDate } from "@/shared/utils/functions/dates";
-import { monthNames, useEvents, dayNames } from "@/features/events/event";
+import { monthNames } from "../../event/utils/monthNames";
+import { dayNames } from "../../event/utils/dayNames";
 import { motion } from "motion/react";
-import { useCalendarContext } from "@/features/events/agenda/hooks/useCalendarContext";
+import { useCalendarContext } from "../../event/hooks/useCalendarContext";
+import { useEvents } from "../../event/hooks/useEvents";
 
 const CalendarGrid = () => {
   /* - Puxando do context - */
@@ -22,13 +24,13 @@ const CalendarGrid = () => {
 
   // 1. Cria um conjunto com os dias que têm evento(s) no mês e ano selecionados
 
-  const daysWithEvents = events
+  const daysWithEvents = (events ?? [])
     .filter((event) => {
-      const { year, month } = formattedDate(event.starts_at);
+      const { year, month } = formattedDate(event.startsAt);
       return year === selectedYear && month === selectedMonth.toLowerCase();
     })
     .reduce((accumulator, event) => {
-      const { dayNumber } = formattedDate(event.starts_at);
+      const { dayNumber } = formattedDate(event.startsAt);
       const eventName = event.title;
 
       const todayEvents = accumulator.get(dayNumber) ?? [];

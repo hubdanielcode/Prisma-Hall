@@ -5,7 +5,6 @@ import { CustomTextInput } from "@/shared/components/ui/CustomTextInput";
 import { FaCalendarAlt, FaCity, FaHome, FaIdCard, FaMapMarkerAlt, FaPhone, FaSortNumericUp, FaUser } from "react-icons/fa";
 import { masks } from "@/shared/utils/functions/masks";
 import { MdApartment, MdMyLocation } from "react-icons/md";
-import { updateProfileSchema } from "@/lib/validations/users/updateProfileSchema";
 import { useBlockScroll } from "@/shared/hooks/useBlockScroll";
 import { useEffect, useRef, useState } from "react";
 import { useProfileContext } from "../hooks/useProfileContext";
@@ -78,27 +77,21 @@ const EditProfileModal = ({ onClose, isOpen }: EditProfileModalProps) => {
   const handleSaveInfo = async () => {
     setProfileSubmitError("");
 
-    const parsedProfile = updateProfileSchema.safeParse({
+    const rawProfile = {
       name,
-      phoneNumber,
-      socialSecurityNumber,
-      birthDate,
-      zipCode,
-      city,
-      state,
-      neighborhood,
-      street,
-      number,
-      complement,
-    });
+      phoneNumber: phoneNumber ?? "",
+      socialSecurityNumber: socialSecurityNumber ?? undefined,
+      birthDate: birthDate ?? undefined,
+      zipCode: zipCode ?? undefined,
+      city: city ?? undefined,
+      state: state ?? undefined,
+      neighborhood: neighborhood ?? undefined,
+      street: street ?? undefined,
+      number: number ?? undefined,
+      complement: complement ?? undefined,
+    };
 
-    if (!parsedProfile.success) {
-      setProfileSubmitError("Confira os dados digitados e tente novamente.");
-
-      return;
-    }
-
-    const updatedProfile = await updateProfileMutation(parsedProfile.data);
+    const updatedProfile = await updateProfileMutation(rawProfile);
 
     if (!updatedProfile) {
       setProfileSubmitError("Não foi possível salvar as alterações.");

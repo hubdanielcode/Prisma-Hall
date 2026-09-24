@@ -4,7 +4,7 @@ import { DeleteProductModal } from "../components/DeleteProductModal";
 import { FaPlusCircle } from "react-icons/fa";
 import { motion } from "motion/react";
 import { ProductsManagementTable, ProductsManagementCard, ProductsManagementFilter, CreateProductModal, EditProductModal } from "@/features/admin";
-import { useBarContext, useProducts } from "@/features/bar";
+import { useBarContext } from "@/features/bar";
 import { useEffect, useState } from "react";
 import { useMobileContext } from "@/shared/hooks/useMobileContext";
 
@@ -12,8 +12,7 @@ const BarManagement = () => {
   /* - Puxando do context - */
 
   const { isPortraitMobile, isLandscapeMobile } = useMobileContext();
-  const { filteredProducts } = useBarContext();
-  const { productBeingEdited, setProductBeingEdited, productBeingDeleted, setProductBeingDeleted } = useProducts();
+  const { filteredProducts, productBeingEdited, setProductBeingEdited, productBeingDeleted, setProductBeingDeleted } = useBarContext();
 
   /* - Estados de paginação - */
 
@@ -42,7 +41,7 @@ const BarManagement = () => {
   return (
     <>
       <div className={`bg-[#1A1A1A] min-h-screen w-full ${isPortraitMobile ? "pb-10" : isLandscapeMobile ? "pb-12 px-6" : "pb-14 px-8"}`}>
-        <div className="flex flex-col max-w-4xl w-full mx-auto gap-6 px-4">
+        <div className="flex flex-col max-w-6xl w-full mx-auto gap-6 px-4">
           <div className={`flex ${isPortraitMobile ? "flex-col" : "flex-row justify-between items-stretch gap-0"}`}>
             {/* - Título - */}
 

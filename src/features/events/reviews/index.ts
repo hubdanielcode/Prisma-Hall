@@ -9,7 +9,7 @@ export { useReviews } from "@/features/events/reviews/hooks/useReviews";
 
 /* - Services - */
 
-export { createReview, getReviews, getSingleReview, updateReview, deleteReview } from "@/features/events/reviews/services/reviewServices";
+export { createReview, deleteReview, updateReview, getReviews, getSingleReview } from "@/features/events/reviews/services/reviewsServices";
 
 /* - Types - */
 

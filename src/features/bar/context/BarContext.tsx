@@ -6,6 +6,8 @@ import { productCategoryIcons } from "@/features/bar/utils/productCategoryIcons"
 import { useProducts } from "@/features/bar/hooks/useProducts";
 import type { CategoryProps } from "@/features/bar/types/category";
 import type { ProductProps } from "@/features/bar/types/product";
+import { createProductSchema, editProductSchema } from "@/lib/validations";
+import { z } from "zod";
 
 interface BarContextType {
   /* - Dados dos produtos - */
@@ -24,6 +26,22 @@ interface BarContextType {
 
   searchQuery: string;
   setSearchQuery: (searchQuery: string) => void;
+
+  /* - Estados de edição - */
+
+  productBeingEdited: ProductProps | null;
+  setProductBeingEdited: (productBeingEdited: ProductProps | null) => void;
+
+  /* - Estados de deleção - */
+
+  productBeingDeleted: ProductProps | null;
+  setProductBeingDeleted: (productBeingDeleted: ProductProps | null) => void;
+
+  /* - Mutations - */
+
+  createProductMutation: (product: z.infer<typeof createProductSchema>) => Promise<unknown>;
+  editProductMutation: (product: z.infer<typeof editProductSchema>) => Promise<unknown>;
+  deleteProductMutation: (productId: string) => Promise<unknown>;
 }
 
 const BarContext = createContext<BarContextType | null>(null);
@@ -31,7 +49,18 @@ const BarContext = createContext<BarContextType | null>(null);
 const BarProvider = ({ children }: { children: React.ReactNode }) => {
   /* - Dados dos produtos - */
 
-  const { products, isLoading, error } = useProducts();
+  const {
+    products,
+    isLoading,
+    error,
+    productBeingEdited,
+    setProductBeingEdited,
+    productBeingDeleted,
+    setProductBeingDeleted,
+    createProductMutation,
+    editProductMutation,
+    deleteProductMutation,
+  } = useProducts();
 
   /* - Estados de categoria - */
 
@@ -79,6 +108,22 @@ const BarProvider = ({ children }: { children: React.ReactNode }) => {
 
         searchQuery,
         setSearchQuery,
+
+        /* - Estados de edição - */
+
+        productBeingEdited,
+        setProductBeingEdited,
+
+        /* - Estados de deleção - */
+
+        productBeingDeleted,
+        setProductBeingDeleted,
+
+        /* - Mutations - */
+
+        createProductMutation,
+        editProductMutation,
+        deleteProductMutation,
       }}
     >
       {children}

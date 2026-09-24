@@ -1,0 +1,84 @@
+warning: in the working copy of 'src/prisma/generated/prisma/internal/class.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/prisma/generated/prisma/internal/prismaNamespace.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/prisma/generated/prisma/internal/prismaNamespaceBrowser.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/prisma/generated/prisma/models/Product.ts', LF will be replaced by CRLF the next time Git touches it
+ .storybook/mocks/useProducts.ts                    |  16 [32m+[m
+ README.md                                          | 821 [32m++++++++++++++++++++[m[31m-[m
+ next.config.ts                                     |   6 [32m+[m
+ src/actions/admin/events-management/editEvent.ts   | 122 [32m++[m[31m-[m
+ src/actions/bar/getAllProducts.ts                  |   1 [32m+[m
+ src/actions/bar/getSingleProduct.ts                |   2 [32m+[m[31m-[m
+ src/actions/events/agenda/getAllEvents.ts          |  30 [32m+[m
+ src/actions/events/agenda/getSingleAttraction.ts   |   0
+ src/actions/events/agenda/getSingleEvent.ts        |   0
+ src/actions/index.ts                               |  12 [32m+[m[31m-[m
+ src/actions/users/profile/updateProfile.ts         |  39 [32m+[m[31m-[m
+ src/app/layout.tsx                                 |   3 [32m+[m[31m-[m
+ .../components/CreateProductModal.tsx              | 147 [32m++[m[31m--[m
+ .../components/DeleteProductModal.tsx              |   4 [32m+[m[31m-[m
+ .../bar-management/components/EditProductModal.tsx | 236 [32m++++[m[31m--[m
+ .../components/ProductsManagementCard.tsx          | 153 [32m++[m[31m--[m
+ .../components/ProductsManagementTable.tsx         |  60 [32m+[m[31m-[m
+ .../components/ProductsTablePagination.tsx         |   4 [32m+[m[31m-[m
+ .../admin/bar-management/pages/BarManagement.tsx   |   7 [32m+[m[31m-[m
+ .../components/CreateEventModal.stories.tsx        |   3 [32m+[m
+ .../components/DeleteEventModal.stories.tsx        |   3 [32m+[m
+ .../components/EditEventModal.stories.tsx          |   3 [32m+[m
+ .../components/EventsManagementCard.stories.tsx    |  12 [32m+[m[31m-[m
+ .../components/EventsManagementCard.tsx            |   2 [32m+[m[31m-[m
+ .../components/EventsManagementFilter.stories.tsx  |   3 [32m+[m
+ .../components/EventsManagementTable.stories.tsx   |   3 [32m+[m
+ .../components/EventsTablePagination.stories.tsx   |   3 [32m+[m
+ .../events-management/pages/EventsManagement.tsx   |   2 [32m+[m[31m-[m
+ .../AuthenticationScreenShell.stories.tsx          |  12 [32m+[m[31m-[m
+ src/features/authentication/hooks/useSession.ts    |  20 [32m+[m[31m-[m
+ src/features/bar/components/MotionCard.stories.tsx |  12 [32m+[m[31m-[m
+ src/features/bar/context/BarContext.tsx            |  47 [32m+[m[31m-[m
+ src/features/bar/hooks/useProducts.ts              |  19 [32m+[m[31m-[m
+ src/features/bar/types/product.ts                  |   2 [32m+[m
+ .../events/agenda/components/CalendarGrid.tsx      |  12 [32m+[m[31m-[m
+ .../events/agenda/components/CalendarHeader.tsx    |  11 [32m+[m[31m-[m
+ .../events/agenda/hooks/useCalendarContext.ts      |  13 [31m-[m
+ src/features/events/agenda/index.ts                |   4 [31m-[m
+ src/features/events/agenda/pages/Schedule.tsx      |  36 [32m+[m[31m-[m
+ src/features/events/event/components/EventCard.tsx |   6 [32m+[m[31m-[m
+ .../events/event/components/EventListItem.tsx      |  10 [32m+[m[31m-[m
+ .../events/event/components/EventModal.tsx         |   8 [32m+[m[31m-[m
+ .../events/event/components/EventsSection.tsx      |  13 [32m+[m[31m-[m
+ .../event/components/GallerySection.stories.tsx    |   0
+ .../events/event/components/GallerySection.tsx     | 156 [31m----[m
+ src/features/events/event/hooks/useEvents.ts       |  73 [32m+[m[31m-[m
+ src/features/events/event/index.ts                 |   7 [32m+[m[31m-[m
+ .../events/event/services/eventsServices.ts        | 100 [31m---[m
+ src/features/events/event/types/event.ts           |  16 [32m+[m[31m-[m
+ src/features/events/event/utils/eventTags.ts       |  16 [32m+[m[31m-[m
+ src/features/events/index.ts                       |   3 [31m-[m
+ .../events/reviews/components/ReviewsSection.tsx   |   2 [32m+[m[31m-[m
+ src/features/events/reviews/hooks/useReviews.ts    |   2 [32m+[m[31m-[m
+ src/features/events/reviews/index.ts               |   2 [32m+[m[31m-[m
+ .../events/reviews/services/reviewServices.ts      | 109 [31m---[m
+ .../users/profiles/components/EditProfileModal.tsx |  33 [32m+[m[31m-[m
+ .../profiles/components/FirstTimeProfileModal.tsx  |  85 [32m++[m[31m-[m
+ .../ProfileInformationsSection.stories.tsx         |   2 [32m+[m[31m-[m
+ .../components/ProfileSettingsSection.stories.tsx  |   2 [32m+[m[31m-[m
+ .../components/ProfileTicketsSection.stories.tsx   |   2 [32m+[m[31m-[m
+ .../users/profiles/context/ProfileContext.tsx      |   2 [32m+[m[31m-[m
+ .../admin/bar-management/createProductSchema.ts    |  10 [32m+[m[31m-[m
+ src/lib/validations/users/profileSchema.ts         |   4 [32m+[m[31m-[m
+ src/prisma/generated/prisma/internal/class.ts      |   6 [32m+[m[31m-[m
+ .../generated/prisma/internal/prismaNamespace.ts   |   1 [32m+[m
+ .../prisma/internal/prismaNamespaceBrowser.ts      |   1 [32m+[m
+ src/prisma/generated/prisma/models/Product.ts      |  44 [32m+[m[31m-[m
+ src/prisma/schema.prisma                           |   1 [32m+[m
+ .../components/layout/AdminHeader.stories.tsx      |   1 [32m+[m
+ src/shared/components/layout/Footer.tsx            |  20 [32m+[m[31m-[m
+ src/shared/components/layout/Header.stories.tsx    |   1 [32m+[m
+ src/shared/components/layout/Header.tsx            |   7 [32m+[m[31m-[m
+ src/shared/components/layout/HeroSection.tsx       |   2 [32m+[m
+ .../components/layout/ProfileHeader.stories.tsx    |   1 [32m+[m
+ src/shared/components/layout/ProfileHeader.tsx     | 193 [32m++[m[31m---[m
+ src/shared/emails/PasswordResetEmail.stories.tsx   |   3 [32m+[m
+ src/shared/pages/content-pages/MainContent.tsx     |   6 [32m+[m[31m-[m
+ src/shared/providers/QueryProvider.tsx             |   3 [32m+[m[31m-[m
+ src/shared/utils/functions/masks.ts                |  63 [32m+[m[31m-[m
+ 79 files changed, 1906 insertions(+), 995 deletions(-)

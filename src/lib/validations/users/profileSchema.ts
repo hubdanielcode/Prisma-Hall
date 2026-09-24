@@ -53,7 +53,7 @@ const profileSchema = z.object({
 
   // 9. Bairro
 
-  neighborhood: z.string().regex(regex.neighborhood).min(2, "Digite o nome de um bairro válido.").max(60, "Digite o nome de um bairro válido."),
+  neighborhood: z.string().regex(regex.neighborhood).min(2, "Digite o nome de um bairro válido.").max(40, "Digite o nome de um bairro válido."),
 
   // 10. Rua
 
@@ -65,7 +65,7 @@ const profileSchema = z.object({
 
   // 12. Complemento
 
-  complement: z.string().regex(regex.complement).min(2, "Digite um complemento válido.").max(25, "Digite um complemento válido."),
+  complement: z.string().regex(regex.complement).min(2, "Digite um complemento válido.").max(40, "Digite um complemento válido."),
 });
 
 export { profileSchema };

@@ -6,7 +6,7 @@ import { updateProfileSchema } from "@/lib/validations/users/updateProfileSchema
 import { validateSession } from "@/actions/session/validateSession";
 import z from "zod";
 
-const updateProfile = async (profile: z.infer<typeof updateProfileSchema>) => {
+const updateProfile = async (profile: z.input<typeof updateProfileSchema>) => {
   const validSession = await validateSession();
 
   if (!validSession) {
@@ -44,9 +44,22 @@ const updateProfile = async (profile: z.infer<typeof updateProfileSchema>) => {
 
       /* - Se houver troca de imagem - */
 
-      const editedProfile = await prisma.profile.update({
+      const editedProfile = await prisma.profile.upsert({
         where: { userId: validSession.user.id },
-        data: { ...baseProfileData },
+        update: { ...baseProfileData },
+        create: {
+          userId: validSession.user.id,
+          phoneNumber: parsedUpdate.data.phoneNumber ?? "",
+          socialSecurityNumber: parsedUpdate.data.socialSecurityNumber ?? "",
+          birthDate: parsedUpdate.data.birthDate ?? new Date(),
+          zipCode: parsedUpdate.data.zipCode ?? "",
+          city: parsedUpdate.data.city ?? "",
+          state: parsedUpdate.data.state ?? "",
+          neighborhood: parsedUpdate.data.neighborhood ?? "",
+          street: parsedUpdate.data.street ?? "",
+          number: parsedUpdate.data.number ?? "",
+          complement: parsedUpdate.data.complement ?? "",
+        },
       });
 
       const editedUser = await prisma.user.update({
@@ -73,9 +86,22 @@ const updateProfile = async (profile: z.infer<typeof updateProfileSchema>) => {
 
     /* - Se não houver troca de imagem - */
 
-    const editedProfile = await prisma.profile.update({
+    const editedProfile = await prisma.profile.upsert({
       where: { userId: validSession.user.id },
-      data: { ...baseProfileData },
+      update: { ...baseProfileData },
+      create: {
+        userId: validSession.user.id,
+        phoneNumber: parsedUpdate.data.phoneNumber ?? "",
+        socialSecurityNumber: parsedUpdate.data.socialSecurityNumber ?? "",
+        birthDate: parsedUpdate.data.birthDate ?? new Date(),
+        zipCode: parsedUpdate.data.zipCode ?? "",
+        city: parsedUpdate.data.city ?? "",
+        state: parsedUpdate.data.state ?? "",
+        neighborhood: parsedUpdate.data.neighborhood ?? "",
+        street: parsedUpdate.data.street ?? "",
+        number: parsedUpdate.data.number ?? "",
+        complement: parsedUpdate.data.complement ?? "",
+      },
     });
 
     const editedUser = await prisma.user.update({
@@ -98,7 +124,8 @@ const updateProfile = async (profile: z.infer<typeof updateProfileSchema>) => {
       number: editedProfile.number,
       complement: editedProfile.complement,
     };
-  } catch {
+  } catch (error) {
+    console.error(error);
     return false;
   }
 };

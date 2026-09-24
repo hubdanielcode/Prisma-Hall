@@ -13,6 +13,7 @@ const getAllProducts = async () => {
       description: product.description,
       image: product.image,
       price: product.price.toNumber(),
+      quantity: product.quantity,
       status: product.status,
 
       createdAt: product.createdAt.toISOString(),

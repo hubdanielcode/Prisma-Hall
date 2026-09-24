@@ -1,3 +1,4 @@
+import "./globals.css";
 import { AuthenticationProvider } from "@/features/authentication/context/AuthenticationContext";
 import { BarProvider } from "@/features/bar/context/BarContext";
 import { CalendarProvider } from "@/features/events/agenda/context/CalendarContext";
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
-      <body>
+      <body className="select-none">
         <QueryProvider>
           <AuthenticationProvider>
             <ProfileProvider>

@@ -7,10 +7,6 @@ export { CalendarHeader } from "@/features/events/agenda/components/CalendarHead
 
 export { CalendarContext, CalendarProvider } from "@/features/events/agenda/context/CalendarContext";
 
-/* - Hooks - */
-
-export { useCalendarContext } from "@/features/events/agenda/hooks/useCalendarContext";
-
 /* - Pages - */
 
 export { Schedule } from "@/features/events/agenda/pages/Schedule";

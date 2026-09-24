@@ -5,6 +5,9 @@ import { MobileProvider } from "@/shared/context/MobileContext";
 export default {
   title: "Layouts/Admin/Events Management/Table",
   component: EventsTablePagination,
+  parameters: {
+    layout: "fullscreen",
+  },
 };
 
 const TablePagination = () => {

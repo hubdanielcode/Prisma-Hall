@@ -6,7 +6,7 @@ import { masks } from "@/shared/utils/functions/masks";
 import { motion, AnimatePresence } from "motion/react";
 import { productCategoryBadges } from "../types/productCategoryBadges";
 import { useBlockScroll, useMobileContext } from "@/shared/hooks";
-import { useProducts } from "@/features/bar/hooks/useProducts";
+import { useBarContext } from "@/features/bar/hooks/useBarContext";
 import { useRef, useState } from "react";
 import z from "zod";
 
@@ -23,6 +23,7 @@ const emptyProduct: EmptyProductType = {
   name: "",
   description: "",
   category: "beers",
+  quantity: 1,
   price: 0,
   image: null,
   status: "inactive",
@@ -32,10 +33,11 @@ const CreateProductModal = ({ isOpen, onClose }: CreateProductModalProps) => {
   /* - Puxando do context - */
 
   const { isPortraitMobile, isLandscapeMobile } = useMobileContext();
-  const { createProductMutation } = useProducts();
+  const { createProductMutation } = useBarContext();
 
   /* - Estados de produto - */
 
+  const [productQuantity, setProductQuantity] = useState<string>("");
   const [productPrice, setProductPrice] = useState<string>("");
   const [productImagePreview, setProductImagePreview] = useState<string>("");
   const [newProduct, setNewProduct] = useState<EmptyProductType>(emptyProduct);
@@ -62,25 +64,23 @@ const CreateProductModal = ({ isOpen, onClose }: CreateProductModalProps) => {
   // 2. Permite que o admin adicione a imagem do produto que será integrado ao cardápio
 
   const handleAddProductImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+    const selectedFile = e.target.files?.[0];
+    const maxFileSize = 4.5 * 1024 * 1024;
+    const allowedFileTypes = ["image/png", "image/jpg", "image/jpeg", "image/webp"];
 
-    if (!file) {
+    if (!selectedFile) {
       return;
     }
 
     // 2.1. Valida a imagem com relação ao seu tamanho e ao seu tipo
 
-    const maxFileSize = 4.5 * 1024 * 1024;
-
-    if (maxFileSize > file.size) {
+    if (maxFileSize < selectedFile.size) {
       setProductImageError("A imagem deve ter um tamanho de, no máximo, 4.5MB.");
       e.target.value = "";
       return;
     }
 
-    const allowedFileTypes = ["image/png", "image/jpg", "image/jpeg", "image/webp"];
-
-    if (!allowedFileTypes.includes(file.type)) {
+    if (!allowedFileTypes.includes(selectedFile.type)) {
       setProductImageError("Formato inválido. Escolha um arquivo com formato PNG, JPG ou WebP.");
       e.target.value ?? "";
       return;
@@ -95,14 +95,14 @@ const CreateProductModal = ({ isOpen, onClose }: CreateProductModalProps) => {
     reader.onload = () => {
       setProductImagePreview(reader.result as string);
 
-      setNewProduct((prev) => ({ ...prev, image: file }));
+      setNewProduct((prev) => ({ ...prev, image: selectedFile }));
     };
 
     reader.onerror = () => {
       setProductImageError("Erro ao carregar a imagem.");
     };
 
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(selectedFile);
     e.target.value ?? "";
   };
 
@@ -134,17 +134,10 @@ const CreateProductModal = ({ isOpen, onClose }: CreateProductModalProps) => {
       return false;
     }
 
-    const parsedProduct = createProductSchema.safeParse({ ...newProduct, image: newProduct.image });
-
-    if (!parsedProduct.success) {
-      setProductSubmitError("Confira os dados do produto e tente novamente.");
-      return false;
-    }
-
-    const createdProduct = await createProductMutation(parsedProduct.data);
+    const createdProduct = await createProductMutation({ ...newProduct, image: newProduct.image });
 
     if (!createdProduct) {
-      setProductSubmitError("Não foi possível criar o produto. Tente novamente.");
+      setProductSubmitError("Não foi possível criar o produto.");
       return false;
     }
     return true;
@@ -181,11 +174,11 @@ const CreateProductModal = ({ isOpen, onClose }: CreateProductModalProps) => {
           {/* - Card do modal - */}
 
           <motion.div
-            className={`fixed z-50 ${
+            className={`fixed z-50 my-10 ${
               isPortraitMobile
-                ? "top-5 w-full h-fit max-w-none mx-0"
-                : `inset-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-auto mx-4 ${isLandscapeMobile ? "max-w-lg" : "max-w-xl"}`
-            } bg-black border border-[#B8860B] rounded-lg overflow-hidden max-h-dh overflow-y-auto`}
+                ? "top-14 left-4 w-[calc(100%-2rem)] h-fit max-w-none mx-0 max-h-[calc(100dvh-7rem)]"
+                : `inset-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-auto mx-4 max-h-[calc(100dvh-7rem)] ${isLandscapeMobile ? "max-w-lg" : "max-w-xl"}`
+            } bg-black border border-[#B8860B] rounded-lg overflow-hidden overflow-y-auto`}
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -277,10 +270,37 @@ const CreateProductModal = ({ isOpen, onClose }: CreateProductModalProps) => {
                 />
               </div>
 
-              {/* - Preço - */}
+              <div className="flex flex-row gap-4">
+                {/* - Quantidade - */}
 
-              <div className={`flex gap-4 ${isPortraitMobile ? "flex-col" : "flex-row"}`}>
-                <div className={`flex flex-col gap-1.5 shrink-0 ${isPortraitMobile ? "w-full" : "w-28"}`}>
+                <div className={`flex flex-col gap-1.5 ${isPortraitMobile ? "flex-1 min-w-0" : "shrink-0 w-28"}`}>
+                  <label className="text-xs text-[#B8860B] uppercase tracking-wide font-semibold mb-1.5">Quantidade</label>
+
+                  <div className="flex items-center bg-[#0A0A0A] border border-[#333] focus-within:border-[#B8860B] rounded-lg px-3 transition-colors">
+                    <span className="text-[#B8860B] text-sm font-bold mr-1">Qtd</span>
+
+                    <input
+                      type="text"
+                      placeholder="1"
+                      className="bg-transparent py-2.5 text-sm text-white placeholder:text-white/30 outline-none w-full min-w-0"
+                      value={productQuantity}
+                      onChange={(e) => {
+                        const maskedQuantityString = masks.productQuantity(e.target.value);
+                        setProductQuantity(maskedQuantityString);
+
+                        const maskedQuantityNumber = Number(maskedQuantityString.replace(",", "."));
+                        setNewProduct((prev) => ({
+                          ...prev,
+                          quantity: Number.isNaN(maskedQuantityNumber) ? 0 : maskedQuantityNumber,
+                        }));
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* - Preço - */}
+
+                <div className={`flex flex-col gap-1.5 ${isPortraitMobile ? "flex-1 min-w-0" : "shrink-0 w-28"}`}>
                   <label className="text-xs text-[#B8860B] uppercase tracking-wide font-semibold mb-1.5">Preço</label>
 
                   <div className="flex items-center bg-[#0A0A0A] border border-[#333] focus-within:border-[#B8860B] rounded-lg px-3 transition-colors">
@@ -289,7 +309,7 @@ const CreateProductModal = ({ isOpen, onClose }: CreateProductModalProps) => {
                     <input
                       type="text"
                       placeholder="0,00"
-                      className="bg-transparent py-2.5 text-sm text-white placeholder:text-white/30 outline-none w-full"
+                      className="bg-transparent py-2.5 text-sm text-white placeholder:text-white/30 outline-none w-full min-w-0"
                       value={productPrice}
                       onChange={(e) => {
                         const maskedPriceString = masks.productPrice(e.target.value);
@@ -304,41 +324,41 @@ const CreateProductModal = ({ isOpen, onClose }: CreateProductModalProps) => {
                     />
                   </div>
                 </div>
+              </div>
 
-                {/* - Categoria - */}
+              {/* - Categoria - */}
 
-                <div className="flex flex-col gap-1.5 flex-1">
-                  <label className="text-xs text-[#B8860B] uppercase tracking-wide font-semibold mb-1.5">Categoria</label>
+              <div className="flex flex-col gap-1.5 flex-1">
+                <label className="text-xs text-[#B8860B] uppercase tracking-wide font-semibold mb-1.5">Categoria</label>
 
-                  <div className="flex flex-wrap gap-2">
-                    {ProductCategories.map((category) => {
-                      const displayName = masks.productCategory(category);
-                      const badge = productCategoryBadges[displayName];
-                      const isSelected = newProduct.category === category;
+                <div className="flex flex-wrap gap-2">
+                  {ProductCategories.map((category) => {
+                    const displayName = masks.productCategory(category);
+                    const badge = productCategoryBadges[displayName];
+                    const isSelected = newProduct.category === category;
 
-                      return (
-                        <motion.button
-                          className={`px-3 py-1.5 text-xs font-semibold uppercase rounded-full border cursor-pointer transition-colors ${
-                            isSelected
-                              ? `${badge.background} ${badge.border} ${badge.text}`
-                              : "bg-transparent border-[#333] text-white/40 hover:border-white/30"
-                          }`}
-                          key={category}
-                          type="button"
-                          onClick={() => {
-                            setNewProduct((prev) => ({
-                              ...prev,
-                              category,
-                            }));
-                          }}
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          {displayName}
-                        </motion.button>
-                      );
-                    })}
-                  </div>
+                    return (
+                      <motion.button
+                        className={`px-3 py-1.5 text-xs font-semibold uppercase rounded-full border cursor-pointer transition-colors ${
+                          isSelected
+                            ? `${badge.background} ${badge.border} ${badge.text}`
+                            : "bg-transparent border-[#333] text-white/40 hover:border-white/30"
+                        }`}
+                        key={category}
+                        type="button"
+                        onClick={() => {
+                          setNewProduct((prev) => ({
+                            ...prev,
+                            category,
+                          }));
+                        }}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        {displayName}
+                      </motion.button>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -433,6 +453,7 @@ const CreateProductModal = ({ isOpen, onClose }: CreateProductModalProps) => {
                 whileTap={{ scale: 0.95 }}
                 onClick={async () => {
                   const success = await handleCreateNewProduct();
+
                   if (success) {
                     handleResetForm();
                     onClose();

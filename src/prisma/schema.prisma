@@ -165,6 +165,7 @@ model Product {
   name        String          @unique
   description String          @unique
   category    ProductCategory
+  quantity    Int
   image       String
   price       Decimal
   status      ProductStatus

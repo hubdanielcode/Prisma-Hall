@@ -1,5 +1,5 @@
 const EventsManagement = () => {
-  return <div>Events</div>;
+  return <div>EventsManagement</div>;
 };
 
 export { EventsManagement };

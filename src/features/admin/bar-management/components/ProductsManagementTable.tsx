@@ -1,6 +1,6 @@
 "use client";
 
-import { useBarContext, useProducts } from "@/features/bar";
+import { useBarContext } from "@/features/bar";
 import { motion } from "motion/react";
 import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import { productCategoryBadges } from "../types/productCategoryBadges";
@@ -16,8 +16,7 @@ interface ProductsManagementTableProps {
 const ProductsManagementTable = ({ currentPage, onPageChange }: ProductsManagementTableProps) => {
   /* - Puxando do context - */
 
-  const { setProductBeingEdited, setProductBeingDeleted } = useProducts();
-  const { filteredProducts } = useBarContext();
+  const { filteredProducts, setProductBeingEdited, setProductBeingDeleted } = useBarContext();
   const { isPortraitMobile, isLandscapeMobile } = useMobileContext();
 
   /* - Definições - */
@@ -67,17 +66,23 @@ const ProductsManagementTable = ({ currentPage, onPageChange }: ProductsManageme
 
                     <span className="text-white/50 text-xs line-clamp-2 leading-snug">{masks.productDescription(product.description)}</span>
 
-                    {/* - Categoria - */}
+                    {/* - Categoria e quantidade - */}
 
-                    <div
-                      className={`flex justify-center items-center px-2 py-1 w-fit backdrop-blur-sm border rounded-full ${badge.background} ${badge.border}`}
-                    >
-                      <span className={`flex justify-center items-center text-xs font-semibold uppercase ${badge.text}`}>{displayName}</span>
+                    <div className="flex items-center justify-between gap-2">
+                      <div
+                        className={`flex justify-center items-center px-2 py-1 w-fit backdrop-blur-sm border rounded-full mt-3 ${badge.background} ${badge.border}`}
+                      >
+                        <span className={`flex justify-center items-center text-xs font-semibold uppercase ${badge.text}`}>{displayName}</span>
+                      </div>
+
+                      <span className="text-white/60 text-xs font-semibold shrink-0">
+                        {product.quantity} {product.quantity === 1 ? "unidade" : "unidades"}
+                      </span>
                     </div>
                   </div>
                 </div>
 
-                {/* - Status, Criado Em e Ações - */}
+                {/* - Status, criado em e ações - */}
 
                 <div className="flex items-center justify-between pt-2 border-t border-[#B8860B30]">
                   <div className="flex flex-col gap-1">
@@ -91,10 +96,10 @@ const ProductsManagementTable = ({ currentPage, onPageChange }: ProductsManageme
                             : "bg-red-400 shadow-[0_0_6px_2px_rgba(248,113,113,0.6)]"
                         }`}
                       />
-                      <span className="text-white text-xs font-semibold">{product.status}</span>
+                      <span className="text-white text-xs font-semibold">{masks.productStatus(product.status)}</span>
                     </div>
 
-                    {/* - Criado Em - */}
+                    {/* - Criado em - */}
 
                     <span className="text-[#B8860B] font-semibold text-xs">{new Date(product.createdAt).toLocaleDateString("pt-BR")}</span>
                   </div>
@@ -115,9 +120,7 @@ const ProductsManagementTable = ({ currentPage, onPageChange }: ProductsManageme
                       className="group flex justify-center items-center h-9 w-9 bg-[#1A1A1A] hover:bg-[#333] border border-[#B8860B60] rounded-lg cursor-pointer"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      onClick={() => {
-                        setProductBeingDeleted(product);
-                      }}
+                      onClick={() => setProductBeingDeleted(product)}
                     >
                       <FaTrashAlt className="group-hover:text-red-400 text-xs" />
                     </motion.button>
@@ -144,19 +147,20 @@ const ProductsManagementTable = ({ currentPage, onPageChange }: ProductsManageme
       {/* - Container geral - */}
 
       <div className="w-full border border-[#B8860B] rounded-lg overflow-x-auto">
-        <motion.table className={`w-full ${isLandscapeMobile ? "min-w-160]" : ""}`}>
+        <motion.table className={`w-full ${isLandscapeMobile ? "min-w-160" : ""}`}>
           <colgroup>
-            <col className="w-[35%]" />
+            <col className="w-[31%]" />
+            <col className="w-[9%]" />
+            <col className="w-[9%]" />
             <col className="w-[10%]" />
+            <col className="w-[13%]" />
+            <col className="w-[18%]" />
             <col className="w-[10%]" />
-            <col className="w-[11%]" />
-            <col className="w-[14%]" />
-            <col className="w-[20%]" />
           </colgroup>
 
           {/* - Cabeçalho da tabela - */}
 
-          <thead className={`bg-[#0A0A0A] text-[#B8860B] trackin-wider uppercase ${isLandscapeMobile ? "text-xs" : "text-sm"}`}>
+          <thead className={`bg-[#0A0A0A] text-[#B8860B] tracking-wider uppercase ${isLandscapeMobile ? "text-xs" : "text-sm"}`}>
             <tr className={`border-b border-[#B6880660] ${isLandscapeMobile ? "h-16" : "h-20"}`}>
               <th className={`text-center rounded-tl-lg ${isLandscapeMobile ? "px-3 py-2" : "px-4 py-2"}`}>Produtos</th>
 
@@ -168,13 +172,15 @@ const ProductsManagementTable = ({ currentPage, onPageChange }: ProductsManageme
 
               <th className={`text-center ${isLandscapeMobile ? "px-3 py-2" : "px-4 py-2"}`}>Criado Em</th>
 
-              <th className={`text-center rounded-tr-lg ${isLandscapeMobile ? "px-3 py-2" : "px-4 py-2"}`}>Ações</th>
+              <th className={`text-center ${isLandscapeMobile ? "px-3 py-2" : "px-4 py-2"}`}>Ações</th>
+
+              <th className={`text-center rounded-tr-lg ${isLandscapeMobile ? "px-3 py-2" : "px-4 py-2"}`}>Quantidade disponível</th>
             </tr>
           </thead>
 
           {/* - Corpo da tabela - */}
 
-          <tbody className="bg-black text-white trackin-wider">
+          <tbody className="bg-black text-white tracking-wider">
             {paginatedProducts.map((product, index) => {
               const isLast = index === paginatedProducts.length - 1;
               const displayName = masks.productCategory(product.category);
@@ -242,11 +248,11 @@ const ProductsManagementTable = ({ currentPage, onPageChange }: ProductsManageme
                             : "bg-red-400 shadow-[0_0_6px_2px_rgba(248,113,113,0.6)]"
                         }`}
                       />
-                      <span>{product.status}</span>
+                      <span>{masks.productStatus(product.status)}</span>
                     </div>
                   </td>
 
-                  {/* - Criado Em - */}
+                  {/* - Criado em - */}
 
                   <td className="text-center font-semibold">
                     <span className={`text-[#B8860B] ${isLandscapeMobile ? "pl-2" : "pl-4"}`}>
@@ -288,6 +294,12 @@ const ProductsManagementTable = ({ currentPage, onPageChange }: ProductsManageme
                         </span>
                       </motion.button>
                     </div>
+                  </td>
+
+                  {/* - Quantidade - */}
+
+                  <td className="text-center font-semibold">
+                    {product.quantity} {product.quantity === 1 ? "unidade" : "unidades"}
                   </td>
                 </tr>
               );

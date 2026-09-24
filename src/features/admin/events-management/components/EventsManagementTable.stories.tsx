@@ -5,6 +5,9 @@ import { MobileProvider } from "@/shared/context/MobileContext";
 export default {
   title: "Layouts/Admin/Events Management/Table",
   component: EventsManagementTable,
+  parameters: {
+    layout: "fullscreen",
+  },
 };
 
 const TableData = () => {

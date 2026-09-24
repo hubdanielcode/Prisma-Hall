@@ -5,9 +5,8 @@ import { CustomTextInput } from "@/shared/components/ui/CustomTextInput";
 import { FaCalendarAlt, FaCity, FaHome, FaIdCard, FaMapMarkerAlt, FaPhone, FaSortNumericUp, FaUser } from "react-icons/fa";
 import { masks } from "@/shared/utils/functions/masks";
 import { MdApartment, MdMyLocation } from "react-icons/md";
-import { updateProfileSchema } from "@/lib/validations/users/updateProfileSchema";
 import { useBlockScroll } from "@/shared/hooks/useBlockScroll";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useProfileContext } from "../hooks/useProfileContext";
 
 export interface FirstTimeProfileModalProps {
@@ -37,6 +36,14 @@ const FirstTimeProfileModal = ({ onClose, isOpen }: FirstTimeProfileModalProps) 
   const [number, setNumber] = useState<string | null>(null);
   const [complement, setComplement] = useState<string | null>(null);
 
+  /* - Estados de erro - */
+
+  const [profileSubmitError, setProfileSubmitError] = useState<string>("");
+
+  /* - Definições - */
+
+  const profileSubmitRef = useRef<HTMLDivElement | null>(null);
+
   /* - Funções - */
 
   // 1. Impedindo o scroll enquanto o modal estiver aberto
@@ -61,37 +68,54 @@ const FirstTimeProfileModal = ({ onClose, isOpen }: FirstTimeProfileModalProps) 
     setStreet("");
     setNumber("");
     setComplement("");
+    setProfileSubmitError("");
   }, [isOpen, profile]);
 
   // 3. Salva os dados digitados e fecha o modal
 
   const handleSaveInfo = async () => {
-    const parsedProfile = updateProfileSchema.safeParse({
+    setProfileSubmitError("");
+
+    const rawProfile = {
       name,
-      phoneNumber,
-      socialSecurityNumber,
-      birthDate,
-      zipCode,
-      city,
-      state,
-      neighborhood,
-      street,
-      number,
-      complement,
-    });
+      phoneNumber: phoneNumber ?? "",
+      socialSecurityNumber: socialSecurityNumber ?? undefined,
+      birthDate: birthDate ?? undefined,
+      zipCode: zipCode ?? undefined,
+      city: city ?? undefined,
+      state: state ?? undefined,
+      neighborhood: neighborhood ?? undefined,
+      street: street ?? undefined,
+      number: number ?? undefined,
+      complement: complement ?? undefined,
+    };
 
-    if (!parsedProfile.success) {
-      return;
-    }
-
-    const updatedProfile = await updateProfileMutation(parsedProfile.data);
+    const updatedProfile = await updateProfileMutation(rawProfile);
 
     if (!updatedProfile) {
+      setProfileSubmitError("Não foi possível salvar as informações.");
       return;
     }
 
     onClose();
   };
+
+  // 4. Fecha o erro ao clicar fora
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const clickedInside = !profileSubmitRef.current || profileSubmitRef.current.contains(e.target as Node);
+
+      if (clickedInside) {
+        return;
+      }
+
+      setProfileSubmitError("");
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <AnimatePresence>
@@ -224,7 +248,7 @@ const FirstTimeProfileModal = ({ onClose, isOpen }: FirstTimeProfileModalProps) 
                       value={neighborhood ?? ""}
                       onChange={(value) => setNeighborhood(masks.neighborhood(value as string))}
                       icon={<FaMapMarkerAlt />}
-                      maxLength={60}
+                      maxLength={40}
                     />
                   </div>
                 </div>
@@ -267,9 +291,22 @@ const FirstTimeProfileModal = ({ onClose, isOpen }: FirstTimeProfileModalProps) 
                       value={complement ?? ""}
                       onChange={(value) => setComplement(masks.complement(value as string))}
                       icon={<MdApartment />}
-                      maxLength={25}
+                      maxLength={40}
                     />
                   </div>
+                </div>
+
+                {/* - Seção de erro - */}
+
+                <div
+                  className="min-h-20"
+                  ref={profileSubmitRef}
+                >
+                  {profileSubmitError && (
+                    <p className="flex items-center justify-center h-12 rounded-xl bg-red-100 border border-red-300 text-red-700 text-sm font-semibold px-4 text-center">
+                      {profileSubmitError}
+                    </p>
+                  )}
                 </div>
 
                 {/* - Botão de salvar - */}
@@ -279,7 +316,9 @@ const FirstTimeProfileModal = ({ onClose, isOpen }: FirstTimeProfileModalProps) 
                     className="text-white/60 hover:text-white text-sm font-semibold bg-[#1A1A1A] hover:bg-[#333] border border-[#B8860B] hover:shadow-sm hover:shadow-[#B8860B] px-4 py-2 rounded-lg cursor-pointer"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    onClick={handleSaveInfo}
+                    onClick={() => {
+                      handleSaveInfo();
+                    }}
                   >
                     Salvar e Continuar
                   </motion.button>

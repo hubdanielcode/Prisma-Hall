@@ -8,6 +8,7 @@ export default {
   title: "Layouts/Protected/Profile",
   component: ProfileHeader,
   parameters: {
+    layout: "fullscreen",
     nextjs: {
       appDirectory: true,
     },

@@ -1,7 +1,7 @@
 import { ProfileTicketsSection } from "./ProfileTicketsSection";
 
 export default {
-  title: "Layouts/Protected/Profile",
+  title: "Layouts/Protected/Profile/Sections",
   component: ProfileTicketsSection,
   parameters: {
     nextjs: {

@@ -7,7 +7,7 @@ const getSingleProduct = async (productId: string) => {
     const product = await prisma.product.findUnique({ where: { id: productId } });
 
     if (!product) {
-      return null;
+      return false;
     }
 
     return {

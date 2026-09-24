@@ -1,5 +1,7 @@
 import { MobileProvider } from "@/shared/context/MobileContext";
 import { EventsManagementCard } from "./EventsManagementCard";
+import { QueryProvider } from "@/shared/providers/QueryProvider";
+import { CalendarProvider } from "@/features/events/agenda";
 
 export default {
   title: "Layouts/Admin/Events Management",
@@ -8,9 +10,13 @@ export default {
 
 const EventCards = () => {
   return (
-    <MobileProvider>
-      <EventsManagementCard />
-    </MobileProvider>
+    <QueryProvider>
+      <CalendarProvider>
+        <MobileProvider>
+          <EventsManagementCard />
+        </MobileProvider>
+      </CalendarProvider>
+    </QueryProvider>
   );
 };
 

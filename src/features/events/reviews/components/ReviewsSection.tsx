@@ -23,7 +23,7 @@ const ReviewsSection = () => {
   const reviewBadges = [
     { label: "Avaliação Média", value: averageRating.toFixed(1), icon: Star },
     { label: "Total de Avaliações", value: `${reviews.length}`, icon: Quote },
-    { label: "Eventos Realizados", value: `${events.length}`, icon: Star },
+    { label: "Eventos Realizados", value: `${(events ?? []).length}`, icon: Star },
     { label: "Clientes Satisfeitos", value: "98%", icon: Users },
   ];
   return (

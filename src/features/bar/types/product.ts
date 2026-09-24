@@ -5,7 +5,9 @@ export type ProductProps = {
   description: string;
   image: string;
   price: number;
+  quantity: number;
   status: "active" | "inactive";
+
   createdAt: string;
   updatedAt: string;
 };

@@ -1,38 +1,65 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { type EventProps } from "../../event/types/event";
-import { getEvents } from "../../event/services/eventsServices";
+import { createEvent as createEventAction, editEvent as editEventAction, deleteEvent as deleteEventAction, getAllEvents } from "@/actions";
+import { EventProps } from "../types/event";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 
 const useEvents = () => {
-  /* - Estados de eventos - */
+  const queryClient = useQueryClient();
 
-  const [events, setEvents] = useState<EventProps[]>([]);
+  /* - Estados dos eventos - */
 
-  /* - Estados de carregamento - */
+  const [eventBeingEdited, setEventBeingEdited] = useState<EventProps | null>(null);
+  const [eventBeingDeleted, setEventBeingDeleted] = useState<EventProps | null>(null);
 
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  /* - Query de leitura - */
 
-  /* - Estados de erro - */
+  const { data: events, isLoading, error } = useQuery({ queryKey: ["events"], queryFn: getAllEvents });
 
-  const [error, setError] = useState<string>("");
+  /* - Mutations - */
 
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const data = await getEvents();
-        setEvents(data);
-      } catch (error) {
-        setError("Erro ao buscar eventos.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  // 1. CreateEventMutation
 
-    fetchEvents();
-  }, []);
+  const { mutateAsync: createEventMutation } = useMutation({
+    mutationFn: createEventAction,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["events"] }),
+  });
 
-  return { events, isLoading, error };
+  // 2. EditEventMutation
+
+  const { mutateAsync: editEventMutation } = useMutation({
+    mutationFn: editEventAction,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["events"] }),
+  });
+
+  // 3. DeleteEventMutation
+
+  const { mutateAsync: deleteEventMutation } = useMutation({
+    mutationFn: deleteEventAction,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["events"] }),
+  });
+
+  return {
+    /* - Leitura - */
+
+    events,
+    isLoading,
+    error,
+
+    /* - Mutations - */
+
+    createEventMutation,
+    editEventMutation,
+    deleteEventMutation,
+
+    /* - Estados dos eventos - */
+
+    eventBeingEdited,
+    setEventBeingEdited,
+    eventBeingDeleted,
+    setEventBeingDeleted,
+  };
 };
 
 export { useEvents };

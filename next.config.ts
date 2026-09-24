@@ -7,6 +7,12 @@ const nextConfig: NextConfig = {
   },
 
   serverExternalPackages: ["pg"],
+
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "4.5mb",
+    },
+  },
 };
 
 export default nextConfig;

@@ -1,7 +1,7 @@
 import { AuthenticationScreenShell } from "./AuthenticationScreenShell";
 
 export default {
-  title: "Layouts/Public/Authentication Secreen Shells",
+  title: "Layouts/Public/Secreen Shells",
   component: AuthenticationScreenShell,
   parameters: {
     layout: "fullscreen",
@@ -34,7 +34,7 @@ const signUpShell = () => {
 
 const signInShell = () => {
   return (
-    <AuthenticationScreenShell image="/images/ph-palco.png">
+    <AuthenticationScreenShell image="/images/ph-mezanino.png">
       <ExempleCard title="Entrar" />
     </AuthenticationScreenShell>
   );
@@ -44,12 +44,12 @@ const signInShell = () => {
 
 const recoverPasswordShell = () => {
   return (
-    <AuthenticationScreenShell image="/images/ph-palco.png">
+    <AuthenticationScreenShell image="/images/ph-bar.png">
       <ExempleCard title="Recuperar Senha" />
     </AuthenticationScreenShell>
   );
 };
 
-export { signUpShell as "Authentication Shell" };
-export { signInShell as "Login Shell" };
-export { recoverPasswordShell as "Recover Password Shell" };
+export { signUpShell as "Authentication Screen Shell" };
+export { signInShell as "Login Screen Shell" };
+export { recoverPasswordShell as "Recover Password Screen Shell" };

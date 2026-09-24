@@ -1,16 +1,16 @@
 export interface EventProps {
-  event_id: string;
-  event_name: string;
+  id: string;
   title: string;
   description: string;
-  artist: string;
-  starts_at: string;
+  tag: "all_tags" | "trap_and_hiphop" | "forro" | "samba_and_pagode" | "metal" | "eletronica" | "funk" | "rock" | "pop";
+  attractionId: string;
+  image: string;
+  status: "happened" | "soon";
   price: number;
+  startsAt: string;
   attendees: number;
   rating: number;
-  image: string;
-  tag: string;
-  status: "Active" | "Pending" | "Cancelled" | "Happened";
 
-  created_at: string;
+  createdAt: string;
+  updatedAt: string;
 }

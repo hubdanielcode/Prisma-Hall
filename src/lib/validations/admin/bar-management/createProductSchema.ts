@@ -19,15 +19,19 @@ const createProductSchema = z.object({
 
   category: z.enum(["beers", "cocktails", "drinks", "no_alcohol"]),
 
-  // 4. Imagem
+  // 4. Quantity
+
+  quantity: z.number().positive(),
+
+  // 5. Imagem
 
   image: imageFileSchema,
 
-  // 5. Preço
+  // 6. Preço
 
   price: z.number().positive(),
 
-  // 6. Estado
+  // 7. Estado
 
   status: z.enum(["active", "inactive"]),
 });

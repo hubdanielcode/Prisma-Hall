@@ -80,23 +80,26 @@ const EventModal = ({ event, isOpen, onClose }: EventModalProps) => {
 
                 {/* - Artista(s) do evento - */}
 
-                <span className="text-[#B8860B] font-semibold text-base truncate">{event.artist}</span>
+                <span className="text-[#B8860B] font-semibold text-base truncate">{event.attractionId}</span>
 
                 {/* - Detalhes do evento - */}
 
                 <div className="flex flex-wrap gap-3 mt-0.5">
                   <div className="flex items-center text-white/60 text-sm font-semibold">
                     <Clock className="h-4 w-4 mr-1 text-[#B8860B] shrink-0" />
-                    {formattedDate(event.starts_at).time}
+
+                    {formattedDate(event.startsAt).time}
                   </div>
 
                   <div className="flex items-center text-white/60 text-sm font-semibold">
                     <Users className="h-4 w-4 mr-1 text-[#B8860B] shrink-0" />
+
                     {event.attendees}
                   </div>
 
                   <div className="flex items-center text-white/60 text-sm font-semibold">
                     <Star className="h-4 w-4 mr-1 text-[#B8860B] fill-current shrink-0" />
+
                     {event.rating}
                   </div>
                 </div>
@@ -124,6 +127,7 @@ const EventModal = ({ event, isOpen, onClose }: EventModalProps) => {
                       event_name: event.title,
                       quantity: 1,
                     });
+
                     setIsCartOpen(true);
                   } else {
                     router.replace("/login");

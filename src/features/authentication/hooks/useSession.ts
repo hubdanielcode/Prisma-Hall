@@ -23,9 +23,11 @@ const useSession = () => {
     protected: "protectedSession",
   };
 
-  const invalidateAllSessionQueries = () => {
-    queryClient.invalidateQueries({ queryKey: [sessionQueryKey.admin] });
-    queryClient.invalidateQueries({ queryKey: [sessionQueryKey.protected] });
+  const invalidateAllSessionQueries = async () => {
+    await Promise.all([
+      queryClient.invalidateQueries({ queryKey: [sessionQueryKey.admin] }),
+      queryClient.invalidateQueries({ queryKey: [sessionQueryKey.protected] }),
+    ]);
   };
 
   /* - Query de leitura - */
@@ -53,9 +55,9 @@ const useSession = () => {
 
   const { mutateAsync: signInMutation } = useMutation({
     mutationFn: signInAction,
-    onSuccess: (signInMutationResult) => {
+    onSuccess: async (signInMutationResult) => {
       if (signInMutationResult) {
-        invalidateAllSessionQueries();
+        await invalidateAllSessionQueries();
       }
     },
   });
@@ -64,9 +66,9 @@ const useSession = () => {
 
   const { mutateAsync: signUpMutation } = useMutation({
     mutationFn: signUpAction,
-    onSuccess: (signUpMutationResult) => {
+    onSuccess: async (signUpMutationResult) => {
       if (signUpMutationResult) {
-        invalidateAllSessionQueries();
+        await invalidateAllSessionQueries();
       }
     },
   });
@@ -75,9 +77,9 @@ const useSession = () => {
 
   const { mutateAsync: revokeSessionMutation } = useMutation({
     mutationFn: revokeSessionAction,
-    onSuccess: (revokeSessionMutationResult) => {
+    onSuccess: async (revokeSessionMutationResult) => {
       if (revokeSessionMutationResult) {
-        invalidateAllSessionQueries();
+        await invalidateAllSessionQueries();
       }
     },
   });

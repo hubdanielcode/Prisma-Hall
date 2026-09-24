@@ -13,13 +13,20 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Footer = () => {
+  /* - Estados do email - */
+
   const [email, setEmail] = useState<string>("");
+
+  /* - Definições - */
 
   const router = useRouter();
   const pathname = usePathname();
   const appVersion = "v.1.0.0";
-
   const year = new Date().getFullYear();
+
+  /* - Funções - */
+
+  // 1. Redireciona o usuário para a seção que foi clicada
 
   const navigateToActiveSection = (link: { title: string; id: string }) => {
     const destination = link.title === "Agenda" ? "/agenda" : "/";
@@ -60,7 +67,7 @@ const Footer = () => {
           />
         </div>
 
-        {/* - Botão - */}
+        {/* - Botão de inscrever-se - */}
 
         <motion.button
           className="flex justify-center items-center w-full sm:w-fit md:w-fit h-13 bg-[#B8860B] hover:bg-[#7A5A08] shadow-sm shadow-[#B8860B] hover:shadow-[#7A5A08] text-black font-semibold px-4 py-2 rounded-lg cursor-pointer"
@@ -99,6 +106,7 @@ const Footer = () => {
               <h1 className="text-xl font-bold bg-clip-text text-transparent bg-linear-to-br from-yellow-500 via-yellow-600 to-yellow-700 whitespace-nowrap ml-1 mr-5">
                 Prisma Hall
               </h1>
+
               <p className="flex text-xs text-white font-semibold ml-2 mb-1">LIVE EXPERIENCE</p>
             </div>
           </div>
@@ -112,25 +120,17 @@ const Footer = () => {
           {/* - Redes sociais - */}
 
           <div className="flex gap-3">
-            {/* - Wrapper Instagram - */}
-
             <div className="bg-[#1A1A1A] hover:bg-[#B8860B] p-3 text-white rounded-lg mt-4 cursor-pointer">
               <FaInstagram className="h-4 w-4" />
             </div>
-
-            {/* - Wrapper Facebook - */}
 
             <div className="bg-[#1A1A1A] hover:bg-[#B8860B] p-3 text-white rounded-lg mt-4 cursor-pointer">
               <FaFacebook className="h-4 w-4" />
             </div>
 
-            {/* - Wrapper Twitter - */}
-
             <div className="bg-[#1A1A1A] hover:bg-[#B8860B] p-3 text-white rounded-lg mt-4 cursor-pointer">
               <FaTwitter className="h-4 w-4" />
             </div>
-
-            {/* - Wrapper Youtube - */}
 
             <div className="bg-[#1A1A1A] hover:bg-[#B8860B] p-3 text-white rounded-lg mt-4 cursor-pointer">
               <FaYoutube className="h-4 w-4" />

@@ -2,9 +2,10 @@
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { formattedDate } from "@/shared/utils/functions/dates";
-import { monthNames, useEvents } from "@/features/events/event";
+import { monthNames } from "../../event/utils/monthNames";
+import { useEvents } from "../../event/hooks/useEvents";
 import { motion } from "motion/react";
-import { useCalendarContext } from "@/features/events/agenda/hooks/useCalendarContext";
+import { useCalendarContext } from "../../event/hooks/useCalendarContext";
 
 const CalendarHeader = () => {
   /* - Puxando do context - */
@@ -18,12 +19,12 @@ const CalendarHeader = () => {
   const currentMonthIndex = monthNames.indexOf(selectedMonth);
 
   const monthEvents = new Set(
-    events
+    (events ?? [])
       .filter((event) => {
-        const { month, year } = formattedDate(event.starts_at);
+        const { month, year } = formattedDate(event.startsAt);
         return month === selectedMonth.toLowerCase() && year === selectedYear;
       })
-      .map((event) => formattedDate(event.starts_at)),
+      .map((event) => formattedDate(event.startsAt)),
   );
 
   /* - Funções - */

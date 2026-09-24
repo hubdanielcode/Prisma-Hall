@@ -1,11 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion } from "motion/react";
 import { Calendar, List } from "lucide-react";
-import { CalendarGrid, CalendarHeader, useCalendarContext } from "@/features/events/agenda";
-import { EventListItem, EventModal, eventTags, useEvents, type EventProps } from "@/features/events/event";
-import { formattedDate, Header } from "@/shared";
+import { CalendarGrid } from "../components/CalendarGrid";
+import { CalendarHeader } from "../components/CalendarHeader";
+import { EventListItem } from "../../event/components/EventListItem";
+import { EventModal } from "../../event/components/EventModal";
+import { EventProps } from "../../event/types/event";
+import { eventTags } from "../../event/utils/eventTags";
+import { formattedDate } from "@/shared/utils/functions/dates";
+import { Header } from "@/shared/components/layout/Header";
+import { motion } from "motion/react";
+import { useEffect, useState } from "react";
+import { useEvents } from "../../event/hooks/useEvents";
+import { useCalendarContext } from "../../event/hooks/useCalendarContext";
 
 const Schedule = () => {
   /* - Puxando do context - */
@@ -13,13 +20,13 @@ const Schedule = () => {
   const { selectedYear, selectedMonth, selectedDay } = useCalendarContext();
   const { events } = useEvents();
 
-  /* - Estados de vizualizaçao - */
+  /* - Estados de vizualização - */
 
   const [viewState, setViewState] = useState<"Calendar" | "List">("Calendar");
 
   /* - Estados de categoria - */
 
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [selectedCategory, setSelectedCategory] = useState<string>("all_tags");
 
   /* - Estados do modal - */
 
@@ -36,15 +43,21 @@ const Schedule = () => {
 
   // 2. Filtra os eventos com base no dia exato (DD/MMMM/AA)
 
+  if (!events) {
+    return false;
+  }
+
   const filteredEvents = events.filter((event) => {
-    const { dayNumber, month, year } = formattedDate(event.starts_at);
+    const { dayNumber, month, year } = formattedDate(event.startsAt);
+
     return dayNumber === selectedDay && month === selectedMonth.toLowerCase() && year === selectedYear;
   });
 
   // 3. Mostra os eventos do dia selecionado
 
   const todayEvents = filteredEvents.filter((event) => {
-    const { dayNumber, month, year } = formattedDate(event.starts_at);
+    const { dayNumber, month, year } = formattedDate(event.startsAt);
+
     return dayNumber === selectedDay && month === selectedMonth.toLowerCase() && year === selectedYear;
   });
 
@@ -52,12 +65,13 @@ const Schedule = () => {
 
   const monthEvents = events
     .filter((event) => {
-      const { month, year } = formattedDate(event.starts_at);
+      const { month, year } = formattedDate(event.startsAt);
       const matchDate = month === selectedMonth.toLowerCase() && year === selectedYear;
       const matchCategory = selectedCategory === "all" || selectedCategory === event.tag;
+
       return matchDate && matchCategory;
     })
-    .sort((a, b) => new Date(a.starts_at).getTime() - new Date(b.starts_at).getTime());
+    .sort((a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime());
 
   return (
     <>

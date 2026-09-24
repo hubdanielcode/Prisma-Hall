@@ -21,8 +21,8 @@ export { editProduct } from "@/actions/admin/bar-management/editProduct";
 // export { editAttraction } from "@/actions/admin/events-management/editAttraction";
 
 export { createEvent } from "@/actions/admin/events-management/createEvent";
-// export { deleteEvent } from "@/actions/admin/events-management/deleteEvent";
-// export { editEvent } from "@/actions/admin/events-management/editEvent";
+export { deleteEvent } from "@/actions/admin/events-management/deleteEvent";
+export { editEvent } from "@/actions/admin/events-management/editEvent";
 
 // 4. Users Management
 
@@ -47,11 +47,11 @@ export { getSingleProduct } from "@/actions/bar/getSingleProduct";
 
 /* - Events - */
 
-// export { getAllAttractions } from "@/actions/events/agenda/getAllAttractions";
-// export { getSingleAttraction } from "@/actions/events/agenda/getSingleAttraction";
+// export { getAllAttractions } from "@/actions/events/getAllAttractions";
+// export { getSingleAttraction } from "@/actions/events/getSingleAttraction";
 
-// export { getAllEvents } from "@/actions/events/agenda/getAllEvents";
-// export { getSingleEvent } from "@/actions/events/agenda/getSingleEvent";
+export { getAllEvents } from "@/actions/events/agenda/getAllEvents";
+export { getSingleEvent } from "@/actions/events/event/getSingleEvent";
 
 // export { getEventPicture } from "@/actions/events/gallery/getEventPictures";
 // export { likeEventPicture } from "@/actions/events/gallery/likeEventPictures";

@@ -4,7 +4,7 @@ import { masks } from "@/shared/utils/functions/masks";
 import { motion, AnimatePresence } from "motion/react";
 import { productCategoryBadges } from "@/features/admin/bar-management/types/productCategoryBadges";
 import { useMobileContext } from "@/shared/hooks/useMobileContext";
-import { useProducts } from "@/features/bar/hooks/useProducts";
+import { useBarContext } from "@/features/bar/hooks/useBarContext";
 import { X } from "lucide-react";
 import type { ProductProps } from "@/features/bar/types/product";
 
@@ -18,7 +18,7 @@ const DeleteProductModal = ({ isOpen, onClose, product }: DeleteProductModalProp
   /* - Puxando do context - */
 
   const { isPortraitMobile, isLandscapeMobile } = useMobileContext();
-  const { deleteProductMutation, setProductBeingDeleted } = useProducts();
+  const { deleteProductMutation, setProductBeingDeleted } = useBarContext();
 
   /* - Definições - */
 

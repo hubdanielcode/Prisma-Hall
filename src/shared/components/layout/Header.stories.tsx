@@ -8,6 +8,7 @@ export default {
   title: "Layouts/Public/Home Page",
   component: Header,
   parameters: {
+    layout: "fullscreen",
     nextjs: {
       appDirectory: true,
     },

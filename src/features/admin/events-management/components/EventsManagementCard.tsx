@@ -1,5 +1,5 @@
 const EventsManagementCard = () => {
-  return <div>EventsManagementCard</div>;
+  return <div>Teste</div>;
 };
 
 export { EventsManagementCard };

@@ -13,16 +13,21 @@ import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
 
 const Header = () => {
+  /* - Puxando do context - */
+
   const { isPortraitMobile, isLandscapeMobile } = useMobileContext();
   const { isAuthenticated, revokeSessionMutation } = useAuthenticationContext();
   const { handleOpenCart, isCartOpen, setIsCartOpen, totalItems } = useCartContext();
 
+  /* - Estados do menu - */
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
+  /* - Definições - */
+
   const router = useRouter();
   const pathname = usePathname();
-
   const navLinks = [
     { title: "Agenda", id: "schedule" },
     { title: "Eventos", id: "events" },

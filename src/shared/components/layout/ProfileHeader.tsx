@@ -6,9 +6,10 @@ import { ImExit } from "react-icons/im";
 import { Menu } from "lucide-react";
 import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
 import { useMobileContext } from "@/shared/hooks/useMobileContext";
-import { useRef, useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useProfileContext } from "@/features/users";
 
 interface ProfileHeaderProps {
   activeTab: string;
@@ -16,14 +17,35 @@ interface ProfileHeaderProps {
 }
 
 const ProfileHeader = ({ activeTab, setActiveTab }: ProfileHeaderProps) => {
+  /* - Puxando do context - */
+
+  const { profile, isLoading: isProfileLoading, updateProfileMutation } = useProfileContext();
   const { isPortraitMobile } = useMobileContext();
   const { isAuthenticated, revokeSessionMutation } = useAuthenticationContext();
 
-  const [profilePicture, setProfilePicture] = useState<string | null>(null);
-  const [isLoadingProfilePicture, setIsLoadingProfilePicture] = useState<boolean>(true);
+  /* - Estados de foto de perfil - */
+
+  const [profilePicturePreview, setProfilePicturePreview] = useState<string>("");
   const [isUploadingProfilePicture, setIsUploadingProfilePicture] = useState<boolean>(false);
 
+  /* - Estados de erro - */
+
+  const [profilePictureError, setProfilePictureError] = useState<string>("");
+
+  /* - Estados de dropdown - */
+
   const [isDropdownOpen, setIsDropDownOpen] = useState<boolean>(false);
+
+  /* - Definições - */
+
+  const router = useRouter();
+
+  const profilePictureErrorRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const profilePictureRef = useRef<HTMLInputElement>(null);
+
+  const savedProfilePicture = profile ? profile.profilePicture : null;
+  const displayedProfilePicture = profilePicturePreview || savedProfilePicture;
 
   const navLinks = [
     { id: "tickets", title: "Meus Ingressos" },
@@ -31,114 +53,76 @@ const ProfileHeader = ({ activeTab, setActiveTab }: ProfileHeaderProps) => {
     { id: "settings", title: "Configurações" },
   ];
 
-  const ProfilePictureRef = useRef<HTMLInputElement>(null);
-
-  const router = useRouter();
-
   /* - Funções - */
 
-  // 1. Busca a foto de perfil do usuário ao renderizar a página
-
-  useEffect(() => {
-    const fetchProfilePicture = async () => {
-      const {
-        data: { user },
-      } = await client.auth.getUser();
-
-      if (!user) {
-        setIsLoadingPhoto(false);
-        return;
-      }
-
-      const { data, error } = await client.from("users").select("photo").eq("user_id", user.id).single();
-
-      if (error || !data?.photo) {
-        setIsLoadingPhoto(false);
-        return;
-      }
-
-      setProfilePicture(data.photo);
-      setIsLoadingPhoto(false);
-    };
-
-    fetchProfilePicture();
-  }, []);
-
-  // 2. Permite que o usuário faça upload de uma foto para usar como foto de perfil
+  // 1. Permite que o usuário faça upload de um arquivo para usar como foto de perfil
 
   const handleUploadProfilePicture = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    const maxSize = 5 * 1024 * 1024;
+    const selectedFile = e.target.files?.[0];
 
-    if (!file || file.size > maxSize) {
+    if (!selectedFile) {
       return;
     }
 
-    const allowedFileTypes = ["image/png", "image/jpeg", "image/webp"];
+    // 1.1 Validando o arquivo escolhido pelo usuário com relação a tipo e tamanho
 
-    if (!allowedFileTypes.includes(file.type)) {
+    const maxFileSize = 4.5 * 1024 * 1024;
+    const allowedFileTypes = ["image/png", "image/jpg", "image/jpeg", "image/webp"];
+
+    if (maxFileSize < selectedFile.size) {
+      setProfilePictureError("A imagem deve ter um tamanho de, no máximo, 4.5MB.");
+      e.target.value = "";
       return;
     }
+
+    if (!allowedFileTypes.includes(selectedFile.type)) {
+      setProfilePictureError("Formato inválido. Escolha um arquivo com formato PNG, JPG ou WebP.");
+      e.target.value ?? "";
+      return;
+    }
+
+    // 1.2 Mostrando um preview do arquivo escolhido para que o usuário possa confirmar que é realmente o arquivo desejado
 
     const reader = new FileReader();
 
-    reader.onload = () => setProfilePicture(reader.result as string);
-    reader.readAsDataURL(file);
+    reader.onload = () => setProfilePicturePreview(reader.result as string);
+    reader.readAsDataURL(selectedFile);
+
+    // 1.3 Chamando a action que realmente valida o arquivo escolhido, sobe no vercelblob, edita o perfil e salva no banco
+
+    setIsUploadingProfilePicture(true);
 
     try {
-      setIsUploadingPhoto(true);
-      await handleSaveProfilePicture(file);
-    } catch (error) {
-      console.error("Erro ao salvar foto:", error);
+      const updatedProfilePicture = await updateProfileMutation({ profilePicture: selectedFile });
+
+      if (!updatedProfilePicture) {
+        throw new Error("Não foi possível salvar a foto.");
+      }
+    } catch {
+      setProfilePicturePreview("");
+      setProfilePictureError("Não foi possível salvar a foto.");
     } finally {
-      setIsUploadingPhoto(false);
+      setIsUploadingProfilePicture(false);
+      e.target.value = "";
     }
   };
 
-  // 3. Permite que a foto seja salva no supabase
+  // 2. Fecha o erro ao clicar fora
 
-  const handleSaveProfilePicture = async (file: File) => {
-    // 3.1 Descobrindo quem foi o usuário que subiu a foto
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const clickedInside = !profilePictureRef.current || profilePictureRef.current.contains(e.target as Node);
 
-    const {
-      data: { user },
-    } = await client.auth.getUser();
+      if (clickedInside) {
+        return;
+      }
 
-    if (!user) {
-      throw new Error("Usuário não autenticado!");
-    }
+      setProfilePictureError("");
+    };
 
-    // 3.2 Definindo o caminho da foto no bucket do supabase
-
-    const fileExt = file.name.split(".").pop();
-    const filePath = `${user.id}/avatar.${fileExt}`;
-
-    // 3.3 Subindo a foto no supabase
-
-    const { error: uploadError } = await client.storage.from("Profile_Pictures").upload(filePath, file, { upsert: true });
-
-    if (uploadError) {
-      throw new Error("Erro ao fazer upload da foto.");
-    }
-
-    // 3.4 Convertendo a URL do bucket para URL pública
-
-    const {
-      data: { publicUrl },
-    } = client.storage.from("Profile_Pictures").getPublicUrl(filePath);
-
-    // 3.5 Salvando essa URL pública na tabela de usuários
-
-    const { error: savingURLError } = await client.from("users").update({ photo: publicUrl }).eq("user_id", user.id);
-
-    if (savingURLError) {
-      throw new Error("Erro ao salvar foto no banco de dados.");
-    }
-
-    // 3.6 Atualizando o estado local com a URL pública
-
-    setProfilePicture(publicUrl);
-  };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <>
@@ -211,32 +195,42 @@ const ProfileHeader = ({ activeTab, setActiveTab }: ProfileHeaderProps) => {
 
             <div className="hidden sm:flex md:flex items-center gap-4">
               <div className="relative w-15 h-15 rounded-full border border-[#B8860B]">
-                {/* - Loading skeleton - */}
+                {/* - Foto - */}
 
-                {isLoadingPhoto ? (
+                {isProfileLoading && !profilePicturePreview ? (
                   <div className="w-full h-full rounded-full bg-[#1A1A1A] animate-pulse" />
-                ) : profilePicture ? (
+                ) : displayedProfilePicture ? (
                   <img
-                    className="w-full h-full object-cover object-center rounded-full"
-                    src={profilePicture}
+                    className={`w-full h-full object-cover object-center rounded-full ${isUploadingProfilePicture ? "opacity-50" : ""}`}
+                    src={displayedProfilePicture}
                     alt="Foto de perfil"
                   />
                 ) : (
                   <div className="w-full h-full rounded-full bg-[#1A1A1A]" />
                 )}
 
+                {/* - Input de arquivo (escondido) - */}
+
+                <input
+                  className="hidden"
+                  type="file"
+                  ref={fileInputRef}
+                  accept="image/jpeg,image/png,image/webp"
+                  onChange={handleUploadProfilePicture}
+                />
+
                 {/* - Botão de upload - */}
 
                 <button
                   className="absolute flex items-center justify-center w-7 h-7 top-8 right-10 rounded-full text-[#B8860B] hover:text-[#DDAE56] border border-[#B8860B] bg-[#1A1A1A] hover:bg-[#333] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                  onClick={() => ProfilePictureRef.current?.click()}
-                  disabled={isUploadingPhoto}
+                  onClick={() => profilePictureRef.current?.click()}
+                  disabled={isUploadingProfilePicture}
                   aria-label="Alterar foto de perfil"
                 >
                   <input
                     className="hidden"
                     type="file"
-                    ref={ProfilePictureRef}
+                    ref={profilePictureRef}
                     accept="image/jpeg,image/png,image/webp"
                     onChange={handleUploadProfilePicture}
                   />
@@ -266,6 +260,19 @@ const ProfileHeader = ({ activeTab, setActiveTab }: ProfileHeaderProps) => {
           </div>
         </div>
       </header>
+
+      {/* - Seção de erro da foto - */}
+
+      {profilePictureError && (
+        <div
+          className="fixed top-24 right-6 z-50 w-72 md:w-80"
+          ref={profilePictureErrorRef}
+        >
+          <p className="flex items-center justify-center min-h-12 rounded-xl bg-red-100 border border-red-300 text-red-700 text-sm font-semibold px-4 py-2 text-center">
+            {profilePictureError}
+          </p>
+        </div>
+      )}
 
       <AnimatePresence>
         {isPortraitMobile && isDropdownOpen && (

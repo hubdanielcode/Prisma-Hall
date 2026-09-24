@@ -1,30 +1,92 @@
-/*
-  
-  - O QUE ESSA SERVER ACTION DEVERIA FAZER? 
-  
-  // 1. Verificar se quem está chamando a ação tem a role de admin
+"use server";
 
-      - if (!isAdmin) => Interrompe a função com um belíssimo return false
-      - if (isAdmin) => Segue a função com um singelo return true
-  
-  // 2. Valida o evento a ser editado contra o schema e roda o safeParse
+import { checkIsAdmin } from "../checkIsAdmin";
+import { editEventSchema } from "@/lib/validations";
+import { prisma } from "@/lib/prisma";
+import { put } from "@vercel/blob";
+import z from "zod";
 
-  // 3. Criar um objeto base para o evento padrão com os campos obrigatórios
-  
-      - const baseEventData = {campos obrigatórios do evento já com os valores validados (parsedEvent.data.value)}
-      - cria um imageFile separado para guardar a possivel imagem (já que não é obrigatório)
+const editEvent = async (event: z.infer<typeof editEventSchema>) => {
+  const isAdmin = await checkIsAdmin();
 
-  // 4. Como aceita edit parcial, precisa verificar se veio alguma imagem nessa edição
+  if (!isAdmin) {
+    return false;
+  }
 
-    - Se houver troca de imagem: {
-                                   - Valida a imagem contra o schema: {
-                                                                        - Se passar => Segue a função normalmente com return true
-                                                                        - Se falhar => Interrompe a função e não aceita a imagem com return false
-                                                                      }
-                                   - Sobe a imagem no vercel: const blob = await put(`${Date.now()}-${imageFile.name}`, imageFile, { access: "public" });  
-                                   - Forma o editedEvent (objeto novo com os campos editados)  
-                                 }
-    
-    - Se não houver troca de imagem, forma o editedEvent (objeto novo com os campos editados)
-  
-  - */
+  const parsedEvent = editEventSchema.safeParse(event);
+
+  if (!parsedEvent.success) {
+    return false;
+  }
+
+  const baseEventData = {
+    title: parsedEvent.data.title,
+    description: parsedEvent.data.description,
+    tag: parsedEvent.data.tag,
+    attractionId: parsedEvent.data.attractionId,
+    status: parsedEvent.data.status,
+    price: parsedEvent.data.price,
+    startsAt: parsedEvent.data.startsAt,
+  };
+
+  const imageFile = parsedEvent.data.image;
+
+  try {
+    if (imageFile) {
+      /* - Se houver troca de imagem - */
+
+      const blob = await put(`${Date.now()}-${imageFile.name}`, imageFile, { access: "public" });
+
+      const editedEvent = await prisma.event.update({
+        where: { id: parsedEvent.data.eventId },
+        data: { ...baseEventData, image: blob.url },
+      });
+
+      return {
+        id: editedEvent.id,
+        title: editedEvent.title,
+
+        description: editedEvent.description,
+        tag: editedEvent.tag,
+        attractionId: editedEvent.attractionId,
+        image: editedEvent.image,
+        status: editedEvent.status,
+        price: editedEvent.price.toNumber(),
+        startsAt: editedEvent.startsAt,
+        attendees: editedEvent.attendees,
+        rating: editedEvent.rating.toNumber(),
+
+        createdAt: editedEvent.createdAt.toISOString(),
+        updatedAt: editedEvent.updatedAt.toISOString(),
+      };
+    }
+    /* - Se não houver troca de imagem - */
+
+    const editedEvent = await prisma.event.update({
+      where: { id: parsedEvent.data.eventId },
+      data: { ...baseEventData },
+    });
+
+    return {
+      id: editedEvent.id,
+      title: editedEvent.title,
+
+      description: editedEvent.description,
+      tag: editedEvent.tag,
+      attractionId: editedEvent.attractionId,
+      image: editedEvent.image,
+      status: editedEvent.status,
+      price: editedEvent.price.toNumber(),
+      startsAt: editedEvent.startsAt,
+      attendees: editedEvent.attendees,
+      rating: editedEvent.rating.toNumber(),
+
+      createdAt: editedEvent.createdAt.toISOString(),
+      updatedAt: editedEvent.updatedAt.toISOString(),
+    };
+  } catch {
+    return false;
+  }
+};
+
+export { editEvent };
