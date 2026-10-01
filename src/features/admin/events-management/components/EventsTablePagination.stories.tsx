@@ -1,6 +1,5 @@
-import { CalendarProvider } from "@/features/events/agenda/context/CalendarContext";
 import { EventsTablePagination } from "./EventsTablePagination";
-import { MobileProvider } from "@/shared/context/MobileContext";
+import { useState } from "react";
 
 export default {
   title: "Layouts/Admin/Events Management/Table",
@@ -11,12 +10,15 @@ export default {
 };
 
 const TablePagination = () => {
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const totalPages = 3;
+
   return (
-    <CalendarProvider>
-      <MobileProvider>
-        <EventsTablePagination />
-      </MobileProvider>
-    </CalendarProvider>
+    <EventsTablePagination
+      currentPage={currentPage}
+      totalPages={totalPages}
+      onPageChange={setCurrentPage}
+    />
   );
 };
 

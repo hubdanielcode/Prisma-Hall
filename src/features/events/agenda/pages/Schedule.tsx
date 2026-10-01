@@ -33,6 +33,10 @@ const Schedule = () => {
   const [selectedEvent, setSelectedEvent] = useState<EventProps | null>(null);
   const [isEventModalOpen, setIsEventModalOpen] = useState<boolean>(false);
 
+  /* - Definições - */
+
+  const filterList = [{ id: "all_tags", title: "Todos" }, ...eventTags];
+
   /* - Funções - */
 
   // 1. Faz o scroll da página voltar para o topo no momento da renderização
@@ -67,7 +71,7 @@ const Schedule = () => {
     .filter((event) => {
       const { month, year } = formattedDate(event.startsAt);
       const matchDate = month === selectedMonth.toLowerCase() && year === selectedYear;
-      const matchCategory = selectedCategory === "all" || selectedCategory === event.tag;
+      const matchCategory = selectedCategory === "all_tags" || selectedCategory === event.tag;
 
       return matchDate && matchCategory;
     })
@@ -117,7 +121,7 @@ const Schedule = () => {
             className={`flex items-center gap-2 px-3 sm:px-4 py-2 border rounded-lg w-full h-fit mt-2 text-sm sm:text-base font-semibold transition-colors cursor-pointer ${viewState === "Calendar" ? "bg-[#B8860B] border-[#B8860B] text-black" : "bg-black border-[#B8860B] text-white hover:bg-[#333]"}`}
             onClick={() => {
               setViewState("Calendar");
-              setSelectedCategory("all");
+              setSelectedCategory("all_tags");
             }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -149,7 +153,7 @@ const Schedule = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
           >
-            {eventTags.map((tag) => (
+            {filterList.map((tag) => (
               <button
                 key={tag.id}
                 onClick={() => setSelectedCategory(tag.id)}
@@ -170,7 +174,7 @@ const Schedule = () => {
               initial={{ y: 20, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.75 }}
+              transition={{ delay: 0.3 }}
             >
               <CalendarHeader />
               <CalendarGrid />

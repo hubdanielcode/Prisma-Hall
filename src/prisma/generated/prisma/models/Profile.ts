@@ -28,15 +28,15 @@ export type ProfileMinAggregateOutputType = {
   id: string | null
   userId: string | null
   phoneNumber: string | null
-  socialSecurityNumber: string | null
   birthDate: Date | null
-  zipCode: string | null
   city: string | null
-  state: string | null
   neighborhood: string | null
   street: string | null
   number: string | null
   complement: string | null
+  socialSecurityNumber: string | null
+  state: string | null
+  zipCode: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -45,15 +45,15 @@ export type ProfileMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   phoneNumber: string | null
-  socialSecurityNumber: string | null
   birthDate: Date | null
-  zipCode: string | null
   city: string | null
-  state: string | null
   neighborhood: string | null
   street: string | null
   number: string | null
   complement: string | null
+  socialSecurityNumber: string | null
+  state: string | null
+  zipCode: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -62,15 +62,15 @@ export type ProfileCountAggregateOutputType = {
   id: number
   userId: number
   phoneNumber: number
-  socialSecurityNumber: number
   birthDate: number
-  zipCode: number
   city: number
-  state: number
   neighborhood: number
   street: number
   number: number
   complement: number
+  socialSecurityNumber: number
+  state: number
+  zipCode: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -81,15 +81,15 @@ export type ProfileMinAggregateInputType = {
   id?: true
   userId?: true
   phoneNumber?: true
-  socialSecurityNumber?: true
   birthDate?: true
-  zipCode?: true
   city?: true
-  state?: true
   neighborhood?: true
   street?: true
   number?: true
   complement?: true
+  socialSecurityNumber?: true
+  state?: true
+  zipCode?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -98,15 +98,15 @@ export type ProfileMaxAggregateInputType = {
   id?: true
   userId?: true
   phoneNumber?: true
-  socialSecurityNumber?: true
   birthDate?: true
-  zipCode?: true
   city?: true
-  state?: true
   neighborhood?: true
   street?: true
   number?: true
   complement?: true
+  socialSecurityNumber?: true
+  state?: true
+  zipCode?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -115,15 +115,15 @@ export type ProfileCountAggregateInputType = {
   id?: true
   userId?: true
   phoneNumber?: true
-  socialSecurityNumber?: true
   birthDate?: true
-  zipCode?: true
   city?: true
-  state?: true
   neighborhood?: true
   street?: true
   number?: true
   complement?: true
+  socialSecurityNumber?: true
+  state?: true
+  zipCode?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -205,15 +205,15 @@ export type ProfileGroupByOutputType = {
   id: string
   userId: string
   phoneNumber: string
-  socialSecurityNumber: string
   birthDate: Date
-  zipCode: string
   city: string
-  state: string
   neighborhood: string
   street: string
   number: string
   complement: string
+  socialSecurityNumber: string
+  state: string
+  zipCode: string
   createdAt: Date
   updatedAt: Date
   _count: ProfileCountAggregateOutputType | null
@@ -243,15 +243,15 @@ export type ProfileWhereInput = {
   id?: Prisma.StringFilter<"Profile"> | string
   userId?: Prisma.StringFilter<"Profile"> | string
   phoneNumber?: Prisma.StringFilter<"Profile"> | string
-  socialSecurityNumber?: Prisma.StringFilter<"Profile"> | string
   birthDate?: Prisma.DateTimeFilter<"Profile"> | Date | string
-  zipCode?: Prisma.StringFilter<"Profile"> | string
   city?: Prisma.StringFilter<"Profile"> | string
-  state?: Prisma.StringFilter<"Profile"> | string
   neighborhood?: Prisma.StringFilter<"Profile"> | string
   street?: Prisma.StringFilter<"Profile"> | string
   number?: Prisma.StringFilter<"Profile"> | string
   complement?: Prisma.StringFilter<"Profile"> | string
+  socialSecurityNumber?: Prisma.StringFilter<"Profile"> | string
+  state?: Prisma.StringFilter<"Profile"> | string
+  zipCode?: Prisma.StringFilter<"Profile"> | string
   createdAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -261,15 +261,15 @@ export type ProfileOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
-  socialSecurityNumber?: Prisma.SortOrder
   birthDate?: Prisma.SortOrder
-  zipCode?: Prisma.SortOrder
   city?: Prisma.SortOrder
-  state?: Prisma.SortOrder
   neighborhood?: Prisma.SortOrder
   street?: Prisma.SortOrder
   number?: Prisma.SortOrder
   complement?: Prisma.SortOrder
+  socialSecurityNumber?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  zipCode?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -282,15 +282,15 @@ export type ProfileWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ProfileWhereInput[]
   NOT?: Prisma.ProfileWhereInput | Prisma.ProfileWhereInput[]
   phoneNumber?: Prisma.StringFilter<"Profile"> | string
-  socialSecurityNumber?: Prisma.StringFilter<"Profile"> | string
   birthDate?: Prisma.DateTimeFilter<"Profile"> | Date | string
-  zipCode?: Prisma.StringFilter<"Profile"> | string
   city?: Prisma.StringFilter<"Profile"> | string
-  state?: Prisma.StringFilter<"Profile"> | string
   neighborhood?: Prisma.StringFilter<"Profile"> | string
   street?: Prisma.StringFilter<"Profile"> | string
   number?: Prisma.StringFilter<"Profile"> | string
   complement?: Prisma.StringFilter<"Profile"> | string
+  socialSecurityNumber?: Prisma.StringFilter<"Profile"> | string
+  state?: Prisma.StringFilter<"Profile"> | string
+  zipCode?: Prisma.StringFilter<"Profile"> | string
   createdAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -300,15 +300,15 @@ export type ProfileOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
-  socialSecurityNumber?: Prisma.SortOrder
   birthDate?: Prisma.SortOrder
-  zipCode?: Prisma.SortOrder
   city?: Prisma.SortOrder
-  state?: Prisma.SortOrder
   neighborhood?: Prisma.SortOrder
   street?: Prisma.SortOrder
   number?: Prisma.SortOrder
   complement?: Prisma.SortOrder
+  socialSecurityNumber?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  zipCode?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ProfileCountOrderByAggregateInput
@@ -323,15 +323,15 @@ export type ProfileScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Profile"> | string
   userId?: Prisma.StringWithAggregatesFilter<"Profile"> | string
   phoneNumber?: Prisma.StringWithAggregatesFilter<"Profile"> | string
-  socialSecurityNumber?: Prisma.StringWithAggregatesFilter<"Profile"> | string
   birthDate?: Prisma.DateTimeWithAggregatesFilter<"Profile"> | Date | string
-  zipCode?: Prisma.StringWithAggregatesFilter<"Profile"> | string
   city?: Prisma.StringWithAggregatesFilter<"Profile"> | string
-  state?: Prisma.StringWithAggregatesFilter<"Profile"> | string
   neighborhood?: Prisma.StringWithAggregatesFilter<"Profile"> | string
   street?: Prisma.StringWithAggregatesFilter<"Profile"> | string
   number?: Prisma.StringWithAggregatesFilter<"Profile"> | string
   complement?: Prisma.StringWithAggregatesFilter<"Profile"> | string
+  socialSecurityNumber?: Prisma.StringWithAggregatesFilter<"Profile"> | string
+  state?: Prisma.StringWithAggregatesFilter<"Profile"> | string
+  zipCode?: Prisma.StringWithAggregatesFilter<"Profile"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Profile"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Profile"> | Date | string
 }
@@ -339,15 +339,15 @@ export type ProfileScalarWhereWithAggregatesInput = {
 export type ProfileCreateInput = {
   id?: string
   phoneNumber: string
-  socialSecurityNumber: string
   birthDate: Date | string
-  zipCode: string
   city: string
-  state: string
   neighborhood: string
   street: string
   number: string
   complement: string
+  socialSecurityNumber: string
+  state: string
+  zipCode: string
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutProfilesInput
@@ -357,15 +357,15 @@ export type ProfileUncheckedCreateInput = {
   id?: string
   userId: string
   phoneNumber: string
-  socialSecurityNumber: string
   birthDate: Date | string
-  zipCode: string
   city: string
-  state: string
   neighborhood: string
   street: string
   number: string
   complement: string
+  socialSecurityNumber: string
+  state: string
+  zipCode: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -373,15 +373,15 @@ export type ProfileUncheckedCreateInput = {
 export type ProfileUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  socialSecurityNumber?: Prisma.StringFieldUpdateOperationsInput | string
   birthDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.StringFieldUpdateOperationsInput | string
-  state?: Prisma.StringFieldUpdateOperationsInput | string
   neighborhood?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   complement?: Prisma.StringFieldUpdateOperationsInput | string
+  socialSecurityNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutProfilesNestedInput
@@ -391,15 +391,15 @@ export type ProfileUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  socialSecurityNumber?: Prisma.StringFieldUpdateOperationsInput | string
   birthDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.StringFieldUpdateOperationsInput | string
-  state?: Prisma.StringFieldUpdateOperationsInput | string
   neighborhood?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   complement?: Prisma.StringFieldUpdateOperationsInput | string
+  socialSecurityNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -408,15 +408,15 @@ export type ProfileCreateManyInput = {
   id?: string
   userId: string
   phoneNumber: string
-  socialSecurityNumber: string
   birthDate: Date | string
-  zipCode: string
   city: string
-  state: string
   neighborhood: string
   street: string
   number: string
   complement: string
+  socialSecurityNumber: string
+  state: string
+  zipCode: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -424,15 +424,15 @@ export type ProfileCreateManyInput = {
 export type ProfileUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  socialSecurityNumber?: Prisma.StringFieldUpdateOperationsInput | string
   birthDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.StringFieldUpdateOperationsInput | string
-  state?: Prisma.StringFieldUpdateOperationsInput | string
   neighborhood?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   complement?: Prisma.StringFieldUpdateOperationsInput | string
+  socialSecurityNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -441,42 +441,37 @@ export type ProfileUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  socialSecurityNumber?: Prisma.StringFieldUpdateOperationsInput | string
   birthDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.StringFieldUpdateOperationsInput | string
-  state?: Prisma.StringFieldUpdateOperationsInput | string
   neighborhood?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   complement?: Prisma.StringFieldUpdateOperationsInput | string
+  socialSecurityNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type ProfileListRelationFilter = {
-  every?: Prisma.ProfileWhereInput
-  some?: Prisma.ProfileWhereInput
-  none?: Prisma.ProfileWhereInput
-}
-
-export type ProfileOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
+export type ProfileNullableScalarRelationFilter = {
+  is?: Prisma.ProfileWhereInput | null
+  isNot?: Prisma.ProfileWhereInput | null
 }
 
 export type ProfileCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
-  socialSecurityNumber?: Prisma.SortOrder
   birthDate?: Prisma.SortOrder
-  zipCode?: Prisma.SortOrder
   city?: Prisma.SortOrder
-  state?: Prisma.SortOrder
   neighborhood?: Prisma.SortOrder
   street?: Prisma.SortOrder
   number?: Prisma.SortOrder
   complement?: Prisma.SortOrder
+  socialSecurityNumber?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  zipCode?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -485,15 +480,15 @@ export type ProfileMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
-  socialSecurityNumber?: Prisma.SortOrder
   birthDate?: Prisma.SortOrder
-  zipCode?: Prisma.SortOrder
   city?: Prisma.SortOrder
-  state?: Prisma.SortOrder
   neighborhood?: Prisma.SortOrder
   street?: Prisma.SortOrder
   number?: Prisma.SortOrder
   complement?: Prisma.SortOrder
+  socialSecurityNumber?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  zipCode?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -502,73 +497,63 @@ export type ProfileMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
-  socialSecurityNumber?: Prisma.SortOrder
   birthDate?: Prisma.SortOrder
-  zipCode?: Prisma.SortOrder
   city?: Prisma.SortOrder
-  state?: Prisma.SortOrder
   neighborhood?: Prisma.SortOrder
   street?: Prisma.SortOrder
   number?: Prisma.SortOrder
   complement?: Prisma.SortOrder
+  socialSecurityNumber?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  zipCode?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
-export type ProfileCreateNestedManyWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.ProfileCreateWithoutUserInput, Prisma.ProfileUncheckedCreateWithoutUserInput> | Prisma.ProfileCreateWithoutUserInput[] | Prisma.ProfileUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutUserInput | Prisma.ProfileCreateOrConnectWithoutUserInput[]
-  createMany?: Prisma.ProfileCreateManyUserInputEnvelope
-  connect?: Prisma.ProfileWhereUniqueInput | Prisma.ProfileWhereUniqueInput[]
+export type ProfileCreateNestedOneWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutUserInput, Prisma.ProfileUncheckedCreateWithoutUserInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutUserInput
+  connect?: Prisma.ProfileWhereUniqueInput
 }
 
-export type ProfileUncheckedCreateNestedManyWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.ProfileCreateWithoutUserInput, Prisma.ProfileUncheckedCreateWithoutUserInput> | Prisma.ProfileCreateWithoutUserInput[] | Prisma.ProfileUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutUserInput | Prisma.ProfileCreateOrConnectWithoutUserInput[]
-  createMany?: Prisma.ProfileCreateManyUserInputEnvelope
-  connect?: Prisma.ProfileWhereUniqueInput | Prisma.ProfileWhereUniqueInput[]
+export type ProfileUncheckedCreateNestedOneWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutUserInput, Prisma.ProfileUncheckedCreateWithoutUserInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutUserInput
+  connect?: Prisma.ProfileWhereUniqueInput
 }
 
-export type ProfileUpdateManyWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.ProfileCreateWithoutUserInput, Prisma.ProfileUncheckedCreateWithoutUserInput> | Prisma.ProfileCreateWithoutUserInput[] | Prisma.ProfileUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutUserInput | Prisma.ProfileCreateOrConnectWithoutUserInput[]
-  upsert?: Prisma.ProfileUpsertWithWhereUniqueWithoutUserInput | Prisma.ProfileUpsertWithWhereUniqueWithoutUserInput[]
-  createMany?: Prisma.ProfileCreateManyUserInputEnvelope
-  set?: Prisma.ProfileWhereUniqueInput | Prisma.ProfileWhereUniqueInput[]
-  disconnect?: Prisma.ProfileWhereUniqueInput | Prisma.ProfileWhereUniqueInput[]
-  delete?: Prisma.ProfileWhereUniqueInput | Prisma.ProfileWhereUniqueInput[]
-  connect?: Prisma.ProfileWhereUniqueInput | Prisma.ProfileWhereUniqueInput[]
-  update?: Prisma.ProfileUpdateWithWhereUniqueWithoutUserInput | Prisma.ProfileUpdateWithWhereUniqueWithoutUserInput[]
-  updateMany?: Prisma.ProfileUpdateManyWithWhereWithoutUserInput | Prisma.ProfileUpdateManyWithWhereWithoutUserInput[]
-  deleteMany?: Prisma.ProfileScalarWhereInput | Prisma.ProfileScalarWhereInput[]
+export type ProfileUpdateOneWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutUserInput, Prisma.ProfileUncheckedCreateWithoutUserInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutUserInput
+  upsert?: Prisma.ProfileUpsertWithoutUserInput
+  disconnect?: Prisma.ProfileWhereInput | boolean
+  delete?: Prisma.ProfileWhereInput | boolean
+  connect?: Prisma.ProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProfileUpdateToOneWithWhereWithoutUserInput, Prisma.ProfileUpdateWithoutUserInput>, Prisma.ProfileUncheckedUpdateWithoutUserInput>
 }
 
-export type ProfileUncheckedUpdateManyWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.ProfileCreateWithoutUserInput, Prisma.ProfileUncheckedCreateWithoutUserInput> | Prisma.ProfileCreateWithoutUserInput[] | Prisma.ProfileUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutUserInput | Prisma.ProfileCreateOrConnectWithoutUserInput[]
-  upsert?: Prisma.ProfileUpsertWithWhereUniqueWithoutUserInput | Prisma.ProfileUpsertWithWhereUniqueWithoutUserInput[]
-  createMany?: Prisma.ProfileCreateManyUserInputEnvelope
-  set?: Prisma.ProfileWhereUniqueInput | Prisma.ProfileWhereUniqueInput[]
-  disconnect?: Prisma.ProfileWhereUniqueInput | Prisma.ProfileWhereUniqueInput[]
-  delete?: Prisma.ProfileWhereUniqueInput | Prisma.ProfileWhereUniqueInput[]
-  connect?: Prisma.ProfileWhereUniqueInput | Prisma.ProfileWhereUniqueInput[]
-  update?: Prisma.ProfileUpdateWithWhereUniqueWithoutUserInput | Prisma.ProfileUpdateWithWhereUniqueWithoutUserInput[]
-  updateMany?: Prisma.ProfileUpdateManyWithWhereWithoutUserInput | Prisma.ProfileUpdateManyWithWhereWithoutUserInput[]
-  deleteMany?: Prisma.ProfileScalarWhereInput | Prisma.ProfileScalarWhereInput[]
+export type ProfileUncheckedUpdateOneWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutUserInput, Prisma.ProfileUncheckedCreateWithoutUserInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutUserInput
+  upsert?: Prisma.ProfileUpsertWithoutUserInput
+  disconnect?: Prisma.ProfileWhereInput | boolean
+  delete?: Prisma.ProfileWhereInput | boolean
+  connect?: Prisma.ProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProfileUpdateToOneWithWhereWithoutUserInput, Prisma.ProfileUpdateWithoutUserInput>, Prisma.ProfileUncheckedUpdateWithoutUserInput>
 }
 
 export type ProfileCreateWithoutUserInput = {
   id?: string
   phoneNumber: string
-  socialSecurityNumber: string
   birthDate: Date | string
-  zipCode: string
   city: string
-  state: string
   neighborhood: string
   street: string
   number: string
   complement: string
+  socialSecurityNumber: string
+  state: string
+  zipCode: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -576,15 +561,15 @@ export type ProfileCreateWithoutUserInput = {
 export type ProfileUncheckedCreateWithoutUserInput = {
   id?: string
   phoneNumber: string
-  socialSecurityNumber: string
   birthDate: Date | string
-  zipCode: string
   city: string
-  state: string
   neighborhood: string
   street: string
   number: string
   complement: string
+  socialSecurityNumber: string
+  state: string
+  zipCode: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -594,75 +579,29 @@ export type ProfileCreateOrConnectWithoutUserInput = {
   create: Prisma.XOR<Prisma.ProfileCreateWithoutUserInput, Prisma.ProfileUncheckedCreateWithoutUserInput>
 }
 
-export type ProfileCreateManyUserInputEnvelope = {
-  data: Prisma.ProfileCreateManyUserInput | Prisma.ProfileCreateManyUserInput[]
-  skipDuplicates?: boolean
-}
-
-export type ProfileUpsertWithWhereUniqueWithoutUserInput = {
-  where: Prisma.ProfileWhereUniqueInput
+export type ProfileUpsertWithoutUserInput = {
   update: Prisma.XOR<Prisma.ProfileUpdateWithoutUserInput, Prisma.ProfileUncheckedUpdateWithoutUserInput>
   create: Prisma.XOR<Prisma.ProfileCreateWithoutUserInput, Prisma.ProfileUncheckedCreateWithoutUserInput>
+  where?: Prisma.ProfileWhereInput
 }
 
-export type ProfileUpdateWithWhereUniqueWithoutUserInput = {
-  where: Prisma.ProfileWhereUniqueInput
+export type ProfileUpdateToOneWithWhereWithoutUserInput = {
+  where?: Prisma.ProfileWhereInput
   data: Prisma.XOR<Prisma.ProfileUpdateWithoutUserInput, Prisma.ProfileUncheckedUpdateWithoutUserInput>
-}
-
-export type ProfileUpdateManyWithWhereWithoutUserInput = {
-  where: Prisma.ProfileScalarWhereInput
-  data: Prisma.XOR<Prisma.ProfileUpdateManyMutationInput, Prisma.ProfileUncheckedUpdateManyWithoutUserInput>
-}
-
-export type ProfileScalarWhereInput = {
-  AND?: Prisma.ProfileScalarWhereInput | Prisma.ProfileScalarWhereInput[]
-  OR?: Prisma.ProfileScalarWhereInput[]
-  NOT?: Prisma.ProfileScalarWhereInput | Prisma.ProfileScalarWhereInput[]
-  id?: Prisma.StringFilter<"Profile"> | string
-  userId?: Prisma.StringFilter<"Profile"> | string
-  phoneNumber?: Prisma.StringFilter<"Profile"> | string
-  socialSecurityNumber?: Prisma.StringFilter<"Profile"> | string
-  birthDate?: Prisma.DateTimeFilter<"Profile"> | Date | string
-  zipCode?: Prisma.StringFilter<"Profile"> | string
-  city?: Prisma.StringFilter<"Profile"> | string
-  state?: Prisma.StringFilter<"Profile"> | string
-  neighborhood?: Prisma.StringFilter<"Profile"> | string
-  street?: Prisma.StringFilter<"Profile"> | string
-  number?: Prisma.StringFilter<"Profile"> | string
-  complement?: Prisma.StringFilter<"Profile"> | string
-  createdAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
-}
-
-export type ProfileCreateManyUserInput = {
-  id?: string
-  phoneNumber: string
-  socialSecurityNumber: string
-  birthDate: Date | string
-  zipCode: string
-  city: string
-  state: string
-  neighborhood: string
-  street: string
-  number: string
-  complement: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
 }
 
 export type ProfileUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  socialSecurityNumber?: Prisma.StringFieldUpdateOperationsInput | string
   birthDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.StringFieldUpdateOperationsInput | string
-  state?: Prisma.StringFieldUpdateOperationsInput | string
   neighborhood?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   complement?: Prisma.StringFieldUpdateOperationsInput | string
+  socialSecurityNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -670,31 +609,15 @@ export type ProfileUpdateWithoutUserInput = {
 export type ProfileUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  socialSecurityNumber?: Prisma.StringFieldUpdateOperationsInput | string
   birthDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.StringFieldUpdateOperationsInput | string
-  state?: Prisma.StringFieldUpdateOperationsInput | string
   neighborhood?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   complement?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type ProfileUncheckedUpdateManyWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   socialSecurityNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  birthDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
-  city?: Prisma.StringFieldUpdateOperationsInput | string
   state?: Prisma.StringFieldUpdateOperationsInput | string
-  neighborhood?: Prisma.StringFieldUpdateOperationsInput | string
-  street?: Prisma.StringFieldUpdateOperationsInput | string
-  number?: Prisma.StringFieldUpdateOperationsInput | string
-  complement?: Prisma.StringFieldUpdateOperationsInput | string
+  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -705,15 +628,15 @@ export type ProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   id?: boolean
   userId?: boolean
   phoneNumber?: boolean
-  socialSecurityNumber?: boolean
   birthDate?: boolean
-  zipCode?: boolean
   city?: boolean
-  state?: boolean
   neighborhood?: boolean
   street?: boolean
   number?: boolean
   complement?: boolean
+  socialSecurityNumber?: boolean
+  state?: boolean
+  zipCode?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -723,15 +646,15 @@ export type ProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   userId?: boolean
   phoneNumber?: boolean
-  socialSecurityNumber?: boolean
   birthDate?: boolean
-  zipCode?: boolean
   city?: boolean
-  state?: boolean
   neighborhood?: boolean
   street?: boolean
   number?: boolean
   complement?: boolean
+  socialSecurityNumber?: boolean
+  state?: boolean
+  zipCode?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -741,15 +664,15 @@ export type ProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   userId?: boolean
   phoneNumber?: boolean
-  socialSecurityNumber?: boolean
   birthDate?: boolean
-  zipCode?: boolean
   city?: boolean
-  state?: boolean
   neighborhood?: boolean
   street?: boolean
   number?: boolean
   complement?: boolean
+  socialSecurityNumber?: boolean
+  state?: boolean
+  zipCode?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -759,20 +682,20 @@ export type ProfileSelectScalar = {
   id?: boolean
   userId?: boolean
   phoneNumber?: boolean
-  socialSecurityNumber?: boolean
   birthDate?: boolean
-  zipCode?: boolean
   city?: boolean
-  state?: boolean
   neighborhood?: boolean
   street?: boolean
   number?: boolean
   complement?: boolean
+  socialSecurityNumber?: boolean
+  state?: boolean
+  zipCode?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "phoneNumber" | "socialSecurityNumber" | "birthDate" | "zipCode" | "city" | "state" | "neighborhood" | "street" | "number" | "complement" | "createdAt" | "updatedAt", ExtArgs["result"]["profile"]>
+export type ProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "phoneNumber" | "birthDate" | "city" | "neighborhood" | "street" | "number" | "complement" | "socialSecurityNumber" | "state" | "zipCode" | "createdAt" | "updatedAt", ExtArgs["result"]["profile"]>
 export type ProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -792,15 +715,15 @@ export type $ProfilePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     id: string
     userId: string
     phoneNumber: string
-    socialSecurityNumber: string
     birthDate: Date
-    zipCode: string
     city: string
-    state: string
     neighborhood: string
     street: string
     number: string
     complement: string
+    socialSecurityNumber: string
+    state: string
+    zipCode: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["profile"]>
@@ -1230,15 +1153,15 @@ export interface ProfileFieldRefs {
   readonly id: Prisma.FieldRef<"Profile", 'String'>
   readonly userId: Prisma.FieldRef<"Profile", 'String'>
   readonly phoneNumber: Prisma.FieldRef<"Profile", 'String'>
-  readonly socialSecurityNumber: Prisma.FieldRef<"Profile", 'String'>
   readonly birthDate: Prisma.FieldRef<"Profile", 'DateTime'>
-  readonly zipCode: Prisma.FieldRef<"Profile", 'String'>
   readonly city: Prisma.FieldRef<"Profile", 'String'>
-  readonly state: Prisma.FieldRef<"Profile", 'String'>
   readonly neighborhood: Prisma.FieldRef<"Profile", 'String'>
   readonly street: Prisma.FieldRef<"Profile", 'String'>
   readonly number: Prisma.FieldRef<"Profile", 'String'>
   readonly complement: Prisma.FieldRef<"Profile", 'String'>
+  readonly socialSecurityNumber: Prisma.FieldRef<"Profile", 'String'>
+  readonly state: Prisma.FieldRef<"Profile", 'String'>
+  readonly zipCode: Prisma.FieldRef<"Profile", 'String'>
   readonly createdAt: Prisma.FieldRef<"Profile", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Profile", 'DateTime'>
 }

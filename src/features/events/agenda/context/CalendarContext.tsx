@@ -27,7 +27,7 @@ const CalendarProvider = ({ children }: { children: ReactNode }) => {
 
   const [selectedYear, setSelectedYear] = useState<number>(2026);
   const [selectedMonth, setSelectedMonth] = useState<string>("Maio");
-  const [selectedDay, setSelectedDay] = useState<number>(1);
+  const [selectedDay, setSelectedDay] = useState<number>(0);
 
   /* - Estados de vizualização - */
 

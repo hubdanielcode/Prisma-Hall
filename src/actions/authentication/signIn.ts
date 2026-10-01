@@ -5,15 +5,10 @@ import { cookies } from "next/headers";
 import { createSession } from "../session/createSession";
 import { prisma } from "@/lib/prisma";
 import { signInSchema } from "@/lib/validations/authentication/signInSchema";
+import z from "zod";
 
-interface SignInProps {
-  typedEmail: string;
-  typedPassword: string;
-  rememberMe: boolean;
-}
-
-const signIn = async ({ typedEmail, typedPassword, rememberMe }: SignInProps) => {
-  const parsedSignInUser = signInSchema.safeParse({ email: typedEmail, password: typedPassword });
+const signIn = async ({ typedEmail, typedPassword, rememberMe }: z.infer<typeof signInSchema> & { rememberMe: boolean }) => {
+  const parsedSignInUser = signInSchema.safeParse({ typedEmail, typedPassword, rememberMe });
 
   if (!parsedSignInUser.success) {
     return false;
@@ -64,7 +59,12 @@ const signIn = async ({ typedEmail, typedPassword, rememberMe }: SignInProps) =>
       sessionId = newSession.id;
     }
 
-    cookieStore.set("validSession", sessionId, { httpOnly: true, secure: true, expires: expiresAt, sameSite: "lax" });
+    cookieStore.set("validSession", sessionId, {
+      httpOnly: true,
+      secure: true,
+      expires: expiresAt,
+      sameSite: "lax",
+    });
 
     return newUser;
   } catch {

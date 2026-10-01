@@ -1,4 +1,4 @@
-import { EventTag, ProductCategory, ProductStatus } from "@/prisma/generated/prisma/enums";
+import { EventStatus, EventTag, ProductCategory, ProductStatus } from "@/prisma/generated/prisma/enums";
 
 const masks = {
   /* - Autenticação - */
@@ -84,7 +84,7 @@ const masks = {
     value
       .replace(/\p{Emoji_Presentation}|\p{Extended_Pictographic}/gu, "")
       .replace(/\s{2,}/g, " ")
-      .slice(0, 200)
+      .slice(0, 150)
       .replace(/(^\s*\w|[.!?]\s*\w)/g, (match) => match.toUpperCase()),
 
   productQuantity: (value: string) => value.replace(/\D/g, "").slice(0, 4),
@@ -129,6 +129,38 @@ const masks = {
 
   /* - Evento - */
 
+  eventTitle: (value: string) =>
+    value
+      .replace(/\p{Emoji_Presentation}|\p{Extended_Pictographic}/gu, "")
+      .replace(/\s{2,}/g, " ")
+      .slice(0, 150)
+      .replace(/(^\s*\w|[.!?]\s*\w)/g, (match) => match.toUpperCase()),
+
+  eventDescription: (value: string) =>
+    value
+      .replace(/\p{Emoji_Presentation}|\p{Extended_Pictographic}/gu, "")
+      .replace(/\s{2,}/g, " ")
+      .slice(0, 150)
+      .replace(/(^\s*\w|[.!?]\s*\w)/g, (match) => match.toUpperCase()),
+
+  eventPrice: (value: string) => {
+    const onlyValid = value.replace(/\./g, ",").replace(/[^\d,]/g, "");
+
+    const [integerPart, ...rest] = onlyValid.split(",");
+
+    if (rest.length === 0) {
+      if (integerPart.length <= 4) {
+        return integerPart;
+      }
+
+      return `${integerPart.slice(0, 4)},${integerPart.slice(4, 6)}`;
+    }
+
+    const decimalPart = rest.join("").slice(0, 2);
+
+    return `${integerPart.slice(0, 4)},${decimalPart}`;
+  },
+
   eventTag: (value: EventTag) => {
     const eventTagLabel = {
       trap_and_hiphop: "Trap & HipHop",
@@ -139,11 +171,25 @@ const masks = {
       funk: "Funk",
       rock: "Rock",
       pop: "Pop",
-      all_tags: "Todos",
-    };
+    } as Record<EventTag, "Trap & HipHop" | "Forró" | "Samba & Pagode" | "Metal" | "Eletrônica" | "Funk" | "Rock" | "Pop">;
 
     return eventTagLabel[value];
   },
+
+  eventStatus: (value: EventStatus) => {
+    const eventStatusLabel = {
+      soon: "Em Breve",
+      happened: "Já Aconteceu",
+    } as Record<EventStatus, "Em Breve" | "Já Aconteceu">;
+
+    return eventStatusLabel[value];
+  },
+
+  eventTime: (value: string) =>
+    value
+      .replace(/\D/g, "")
+      .slice(0, 4)
+      .replace(/(\d{2})(\d)/, "$1:$2"),
 };
 
 export { masks };

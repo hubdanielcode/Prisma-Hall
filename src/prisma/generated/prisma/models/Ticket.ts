@@ -232,9 +232,9 @@ export type TicketWhereInput = {
   quantity?: Prisma.IntFilter<"Ticket"> | number
   createdAt?: Prisma.DateTimeFilter<"Ticket"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Ticket"> | Date | string
+  event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
   order?: Prisma.XOR<Prisma.TicketOrderScalarRelationFilter, Prisma.TicketOrderWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
 }
 
 export type TicketOrderByWithRelationInput = {
@@ -245,9 +245,9 @@ export type TicketOrderByWithRelationInput = {
   quantity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  event?: Prisma.EventOrderByWithRelationInput
   order?: Prisma.TicketOrderOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
-  event?: Prisma.EventOrderByWithRelationInput
 }
 
 export type TicketWhereUniqueInput = Prisma.AtLeast<{
@@ -261,9 +261,9 @@ export type TicketWhereUniqueInput = Prisma.AtLeast<{
   quantity?: Prisma.IntFilter<"Ticket"> | number
   createdAt?: Prisma.DateTimeFilter<"Ticket"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Ticket"> | Date | string
+  event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
   order?: Prisma.XOR<Prisma.TicketOrderScalarRelationFilter, Prisma.TicketOrderWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
 }, "id">
 
 export type TicketOrderByWithAggregationInput = {
@@ -299,9 +299,9 @@ export type TicketCreateInput = {
   quantity: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  event: Prisma.EventCreateNestedOneWithoutTicketsInput
   order?: Prisma.TicketOrderCreateNestedOneWithoutTicketsInput
   user: Prisma.UserCreateNestedOneWithoutTicketsInput
-  event: Prisma.EventCreateNestedOneWithoutTicketsInput
 }
 
 export type TicketUncheckedCreateInput = {
@@ -319,9 +319,9 @@ export type TicketUpdateInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  event?: Prisma.EventUpdateOneRequiredWithoutTicketsNestedInput
   order?: Prisma.TicketOrderUpdateOneRequiredWithoutTicketsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutTicketsNestedInput
-  event?: Prisma.EventUpdateOneRequiredWithoutTicketsNestedInput
 }
 
 export type TicketUncheckedUpdateInput = {
@@ -540,8 +540,8 @@ export type TicketCreateWithoutUserInput = {
   quantity: number
   createdAt?: Date | string
   updatedAt?: Date | string
-  order?: Prisma.TicketOrderCreateNestedOneWithoutTicketsInput
   event: Prisma.EventCreateNestedOneWithoutTicketsInput
+  order?: Prisma.TicketOrderCreateNestedOneWithoutTicketsInput
 }
 
 export type TicketUncheckedCreateWithoutUserInput = {
@@ -641,8 +641,8 @@ export type TicketCreateWithoutOrderInput = {
   quantity: number
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutTicketsInput
   event: Prisma.EventCreateNestedOneWithoutTicketsInput
+  user: Prisma.UserCreateNestedOneWithoutTicketsInput
 }
 
 export type TicketUncheckedCreateWithoutOrderInput = {
@@ -694,8 +694,8 @@ export type TicketUpdateWithoutUserInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  order?: Prisma.TicketOrderUpdateOneRequiredWithoutTicketsNestedInput
   event?: Prisma.EventUpdateOneRequiredWithoutTicketsNestedInput
+  order?: Prisma.TicketOrderUpdateOneRequiredWithoutTicketsNestedInput
 }
 
 export type TicketUncheckedUpdateWithoutUserInput = {
@@ -766,8 +766,8 @@ export type TicketUpdateWithoutOrderInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutTicketsNestedInput
   event?: Prisma.EventUpdateOneRequiredWithoutTicketsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutTicketsNestedInput
 }
 
 export type TicketUncheckedUpdateWithoutOrderInput = {
@@ -798,9 +798,9 @@ export type TicketSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   quantity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   order?: boolean | Prisma.TicketOrderDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["ticket"]>
 
 export type TicketSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -811,9 +811,9 @@ export type TicketSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   quantity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   order?: boolean | Prisma.TicketOrderDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["ticket"]>
 
 export type TicketSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -824,9 +824,9 @@ export type TicketSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   quantity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   order?: boolean | Prisma.TicketOrderDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["ticket"]>
 
 export type TicketSelectScalar = {
@@ -841,27 +841,27 @@ export type TicketSelectScalar = {
 
 export type TicketOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "userId" | "eventId" | "quantity" | "createdAt" | "updatedAt", ExtArgs["result"]["ticket"]>
 export type TicketInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   order?: boolean | Prisma.TicketOrderDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
 }
 export type TicketIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   order?: boolean | Prisma.TicketOrderDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
 }
 export type TicketIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   order?: boolean | Prisma.TicketOrderDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
 }
 
 export type $TicketPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Ticket"
   objects: {
+    event: Prisma.$EventPayload<ExtArgs>
     order: Prisma.$TicketOrderPayload<ExtArgs>
     user: Prisma.$UserPayload<ExtArgs>
-    event: Prisma.$EventPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1265,9 +1265,9 @@ readonly fields: TicketFieldRefs;
  */
 export interface Prisma__TicketClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  event<T extends Prisma.EventDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EventDefaultArgs<ExtArgs>>): Prisma.Prisma__EventClient<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   order<T extends Prisma.TicketOrderDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TicketOrderDefaultArgs<ExtArgs>>): Prisma.Prisma__TicketOrderClient<runtime.Types.Result.GetResult<Prisma.$TicketOrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  event<T extends Prisma.EventDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EventDefaultArgs<ExtArgs>>): Prisma.Prisma__EventClient<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

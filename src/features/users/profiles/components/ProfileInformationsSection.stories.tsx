@@ -7,6 +7,7 @@ export default {
   title: "Layouts/Protected/Profile/Sections",
   component: ProfileInformationsSection,
   parameters: {
+    layout: "fullscreen",
     nextjs: {
       appDirectory: true,
     },

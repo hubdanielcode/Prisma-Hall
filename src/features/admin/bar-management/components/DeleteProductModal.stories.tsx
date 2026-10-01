@@ -1,6 +1,8 @@
+import { BarProvider } from "@/features/bar";
 import { DeleteProductModal } from "@/features/admin/bar-management/components/DeleteProductModal";
-import { fakeProduct } from "../../../../../.storybook/mocks/useProducts";
+import { fakeProduct } from "../../../../../.storybook/mocks/hooks/useProducts";
 import { MobileProvider } from "@/shared/context/MobileContext";
+import { QueryProvider } from "@/shared/providers/QueryProvider";
 
 export default {
   title: "Layouts/Admin/Bar Management/Modals",
@@ -12,13 +14,17 @@ export default {
 
 const DeleteModal = () => {
   return (
-    <MobileProvider>
-      <DeleteProductModal
-        isOpen={true}
-        onClose={() => {}}
-        product={fakeProduct}
-      />
-    </MobileProvider>
+    <QueryProvider>
+      <MobileProvider>
+        <BarProvider>
+          <DeleteProductModal
+            isOpen={true}
+            onClose={() => {}}
+            product={fakeProduct}
+          />
+        </BarProvider>
+      </MobileProvider>
+    </QueryProvider>
   );
 };
 

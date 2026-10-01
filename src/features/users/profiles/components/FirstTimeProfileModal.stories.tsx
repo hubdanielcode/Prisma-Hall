@@ -5,6 +5,9 @@ import { QueryProvider } from "@/shared/providers/QueryProvider";
 export default {
   title: "Layouts/Protected/Profile/Modals",
   component: FirstTimeProfileModal,
+  parameters: {
+    layout: "fullscreen",
+  },
 };
 
 const FirstTimeModal = () => {

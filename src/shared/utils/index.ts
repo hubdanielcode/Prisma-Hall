@@ -10,4 +10,4 @@ export { rotatingImages } from "@/shared/utils/constants/rotatingImages";
 export { atLeastOneFieldUpdated } from "@/shared/utils/functions/atLeastOneFieldUpdated";
 export { getTheme, saveTheme, applyTheme } from "@/shared/utils/functions/theme";
 export { masks } from "@/shared/utils/functions/masks";
-export { parsedDate, formattedDate } from "@/shared/utils/functions/dates";
+export { parsedDate, formattedDate, formattedDateToString, formattedDateToISOString } from "@/shared/utils/functions/dates";

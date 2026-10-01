@@ -1,11 +1,11 @@
 export type ProductProps = {
   id: string;
   name: string;
-  category: "all_categories" | "beers" | "cocktails" | "drinks" | "no_alcohol";
   description: string;
+  category: "beers" | "cocktails" | "drinks" | "no_alcohol";
+  quantity: number;
   image: string;
   price: number;
-  quantity: number;
   status: "active" | "inactive";
 
   createdAt: string;

@@ -51,7 +51,7 @@ const EditProfileModal = ({ onClose, isOpen }: EditProfileModalProps) => {
 
   useBlockScroll(isOpen);
 
-  // 2. Preenche os campos com os dados originais do perfil no momento em que o mmodal abre
+  // 2. Preenche os campos com os dados originais do perfil no momento em que o modal abre
 
   useEffect(() => {
     if (!profile || !isOpen) {

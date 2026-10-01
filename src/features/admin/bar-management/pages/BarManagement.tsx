@@ -46,13 +46,13 @@ const BarManagement = () => {
             {/* - Título - */}
 
             <div className={`flex flex-col items-start ${isPortraitMobile ? "mb-4" : "mb-0"}`}>
-              <span className={`text-white font-semibold ${isPortraitMobile ? "text-lg" : isLandscapeMobile ? "text-xl" : "text-2xl"}`}>
+              <span className={`text-white font-semibold mb-2 ${isPortraitMobile ? "text-lg" : isLandscapeMobile ? "text-xl" : "text-2xl"}`}>
                 Gestão do Bar
               </span>
 
               {/* - Subtítulo - */}
 
-              <span className="text-white/60">Gerencie os produtos do cardápio</span>
+              <span className="text-white/60">Acompanhe o estoque e mantenha o cardápio sempre atualizado</span>
             </div>
 
             {/* - Botão de adicionar produto - */}

@@ -85,7 +85,7 @@ const useSession = () => {
   });
 
   return {
-    /* - Leitura - */
+    /* - Query de leitura - */
 
     session,
     user,

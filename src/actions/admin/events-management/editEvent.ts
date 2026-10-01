@@ -23,7 +23,7 @@ const editEvent = async (event: z.infer<typeof editEventSchema>) => {
     title: parsedEvent.data.title,
     description: parsedEvent.data.description,
     tag: parsedEvent.data.tag,
-    attractionId: parsedEvent.data.attractionId,
+    attractionName: parsedEvent.data.attractionName,
     status: parsedEvent.data.status,
     price: parsedEvent.data.price,
     startsAt: parsedEvent.data.startsAt,
@@ -45,10 +45,9 @@ const editEvent = async (event: z.infer<typeof editEventSchema>) => {
       return {
         id: editedEvent.id,
         title: editedEvent.title,
-
         description: editedEvent.description,
         tag: editedEvent.tag,
-        attractionId: editedEvent.attractionId,
+        attractionName: editedEvent.attractionName,
         image: editedEvent.image,
         status: editedEvent.status,
         price: editedEvent.price.toNumber(),
@@ -73,7 +72,7 @@ const editEvent = async (event: z.infer<typeof editEventSchema>) => {
 
       description: editedEvent.description,
       tag: editedEvent.tag,
-      attractionId: editedEvent.attractionId,
+      attractionName: editedEvent.attractionName,
       image: editedEvent.image,
       status: editedEvent.status,
       price: editedEvent.price.toNumber(),

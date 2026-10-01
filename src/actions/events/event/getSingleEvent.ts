@@ -15,7 +15,7 @@ const getSingleEvent = async (eventId: string) => {
       title: event.title,
       description: event.description,
       tag: event.tag,
-      attractionId: event.attractionId,
+      attractionName: event.attractionName,
       image: event.image,
       status: event.status,
       price: event.price.toNumber(),

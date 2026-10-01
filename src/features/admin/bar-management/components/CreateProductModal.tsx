@@ -4,9 +4,10 @@ import { createProductSchema } from "@/lib/validations/admin/bar-management/crea
 import { ImagePlus, X } from "lucide-react";
 import { masks } from "@/shared/utils/functions/masks";
 import { motion, AnimatePresence } from "motion/react";
+import { productCategories } from "@/features/bar";
 import { productCategoryBadges } from "../types/productCategoryBadges";
-import { useBlockScroll, useMobileContext } from "@/shared/hooks";
 import { useBarContext } from "@/features/bar/hooks/useBarContext";
+import { useBlockScroll, useMobileContext } from "@/shared/hooks";
 import { useRef, useState } from "react";
 import z from "zod";
 
@@ -16,8 +17,6 @@ interface CreateProductModalProps {
 }
 
 type EmptyProductType = Omit<z.infer<typeof createProductSchema>, "image"> & { image: File | null };
-
-const ProductCategories = ["beers", "cocktails", "drinks", "no_alcohol"] as const;
 
 const emptyProduct: EmptyProductType = {
   name: "",
@@ -154,6 +153,7 @@ const CreateProductModal = ({ isOpen, onClose }: CreateProductModalProps) => {
 
     setNewProduct(emptyProduct);
     setProductImagePreview("");
+    setProductQuantity("");
     setProductPrice("");
   };
 
@@ -332,10 +332,9 @@ const CreateProductModal = ({ isOpen, onClose }: CreateProductModalProps) => {
                 <label className="text-xs text-[#B8860B] uppercase tracking-wide font-semibold mb-1.5">Categoria</label>
 
                 <div className="flex flex-wrap gap-2">
-                  {ProductCategories.map((category) => {
-                    const displayName = masks.productCategory(category);
-                    const badge = productCategoryBadges[displayName];
-                    const isSelected = newProduct.category === category;
+                  {productCategories.map(({ id, title }) => {
+                    const badge = productCategoryBadges[title];
+                    const isSelected = newProduct.category === id;
 
                     return (
                       <motion.button
@@ -344,18 +343,18 @@ const CreateProductModal = ({ isOpen, onClose }: CreateProductModalProps) => {
                             ? `${badge.background} ${badge.border} ${badge.text}`
                             : "bg-transparent border-[#333] text-white/40 hover:border-white/30"
                         }`}
-                        key={category}
+                        key={id}
                         type="button"
                         onClick={() => {
                           setNewProduct((prev) => ({
                             ...prev,
-                            category,
+                            category: id,
                           }));
                         }}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
-                        {displayName}
+                        {title}
                       </motion.button>
                     );
                   })}
@@ -442,7 +441,10 @@ const CreateProductModal = ({ isOpen, onClose }: CreateProductModalProps) => {
                 className="px-4 py-2 text-sm text-white/60 font-semibold rounded-lg cursor-pointer hover:text-white transition-colors"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={handleResetForm}
+                onClick={() => {
+                  handleResetForm;
+                  onClose();
+                }}
               >
                 Cancelar
               </motion.button>

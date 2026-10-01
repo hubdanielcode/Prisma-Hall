@@ -93,7 +93,7 @@ const DeleteProductModal = ({ isOpen, onClose, product }: DeleteProductModalProp
 
                   <div className="flex justify-between">
                     <span className="text-[#B8860B] font-bold text-sm shrink-0">
-                      <span className="text-xs font-semibold mr-0.5">R$</span>
+                      <span className="text-SM font-semibold mr-1.5 ml-2">R$</span>
                       {masks.productPrice(product.price.toFixed(2).replace(".", ","))}
                     </span>
 
@@ -105,7 +105,8 @@ const DeleteProductModal = ({ isOpen, onClose, product }: DeleteProductModalProp
                             : "bg-red-400 shadow-[0_0_6px_2px_rgba(248,113,113,0.6)]"
                         }`}
                       />
-                      <span className="text-white text-xs font-semibold">{product.status}</span>
+
+                      <span className="text-white text-xs font-semibold">{masks.productStatus(product.status)}</span>
                     </div>
                   </div>
                 </div>

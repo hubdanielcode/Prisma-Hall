@@ -43,7 +43,7 @@ export type EventMinAggregateOutputType = {
   title: string | null
   description: string | null
   tag: $Enums.EventTag | null
-  attractionId: string | null
+  attractionName: string | null
   image: string | null
   status: $Enums.EventStatus | null
   price: runtime.Decimal | null
@@ -59,7 +59,7 @@ export type EventMaxAggregateOutputType = {
   title: string | null
   description: string | null
   tag: $Enums.EventTag | null
-  attractionId: string | null
+  attractionName: string | null
   image: string | null
   status: $Enums.EventStatus | null
   price: runtime.Decimal | null
@@ -75,7 +75,7 @@ export type EventCountAggregateOutputType = {
   title: number
   description: number
   tag: number
-  attractionId: number
+  attractionName: number
   image: number
   status: number
   price: number
@@ -105,7 +105,7 @@ export type EventMinAggregateInputType = {
   title?: true
   description?: true
   tag?: true
-  attractionId?: true
+  attractionName?: true
   image?: true
   status?: true
   price?: true
@@ -121,7 +121,7 @@ export type EventMaxAggregateInputType = {
   title?: true
   description?: true
   tag?: true
-  attractionId?: true
+  attractionName?: true
   image?: true
   status?: true
   price?: true
@@ -137,7 +137,7 @@ export type EventCountAggregateInputType = {
   title?: true
   description?: true
   tag?: true
-  attractionId?: true
+  attractionName?: true
   image?: true
   status?: true
   price?: true
@@ -240,7 +240,7 @@ export type EventGroupByOutputType = {
   title: string
   description: string
   tag: $Enums.EventTag
-  attractionId: string
+  attractionName: string
   image: string
   status: $Enums.EventStatus
   price: runtime.Decimal
@@ -279,7 +279,7 @@ export type EventWhereInput = {
   title?: Prisma.StringFilter<"Event"> | string
   description?: Prisma.StringFilter<"Event"> | string
   tag?: Prisma.EnumEventTagFilter<"Event"> | $Enums.EventTag
-  attractionId?: Prisma.StringFilter<"Event"> | string
+  attractionName?: Prisma.StringFilter<"Event"> | string
   image?: Prisma.StringFilter<"Event"> | string
   status?: Prisma.EnumEventStatusFilter<"Event"> | $Enums.EventStatus
   price?: Prisma.DecimalFilter<"Event"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -289,10 +289,10 @@ export type EventWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   carts?: Prisma.CartListRelationFilter
-  reviews?: Prisma.ReviewListRelationFilter
-  galleries?: Prisma.GalleryListRelationFilter
-  tickets?: Prisma.TicketListRelationFilter
   attraction?: Prisma.XOR<Prisma.AttractionScalarRelationFilter, Prisma.AttractionWhereInput>
+  galleries?: Prisma.GalleryListRelationFilter
+  reviews?: Prisma.ReviewListRelationFilter
+  tickets?: Prisma.TicketListRelationFilter
 }
 
 export type EventOrderByWithRelationInput = {
@@ -300,7 +300,7 @@ export type EventOrderByWithRelationInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   tag?: Prisma.SortOrder
-  attractionId?: Prisma.SortOrder
+  attractionName?: Prisma.SortOrder
   image?: Prisma.SortOrder
   status?: Prisma.SortOrder
   price?: Prisma.SortOrder
@@ -310,10 +310,10 @@ export type EventOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   carts?: Prisma.CartOrderByRelationAggregateInput
-  reviews?: Prisma.ReviewOrderByRelationAggregateInput
-  galleries?: Prisma.GalleryOrderByRelationAggregateInput
-  tickets?: Prisma.TicketOrderByRelationAggregateInput
   attraction?: Prisma.AttractionOrderByWithRelationInput
+  galleries?: Prisma.GalleryOrderByRelationAggregateInput
+  reviews?: Prisma.ReviewOrderByRelationAggregateInput
+  tickets?: Prisma.TicketOrderByRelationAggregateInput
 }
 
 export type EventWhereUniqueInput = Prisma.AtLeast<{
@@ -324,7 +324,7 @@ export type EventWhereUniqueInput = Prisma.AtLeast<{
   title?: Prisma.StringFilter<"Event"> | string
   description?: Prisma.StringFilter<"Event"> | string
   tag?: Prisma.EnumEventTagFilter<"Event"> | $Enums.EventTag
-  attractionId?: Prisma.StringFilter<"Event"> | string
+  attractionName?: Prisma.StringFilter<"Event"> | string
   image?: Prisma.StringFilter<"Event"> | string
   status?: Prisma.EnumEventStatusFilter<"Event"> | $Enums.EventStatus
   price?: Prisma.DecimalFilter<"Event"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -334,10 +334,10 @@ export type EventWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   carts?: Prisma.CartListRelationFilter
-  reviews?: Prisma.ReviewListRelationFilter
-  galleries?: Prisma.GalleryListRelationFilter
-  tickets?: Prisma.TicketListRelationFilter
   attraction?: Prisma.XOR<Prisma.AttractionScalarRelationFilter, Prisma.AttractionWhereInput>
+  galleries?: Prisma.GalleryListRelationFilter
+  reviews?: Prisma.ReviewListRelationFilter
+  tickets?: Prisma.TicketListRelationFilter
 }, "id">
 
 export type EventOrderByWithAggregationInput = {
@@ -345,7 +345,7 @@ export type EventOrderByWithAggregationInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   tag?: Prisma.SortOrder
-  attractionId?: Prisma.SortOrder
+  attractionName?: Prisma.SortOrder
   image?: Prisma.SortOrder
   status?: Prisma.SortOrder
   price?: Prisma.SortOrder
@@ -369,7 +369,7 @@ export type EventScalarWhereWithAggregatesInput = {
   title?: Prisma.StringWithAggregatesFilter<"Event"> | string
   description?: Prisma.StringWithAggregatesFilter<"Event"> | string
   tag?: Prisma.EnumEventTagWithAggregatesFilter<"Event"> | $Enums.EventTag
-  attractionId?: Prisma.StringWithAggregatesFilter<"Event"> | string
+  attractionName?: Prisma.StringWithAggregatesFilter<"Event"> | string
   image?: Prisma.StringWithAggregatesFilter<"Event"> | string
   status?: Prisma.EnumEventStatusWithAggregatesFilter<"Event"> | $Enums.EventStatus
   price?: Prisma.DecimalWithAggregatesFilter<"Event"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -394,10 +394,10 @@ export type EventCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   carts?: Prisma.CartCreateNestedManyWithoutEventInput
-  reviews?: Prisma.ReviewCreateNestedManyWithoutEventInput
-  galleries?: Prisma.GalleryCreateNestedManyWithoutEventInput
-  tickets?: Prisma.TicketCreateNestedManyWithoutEventInput
   attraction: Prisma.AttractionCreateNestedOneWithoutEventsInput
+  galleries?: Prisma.GalleryCreateNestedManyWithoutEventInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutEventInput
+  tickets?: Prisma.TicketCreateNestedManyWithoutEventInput
 }
 
 export type EventUncheckedCreateInput = {
@@ -405,7 +405,7 @@ export type EventUncheckedCreateInput = {
   title: string
   description: string
   tag: $Enums.EventTag
-  attractionId: string
+  attractionName: string
   image: string
   status: $Enums.EventStatus
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -415,8 +415,8 @@ export type EventUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   carts?: Prisma.CartUncheckedCreateNestedManyWithoutEventInput
-  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutEventInput
   galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutEventInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutEventInput
   tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutEventInput
 }
 
@@ -434,10 +434,10 @@ export type EventUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUpdateManyWithoutEventNestedInput
-  reviews?: Prisma.ReviewUpdateManyWithoutEventNestedInput
-  galleries?: Prisma.GalleryUpdateManyWithoutEventNestedInput
-  tickets?: Prisma.TicketUpdateManyWithoutEventNestedInput
   attraction?: Prisma.AttractionUpdateOneRequiredWithoutEventsNestedInput
+  galleries?: Prisma.GalleryUpdateManyWithoutEventNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutEventNestedInput
+  tickets?: Prisma.TicketUpdateManyWithoutEventNestedInput
 }
 
 export type EventUncheckedUpdateInput = {
@@ -445,7 +445,7 @@ export type EventUncheckedUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
-  attractionId?: Prisma.StringFieldUpdateOperationsInput | string
+  attractionName?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -455,8 +455,8 @@ export type EventUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUncheckedUpdateManyWithoutEventNestedInput
-  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutEventNestedInput
   galleries?: Prisma.GalleryUncheckedUpdateManyWithoutEventNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutEventNestedInput
   tickets?: Prisma.TicketUncheckedUpdateManyWithoutEventNestedInput
 }
 
@@ -465,7 +465,7 @@ export type EventCreateManyInput = {
   title: string
   description: string
   tag: $Enums.EventTag
-  attractionId: string
+  attractionName: string
   image: string
   status: $Enums.EventStatus
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -496,7 +496,7 @@ export type EventUncheckedUpdateManyInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
-  attractionId?: Prisma.StringFieldUpdateOperationsInput | string
+  attractionName?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -517,7 +517,7 @@ export type EventCountOrderByAggregateInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   tag?: Prisma.SortOrder
-  attractionId?: Prisma.SortOrder
+  attractionName?: Prisma.SortOrder
   image?: Prisma.SortOrder
   status?: Prisma.SortOrder
   price?: Prisma.SortOrder
@@ -539,7 +539,7 @@ export type EventMaxOrderByAggregateInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   tag?: Prisma.SortOrder
-  attractionId?: Prisma.SortOrder
+  attractionName?: Prisma.SortOrder
   image?: Prisma.SortOrder
   status?: Prisma.SortOrder
   price?: Prisma.SortOrder
@@ -555,7 +555,7 @@ export type EventMinOrderByAggregateInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   tag?: Prisma.SortOrder
-  attractionId?: Prisma.SortOrder
+  attractionName?: Prisma.SortOrder
   image?: Prisma.SortOrder
   status?: Prisma.SortOrder
   price?: Prisma.SortOrder
@@ -708,10 +708,10 @@ export type EventCreateWithoutCartsInput = {
   rating?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
-  reviews?: Prisma.ReviewCreateNestedManyWithoutEventInput
-  galleries?: Prisma.GalleryCreateNestedManyWithoutEventInput
-  tickets?: Prisma.TicketCreateNestedManyWithoutEventInput
   attraction: Prisma.AttractionCreateNestedOneWithoutEventsInput
+  galleries?: Prisma.GalleryCreateNestedManyWithoutEventInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutEventInput
+  tickets?: Prisma.TicketCreateNestedManyWithoutEventInput
 }
 
 export type EventUncheckedCreateWithoutCartsInput = {
@@ -719,7 +719,7 @@ export type EventUncheckedCreateWithoutCartsInput = {
   title: string
   description: string
   tag: $Enums.EventTag
-  attractionId: string
+  attractionName: string
   image: string
   status: $Enums.EventStatus
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -728,8 +728,8 @@ export type EventUncheckedCreateWithoutCartsInput = {
   rating?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
-  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutEventInput
   galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutEventInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutEventInput
   tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutEventInput
 }
 
@@ -762,10 +762,10 @@ export type EventUpdateWithoutCartsInput = {
   rating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  reviews?: Prisma.ReviewUpdateManyWithoutEventNestedInput
-  galleries?: Prisma.GalleryUpdateManyWithoutEventNestedInput
-  tickets?: Prisma.TicketUpdateManyWithoutEventNestedInput
   attraction?: Prisma.AttractionUpdateOneRequiredWithoutEventsNestedInput
+  galleries?: Prisma.GalleryUpdateManyWithoutEventNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutEventNestedInput
+  tickets?: Prisma.TicketUpdateManyWithoutEventNestedInput
 }
 
 export type EventUncheckedUpdateWithoutCartsInput = {
@@ -773,7 +773,7 @@ export type EventUncheckedUpdateWithoutCartsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
-  attractionId?: Prisma.StringFieldUpdateOperationsInput | string
+  attractionName?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -782,8 +782,8 @@ export type EventUncheckedUpdateWithoutCartsInput = {
   rating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutEventNestedInput
   galleries?: Prisma.GalleryUncheckedUpdateManyWithoutEventNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutEventNestedInput
   tickets?: Prisma.TicketUncheckedUpdateManyWithoutEventNestedInput
 }
 
@@ -801,8 +801,8 @@ export type EventCreateWithoutAttractionInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   carts?: Prisma.CartCreateNestedManyWithoutEventInput
-  reviews?: Prisma.ReviewCreateNestedManyWithoutEventInput
   galleries?: Prisma.GalleryCreateNestedManyWithoutEventInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutEventInput
   tickets?: Prisma.TicketCreateNestedManyWithoutEventInput
 }
 
@@ -820,8 +820,8 @@ export type EventUncheckedCreateWithoutAttractionInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   carts?: Prisma.CartUncheckedCreateNestedManyWithoutEventInput
-  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutEventInput
   galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutEventInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutEventInput
   tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutEventInput
 }
 
@@ -859,7 +859,7 @@ export type EventScalarWhereInput = {
   title?: Prisma.StringFilter<"Event"> | string
   description?: Prisma.StringFilter<"Event"> | string
   tag?: Prisma.EnumEventTagFilter<"Event"> | $Enums.EventTag
-  attractionId?: Prisma.StringFilter<"Event"> | string
+  attractionName?: Prisma.StringFilter<"Event"> | string
   image?: Prisma.StringFilter<"Event"> | string
   status?: Prisma.EnumEventStatusFilter<"Event"> | $Enums.EventStatus
   price?: Prisma.DecimalFilter<"Event"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -884,9 +884,9 @@ export type EventCreateWithoutReviewsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   carts?: Prisma.CartCreateNestedManyWithoutEventInput
+  attraction: Prisma.AttractionCreateNestedOneWithoutEventsInput
   galleries?: Prisma.GalleryCreateNestedManyWithoutEventInput
   tickets?: Prisma.TicketCreateNestedManyWithoutEventInput
-  attraction: Prisma.AttractionCreateNestedOneWithoutEventsInput
 }
 
 export type EventUncheckedCreateWithoutReviewsInput = {
@@ -894,7 +894,7 @@ export type EventUncheckedCreateWithoutReviewsInput = {
   title: string
   description: string
   tag: $Enums.EventTag
-  attractionId: string
+  attractionName: string
   image: string
   status: $Enums.EventStatus
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -938,9 +938,9 @@ export type EventUpdateWithoutReviewsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUpdateManyWithoutEventNestedInput
+  attraction?: Prisma.AttractionUpdateOneRequiredWithoutEventsNestedInput
   galleries?: Prisma.GalleryUpdateManyWithoutEventNestedInput
   tickets?: Prisma.TicketUpdateManyWithoutEventNestedInput
-  attraction?: Prisma.AttractionUpdateOneRequiredWithoutEventsNestedInput
 }
 
 export type EventUncheckedUpdateWithoutReviewsInput = {
@@ -948,7 +948,7 @@ export type EventUncheckedUpdateWithoutReviewsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
-  attractionId?: Prisma.StringFieldUpdateOperationsInput | string
+  attractionName?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -976,9 +976,9 @@ export type EventCreateWithoutGalleriesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   carts?: Prisma.CartCreateNestedManyWithoutEventInput
+  attraction: Prisma.AttractionCreateNestedOneWithoutEventsInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutEventInput
   tickets?: Prisma.TicketCreateNestedManyWithoutEventInput
-  attraction: Prisma.AttractionCreateNestedOneWithoutEventsInput
 }
 
 export type EventUncheckedCreateWithoutGalleriesInput = {
@@ -986,7 +986,7 @@ export type EventUncheckedCreateWithoutGalleriesInput = {
   title: string
   description: string
   tag: $Enums.EventTag
-  attractionId: string
+  attractionName: string
   image: string
   status: $Enums.EventStatus
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1030,9 +1030,9 @@ export type EventUpdateWithoutGalleriesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUpdateManyWithoutEventNestedInput
+  attraction?: Prisma.AttractionUpdateOneRequiredWithoutEventsNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutEventNestedInput
   tickets?: Prisma.TicketUpdateManyWithoutEventNestedInput
-  attraction?: Prisma.AttractionUpdateOneRequiredWithoutEventsNestedInput
 }
 
 export type EventUncheckedUpdateWithoutGalleriesInput = {
@@ -1040,7 +1040,7 @@ export type EventUncheckedUpdateWithoutGalleriesInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
-  attractionId?: Prisma.StringFieldUpdateOperationsInput | string
+  attractionName?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1068,9 +1068,9 @@ export type EventCreateWithoutTicketsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   carts?: Prisma.CartCreateNestedManyWithoutEventInput
-  reviews?: Prisma.ReviewCreateNestedManyWithoutEventInput
-  galleries?: Prisma.GalleryCreateNestedManyWithoutEventInput
   attraction: Prisma.AttractionCreateNestedOneWithoutEventsInput
+  galleries?: Prisma.GalleryCreateNestedManyWithoutEventInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutEventInput
 }
 
 export type EventUncheckedCreateWithoutTicketsInput = {
@@ -1078,7 +1078,7 @@ export type EventUncheckedCreateWithoutTicketsInput = {
   title: string
   description: string
   tag: $Enums.EventTag
-  attractionId: string
+  attractionName: string
   image: string
   status: $Enums.EventStatus
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1088,8 +1088,8 @@ export type EventUncheckedCreateWithoutTicketsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   carts?: Prisma.CartUncheckedCreateNestedManyWithoutEventInput
-  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutEventInput
   galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutEventInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutEventInput
 }
 
 export type EventCreateOrConnectWithoutTicketsInput = {
@@ -1122,9 +1122,9 @@ export type EventUpdateWithoutTicketsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUpdateManyWithoutEventNestedInput
-  reviews?: Prisma.ReviewUpdateManyWithoutEventNestedInput
-  galleries?: Prisma.GalleryUpdateManyWithoutEventNestedInput
   attraction?: Prisma.AttractionUpdateOneRequiredWithoutEventsNestedInput
+  galleries?: Prisma.GalleryUpdateManyWithoutEventNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutEventNestedInput
 }
 
 export type EventUncheckedUpdateWithoutTicketsInput = {
@@ -1132,7 +1132,7 @@ export type EventUncheckedUpdateWithoutTicketsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
-  attractionId?: Prisma.StringFieldUpdateOperationsInput | string
+  attractionName?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1142,8 +1142,8 @@ export type EventUncheckedUpdateWithoutTicketsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUncheckedUpdateManyWithoutEventNestedInput
-  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutEventNestedInput
   galleries?: Prisma.GalleryUncheckedUpdateManyWithoutEventNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutEventNestedInput
 }
 
 export type EventCreateManyAttractionInput = {
@@ -1175,8 +1175,8 @@ export type EventUpdateWithoutAttractionInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUpdateManyWithoutEventNestedInput
-  reviews?: Prisma.ReviewUpdateManyWithoutEventNestedInput
   galleries?: Prisma.GalleryUpdateManyWithoutEventNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutEventNestedInput
   tickets?: Prisma.TicketUpdateManyWithoutEventNestedInput
 }
 
@@ -1194,8 +1194,8 @@ export type EventUncheckedUpdateWithoutAttractionInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUncheckedUpdateManyWithoutEventNestedInput
-  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutEventNestedInput
   galleries?: Prisma.GalleryUncheckedUpdateManyWithoutEventNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutEventNestedInput
   tickets?: Prisma.TicketUncheckedUpdateManyWithoutEventNestedInput
 }
 
@@ -1221,15 +1221,15 @@ export type EventUncheckedUpdateManyWithoutAttractionInput = {
 
 export type EventCountOutputType = {
   carts: number
-  reviews: number
   galleries: number
+  reviews: number
   tickets: number
 }
 
 export type EventCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   carts?: boolean | EventCountOutputTypeCountCartsArgs
-  reviews?: boolean | EventCountOutputTypeCountReviewsArgs
   galleries?: boolean | EventCountOutputTypeCountGalleriesArgs
+  reviews?: boolean | EventCountOutputTypeCountReviewsArgs
   tickets?: boolean | EventCountOutputTypeCountTicketsArgs
 }
 
@@ -1253,15 +1253,15 @@ export type EventCountOutputTypeCountCartsArgs<ExtArgs extends runtime.Types.Ext
 /**
  * EventCountOutputType without action
  */
-export type EventCountOutputTypeCountReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ReviewWhereInput
+export type EventCountOutputTypeCountGalleriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.GalleryWhereInput
 }
 
 /**
  * EventCountOutputType without action
  */
-export type EventCountOutputTypeCountGalleriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.GalleryWhereInput
+export type EventCountOutputTypeCountReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReviewWhereInput
 }
 
 /**
@@ -1277,7 +1277,7 @@ export type EventSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   title?: boolean
   description?: boolean
   tag?: boolean
-  attractionId?: boolean
+  attractionName?: boolean
   image?: boolean
   status?: boolean
   price?: boolean
@@ -1287,10 +1287,10 @@ export type EventSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   createdAt?: boolean
   updatedAt?: boolean
   carts?: boolean | Prisma.Event$cartsArgs<ExtArgs>
-  reviews?: boolean | Prisma.Event$reviewsArgs<ExtArgs>
-  galleries?: boolean | Prisma.Event$galleriesArgs<ExtArgs>
-  tickets?: boolean | Prisma.Event$ticketsArgs<ExtArgs>
   attraction?: boolean | Prisma.AttractionDefaultArgs<ExtArgs>
+  galleries?: boolean | Prisma.Event$galleriesArgs<ExtArgs>
+  reviews?: boolean | Prisma.Event$reviewsArgs<ExtArgs>
+  tickets?: boolean | Prisma.Event$ticketsArgs<ExtArgs>
   _count?: boolean | Prisma.EventCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["event"]>
 
@@ -1299,7 +1299,7 @@ export type EventSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   title?: boolean
   description?: boolean
   tag?: boolean
-  attractionId?: boolean
+  attractionName?: boolean
   image?: boolean
   status?: boolean
   price?: boolean
@@ -1316,7 +1316,7 @@ export type EventSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   title?: boolean
   description?: boolean
   tag?: boolean
-  attractionId?: boolean
+  attractionName?: boolean
   image?: boolean
   status?: boolean
   price?: boolean
@@ -1333,7 +1333,7 @@ export type EventSelectScalar = {
   title?: boolean
   description?: boolean
   tag?: boolean
-  attractionId?: boolean
+  attractionName?: boolean
   image?: boolean
   status?: boolean
   price?: boolean
@@ -1344,13 +1344,13 @@ export type EventSelectScalar = {
   updatedAt?: boolean
 }
 
-export type EventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "tag" | "attractionId" | "image" | "status" | "price" | "startsAt" | "attendees" | "rating" | "createdAt" | "updatedAt", ExtArgs["result"]["event"]>
+export type EventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "tag" | "attractionName" | "image" | "status" | "price" | "startsAt" | "attendees" | "rating" | "createdAt" | "updatedAt", ExtArgs["result"]["event"]>
 export type EventInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   carts?: boolean | Prisma.Event$cartsArgs<ExtArgs>
-  reviews?: boolean | Prisma.Event$reviewsArgs<ExtArgs>
-  galleries?: boolean | Prisma.Event$galleriesArgs<ExtArgs>
-  tickets?: boolean | Prisma.Event$ticketsArgs<ExtArgs>
   attraction?: boolean | Prisma.AttractionDefaultArgs<ExtArgs>
+  galleries?: boolean | Prisma.Event$galleriesArgs<ExtArgs>
+  reviews?: boolean | Prisma.Event$reviewsArgs<ExtArgs>
+  tickets?: boolean | Prisma.Event$ticketsArgs<ExtArgs>
   _count?: boolean | Prisma.EventCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type EventIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1364,17 +1364,17 @@ export type $EventPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   name: "Event"
   objects: {
     carts: Prisma.$CartPayload<ExtArgs>[]
-    reviews: Prisma.$ReviewPayload<ExtArgs>[]
-    galleries: Prisma.$GalleryPayload<ExtArgs>[]
-    tickets: Prisma.$TicketPayload<ExtArgs>[]
     attraction: Prisma.$AttractionPayload<ExtArgs>
+    galleries: Prisma.$GalleryPayload<ExtArgs>[]
+    reviews: Prisma.$ReviewPayload<ExtArgs>[]
+    tickets: Prisma.$TicketPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     title: string
     description: string
     tag: $Enums.EventTag
-    attractionId: string
+    attractionName: string
     image: string
     status: $Enums.EventStatus
     price: runtime.Decimal
@@ -1778,10 +1778,10 @@ readonly fields: EventFieldRefs;
 export interface Prisma__EventClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   carts<T extends Prisma.Event$cartsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$cartsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CartPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  reviews<T extends Prisma.Event$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  galleries<T extends Prisma.Event$galleriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$galleriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GalleryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  tickets<T extends Prisma.Event$ticketsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$ticketsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   attraction<T extends Prisma.AttractionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AttractionDefaultArgs<ExtArgs>>): Prisma.Prisma__AttractionClient<runtime.Types.Result.GetResult<Prisma.$AttractionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  galleries<T extends Prisma.Event$galleriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$galleriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GalleryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reviews<T extends Prisma.Event$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tickets<T extends Prisma.Event$ticketsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$ticketsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1815,7 +1815,7 @@ export interface EventFieldRefs {
   readonly title: Prisma.FieldRef<"Event", 'String'>
   readonly description: Prisma.FieldRef<"Event", 'String'>
   readonly tag: Prisma.FieldRef<"Event", 'EventTag'>
-  readonly attractionId: Prisma.FieldRef<"Event", 'String'>
+  readonly attractionName: Prisma.FieldRef<"Event", 'String'>
   readonly image: Prisma.FieldRef<"Event", 'String'>
   readonly status: Prisma.FieldRef<"Event", 'EventStatus'>
   readonly price: Prisma.FieldRef<"Event", 'Decimal'>
@@ -2249,30 +2249,6 @@ export type Event$cartsArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 }
 
 /**
- * Event.reviews
- */
-export type Event$reviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Review
-   */
-  select?: Prisma.ReviewSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Review
-   */
-  omit?: Prisma.ReviewOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ReviewInclude<ExtArgs> | null
-  where?: Prisma.ReviewWhereInput
-  orderBy?: Prisma.ReviewOrderByWithRelationInput | Prisma.ReviewOrderByWithRelationInput[]
-  cursor?: Prisma.ReviewWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ReviewScalarFieldEnum | Prisma.ReviewScalarFieldEnum[]
-}
-
-/**
  * Event.galleries
  */
 export type Event$galleriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2294,6 +2270,30 @@ export type Event$galleriesArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.GalleryScalarFieldEnum | Prisma.GalleryScalarFieldEnum[]
+}
+
+/**
+ * Event.reviews
+ */
+export type Event$reviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Review
+   */
+  select?: Prisma.ReviewSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Review
+   */
+  omit?: Prisma.ReviewOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReviewInclude<ExtArgs> | null
+  where?: Prisma.ReviewWhereInput
+  orderBy?: Prisma.ReviewOrderByWithRelationInput | Prisma.ReviewOrderByWithRelationInput[]
+  cursor?: Prisma.ReviewWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReviewScalarFieldEnum | Prisma.ReviewScalarFieldEnum[]
 }
 
 /**

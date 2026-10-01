@@ -12,15 +12,13 @@ export default {
 
 const myPasswordInput = () => {
   return (
-    <div className="[&>div>span:first-child]:text-white/60">
-      <CustomPasswordInput
-        label="Sua Senha"
-        placeholder="•••••••"
-        value="•••••••"
-        onChange={() => {}}
-        maxLength={50}
-      />
-    </div>
+    <CustomPasswordInput
+      label="Sua Senha"
+      placeholder="•••••••"
+      value="•••••••"
+      onChange={() => {}}
+      maxLength={50}
+    />
   );
 };
 

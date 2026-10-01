@@ -1,5 +1,4 @@
 const eventTags = [
-  { id: "all_tags", title: "Todos" },
   { id: "trap_and_hiphop", title: "Trap & Hip Hop" },
   { id: "forro", title: "Forró" },
   { id: "samba_and_pagode", title: "Samba & Pagode" },

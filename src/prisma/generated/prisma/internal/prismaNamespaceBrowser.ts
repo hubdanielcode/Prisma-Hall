@@ -102,11 +102,11 @@ export const UserScalarFieldEnum = {
   name: 'name',
   email: 'email',
   password: 'password',
-  profilePicture: 'profilePicture',
   role: 'role',
   verifiedBadge: 'verifiedBadge',
   token: 'token',
   tokenExpiresAt: 'tokenExpiresAt',
+  profilePicture: 'profilePicture',
   createdAt: 'createdAt',
   validatedAt: 'validatedAt',
   updatedAt: 'updatedAt'
@@ -119,15 +119,15 @@ export const ProfileScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   phoneNumber: 'phoneNumber',
-  socialSecurityNumber: 'socialSecurityNumber',
   birthDate: 'birthDate',
-  zipCode: 'zipCode',
   city: 'city',
-  state: 'state',
   neighborhood: 'neighborhood',
   street: 'street',
   number: 'number',
   complement: 'complement',
+  socialSecurityNumber: 'socialSecurityNumber',
+  state: 'state',
+  zipCode: 'zipCode',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -153,11 +153,11 @@ export type CartScalarFieldEnum = (typeof CartScalarFieldEnum)[keyof typeof Cart
 export const ProductScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  description: 'description',
   category: 'category',
-  quantity: 'quantity',
+  description: 'description',
   image: 'image',
   price: 'price',
+  quantity: 'quantity',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -210,7 +210,7 @@ export const EventScalarFieldEnum = {
   title: 'title',
   description: 'description',
   tag: 'tag',
-  attractionId: 'attractionId',
+  attractionName: 'attractionName',
   image: 'image',
   status: 'status',
   price: 'price',
@@ -228,6 +228,7 @@ export const AttractionScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
+  image: 'image',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

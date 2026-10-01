@@ -6,9 +6,9 @@ import {
   editProduct as editProductAction,
   getAllProducts,
 } from "@/actions";
-import type { ProductProps } from "../types/product";
 import { useQueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import type { ProductProps } from "../types/product";
 
 const useProducts = () => {
   const queryClient = useQueryClient();
@@ -28,34 +28,36 @@ const useProducts = () => {
 
   const { mutateAsync: createProductMutation } = useMutation({
     mutationFn: createProductAction,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["products"] }),
+    onSuccess: async (createProductMutationResult) => {
+      if (createProductMutationResult) {
+        queryClient.invalidateQueries({ queryKey: ["products"] });
+      }
+    },
   });
 
   // 2. EditProductMutation
 
   const { mutateAsync: editProductMutation } = useMutation({
     mutationFn: editProductAction,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["products"] }),
+    onSuccess: async (editProductMutationResult) => {
+      if (editProductMutationResult) {
+        queryClient.invalidateQueries({ queryKey: ["products"] });
+      }
+    },
   });
 
   // 3. DeleteProductMutation
 
   const { mutateAsync: deleteProductMutation } = useMutation({
     mutationFn: deleteProductAction,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["products"] }),
+    onSuccess: async (deleteProductMutationResult) => {
+      if (deleteProductMutationResult) {
+        queryClient.invalidateQueries({ queryKey: ["products"] });
+      }
+    },
   });
 
   return {
-    /* - Estados de edição- */
-
-    productBeingEdited,
-    setProductBeingEdited,
-
-    /* - Estados de deleção- */
-
-    productBeingDeleted,
-    setProductBeingDeleted,
-
     /* - Query de leitura - */
 
     products,
@@ -67,6 +69,13 @@ const useProducts = () => {
     createProductMutation,
     editProductMutation,
     deleteProductMutation,
+
+    /* - Estados dos produtos - */
+
+    productBeingEdited,
+    setProductBeingEdited,
+    productBeingDeleted,
+    setProductBeingDeleted,
   };
 };
 

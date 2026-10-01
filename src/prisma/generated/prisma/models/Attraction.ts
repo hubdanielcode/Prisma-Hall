@@ -28,6 +28,7 @@ export type AttractionMinAggregateOutputType = {
   id: string | null
   name: string | null
   description: string | null
+  image: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -36,6 +37,7 @@ export type AttractionMaxAggregateOutputType = {
   id: string | null
   name: string | null
   description: string | null
+  image: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -44,6 +46,7 @@ export type AttractionCountAggregateOutputType = {
   id: number
   name: number
   description: number
+  image: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -54,6 +57,7 @@ export type AttractionMinAggregateInputType = {
   id?: true
   name?: true
   description?: true
+  image?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -62,6 +66,7 @@ export type AttractionMaxAggregateInputType = {
   id?: true
   name?: true
   description?: true
+  image?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -70,6 +75,7 @@ export type AttractionCountAggregateInputType = {
   id?: true
   name?: true
   description?: true
+  image?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -151,6 +157,7 @@ export type AttractionGroupByOutputType = {
   id: string
   name: string
   description: string | null
+  image: string
   createdAt: Date
   updatedAt: Date
   _count: AttractionCountAggregateOutputType | null
@@ -180,6 +187,7 @@ export type AttractionWhereInput = {
   id?: Prisma.StringFilter<"Attraction"> | string
   name?: Prisma.StringFilter<"Attraction"> | string
   description?: Prisma.StringNullableFilter<"Attraction"> | string | null
+  image?: Prisma.StringFilter<"Attraction"> | string
   createdAt?: Prisma.DateTimeFilter<"Attraction"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Attraction"> | Date | string
   events?: Prisma.EventListRelationFilter
@@ -189,6 +197,7 @@ export type AttractionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  image?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   events?: Prisma.EventOrderByRelationAggregateInput
@@ -201,6 +210,7 @@ export type AttractionWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.AttractionWhereInput[]
   NOT?: Prisma.AttractionWhereInput | Prisma.AttractionWhereInput[]
   description?: Prisma.StringNullableFilter<"Attraction"> | string | null
+  image?: Prisma.StringFilter<"Attraction"> | string
   createdAt?: Prisma.DateTimeFilter<"Attraction"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Attraction"> | Date | string
   events?: Prisma.EventListRelationFilter
@@ -210,6 +220,7 @@ export type AttractionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  image?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.AttractionCountOrderByAggregateInput
@@ -224,6 +235,7 @@ export type AttractionScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Attraction"> | string
   name?: Prisma.StringWithAggregatesFilter<"Attraction"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Attraction"> | string | null
+  image?: Prisma.StringWithAggregatesFilter<"Attraction"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Attraction"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Attraction"> | Date | string
 }
@@ -232,6 +244,7 @@ export type AttractionCreateInput = {
   id?: string
   name: string
   description?: string | null
+  image: string
   createdAt?: Date | string
   updatedAt?: Date | string
   events?: Prisma.EventCreateNestedManyWithoutAttractionInput
@@ -241,6 +254,7 @@ export type AttractionUncheckedCreateInput = {
   id?: string
   name: string
   description?: string | null
+  image: string
   createdAt?: Date | string
   updatedAt?: Date | string
   events?: Prisma.EventUncheckedCreateNestedManyWithoutAttractionInput
@@ -250,6 +264,7 @@ export type AttractionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   events?: Prisma.EventUpdateManyWithoutAttractionNestedInput
@@ -259,6 +274,7 @@ export type AttractionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   events?: Prisma.EventUncheckedUpdateManyWithoutAttractionNestedInput
@@ -268,6 +284,7 @@ export type AttractionCreateManyInput = {
   id?: string
   name: string
   description?: string | null
+  image: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -276,6 +293,7 @@ export type AttractionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -284,6 +302,7 @@ export type AttractionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -297,6 +316,7 @@ export type AttractionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  image?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -305,6 +325,7 @@ export type AttractionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  image?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -313,6 +334,7 @@ export type AttractionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  image?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -335,6 +357,7 @@ export type AttractionCreateWithoutEventsInput = {
   id?: string
   name: string
   description?: string | null
+  image: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -343,6 +366,7 @@ export type AttractionUncheckedCreateWithoutEventsInput = {
   id?: string
   name: string
   description?: string | null
+  image: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -367,6 +391,7 @@ export type AttractionUpdateWithoutEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -375,6 +400,7 @@ export type AttractionUncheckedUpdateWithoutEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -414,6 +440,7 @@ export type AttractionSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   id?: boolean
   name?: boolean
   description?: boolean
+  image?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   events?: boolean | Prisma.Attraction$eventsArgs<ExtArgs>
@@ -424,6 +451,7 @@ export type AttractionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   id?: boolean
   name?: boolean
   description?: boolean
+  image?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["attraction"]>
@@ -432,6 +460,7 @@ export type AttractionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   id?: boolean
   name?: boolean
   description?: boolean
+  image?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["attraction"]>
@@ -440,11 +469,12 @@ export type AttractionSelectScalar = {
   id?: boolean
   name?: boolean
   description?: boolean
+  image?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type AttractionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["attraction"]>
+export type AttractionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "image" | "createdAt" | "updatedAt", ExtArgs["result"]["attraction"]>
 export type AttractionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   events?: boolean | Prisma.Attraction$eventsArgs<ExtArgs>
   _count?: boolean | Prisma.AttractionCountOutputTypeDefaultArgs<ExtArgs>
@@ -461,6 +491,7 @@ export type $AttractionPayload<ExtArgs extends runtime.Types.Extensions.Internal
     id: string
     name: string
     description: string | null
+    image: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["attraction"]>
@@ -890,6 +921,7 @@ export interface AttractionFieldRefs {
   readonly id: Prisma.FieldRef<"Attraction", 'String'>
   readonly name: Prisma.FieldRef<"Attraction", 'String'>
   readonly description: Prisma.FieldRef<"Attraction", 'String'>
+  readonly image: Prisma.FieldRef<"Attraction", 'String'>
   readonly createdAt: Prisma.FieldRef<"Attraction", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Attraction", 'DateTime'>
 }

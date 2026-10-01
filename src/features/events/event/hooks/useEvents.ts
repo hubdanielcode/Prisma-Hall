@@ -23,25 +23,37 @@ const useEvents = () => {
 
   const { mutateAsync: createEventMutation } = useMutation({
     mutationFn: createEventAction,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["events"] }),
+    onSuccess: async (createEventMutationResult) => {
+      if (createEventMutationResult) {
+        queryClient.invalidateQueries({ queryKey: ["events"] });
+      }
+    },
   });
 
   // 2. EditEventMutation
 
   const { mutateAsync: editEventMutation } = useMutation({
     mutationFn: editEventAction,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["events"] }),
+    onSuccess: async (editEventMutationResult) => {
+      if (editEventMutationResult) {
+        queryClient.invalidateQueries({ queryKey: ["events"] });
+      }
+    },
   });
 
   // 3. DeleteEventMutation
 
   const { mutateAsync: deleteEventMutation } = useMutation({
     mutationFn: deleteEventAction,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["events"] }),
+    onSuccess: async (deleteEventMutationResult) => {
+      if (deleteEventMutationResult) {
+        queryClient.invalidateQueries({ queryKey: ["events"] });
+      }
+    },
   });
 
   return {
-    /* - Leitura - */
+    /* - Query de leitura - */
 
     events,
     isLoading,

@@ -75,11 +75,11 @@ const CalendarHeader = () => {
       {/* - Título - */}
 
       <div className="flex items-center flex-col">
-        <motion.span className="text-white font-bold text-lg">
+        <span className="text-white font-bold text-lg">
           {selectedMonth} {selectedYear}
-        </motion.span>
+        </span>
 
-        <motion.span className="text-[#B8860B] text-sm">{monthEvents.size} eventos este mês</motion.span>
+        <span className="text-[#B8860B] text-sm">{monthEvents.size} eventos este mês</span>
       </div>
 
       {/* - Botão de próximo mês - */}

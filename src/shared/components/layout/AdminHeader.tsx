@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { FaSearch, FaUser } from "react-icons/fa";
 import { ImExit } from "react-icons/im";
-import { Menu } from "lucide-react";
+import { Menu, ShieldCheck } from "lucide-react";
 import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
 import { useMobileContext } from "../../hooks/useMobileContext";
 import { useRouter } from "next/navigation";
@@ -17,7 +17,7 @@ interface AdminHeaderProps {
 
 const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
   const { isPortraitMobile, isLandscapeMobile } = useMobileContext();
-  const { isAuthenticated, revokeSessionMutation } = useAuthenticationContext();
+  const { isAuthenticated, isLoading, revokeSessionMutation } = useAuthenticationContext();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
@@ -111,38 +111,55 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
             {/* - Botões - */}
 
             <div className="hidden sm:flex md:flex gap-4">
-              {isAuthenticated && (
-                // 1. Botão de Perfil do desktop
+              {isLoading ? (
+                <div className="w-24 h-10 rounded-lg bg-[#1A1A1A] animate-pulse" />
+              ) : (
+                <>
+                  {isAuthenticated && (
+                    <div className="flex items-center justify-center">
+                      <motion.button
+                        className="relative group mr-3 sm:mx-6 md:mx-6 border bg-[#0A0A0A] hover:bg-[#1A1A1A] border-[#B8860B] rounded-full p-2 cursor-pointer"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => router.push("/")}
+                      >
+                        <ShieldCheck className="h-6 w-6 text-[#B8860B] group-hover:text-[#DDAE56]" />
+                      </motion.button>
 
-                <motion.button
-                  className="flex justify-center items-center w-fit bg-[#1A1A1A] hover:bg-[#333] shadow-sm shadow-[#1A1A1A] hover:shadow-md hover:shadow-[#333] text-white font-semibold px-4 py-2 rounded-lg cursor-pointer"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => router.push("/perfil")}
-                >
-                  <FaUser className="mr-2 h-4 w-4" />
-                  Perfil
-                </motion.button>
+                      <motion.button
+                        // 1. Botão de Perfil do desktop
+
+                        className="flex justify-center items-center w-full h-fit bg-[#1A1A1A] hover:bg-[#333] shadow-sm shadow-[#1A1A1A] hover:shadow-md hover:shadow-[#333] text-white font-semibold px-4 py-2 rounded-lg cursor-pointer"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => router.push("/perfil")}
+                      >
+                        <FaUser className="mr-2 h-4 w-4" />
+                        Perfil
+                      </motion.button>
+                    </div>
+                  )}
+
+                  <motion.button
+                    // 2. Botão de sair/entrar do desktop
+
+                    className="flex justify-center items-center w-full h-fit bg-[#B8860B] hover:bg-[#7A5A08] shadow-sm shadow-[#B8860B] hover:shadow-[#7A5A08] text-black font-semibold px-4 py-2 rounded-lg cursor-pointer"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => {
+                      if (isAuthenticated) {
+                        revokeSessionMutation();
+                      } else {
+                        router.replace("/login");
+                      }
+                    }}
+                  >
+                    <ImExit className="mr-2 h-4 w-4" />
+
+                    {isAuthenticated ? "Sair" : "Entrar"}
+                  </motion.button>
+                </>
               )}
-
-              <motion.button
-                // 2. Botão de sair/entrar do desktop
-
-                className="flex justify-center items-center w-full h-fit bg-[#B8860B] hover:bg-[#7A5A08] shadow-sm shadow-[#B8860B] hover:shadow-[#7A5A08] text-black font-semibold px-4 py-2 rounded-lg cursor-pointer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => {
-                  if (isAuthenticated) {
-                    revokeSessionMutation();
-                  } else {
-                    router.replace("/login");
-                  }
-                }}
-              >
-                <ImExit className="mr-2 h-4 w-4" />
-
-                {isAuthenticated ? "Sair" : "Entrar"}
-              </motion.button>
             </div>
           </div>
         </div>
@@ -186,24 +203,28 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
               ))}
 
               <li className="px-6 py-4">
-                <motion.button
-                  // 3. Botão de sair/entrar do mobile (portrait)
+                {isLoading ? (
+                  <div className="w-20 h-6 rounded-md bg-[#1A1A1A] animate-pulse" />
+                ) : (
+                  <motion.button
+                    // 3. Botão de sair/entrar do mobile (portrait)
 
-                  className="flex justify-center items-center text-white font-semibold cursor-pointer"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => {
-                    if (isAuthenticated) {
-                      revokeSessionMutation();
-                    } else {
-                      router.replace("/login");
-                    }
-                  }}
-                >
-                  <ImExit className="mr-2 h-4 w-4" />
+                    className="flex justify-center items-center text-white font-semibold cursor-pointer"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => {
+                      if (isAuthenticated) {
+                        revokeSessionMutation();
+                      } else {
+                        router.replace("/login");
+                      }
+                    }}
+                  >
+                    <ImExit className="mr-2 h-4 w-4" />
 
-                  {isAuthenticated ? "Sair" : "Entrar"}
-                </motion.button>
+                    {isAuthenticated ? "Sair" : "Entrar"}
+                  </motion.button>
+                )}
               </li>
             </ul>
           </motion.div>
@@ -246,24 +267,28 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
               ))}
 
               <li className="px-6 py-4">
-                <motion.button
-                  // 4. Botão de sair/entrar do mobile (landscape)
+                {isLoading ? (
+                  <div className="w-20 h-6 rounded-md bg-[#1A1A1A] animate-pulse" />
+                ) : (
+                  <motion.button
+                    // 4. Botão de sair/entrar do mobile (landscape)
 
-                  className="flex justify-center items-center text-white font-semibold cursor-pointer"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => {
-                    if (isAuthenticated) {
-                      revokeSessionMutation();
-                    } else {
-                      router.replace("/login");
-                    }
-                  }}
-                >
-                  <ImExit className="mr-2 h-4 w-4" />
+                    className="flex justify-center items-center text-white font-semibold cursor-pointer"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => {
+                      if (isAuthenticated) {
+                        revokeSessionMutation();
+                      } else {
+                        router.replace("/login");
+                      }
+                    }}
+                  >
+                    <ImExit className="mr-2 h-4 w-4" />
 
-                  {isAuthenticated ? "Sair" : "Entrar"}
-                </motion.button>
+                    {isAuthenticated ? "Sair" : "Entrar"}
+                  </motion.button>
+                )}
               </li>
             </ul>
           </motion.div>

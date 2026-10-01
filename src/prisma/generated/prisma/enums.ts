@@ -9,56 +9,6 @@
 * 🟢 You can import this file directly.
 */
 
-export const UserRole = {
-  user: 'user',
-  admin: 'admin'
-} as const
-
-export type UserRole = (typeof UserRole)[keyof typeof UserRole]
-
-
-export const ProductCategory = {
-  beers: 'beers',
-  cocktails: 'cocktails',
-  drinks: 'drinks',
-  no_alcohol: 'no_alcohol',
-  all_categories: 'all_categories'
-} as const
-
-export type ProductCategory = (typeof ProductCategory)[keyof typeof ProductCategory]
-
-
-export const ProductStatus = {
-  active: 'active',
-  inactive: 'inactive'
-} as const
-
-export type ProductStatus = (typeof ProductStatus)[keyof typeof ProductStatus]
-
-
-export const EventTag = {
-  trap_and_hiphop: 'trap_and_hiphop',
-  forro: 'forro',
-  samba_and_pagode: 'samba_and_pagode',
-  metal: 'metal',
-  eletronica: 'eletronica',
-  funk: 'funk',
-  rock: 'rock',
-  pop: 'pop',
-  all_tags: 'all_tags'
-} as const
-
-export type EventTag = (typeof EventTag)[keyof typeof EventTag]
-
-
-export const EventStatus = {
-  happened: 'happened',
-  soon: 'soon'
-} as const
-
-export type EventStatus = (typeof EventStatus)[keyof typeof EventStatus]
-
-
 export const ItemType = {
   drinks: 'drinks',
   tickets: 'tickets'
@@ -93,3 +43,51 @@ export const PaymentStatus = {
 } as const
 
 export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
+
+
+export const UserRole = {
+  user: 'user',
+  admin: 'admin'
+} as const
+
+export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+
+
+export const ProductCategory = {
+  beers: 'beers',
+  cocktails: 'cocktails',
+  drinks: 'drinks',
+  no_alcohol: 'no_alcohol'
+} as const
+
+export type ProductCategory = (typeof ProductCategory)[keyof typeof ProductCategory]
+
+
+export const ProductStatus = {
+  active: 'active',
+  inactive: 'inactive'
+} as const
+
+export type ProductStatus = (typeof ProductStatus)[keyof typeof ProductStatus]
+
+
+export const EventTag = {
+  trap_and_hiphop: 'trap_and_hiphop',
+  forro: 'forro',
+  samba_and_pagode: 'samba_and_pagode',
+  metal: 'metal',
+  eletronica: 'eletronica',
+  funk: 'funk',
+  rock: 'rock',
+  pop: 'pop'
+} as const
+
+export type EventTag = (typeof EventTag)[keyof typeof EventTag]
+
+
+export const EventStatus = {
+  happened: 'happened',
+  soon: 'soon'
+} as const
+
+export type EventStatus = (typeof EventStatus)[keyof typeof EventStatus]

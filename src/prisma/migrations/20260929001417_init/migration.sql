@@ -1,19 +1,4 @@
 -- CreateEnum
-CREATE TYPE "UserRole" AS ENUM ('user', 'admin');
-
--- CreateEnum
-CREATE TYPE "ProductCategory" AS ENUM ('beers', 'cocktails', 'drinks', 'no_alcohol', 'all_categories');
-
--- CreateEnum
-CREATE TYPE "ProductStatus" AS ENUM ('active', 'inactive');
-
--- CreateEnum
-CREATE TYPE "EventTag" AS ENUM ('trap_and_hiphop', 'forro', 'samba_and_pagode', 'metal', 'eletronica', 'funk', 'rock', 'pop', 'all_tags');
-
--- CreateEnum
-CREATE TYPE "EventStatus" AS ENUM ('happened', 'soon');
-
--- CreateEnum
 CREATE TYPE "ItemType" AS ENUM ('drinks', 'tickets');
 
 -- CreateEnum
@@ -24,6 +9,21 @@ CREATE TYPE "PaymentMethod" AS ENUM ('cash', 'pix', 'creditCard', 'debitCard');
 
 -- CreateEnum
 CREATE TYPE "PaymentStatus" AS ENUM ('confirmed', 'pending', 'failed');
+
+-- CreateEnum
+CREATE TYPE "UserRole" AS ENUM ('user', 'admin');
+
+-- CreateEnum
+CREATE TYPE "ProductCategory" AS ENUM ('beers', 'cocktails', 'drinks', 'no_alcohol');
+
+-- CreateEnum
+CREATE TYPE "ProductStatus" AS ENUM ('active', 'inactive');
+
+-- CreateEnum
+CREATE TYPE "EventTag" AS ENUM ('trap_and_hiphop', 'forro', 'samba_and_pagode', 'metal', 'eletronica', 'funk', 'rock', 'pop');
+
+-- CreateEnum
+CREATE TYPE "EventStatus" AS ENUM ('happened', 'soon');
 
 -- CreateTable
 CREATE TABLE "session" (
@@ -43,11 +43,11 @@ CREATE TABLE "users" (
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "photo" TEXT NOT NULL,
     "role" "UserRole" NOT NULL DEFAULT 'user',
-    "verified_user" BOOLEAN NOT NULL,
+    "verified_user" BOOLEAN NOT NULL DEFAULT false,
     "token" TEXT,
     "token_expires_at" TIMESTAMP(3),
+    "profilePicture" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "validated_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
@@ -60,15 +60,15 @@ CREATE TABLE "profiles" (
     "id" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
     "phone_number" TEXT NOT NULL,
-    "cpf" TEXT NOT NULL,
     "birth_date" TIMESTAMP(3) NOT NULL,
-    "cep" TEXT NOT NULL,
     "city" TEXT NOT NULL,
-    "uf" TEXT NOT NULL,
     "neighborhood" TEXT NOT NULL,
     "street" TEXT NOT NULL,
     "number" TEXT NOT NULL,
     "complement" TEXT NOT NULL,
+    "socialSecurityNumber" TEXT NOT NULL,
+    "state" TEXT NOT NULL,
+    "zipCode" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -98,6 +98,7 @@ CREATE TABLE "products" (
     "description" TEXT NOT NULL,
     "image" TEXT NOT NULL,
     "price" DECIMAL(65,30) NOT NULL,
+    "quantity" INTEGER NOT NULL,
     "status" "ProductStatus" NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
@@ -150,7 +151,7 @@ CREATE TABLE "events" (
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "tag" "EventTag" NOT NULL,
-    "attraction_id" TEXT NOT NULL,
+    "attraction_name" TEXT NOT NULL,
     "image" TEXT NOT NULL,
     "status" "EventStatus" NOT NULL,
     "price" DECIMAL(65,30) NOT NULL,
@@ -168,6 +169,7 @@ CREATE TABLE "attractions" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT,
+    "image" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -253,6 +255,9 @@ CREATE TABLE "ticket_payments" (
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "users_token_key" ON "users"("token");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "profiles_user_id_key" ON "profiles"("user_id");
 
 -- CreateIndex
@@ -271,49 +276,52 @@ ALTER TABLE "session" ADD CONSTRAINT "session_user_id_fkey" FOREIGN KEY ("user_i
 ALTER TABLE "profiles" ADD CONSTRAINT "profiles_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "cart" ADD CONSTRAINT "cart_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "cart" ADD CONSTRAINT "cart_event_id_fkey" FOREIGN KEY ("event_id") REFERENCES "events"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "cart" ADD CONSTRAINT "cart_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "products"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "cart" ADD CONSTRAINT "cart_event_id_fkey" FOREIGN KEY ("event_id") REFERENCES "events"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "voucher_payments" ADD CONSTRAINT "voucher_payments_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "cart" ADD CONSTRAINT "cart_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "voucher_payments" ADD CONSTRAINT "voucher_payments_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "voucher_orders"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "voucher_payments" ADD CONSTRAINT "voucher_payments_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "voucher_orders" ADD CONSTRAINT "voucher_orders_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "voucher" ADD CONSTRAINT "voucher_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "voucher" ADD CONSTRAINT "voucher_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "products"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "voucher" ADD CONSTRAINT "voucher_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "voucher_orders"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "events" ADD CONSTRAINT "events_attraction_id_fkey" FOREIGN KEY ("attraction_id") REFERENCES "attractions"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "voucher" ADD CONSTRAINT "voucher_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "products"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "reviews" ADD CONSTRAINT "reviews_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "voucher" ADD CONSTRAINT "voucher_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "events" ADD CONSTRAINT "events_attraction_name_fkey" FOREIGN KEY ("attraction_name") REFERENCES "attractions"("name") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "reviews" ADD CONSTRAINT "reviews_event_id_fkey" FOREIGN KEY ("event_id") REFERENCES "events"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "gallery" ADD CONSTRAINT "gallery_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "reviews" ADD CONSTRAINT "reviews_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "gallery" ADD CONSTRAINT "gallery_event_id_fkey" FOREIGN KEY ("event_id") REFERENCES "events"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "gallery" ADD CONSTRAINT "gallery_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "gallery_likes" ADD CONSTRAINT "gallery_likes_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "tickets" ADD CONSTRAINT "tickets_event_id_fkey" FOREIGN KEY ("event_id") REFERENCES "events"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "tickets" ADD CONSTRAINT "tickets_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "ticket_orders"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -322,13 +330,10 @@ ALTER TABLE "tickets" ADD CONSTRAINT "tickets_order_id_fkey" FOREIGN KEY ("order
 ALTER TABLE "tickets" ADD CONSTRAINT "tickets_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "tickets" ADD CONSTRAINT "tickets_event_id_fkey" FOREIGN KEY ("event_id") REFERENCES "events"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "ticket_orders" ADD CONSTRAINT "ticket_orders_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ticket_payments" ADD CONSTRAINT "ticket_payments_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ticket_payments" ADD CONSTRAINT "ticket_payments_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "ticket_orders"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ticket_payments" ADD CONSTRAINT "ticket_payments_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "ticket_orders"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ticket_payments" ADD CONSTRAINT "ticket_payments_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

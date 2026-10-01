@@ -8,8 +8,6 @@ const config: StorybookConfig = {
   addons: ["@chromatic-com/storybook", "@storybook/addon-vitest", "@storybook/addon-a11y", "@storybook/addon-docs", "@storybook/addon-mcp"],
   framework: "@storybook/nextjs-vite",
 
-  // 1. Trocando o @/lib/prisma pelo mock central, só dentro do storybook
-
   async viteFinal(viteConfig) {
     const existingAlias = viteConfig.resolve?.alias;
 
@@ -22,9 +20,23 @@ const config: StorybookConfig = {
     viteConfig.resolve = {
       ...viteConfig.resolve,
       alias: [
+        // 1. Bcrypt
+
         { find: "bcrypt", replacement: path.resolve(dirname, "./mocks/bcrypt.ts") },
+
+        // 2. Prisma
+
         { find: "@/lib/prisma", replacement: path.resolve(dirname, "./mocks/prisma.ts") },
-        { find: "@/features/bar/hooks/useProducts", replacement: path.resolve(dirname, "./mocks/useProducts.ts") },
+
+        // 3. Hooks
+
+        { find: "@/features/bar/hooks/useProducts", replacement: path.resolve(dirname, "./mocks/hooks/useProducts.ts") },
+        { find: "@/features/events/event/hooks/useEvents", replacement: path.resolve(dirname, "./mocks/hooks/useEvents.ts") },
+        { find: "@/features/events/event/hooks/useAttracions", replacement: path.resolve(dirname, "./mocks/hooks/useAttracions.ts") },
+        { find: "@/features/users/profiles/hooks/useProducts", replacement: path.resolve(dirname, "./mocks/hooks/useProfile.ts") },
+
+        // 4. Aliases originais
+
         ...normalizedAlias,
       ],
     };

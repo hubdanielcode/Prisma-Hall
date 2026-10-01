@@ -7,6 +7,7 @@ const useCalendarContext = () => {
   if (!context) {
     throw new Error("useCalendarContext must be used within a CalendarProvider");
   }
+
   return context;
 };
 

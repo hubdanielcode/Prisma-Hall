@@ -1,6 +1,8 @@
-import { EditEventModal } from "./EditEventModal";
 import { CalendarProvider } from "@/features/events/agenda/context/CalendarContext";
+import { EditEventModal } from "./EditEventModal";
+import { EventProvider } from "@/features/events/event/context/EventContext";
 import { MobileProvider } from "@/shared/context/MobileContext";
+import { QueryProvider } from "@/shared/providers/QueryProvider";
 
 export default {
   title: "Layouts/Admin/Events Management/Modals",
@@ -11,14 +13,20 @@ export default {
 };
 
 const EditModal = () => {
-  <MobileProvider>
-    <CalendarProvider>
-      <EditEventModal
-        isOpen={true}
-        onClose={() => {}}
-      />
-    </CalendarProvider>
-  </MobileProvider>;
+  return (
+    <QueryProvider>
+      <MobileProvider>
+        <CalendarProvider>
+          <EventProvider>
+            <EditEventModal
+              isOpen={true}
+              onClose={() => {}}
+            />
+          </EventProvider>
+        </CalendarProvider>
+      </MobileProvider>
+    </QueryProvider>
+  );
 };
 
 export { EditModal as "Edit Event Modal" };

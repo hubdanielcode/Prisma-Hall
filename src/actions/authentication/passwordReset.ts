@@ -3,15 +3,10 @@
 import { hash } from "bcrypt";
 import { passwordResetSchema } from "@/lib/validations/authentication/passwordResetSchemas";
 import { prisma } from "@/lib/prisma";
+import z from "zod";
 
-interface PasswordResetProps {
-  token: string;
-  password: string;
-  confirmPassword: string;
-}
-
-const passwordReset = async ({ token, password, confirmPassword }: PasswordResetProps) => {
-  const parsedPasswordReset = passwordResetSchema.safeParse({ token, password, confirmPassword });
+const passwordReset = async (passwordResetRequest: z.infer<typeof passwordResetSchema>) => {
+  const parsedPasswordReset = passwordResetSchema.safeParse(passwordResetRequest);
 
   if (!parsedPasswordReset.success) {
     return false;

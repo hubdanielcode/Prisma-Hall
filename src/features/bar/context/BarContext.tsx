@@ -1,13 +1,13 @@
 "use client";
 
 import { createContext, useState } from "react";
-import { productCategories } from "@/features/bar/utils/productCategories";
-import { productCategoryIcons } from "@/features/bar/utils/productCategoryIcons";
-import { useProducts } from "@/features/bar/hooks/useProducts";
-import type { CategoryProps } from "@/features/bar/types/category";
-import type { ProductProps } from "@/features/bar/types/product";
 import { createProductSchema, editProductSchema } from "@/lib/validations";
+import { productCategories } from "../utils/productCategories";
+import { productCategoryIcons } from "../utils/productCategoryIcons";
+import { useProducts } from "../hooks/useProducts";
 import { z } from "zod";
+import type { CategoryProps } from "../types/category";
+import type { ProductProps } from "../types/product";
 
 interface BarContextType {
   /* - Dados dos produtos - */
@@ -17,25 +17,24 @@ interface BarContextType {
   isLoading: boolean;
   error: Error | null;
 
-  /* - Estados de categoria - */
-
-  selectedCategory: string;
-  setSelectedCategory: (selectedCategory: string) => void;
-
   /* - Estados de busca - */
 
   searchQuery: string;
   setSearchQuery: (searchQuery: string) => void;
 
-  /* - Estados de edição - */
+  /* - Estados de produtos - */
 
   productBeingEdited: ProductProps | null;
   setProductBeingEdited: (productBeingEdited: ProductProps | null) => void;
 
-  /* - Estados de deleção - */
-
   productBeingDeleted: ProductProps | null;
   setProductBeingDeleted: (productBeingDeleted: ProductProps | null) => void;
+
+  selectedCategory: string;
+  setSelectedCategory: (selectedCategory: string) => void;
+
+  selectedStatus: "all_status" | "active" | "inactive";
+  setSelectedStatus: (selectedStatus: "all_status" | "active" | "inactive") => void;
 
   /* - Mutations - */
 
@@ -62,17 +61,18 @@ const BarProvider = ({ children }: { children: React.ReactNode }) => {
     deleteProductMutation,
   } = useProducts();
 
-  /* - Estados de categoria - */
-
-  const [selectedCategory, setSelectedCategory] = useState("all_categories");
-
   /* - Estados de busca - */
 
   const [searchQuery, setSearchQuery] = useState("");
 
+  /* - Estados dos produtos - */
+
+  const [selectedCategory, setSelectedCategory] = useState("all_categories");
+  const [selectedStatus, setSelectedStatus] = useState<"all_status" | "active" | "inactive">("all_status");
+
   /* - Definições - */
 
-  const possibleCategories = [{ id: "all_categories", title: "Todos" }, ...productCategories] as const;
+  const possibleCategories = [{ id: "all_categories", title: "Todas as Categorias" }, ...productCategories] as const;
 
   const categories: CategoryProps[] = possibleCategories.map((category) => ({
     id: category.id,
@@ -83,10 +83,10 @@ const BarProvider = ({ children }: { children: React.ReactNode }) => {
   const filteredProducts =
     products?.filter((product) => {
       const matchingNames = product.name.toLowerCase().includes(searchQuery.toLowerCase());
-
       const matchingCategories = selectedCategory === "all_categories" || product.category === selectedCategory;
+      const matchingStatus = selectedStatus === "all_status" || product.status === selectedStatus;
 
-      return matchingNames && matchingCategories;
+      return matchingNames && matchingCategories && matchingStatus;
     }) ?? [];
 
   return (
@@ -99,25 +99,24 @@ const BarProvider = ({ children }: { children: React.ReactNode }) => {
         isLoading,
         error,
 
-        /* - Estados de categoria - */
-
-        selectedCategory,
-        setSelectedCategory,
-
         /* - Estados de busca - */
 
         searchQuery,
         setSearchQuery,
 
-        /* - Estados de edição - */
+        /* - Estados dos produtos - */
 
         productBeingEdited,
         setProductBeingEdited,
 
-        /* - Estados de deleção - */
-
         productBeingDeleted,
         setProductBeingDeleted,
+
+        selectedCategory,
+        setSelectedCategory,
+
+        selectedStatus,
+        setSelectedStatus,
 
         /* - Mutations - */
 

@@ -1,6 +1,8 @@
+import { CalendarProvider } from "@/features/events";
 import { CreateEventModal } from "@/features/admin/events-management/components/CreateEventModal";
-import { CalendarProvider } from "@/features/events/agenda/context/CalendarContext";
+import { EventProvider } from "@/features/events/event/context/EventContext";
 import { MobileProvider } from "@/shared/context/MobileContext";
+import { QueryProvider } from "@/shared/providers/QueryProvider";
 
 export default {
   title: "Layouts/Admin/Events Management/Modals",
@@ -11,14 +13,20 @@ export default {
 };
 
 const CreateModal = () => {
-  <MobileProvider>
-    <CalendarProvider>
-      <CreateEventModal
-        isOpen={true}
-        onClose={() => {}}
-      />
-    </CalendarProvider>
-  </MobileProvider>;
+  return (
+    <QueryProvider>
+      <MobileProvider>
+        <CalendarProvider>
+          <EventProvider>
+            <CreateEventModal
+              isOpen={true}
+              onClose={() => {}}
+            />
+          </EventProvider>
+        </CalendarProvider>
+      </MobileProvider>
+    </QueryProvider>
+  );
 };
 
 export { CreateModal as "Create Event Modal" };

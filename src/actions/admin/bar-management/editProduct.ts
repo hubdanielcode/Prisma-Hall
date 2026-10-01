@@ -23,6 +23,7 @@ const editProduct = async (product: z.infer<typeof editProductSchema>) => {
     name: parsedProduct.data.name,
     description: parsedProduct.data.description,
     category: parsedProduct.data.category,
+    quantity: parsedProduct.data.quantity,
     price: parsedProduct.data.price,
     status: parsedProduct.data.status,
   };
@@ -45,6 +46,7 @@ const editProduct = async (product: z.infer<typeof editProductSchema>) => {
         name: editedProduct.name,
         description: editedProduct.description,
         category: editedProduct.category,
+        quantity: editedProduct.quantity,
         image: editedProduct.image,
         price: editedProduct.price.toNumber(),
         status: editedProduct.status,
@@ -66,6 +68,7 @@ const editProduct = async (product: z.infer<typeof editProductSchema>) => {
       name: editedProduct.name,
       description: editedProduct.description,
       category: editedProduct.category,
+      quantity: editedProduct.quantity,
       image: editedProduct.image,
       price: editedProduct.price.toNumber(),
       status: editedProduct.status,

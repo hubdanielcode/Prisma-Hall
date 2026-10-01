@@ -4,6 +4,7 @@ export default {
   title: "Layouts/Protected/Profile/Sections",
   component: ProfileTicketsSection,
   parameters: {
+    layout: "fullscreen",
     nextjs: {
       appDirectory: true,
     },

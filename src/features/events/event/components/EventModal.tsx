@@ -80,7 +80,7 @@ const EventModal = ({ event, isOpen, onClose }: EventModalProps) => {
 
                 {/* - Artista(s) do evento - */}
 
-                <span className="text-[#B8860B] font-semibold text-base truncate">{event.attractionId}</span>
+                <span className="text-[#B8860B] font-semibold text-base truncate">{event.attractionName}</span>
 
                 {/* - Detalhes do evento - */}
 
@@ -124,7 +124,7 @@ const EventModal = ({ event, isOpen, onClose }: EventModalProps) => {
                       id: "",
                       type: "tickets",
                       ticket_id: crypto.randomUUID(),
-                      event_name: event.title,
+                      title: event.title,
                       quantity: 1,
                     });
 

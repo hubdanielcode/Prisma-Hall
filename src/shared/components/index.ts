@@ -10,3 +10,4 @@ export { ProfileHeader } from "@/shared/components/layout/ProfileHeader";
 
 export { CustomPasswordInput } from "@/shared/components/ui/CustomPasswordInput";
 export { CustomTextInput } from "@/shared/components/ui/CustomTextInput";
+export { CustomDateTimePicker } from "@/shared/components/ui/CustomDateTimePicker";

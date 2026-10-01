@@ -1,7 +1,7 @@
-import { MobileProvider } from "@/shared/context/MobileContext";
-import { EventsManagementCard } from "./EventsManagementCard";
-import { QueryProvider } from "@/shared/providers/QueryProvider";
 import { CalendarProvider } from "@/features/events/agenda";
+import { EventsManagementCard } from "./EventsManagementCard";
+import { MobileProvider } from "@/shared/context/MobileContext";
+import { QueryProvider } from "@/shared/providers/QueryProvider";
 
 export default {
   title: "Layouts/Admin/Events Management",

@@ -16,7 +16,6 @@ const createEvent = async (event: z.infer<typeof createEventSchema>) => {
   const parsedEvent = createEventSchema.safeParse(event);
 
   if (!parsedEvent.success) {
-    console.log(parsedEvent.error.issues);
     return false;
   }
 
@@ -30,14 +29,29 @@ const createEvent = async (event: z.infer<typeof createEventSchema>) => {
         title: parsedEvent.data.title,
         description: parsedEvent.data.description,
         tag: parsedEvent.data.tag,
-        attractionId: parsedEvent.data.attractionId,
+        attractionName: parsedEvent.data.attractionName,
         image: blob.url,
         price: parsedEvent.data.price,
         status: parsedEvent.data.status,
         startsAt: parsedEvent.data.startsAt,
       },
     });
-    return newEvent;
+    return {
+      id: newEvent.id,
+      title: newEvent.title,
+      description: newEvent.description,
+      tag: newEvent.tag,
+      attractionName: newEvent.attractionName,
+      image: newEvent.image,
+      status: newEvent.status,
+      price: newEvent.price.toNumber(),
+      startsAt: newEvent.startsAt.toISOString(),
+      attendees: newEvent.attendees,
+      rating: newEvent.rating.toNumber(),
+
+      createdAt: newEvent.createdAt.toISOString(),
+      updatedAt: newEvent.updatedAt.toISOString(),
+    };
   } catch {
     return false;
   }

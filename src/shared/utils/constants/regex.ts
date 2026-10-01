@@ -27,7 +27,8 @@ const regex = {
 
   eventTitle: /^(?!.*[\p{Emoji_Presentation}\p{Extended_Pictographic}]).{1,30}$/u,
   eventDescription: /^(?!.*[\p{Emoji_Presentation}\p{Extended_Pictographic}]).{1,100}$/u,
-  attractionName: /^(?!.*[\p{Emoji_Presentation}\p{Extended_Pictographic}]).{1,50}$/u,
+  eventAttractionName: /^(?!.*[\p{Emoji_Presentation}\p{Extended_Pictographic}]).{1,50}$/u,
+  eventTime: /^([01]\d|2[0-3]):[0-5]\d$/,
   attractionDescription: /^(?!.*[\p{Emoji_Presentation}\p{Extended_Pictographic}]).{1,100}$/u,
 
   /* - Review - */

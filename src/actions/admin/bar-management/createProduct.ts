@@ -29,6 +29,7 @@ const createProduct = async (product: z.infer<typeof createProductSchema>) => {
         name: parsedProduct.data.name,
         description: parsedProduct.data.description,
         category: parsedProduct.data.category,
+        quantity: parsedProduct.data.quantity,
         image: blob.url,
         price: parsedProduct.data.price,
         status: parsedProduct.data.status,
@@ -38,8 +39,9 @@ const createProduct = async (product: z.infer<typeof createProductSchema>) => {
     return {
       id: newProduct.id,
       name: newProduct.name,
-      category: newProduct.category,
       description: newProduct.description,
+      category: newProduct.category,
+      quantity: newProduct.quantity,
       image: newProduct.image,
       price: newProduct.price.toNumber(),
       status: newProduct.status,

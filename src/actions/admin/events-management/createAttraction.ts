@@ -1,16 +1,48 @@
-// O que essa função precisa fazer?
+"use server";
 
-// 1. Verificar se quem tá chamando é admin {
-//                                            isAdmin: Segue a função
-//                                            !isAdmin: Para a função com return false
-//                                          }
+import { createAttractionSchema } from "@/lib/validations";
+import z from "zod";
+import { checkIsAdmin } from "../checkIsAdmin";
+import { put } from "@vercel/blob";
+import { prisma } from "@/lib/prisma";
 
-// 2. Receber o attraction como parâmetro e garantir que é do tipo validado no schema {
-//                                                                                      safeParse.success: Segue a função
-//                                                                                      !safeParse.success: Para a função com return false
-//                                                                                    }
+const createAttraction = async (attraction: z.infer<typeof createAttractionSchema>) => {
+  const isAdmin = await checkIsAdmin();
 
-// 3. Criar a attraction em si {
-//                                NOME
-//                                DESCRIPTION?
-//                             }
+  if (!isAdmin) {
+    return false;
+  }
+
+  const parsedAttraction = createAttractionSchema.safeParse(attraction);
+
+  if (!parsedAttraction.success) {
+    return false;
+  }
+
+  const imageFile = parsedAttraction.data.image;
+
+  try {
+    const blob = await put(`${Date.now()}-${imageFile.name}`, imageFile, { access: "public" });
+
+    const newAttraction = await prisma.attraction.create({
+      data: {
+        name: parsedAttraction.data.name,
+        description: parsedAttraction.data.description,
+        image: blob.url,
+      },
+    });
+
+    return {
+      id: newAttraction.id,
+      name: newAttraction.name,
+      description: newAttraction.description,
+
+      createdAt: newAttraction.createdAt.toISOString(),
+      updatedAt: newAttraction.updatedAt.toISOString(),
+    };
+  } catch {
+    return false;
+  }
+};
+
+export { createAttraction };

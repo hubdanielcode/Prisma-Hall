@@ -1,6 +1,6 @@
-import { atLeastOneFieldUpdated } from "@/shared/utils/functions/atLeastOneFieldUpdated";
+import z from "zod";
 import { createAttractionSchema } from "./createAttractionSchema";
-import { z } from "zod";
+import { atLeastOneFieldUpdated } from "@/shared/utils";
 
 const editAttractionSchema = createAttractionSchema
   .partial()
@@ -12,7 +12,7 @@ const editAttractionSchema = createAttractionSchema
       return atLeastOneFieldUpdated(attractionWithoutId);
     },
 
-    { message: "Para validar a edição, altere pelo menos um dos campos." },
+    { message: "Para validar a edição, altere pelo menos dos campos" },
   );
 
 export { editAttractionSchema };

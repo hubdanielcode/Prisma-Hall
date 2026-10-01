@@ -50,7 +50,7 @@ const requestPasswordReset = async (email: string) => {
     if (emailSender.error) {
       return false;
     }
-  } catch (error) {
+  } catch {
     return false;
   }
 

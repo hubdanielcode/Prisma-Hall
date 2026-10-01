@@ -7,77 +7,9 @@ datasource db {
   provider = "postgresql"
 }
 
-// User enums
-
-enum UserRole {
-  user
-  admin
-}
-
-// Product enums
-
-enum ProductCategory {
-  beers
-  cocktails
-  drinks
-  no_alcohol
-  all_categories
-}
-
-enum ProductStatus {
-  active
-  inactive
-}
-
-// Event enums
-
-enum EventTag {
-  trap_and_hiphop
-  forro
-  samba_and_pagode
-  metal
-  eletronica
-  funk
-  rock
-  pop
-  all_tags
-}
-
-enum EventStatus {
-  happened
-  soon
-}
-
-// Shared enum
-
-enum ItemType {
-  drinks
-  tickets
-}
-
-enum OrderStatus {
-  confirmed
-  pending
-  cancelled
-}
-
-enum PaymentMethod {
-  cash
-  pix
-  creditCard
-  debitCard
-}
-
-enum PaymentStatus {
-  confirmed
-  pending
-  failed
-}
-
 model Session {
-  id     String @id @default(uuid())
-  userId String @map("user_id")
-
+  id             String    @id @default(uuid())
+  userId         String    @map("user_id")
   createdAt      DateTime  @default(now()) @map("created_at")
   revokedAt      DateTime? @map("revoked_at")
   expiresAt      DateTime  @map("expires_at")
@@ -93,28 +25,28 @@ model User {
   name           String
   email          String    @unique
   password       String
-  profilePicture String?
   role           UserRole  @default(user)
   verifiedBadge  Boolean   @default(false) @map("verified_user")
   token          String?   @unique
   tokenExpiresAt DateTime? @map("token_expires_at")
+  profilePicture String?
 
   createdAt   DateTime  @default(now()) @map("created_at")
   validatedAt DateTime? @default(now()) @map("validated_at")
   updatedAt   DateTime  @updatedAt @map("updated_at")
 
   carts           Cart[]
-  ticketOrders    TicketOrder[]
-  ticketPayments  TicketPayment[]
-  reviews         Review[]
   galleries       Gallery[]
   galleryLikes    GalleryLikes[]
-  tickets         Ticket[]
+  profiles        Profile?
+  reviews         Review[]
   sessions        Session[]
-  profiles        Profile[]
-  voucherPayments VoucherPayment[]
-  voucherOrders   VoucherOrder[]
+  ticketOrders    TicketOrder[]
+  ticketPayments  TicketPayment[]
+  tickets         Ticket[]
   vouchers        Voucher[]
+  voucherOrders   VoucherOrder[]
+  voucherPayments VoucherPayment[]
 
   @@map("users")
 }
@@ -123,15 +55,15 @@ model Profile {
   id                   String   @id @default(uuid())
   userId               String   @unique @map("user_id")
   phoneNumber          String   @map("phone_number")
-  socialSecurityNumber String
   birthDate            DateTime @map("birth_date")
-  zipCode              String
   city                 String
-  state                String
   neighborhood         String
   street               String
   number               String
   complement           String
+  socialSecurityNumber String
+  state                String
+  zipCode              String
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -153,9 +85,9 @@ model Cart {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  user    User     @relation(fields: [userId], references: [id])
-  product Product? @relation(fields: [productId], references: [id])
   event   Event?   @relation(fields: [eventId], references: [id])
+  product Product? @relation(fields: [productId], references: [id])
+  user    User     @relation(fields: [userId], references: [id])
 
   @@map("cart")
 }
@@ -163,11 +95,11 @@ model Cart {
 model Product {
   id          String          @id @default(uuid())
   name        String          @unique
-  description String          @unique
   category    ProductCategory
-  quantity    Int
+  description String          @unique
   image       String
   price       Decimal
+  quantity    Int
   status      ProductStatus
 
   createdAt DateTime @default(now()) @map("created_at")
@@ -191,8 +123,8 @@ model VoucherPayment {
   updatedAt  DateTime  @updatedAt @map("updated_at")
   pickedUpAt DateTime? @map("picked_up_at")
 
-  user         User          @relation(fields: [userId], references: [id])
   voucherOrder VoucherOrder? @relation(fields: [orderId], references: [id])
+  user         User          @relation(fields: [userId], references: [id])
 
   @@map("voucher_payments")
 }
@@ -205,9 +137,9 @@ model VoucherOrder {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  vouchers       Voucher[]
   user           User             @relation(fields: [userId], references: [id])
   voucherPayment VoucherPayment[]
-  vouchers       Voucher[]
 
   @@map("voucher_orders")
 }
@@ -222,34 +154,34 @@ model Voucher {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  user    User         @relation(fields: [userId], references: [id])
-  product Product      @relation(fields: [productId], references: [id])
   order   VoucherOrder @relation(fields: [orderId], references: [id])
+  product Product      @relation(fields: [productId], references: [id])
+  user    User         @relation(fields: [userId], references: [id])
 
   @@map("voucher")
 }
 
 model Event {
-  id           String      @id @default(uuid())
-  title        String
-  description  String
-  tag          EventTag
-  attractionId String      @map("attraction_id")
-  image        String
-  status       EventStatus
-  price        Decimal
-  startsAt     DateTime    @map("starts_at")
-  attendees    Int         @default(0)
-  rating       Decimal     @default(0.0)
+  id             String      @id @default(uuid())
+  title          String
+  description    String
+  tag            EventTag
+  attractionName String      @map("attraction_name")
+  image          String
+  status         EventStatus
+  price          Decimal
+  startsAt       DateTime    @map("starts_at")
+  attendees      Int         @default(0)
+  rating         Decimal     @default(0.0)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   carts      Cart[]
-  reviews    Review[]
+  attraction Attraction @relation(fields: [attractionName], references: [name])
   galleries  Gallery[]
+  reviews    Review[]
   tickets    Ticket[]
-  attraction Attraction @relation(fields: [attractionId], references: [id])
 
   @@map("events")
 }
@@ -258,6 +190,7 @@ model Attraction {
   id          String  @id @default(uuid())
   name        String  @unique
   description String?
+  image       String
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -277,8 +210,8 @@ model Review {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  user  User  @relation(fields: [userId], references: [id])
   event Event @relation(fields: [eventId], references: [id])
+  user  User  @relation(fields: [userId], references: [id])
 
   @@map("reviews")
 }
@@ -294,8 +227,8 @@ model Gallery {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  user  User  @relation(fields: [userId], references: [id])
   event Event @relation(fields: [eventId], references: [id])
+  user  User  @relation(fields: [userId], references: [id])
 
   @@map("gallery")
 }
@@ -323,9 +256,9 @@ model Ticket {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  event Event       @relation(fields: [eventId], references: [id])
   order TicketOrder @relation(fields: [orderId], references: [id])
   user  User        @relation(fields: [userId], references: [id])
-  event Event       @relation(fields: [eventId], references: [id])
 
   @@map("tickets")
 }
@@ -356,8 +289,73 @@ model TicketPayment {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  user  User        @relation(fields: [userId], references: [id])
   order TicketOrder @relation(fields: [orderId], references: [id])
+  user  User        @relation(fields: [userId], references: [id])
 
   @@map("ticket_payments")
+}
+
+// 1. Geral
+
+enum ItemType {
+  drinks
+  tickets
+}
+
+enum OrderStatus {
+  confirmed
+  pending
+  cancelled
+}
+
+enum PaymentMethod {
+  cash
+  pix
+  creditCard
+  debitCard
+}
+
+enum PaymentStatus {
+  confirmed
+  pending
+  failed
+}
+
+// 2. Usuários
+
+enum UserRole {
+  user
+  admin
+}
+
+// 3. Produtos
+
+enum ProductCategory {
+  beers
+  cocktails
+  drinks
+  no_alcohol
+}
+
+enum ProductStatus {
+  active
+  inactive
+}
+
+// 4. Eventos
+
+enum EventTag {
+  trap_and_hiphop
+  forro
+  samba_and_pagode
+  metal
+  eletronica
+  funk
+  rock
+  pop
+}
+
+enum EventStatus {
+  happened
+  soon
 }

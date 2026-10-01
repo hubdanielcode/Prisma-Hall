@@ -240,8 +240,8 @@ export type TicketPaymentWhereInput = {
   totalValue?: Prisma.DecimalFilter<"TicketPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"TicketPayment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TicketPayment"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   order?: Prisma.XOR<Prisma.TicketOrderScalarRelationFilter, Prisma.TicketOrderWhereInput>
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type TicketPaymentOrderByWithRelationInput = {
@@ -253,8 +253,8 @@ export type TicketPaymentOrderByWithRelationInput = {
   totalValue?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  user?: Prisma.UserOrderByWithRelationInput
   order?: Prisma.TicketOrderOrderByWithRelationInput
+  user?: Prisma.UserOrderByWithRelationInput
 }
 
 export type TicketPaymentWhereUniqueInput = Prisma.AtLeast<{
@@ -269,8 +269,8 @@ export type TicketPaymentWhereUniqueInput = Prisma.AtLeast<{
   totalValue?: Prisma.DecimalFilter<"TicketPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"TicketPayment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TicketPayment"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   order?: Prisma.XOR<Prisma.TicketOrderScalarRelationFilter, Prisma.TicketOrderWhereInput>
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
 export type TicketPaymentOrderByWithAggregationInput = {
@@ -310,8 +310,8 @@ export type TicketPaymentCreateInput = {
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutTicketPaymentsInput
   order: Prisma.TicketOrderCreateNestedOneWithoutTicketPaymentsInput
+  user: Prisma.UserCreateNestedOneWithoutTicketPaymentsInput
 }
 
 export type TicketPaymentUncheckedCreateInput = {
@@ -332,8 +332,8 @@ export type TicketPaymentUpdateInput = {
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutTicketPaymentsNestedInput
   order?: Prisma.TicketOrderUpdateOneRequiredWithoutTicketPaymentsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutTicketPaymentsNestedInput
 }
 
 export type TicketPaymentUncheckedUpdateInput = {
@@ -710,8 +710,8 @@ export type TicketPaymentSelect<ExtArgs extends runtime.Types.Extensions.Interna
   totalValue?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   order?: boolean | Prisma.TicketOrderDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["ticketPayment"]>
 
 export type TicketPaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -723,8 +723,8 @@ export type TicketPaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   totalValue?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   order?: boolean | Prisma.TicketOrderDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["ticketPayment"]>
 
 export type TicketPaymentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -736,8 +736,8 @@ export type TicketPaymentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   totalValue?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   order?: boolean | Prisma.TicketOrderDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["ticketPayment"]>
 
 export type TicketPaymentSelectScalar = {
@@ -753,23 +753,23 @@ export type TicketPaymentSelectScalar = {
 
 export type TicketPaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "orderId" | "method" | "status" | "totalValue" | "createdAt" | "updatedAt", ExtArgs["result"]["ticketPayment"]>
 export type TicketPaymentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   order?: boolean | Prisma.TicketOrderDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type TicketPaymentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   order?: boolean | Prisma.TicketOrderDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type TicketPaymentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   order?: boolean | Prisma.TicketOrderDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $TicketPaymentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "TicketPayment"
   objects: {
-    user: Prisma.$UserPayload<ExtArgs>
     order: Prisma.$TicketOrderPayload<ExtArgs>
+    user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1174,8 +1174,8 @@ readonly fields: TicketPaymentFieldRefs;
  */
 export interface Prisma__TicketPaymentClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   order<T extends Prisma.TicketOrderDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TicketOrderDefaultArgs<ExtArgs>>): Prisma.Prisma__TicketOrderClient<runtime.Types.Result.GetResult<Prisma.$TicketOrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

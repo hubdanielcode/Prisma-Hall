@@ -5,6 +5,9 @@ import { ProfileProvider } from "../context/ProfileContext";
 export default {
   title: "Layouts/Protected/Profile/Modals",
   component: EditProfileModal,
+  parameters: {
+    layout: "fullscreen",
+  },
 };
 
 const EditModal = () => {

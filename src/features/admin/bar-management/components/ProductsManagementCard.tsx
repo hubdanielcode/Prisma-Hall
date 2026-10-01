@@ -1,8 +1,8 @@
 "use client";
 
-import { Martini, PackageX, PackageSearch, CircleCheck } from "lucide-react";
 import { useMobileContext } from "@/shared/hooks/useMobileContext";
 import { useProducts } from "@/features/bar/hooks/useProducts";
+import { FaGlassMartini, FaCheckCircle, FaShoppingBag, FaArrowCircleDown } from "react-icons/fa";
 
 const ProductsManagementCard = () => {
   /* - Puxando do context - */
@@ -19,7 +19,7 @@ const ProductsManagementCard = () => {
   const cardData = [
     {
       id: "all",
-      icon: <Martini />,
+      icon: <FaGlassMartini size={24} />,
       message: "+3 este mês",
       title: "Total de produtos",
       quantity: productList.length,
@@ -27,7 +27,7 @@ const ProductsManagementCard = () => {
 
     {
       id: "active",
-      icon: <CircleCheck />,
+      icon: <FaCheckCircle size={24} />,
       message: "86% do total",
       title: "Produtos ativos",
       quantity: productList.filter((product) => product.status === "active").length,
@@ -35,7 +35,7 @@ const ProductsManagementCard = () => {
 
     {
       id: "low_on_stock",
-      icon: <PackageSearch />,
+      icon: <FaShoppingBag size={24} />,
       message: "Requer atenção",
       title: "Estoque baixo",
       quantity: productList.filter((product) => product.quantity < lowerProductLimit).length,
@@ -43,7 +43,7 @@ const ProductsManagementCard = () => {
 
     {
       id: "none_on_stock",
-      icon: <PackageX />,
+      icon: <FaArrowCircleDown size={24} />,
       message: "+12,5%",
       title: "Esgotados",
       quantity: productList.filter((product) => product.quantity === noneLeft).length,

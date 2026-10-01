@@ -42,7 +42,7 @@ const EventListItem = ({ event, onSelect }: EventListItemProps) => {
 
       <div className="flex flex-col flex-1 min-w-0">
         <span className="text-white font-semibold text-sm sm:text-base truncate">{event.title}</span>
-        <span className="text-white/60 text-xs truncate">{event.attractionId}</span>
+        <span className="text-white/60 text-xs truncate">{event.attractionName}</span>
       </div>
 
       {/* - Horário - */}

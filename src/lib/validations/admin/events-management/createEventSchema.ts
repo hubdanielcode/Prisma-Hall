@@ -6,7 +6,7 @@ import { z } from "zod";
 const createEventSchema = z.object({
   // 1. Título
 
-  title: z.string().regex(regex.eventTitle).min(1, "Digite o título do evento.").max(30, "O título do evento está muito longo."),
+  title: z.string().regex(regex.eventTitle).min(1, "Digite o título do evento.").max(50, "O título do evento está muito longo."),
 
   // 2. Tag do evento
 
@@ -18,11 +18,15 @@ const createEventSchema = z.object({
     .string()
     .regex(regex.eventDescription)
     .min(1, "Digite uma descrição para o evento.")
-    .max(100, "A descrição do evento está muito longa."),
+    .max(150, "A descrição do evento está muito longa."),
 
-  // 4. ID da atração (banda/artista)
+  // 4. Nome da atração (banda/artista)
 
-  attractionId: z.uuid(),
+  attractionName: z
+    .string()
+    .regex(regex.eventAttractionName)
+    .min(1, "Digite um nome para a atração do evento.")
+    .max(50, "O nome da atração do evento está muito longo."),
 
   // 5. Imagem
 
@@ -34,11 +38,11 @@ const createEventSchema = z.object({
 
   // 7. Preço
 
-  price: z.number().nonnegative(),
+  price: z.number().positive(),
 
   // 8. Horário
 
-  startsAt: z.coerce.date(),
+  startsAt: z.string(),
 });
 
 export { createEventSchema };

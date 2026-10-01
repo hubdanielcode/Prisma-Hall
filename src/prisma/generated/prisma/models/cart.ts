@@ -252,9 +252,9 @@ export type CartWhereInput = {
   price?: Prisma.DecimalFilter<"Cart"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"Cart"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Cart"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  product?: Prisma.XOR<Prisma.ProductNullableScalarRelationFilter, Prisma.ProductWhereInput> | null
   event?: Prisma.XOR<Prisma.EventNullableScalarRelationFilter, Prisma.EventWhereInput> | null
+  product?: Prisma.XOR<Prisma.ProductNullableScalarRelationFilter, Prisma.ProductWhereInput> | null
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type CartOrderByWithRelationInput = {
@@ -267,9 +267,9 @@ export type CartOrderByWithRelationInput = {
   price?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  user?: Prisma.UserOrderByWithRelationInput
-  product?: Prisma.ProductOrderByWithRelationInput
   event?: Prisma.EventOrderByWithRelationInput
+  product?: Prisma.ProductOrderByWithRelationInput
+  user?: Prisma.UserOrderByWithRelationInput
 }
 
 export type CartWhereUniqueInput = Prisma.AtLeast<{
@@ -285,9 +285,9 @@ export type CartWhereUniqueInput = Prisma.AtLeast<{
   price?: Prisma.DecimalFilter<"Cart"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"Cart"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Cart"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  product?: Prisma.XOR<Prisma.ProductNullableScalarRelationFilter, Prisma.ProductWhereInput> | null
   event?: Prisma.XOR<Prisma.EventNullableScalarRelationFilter, Prisma.EventWhereInput> | null
+  product?: Prisma.XOR<Prisma.ProductNullableScalarRelationFilter, Prisma.ProductWhereInput> | null
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
 export type CartOrderByWithAggregationInput = {
@@ -329,9 +329,9 @@ export type CartCreateInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutCartsInput
-  product?: Prisma.ProductCreateNestedOneWithoutCartsInput
   event?: Prisma.EventCreateNestedOneWithoutCartsInput
+  product?: Prisma.ProductCreateNestedOneWithoutCartsInput
+  user: Prisma.UserCreateNestedOneWithoutCartsInput
 }
 
 export type CartUncheckedCreateInput = {
@@ -353,9 +353,9 @@ export type CartUpdateInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutCartsNestedInput
-  product?: Prisma.ProductUpdateOneWithoutCartsNestedInput
   event?: Prisma.EventUpdateOneWithoutCartsNestedInput
+  product?: Prisma.ProductUpdateOneWithoutCartsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutCartsNestedInput
 }
 
 export type CartUncheckedUpdateInput = {
@@ -612,8 +612,8 @@ export type CartCreateWithoutUserInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
-  product?: Prisma.ProductCreateNestedOneWithoutCartsInput
   event?: Prisma.EventCreateNestedOneWithoutCartsInput
+  product?: Prisma.ProductCreateNestedOneWithoutCartsInput
 }
 
 export type CartUncheckedCreateWithoutUserInput = {
@@ -675,8 +675,8 @@ export type CartCreateWithoutProductInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutCartsInput
   event?: Prisma.EventCreateNestedOneWithoutCartsInput
+  user: Prisma.UserCreateNestedOneWithoutCartsInput
 }
 
 export type CartUncheckedCreateWithoutProductInput = {
@@ -723,8 +723,8 @@ export type CartCreateWithoutEventInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutCartsInput
   product?: Prisma.ProductCreateNestedOneWithoutCartsInput
+  user: Prisma.UserCreateNestedOneWithoutCartsInput
 }
 
 export type CartUncheckedCreateWithoutEventInput = {
@@ -782,8 +782,8 @@ export type CartUpdateWithoutUserInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  product?: Prisma.ProductUpdateOneWithoutCartsNestedInput
   event?: Prisma.EventUpdateOneWithoutCartsNestedInput
+  product?: Prisma.ProductUpdateOneWithoutCartsNestedInput
 }
 
 export type CartUncheckedUpdateWithoutUserInput = {
@@ -826,8 +826,8 @@ export type CartUpdateWithoutProductInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutCartsNestedInput
   event?: Prisma.EventUpdateOneWithoutCartsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutCartsNestedInput
 }
 
 export type CartUncheckedUpdateWithoutProductInput = {
@@ -870,8 +870,8 @@ export type CartUpdateWithoutEventInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutCartsNestedInput
   product?: Prisma.ProductUpdateOneWithoutCartsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutCartsNestedInput
 }
 
 export type CartUncheckedUpdateWithoutEventInput = {
@@ -908,9 +908,9 @@ export type CartSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   price?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  product?: boolean | Prisma.Cart$productArgs<ExtArgs>
   event?: boolean | Prisma.Cart$eventArgs<ExtArgs>
+  product?: boolean | Prisma.Cart$productArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["cart"]>
 
 export type CartSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -923,9 +923,9 @@ export type CartSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   price?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  product?: boolean | Prisma.Cart$productArgs<ExtArgs>
   event?: boolean | Prisma.Cart$eventArgs<ExtArgs>
+  product?: boolean | Prisma.Cart$productArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["cart"]>
 
 export type CartSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -938,9 +938,9 @@ export type CartSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   price?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  product?: boolean | Prisma.Cart$productArgs<ExtArgs>
   event?: boolean | Prisma.Cart$eventArgs<ExtArgs>
+  product?: boolean | Prisma.Cart$productArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["cart"]>
 
 export type CartSelectScalar = {
@@ -957,27 +957,27 @@ export type CartSelectScalar = {
 
 export type CartOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "productId" | "eventId" | "type" | "quantity" | "price" | "createdAt" | "updatedAt", ExtArgs["result"]["cart"]>
 export type CartInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  product?: boolean | Prisma.Cart$productArgs<ExtArgs>
   event?: boolean | Prisma.Cart$eventArgs<ExtArgs>
+  product?: boolean | Prisma.Cart$productArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type CartIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  product?: boolean | Prisma.Cart$productArgs<ExtArgs>
   event?: boolean | Prisma.Cart$eventArgs<ExtArgs>
+  product?: boolean | Prisma.Cart$productArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type CartIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  product?: boolean | Prisma.Cart$productArgs<ExtArgs>
   event?: boolean | Prisma.Cart$eventArgs<ExtArgs>
+  product?: boolean | Prisma.Cart$productArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $CartPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Cart"
   objects: {
-    user: Prisma.$UserPayload<ExtArgs>
-    product: Prisma.$ProductPayload<ExtArgs> | null
     event: Prisma.$EventPayload<ExtArgs> | null
+    product: Prisma.$ProductPayload<ExtArgs> | null
+    user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1383,9 +1383,9 @@ readonly fields: CartFieldRefs;
  */
 export interface Prisma__CartClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  product<T extends Prisma.Cart$productArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cart$productArgs<ExtArgs>>): Prisma.Prisma__ProductClient<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   event<T extends Prisma.Cart$eventArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cart$eventArgs<ExtArgs>>): Prisma.Prisma__EventClient<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  product<T extends Prisma.Cart$productArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cart$productArgs<ExtArgs>>): Prisma.Prisma__ProductClient<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1825,25 +1825,6 @@ export type CartDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * Cart.product
- */
-export type Cart$productArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Product
-   */
-  select?: Prisma.ProductSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Product
-   */
-  omit?: Prisma.ProductOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProductInclude<ExtArgs> | null
-  where?: Prisma.ProductWhereInput
-}
-
-/**
  * Cart.event
  */
 export type Cart$eventArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1860,6 +1841,25 @@ export type Cart$eventArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   include?: Prisma.EventInclude<ExtArgs> | null
   where?: Prisma.EventWhereInput
+}
+
+/**
+ * Cart.product
+ */
+export type Cart$productArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Product
+   */
+  select?: Prisma.ProductSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Product
+   */
+  omit?: Prisma.ProductOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductInclude<ExtArgs> | null
+  where?: Prisma.ProductWhereInput
 }
 
 /**

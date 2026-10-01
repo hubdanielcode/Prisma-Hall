@@ -1,6 +1,8 @@
 import { DeleteEventModal } from "./DeleteEventModal";
-import { CalendarProvider } from "@/features/events/agenda/context/CalendarContext";
+import { EventProvider } from "@/features/events/event/context/EventContext";
+import { fakeEvent } from "../../../../../.storybook/mocks/hooks/useEvents";
 import { MobileProvider } from "@/shared/context/MobileContext";
+import { QueryProvider } from "@/shared/providers/QueryProvider";
 
 export default {
   title: "Layouts/Admin/Events Management/Modals",
@@ -11,14 +13,19 @@ export default {
 };
 
 const DeleteModal = () => {
-  <MobileProvider>
-    <CalendarProvider>
-      <DeleteEventModal
-        isOpen={true}
-        onClose={() => {}}
-      />
-    </CalendarProvider>
-  </MobileProvider>;
+  return (
+    <QueryProvider>
+      <MobileProvider>
+        <EventProvider>
+          <DeleteEventModal
+            isOpen={true}
+            onClose={() => {}}
+            event={fakeEvent}
+          />
+        </EventProvider>
+      </MobileProvider>
+    </QueryProvider>
+  );
 };
 
 export { DeleteModal as "Delete Event Modal" };

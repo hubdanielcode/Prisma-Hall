@@ -17,7 +17,7 @@ export default {
 
 const GeneralFooter = () => {
   const AuthenticationContextConsumer = () => {
-    const { isAuthenticated, setIsAuthenticated } = useAuthenticationContext();
+    const { isAuthenticated } = useAuthenticationContext();
 
     useEffect(() => {
       if (!isAuthenticated) {

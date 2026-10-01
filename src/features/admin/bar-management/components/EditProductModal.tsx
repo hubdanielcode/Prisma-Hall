@@ -4,9 +4,10 @@ import { AnimatePresence, motion } from "motion/react";
 import { createProductSchema } from "@/lib/validations/admin/bar-management/createProductSchema";
 import { ImagePlus, X } from "lucide-react";
 import { masks } from "@/shared/utils/functions/masks";
+import { productCategories } from "@/features/bar";
 import { productCategoryBadges } from "@/features/admin/bar-management/types/productCategoryBadges";
-import { useBlockScroll, useMobileContext } from "@/shared/hooks";
 import { useBarContext } from "@/features/bar/hooks/useBarContext";
+import { useBlockScroll, useMobileContext } from "@/shared/hooks";
 import { useRef, useState } from "react";
 import z from "zod";
 
@@ -16,8 +17,6 @@ interface EditProductModalProps {
 }
 
 type EditableProductType = Omit<z.infer<typeof createProductSchema>, "image">;
-
-const ProductCategories = ["beers", "cocktails", "drinks", "no_alcohol"] as const;
 
 const EditProductModal = ({ isOpen, onClose }: EditProductModalProps) => {
   /* - Puxando do context - */
@@ -35,9 +34,9 @@ const EditProductModal = ({ isOpen, onClose }: EditProductModalProps) => {
   const [newProduct, setNewProduct] = useState<EditableProductType>({
     name: productBeingEdited?.name ?? "",
     description: productBeingEdited?.description ?? "",
-    category: productBeingEdited?.category === "all_categories" ? "beers" : (productBeingEdited?.category ?? "beers"),
-    quantity: productBeingEdited?.quantity ? Number(productBeingEdited.quantity) : 0,
-    price: productBeingEdited ? Number(productBeingEdited.price) : 0,
+    category: productBeingEdited?.category ?? "beers",
+    quantity: productBeingEdited?.quantity ?? 0,
+    price: productBeingEdited?.price ?? 0,
     status: productBeingEdited?.status ?? "inactive",
   });
 
@@ -160,7 +159,7 @@ const EditProductModal = ({ isOpen, onClose }: EditProductModalProps) => {
     setNewProduct({
       name: productBeingEdited.name,
       description: productBeingEdited.description,
-      category: productBeingEdited.category === "all_categories" ? "beers" : productBeingEdited.category,
+      category: productBeingEdited.category ?? "beers",
       quantity: Number(productBeingEdited.quantity),
       price: Number(productBeingEdited.price),
       status: productBeingEdited.status,
@@ -346,10 +345,10 @@ const EditProductModal = ({ isOpen, onClose }: EditProductModalProps) => {
                 <label className="text-xs text-[#B8860B] uppercase tracking-wide font-semibold mb-1.5">Categoria</label>
 
                 <div className="flex flex-wrap gap-2">
-                  {ProductCategories.map((category) => {
-                    const displayName = masks.productCategory(category);
+                  {productCategories.map((category) => {
+                    const displayName = masks.productCategory(category.id);
                     const badge = productCategoryBadges[displayName];
-                    const isSelected = newProduct.category === category;
+                    const isSelected = newProduct.category === category.id;
 
                     return (
                       <motion.button
@@ -358,12 +357,12 @@ const EditProductModal = ({ isOpen, onClose }: EditProductModalProps) => {
                             ? `${badge.background} ${badge.border} ${badge.text}`
                             : "bg-transparent border-[#333] text-white/40 hover:border-white/30"
                         }`}
-                        key={category}
+                        key={category.id}
                         type="button"
                         onClick={() => {
                           setNewProduct((prev) => ({
                             ...prev,
-                            category,
+                            category: category.id,
                           }));
                         }}
                         whileHover={{ scale: 1.05 }}

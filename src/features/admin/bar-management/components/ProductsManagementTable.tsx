@@ -147,15 +147,15 @@ const ProductsManagementTable = ({ currentPage, onPageChange }: ProductsManageme
       {/* - Container geral - */}
 
       <div className="w-full border border-[#B8860B] rounded-lg overflow-x-auto">
-        <motion.table className={`w-full ${isLandscapeMobile ? "min-w-160" : ""}`}>
+        <motion.table className="w-full min-w-270 table-fixed">
           <colgroup>
-            <col className="w-[31%]" />
-            <col className="w-[9%]" />
-            <col className="w-[9%]" />
+            <col className="w-[27%]" />
+            <col className="w-[14%]" />
+            <col className="w-[11%]" />
             <col className="w-[10%]" />
+            <col className="w-[12%]" />
             <col className="w-[13%]" />
-            <col className="w-[18%]" />
-            <col className="w-[10%]" />
+            <col className="w-[13%]" />
           </colgroup>
 
           {/* - Cabeçalho da tabela - */}
@@ -196,17 +196,15 @@ const ProductsManagementTable = ({ currentPage, onPageChange }: ProductsManageme
                   <td className={`${isLast ? "rounded-bl-lg" : ""}`}>
                     <div className={`flex gap-1 ${isLandscapeMobile ? "p-2" : "p-3"}`}>
                       <img
-                        className={`object-cover border border-[#B8860B] rounded-lg ${isLandscapeMobile ? "h-12 w-12 mx-2" : "h-16 w-16 mx-4"}`}
+                        className={`object-cover border border-[#B8860B] rounded-lg shrink-0 ${isLandscapeMobile ? "h-12 w-12 mx-2" : "h-16 w-16 mx-4"}`}
                         src={product.image}
                         alt={product.name}
                       />
 
-                      <div className="flex flex-col gap-1">
-                        <span className="text-white font-bold text-sm">{masks.productName(product.name)}</span>
+                      <div className="flex flex-col min-w-0">
+                        <span className="text-white font-bold text-sm leading-tight">{masks.productName(product.name)}</span>
 
-                        <span className={`text-white/60 text-xs ${isLandscapeMobile ? "line-clamp-2" : "line-clamp-3"}`}>
-                          {masks.productDescription(product.description)}
-                        </span>
+                        <span className="text-white/60 text-xs leading-tight line-clamp-3">{masks.productDescription(product.description)}</span>
                       </div>
                     </div>
                   </td>

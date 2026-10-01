@@ -1,3 +1,4 @@
+import { categorySchema } from "../../shared/categorySchema";
 import { periodSchema } from "../../shared/periodSchema";
 import { z } from "zod";
 
@@ -8,7 +9,7 @@ const voucherIncomeSchema = z.object({
 
   // 2. Categoria
 
-  category: z.enum(["beers", "cocktails", "drinks", "no_alcohol", "all_categories"]),
+  category: categorySchema,
 
   // 3. Nome do produto
 

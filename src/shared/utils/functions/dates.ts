@@ -1,3 +1,5 @@
+import { regex } from "@/shared/utils/constants/regex";
+
 /* - Converte data DD/MM/YYYY (string) para um objeto Date - */
 
 const parsedDate = (date: string) => {
@@ -8,8 +10,8 @@ const parsedDate = (date: string) => {
 
 /* - Formata uma data ISO em partes separadas (dia, mês, ano, hora) - */
 
-const formattedDate = (starts_at: string) => {
-  const date = new Date(starts_at);
+const formattedDate = (startsAt: string) => {
+  const date = new Date(startsAt);
 
   return {
     dayName: date.toLocaleDateString("pt-BR", { weekday: "long" }),
@@ -28,6 +30,22 @@ const formattedDate = (starts_at: string) => {
   };
 };
 
-/* - Converte um label do enum para um intervalo de datas - */
+/* - Formata um objeto Date em texto DD/MM/YYYY - */
 
-export { parsedDate, formattedDate };
+const formattedDateToString = (date: Date) => {
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const year = date.getFullYear();
+
+  return `${day}/${month}/${year}`;
+};
+
+/* - Monta uma data ISO a partir de ano, mês, dia e horário HH:MM. - */
+
+const formattedDateToISOString = (year: number, monthIndex: number, day: number, time: string) => {
+  const [hours, minutes] = regex.eventTime.test(time) ? time.split(":").map(Number) : [0, 0];
+
+  return new Date(year, monthIndex, day, hours, minutes).toISOString();
+};
+
+export { parsedDate, formattedDate, formattedDateToString, formattedDateToISOString };
