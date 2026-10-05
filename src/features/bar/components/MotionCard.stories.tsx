@@ -1,4 +1,4 @@
-import { fakeProduct } from "../../../../.storybook/mocks/hooks/useProducts";
+import { fakeProduct } from "../../../../.storybook/mocks/hooks/bar/useProducts";
 import { MotionCard } from "./MotionCard";
 
 export default {

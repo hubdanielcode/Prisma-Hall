@@ -3,7 +3,7 @@
 import { ProfileHeader } from "@/shared/components/layout/ProfileHeader";
 import { ProfileInformationsSection } from "../components/ProfileInformationsSection";
 import { ProfileSettingsSection } from "../components/ProfileSettingsSection";
-import { ProfileTicketsSection } from "../components/ProfileTicketsSection";
+import { ProfileOrdersSection } from "../components/ProfileOrdersSection";
 import { useState } from "react";
 
 const UserProfile = () => {
@@ -20,7 +20,7 @@ const UserProfile = () => {
 
       {/* - Área de ingressos - */}
 
-      {activeTab === "tickets" && <ProfileTicketsSection />}
+      {activeTab === "tickets" && <ProfileOrdersSection />}
 
       {/* - Área de informações - */}
 

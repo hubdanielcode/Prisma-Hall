@@ -2,7 +2,7 @@
 
 import { masks } from "@/shared/utils/functions/masks";
 import { motion, AnimatePresence } from "motion/react";
-import { productCategoryBadges } from "@/features/admin/bar-management/types/productCategoryBadges";
+import { productCategoryBadgeStyles } from "@/features/admin/bar-management/types/productCategoryBadgeStyles";
 import { useMobileContext } from "@/shared/hooks/useMobileContext";
 import { useBarContext } from "@/features/bar/hooks/useBarContext";
 import { X } from "lucide-react";
@@ -23,7 +23,7 @@ const DeleteProductModal = ({ isOpen, onClose, product }: DeleteProductModalProp
   /* - Definições - */
 
   const displayName = masks.productCategory(product.category);
-  const badge = productCategoryBadges[displayName];
+  const badge = productCategoryBadgeStyles[displayName];
 
   return (
     <AnimatePresence>

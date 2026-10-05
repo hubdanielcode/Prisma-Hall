@@ -19,6 +19,8 @@ const getProfile = async (): Promise<ProfileProps | false> => {
         profilePicture: true,
         role: true,
         verifiedBadge: true,
+        oldUser: true,
+        frequentUser: true,
         createdAt: true,
         validatedAt: true,
         updatedAt: true,

@@ -104,6 +104,8 @@ export const UserScalarFieldEnum = {
   password: 'password',
   role: 'role',
   verifiedBadge: 'verifiedBadge',
+  frequentUser: 'frequentUser',
+  oldUser: 'oldUser',
   token: 'token',
   tokenExpiresAt: 'tokenExpiresAt',
   profilePicture: 'profilePicture',
@@ -279,6 +281,7 @@ export const TicketScalarFieldEnum = {
   userId: 'userId',
   eventId: 'eventId',
   quantity: 'quantity',
+  unitPrice: 'unitPrice',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -304,6 +307,8 @@ export const TicketPaymentScalarFieldEnum = {
   method: 'method',
   status: 'status',
   totalValue: 'totalValue',
+  confirmedAt: 'confirmedAt',
+  pickedUpAt: 'pickedUpAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

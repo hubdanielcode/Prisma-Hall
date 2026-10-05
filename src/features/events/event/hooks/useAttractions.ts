@@ -51,7 +51,7 @@ const useAttractions = () => {
   const { mutateAsync: deleteAttractionMutation } = useMutation({
     mutationFn: deleteAttractionAction,
     onSuccess: async (deleteAttractionMutationResult) => {
-      if (deleteAttractionMutationResult) {
+      if (deleteAttractionMutationResult === true) {
         queryClient.invalidateQueries({ queryKey: ["attractions"] });
       }
     },

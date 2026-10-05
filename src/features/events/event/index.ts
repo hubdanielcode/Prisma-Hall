@@ -10,6 +10,7 @@ export { EventsSection } from "@/features/events/event/components/EventsSection"
 export { useEvents } from "@/features/events/event/hooks/useEvents";
 export { useAttractions } from "@/features/events/event/hooks/useAttractions";
 export { useEventContext } from "@/features/events/event/hooks/useEventContext";
+export { useAttractionContext } from "@/features/events/event/hooks/useAttractionContext";
 export { useCalendarContext } from "@/features/events/event/hooks/useCalendarContext";
 
 /* - Types - */

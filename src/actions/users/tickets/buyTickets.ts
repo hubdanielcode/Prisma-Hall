@@ -1,34 +1,76 @@
-/* - 
+"use server";
 
-O QUE ESSA ACTION DEVERIA FAZER? 
+import { buyTicketsSchema } from "@/lib/validations/users/orderSchemas";
+import { prisma } from "@/lib/prisma";
+import { validateSession } from "@/actions/session/validateSession";
+import z from "zod";
 
-1. Descobrir qual usuário está chamando a ação
+const buyTickets = async (ticket: z.infer<typeof buyTicketsSchema>) => {
+  const validSession = await validateSession();
 
-    - Chama validateSession que valida a sessão pelo cookie
-    - Pega o id do usuário por meio da sessão
+  if (!validSession) {
+    return false;
+  }
 
-2. Descobrir qual evento o usuário clicou para comprar
+  const parsedTicket = buyTicketsSchema.safeParse(ticket);
 
-    - Recebe o eventId como parâmetro
-    - Valida contra o Schema
+  if (!parsedTicket.success) {
+    return false;
+  }
 
-3. Exige o login do usuário para efetuar a compra
+  try {
+    const event = await prisma.event.findUnique({ where: { id: parsedTicket.data.eventId } });
 
-    - Verifica se o usuário está logado. Se sim, executa o passo 4
-    - Caso o usuário não esteja logado, abre o popup de login sem trocar de rota (CRIAR POPUP DE LOGIN)
+    if (!event || event.status !== "soon") {
+      return false;
+    }
 
+    const totalValue = event.price.toNumber() * parsedTicket.data.quantity;
 
-4. Adiciona o pedido ao carrinho daquele usuário específico
+    /* - Cria o pedido, o ingresso e o pagamento pendente de uma vez só - */
 
-    - Pega o carrinho com base no id do usuário que já temos
-    - Chama o handleAddItemsToCart()
-    - Valida contra o schema
+    const newOrder = await prisma.ticketOrder.create({
+      data: {
+        userId: validSession.user.id,
+        status: "pending",
+        tickets: {
+          create: {
+            userId: validSession.user.id,
+            eventId: event.id,
+            quantity: parsedTicket.data.quantity,
+            unitPrice: event.price,
+          },
+        },
 
-5. Segue para o fluxo de pagamento (QUE AINDA NÃO EXISTE)
+        ticketPayments: {
+          create: {
+            userId: validSession.user.id,
+            method: parsedTicket.data.method,
+            status: "pending",
+            totalValue: totalValue,
+          },
+        },
+      },
 
-    - Usuário escolhe forma de pagamento
-    - Confirma pagamento
-    - Usuário recebe email de compra como pendente e, após confirmação de pagamento, recebe email dizendo que a compra foi aprovada
-    - Continuar comprando ou redirecionar para /
+      include: { tickets: true, ticketPayments: true },
+    });
 
-- */
+    return {
+      id: newOrder.id,
+      status: newOrder.status,
+      eventId: newOrder.tickets[0].eventId,
+      quantity: newOrder.tickets[0].quantity,
+      unitPrice: newOrder.tickets[0].unitPrice.toNumber(),
+      method: newOrder.ticketPayments[0].method,
+      paymentStatus: newOrder.ticketPayments[0].status,
+      totalValue: newOrder.ticketPayments[0].totalValue.toNumber(),
+
+      createdAt: newOrder.createdAt.toISOString(),
+      updatedAt: newOrder.updatedAt.toISOString(),
+    };
+  } catch {
+    return false;
+  }
+};
+
+export { buyTickets };

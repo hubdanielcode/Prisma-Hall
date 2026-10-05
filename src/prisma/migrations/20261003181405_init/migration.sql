@@ -8,10 +8,13 @@ CREATE TYPE "OrderStatus" AS ENUM ('confirmed', 'pending', 'cancelled');
 CREATE TYPE "PaymentMethod" AS ENUM ('cash', 'pix', 'creditCard', 'debitCard');
 
 -- CreateEnum
-CREATE TYPE "PaymentStatus" AS ENUM ('confirmed', 'pending', 'failed');
+CREATE TYPE "PaymentStatus" AS ENUM ('confirmed', 'pending', 'failed', 'refunded');
 
 -- CreateEnum
 CREATE TYPE "UserRole" AS ENUM ('user', 'admin');
+
+-- CreateEnum
+CREATE TYPE "UserBadgeLevel" AS ENUM ('none', 'bronze', 'silver', 'gold');
 
 -- CreateEnum
 CREATE TYPE "ProductCategory" AS ENUM ('beers', 'cocktails', 'drinks', 'no_alcohol');
@@ -45,11 +48,13 @@ CREATE TABLE "users" (
     "password" TEXT NOT NULL,
     "role" "UserRole" NOT NULL DEFAULT 'user',
     "verified_user" BOOLEAN NOT NULL DEFAULT false,
+    "frequent_user" "UserBadgeLevel" NOT NULL DEFAULT 'none',
+    "old_user" "UserBadgeLevel" NOT NULL DEFAULT 'none',
     "token" TEXT,
     "token_expires_at" TIMESTAMP(3),
     "profilePicture" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "validated_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "validated_at" TIMESTAMP(3),
     "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
@@ -220,6 +225,7 @@ CREATE TABLE "tickets" (
     "user_id" TEXT NOT NULL,
     "event_id" TEXT NOT NULL,
     "quantity" INTEGER NOT NULL,
+    "unit_price" DECIMAL(65,30) NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -245,6 +251,7 @@ CREATE TABLE "ticket_payments" (
     "payment_method" "PaymentMethod" NOT NULL,
     "status" "PaymentStatus" NOT NULL,
     "total_value" DECIMAL(65,30) NOT NULL,
+    "confirmed_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 

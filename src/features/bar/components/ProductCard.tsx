@@ -1,10 +1,11 @@
 import { masks } from "@/shared/utils/functions/masks";
 import { MotionCard } from "./MotionCard";
+import { productCategoryBadgeStyles } from "@/features/admin/bar-management/types/productCategoryBadgeStyles";
 import Image from "next/image";
 import type { ProductProps } from "../types/product";
 
 interface ProductCardProps {
-  product: ProductProps;
+  product: Pick<ProductProps, "name" | "category" | "image">;
   index: number;
   footer: React.ReactNode;
   description?: string;
@@ -12,6 +13,7 @@ interface ProductCardProps {
 
 const ProductCard = ({ product, index, footer, description }: ProductCardProps) => {
   const displayName = masks.productCategory(product.category);
+  const badge = productCategoryBadgeStyles[displayName];
 
   return (
     <MotionCard
@@ -31,8 +33,10 @@ const ProductCard = ({ product, index, footer, description }: ProductCardProps) 
 
       {/* - Tag do produto - */}
 
-      <div className="absolute top-4 left-4 px-4 py-2 min-h-fit bg-[#B8860B] border border-black/30 rounded-full">
-        <span className="flex items-center justify-center text-xs font-bold tracking-wider">{displayName}</span>
+      <div
+        className={`absolute top-4 left-4 flex justify-center items-center px-2 py-1 w-fit backdrop-blur-sm border rounded-full ${badge.background} ${badge.border}`}
+      >
+        <span className={`flex justify-center items-center text-xs font-semibold uppercase ${badge.text}`}>{displayName}</span>
       </div>
 
       {/* - Nome do produto - */}

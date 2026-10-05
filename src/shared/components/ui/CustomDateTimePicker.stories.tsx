@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CalendarProvider } from "@/features/events";
+import { CalendarProvider } from "@/features/events/agenda/context/CalendarContext";
 import { CustomDateTimePicker } from "./CustomDateTimePicker";
 
 export default {

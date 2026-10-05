@@ -25,9 +25,9 @@ const useProfile = () => {
 
   const { mutateAsync: updateProfileMutation } = useMutation({
     mutationFn: updateProfileAction,
-    onSuccess: (updateProfileMutationResult) => {
+    onSuccess: async (updateProfileMutationResult) => {
       if (updateProfileMutationResult) {
-        queryClient.invalidateQueries({ queryKey: ["profile"] });
+        await queryClient.invalidateQueries({ queryKey: ["profile"] });
       }
     },
   });

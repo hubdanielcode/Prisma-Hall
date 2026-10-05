@@ -27,6 +27,7 @@ const useSession = () => {
     await Promise.all([
       queryClient.invalidateQueries({ queryKey: [sessionQueryKey.admin] }),
       queryClient.invalidateQueries({ queryKey: [sessionQueryKey.protected] }),
+      queryClient.invalidateQueries({ queryKey: ["profile"] }),
     ]);
   };
 

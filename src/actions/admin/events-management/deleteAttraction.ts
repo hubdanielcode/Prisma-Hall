@@ -12,10 +12,14 @@ const deleteAttraction = async (attractionId: string) => {
 
   try {
     await prisma.attraction.delete({ where: { id: attractionId } });
-    return true;
-  } catch {
+  } catch (error) {
+    if (typeof error === "object" && error !== null && "code" in error && error.code === "P2003") {
+      return "attraction_in_use";
+    }
+
     return false;
   }
+  return true;
 };
 
 export { deleteAttraction };

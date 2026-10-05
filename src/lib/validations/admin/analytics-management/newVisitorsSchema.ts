@@ -1,5 +1,5 @@
 import { periodSchema } from "../../shared/periodSchema";
-import { tagSchema } from "../../shared/tagSchema";
+import { tagFilterSchema } from "../../shared/tagSchemas";
 import { z } from "zod";
 
 const newVisitorsSchema = z.object({
@@ -9,7 +9,7 @@ const newVisitorsSchema = z.object({
 
   // 2. Tag do evento
 
-  tag: tagSchema,
+  tag: tagFilterSchema,
 });
 
 export { newVisitorsSchema };

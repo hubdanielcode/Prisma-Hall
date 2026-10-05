@@ -1,6 +1,6 @@
 import { BarProvider } from "@/features/bar";
 import { DeleteProductModal } from "@/features/admin/bar-management/components/DeleteProductModal";
-import { fakeProduct } from "../../../../../.storybook/mocks/hooks/useProducts";
+import { fakeProduct } from "../../../../../.storybook/mocks/hooks/bar/useProducts";
 import { MobileProvider } from "@/shared/context/MobileContext";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
 

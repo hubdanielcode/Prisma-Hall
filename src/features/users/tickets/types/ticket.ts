@@ -1,10 +1,16 @@
+import type { EventProps } from "@/features/events/event/types/event";
+
 export interface TicketProps {
-  user_id: string;
-  order_id: string;
-  ticket_id: string;
-  event_id: string;
+  id: string;
+  orderId: string;
+  eventId: string;
   quantity: number;
-  status: "Pending" | "Confirmed" | "Cancelled" | "Happened";
-  events: Event;
-  created_at: string;
+  unitPrice: number;
+  orderStatus: "pending" | "confirmed" | "cancelled";
+  paymentStatus: "confirmed" | "pending" | "failed" | "refunded";
+  pickedUpAt: string | null;
+  event: EventProps;
+
+  createdAt: string;
+  updatedAt: string;
 }

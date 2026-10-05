@@ -26,7 +26,7 @@ const deleteProfile = async () => {
       prisma.cart.deleteMany({ where: { userId: validSession.user.id } }),
       prisma.session.deleteMany({ where: { userId: validSession.user.id } }),
 
-      prisma.profile.delete({ where: { userId: validSession.user.id } }),
+      prisma.profile.deleteMany({ where: { userId: validSession.user.id } }),
       prisma.user.delete({ where: { id: validSession.user.id } }),
     ]);
 

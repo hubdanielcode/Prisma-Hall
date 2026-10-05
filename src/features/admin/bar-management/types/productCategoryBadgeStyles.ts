@@ -1,4 +1,4 @@
-const productCategoryBadges = {
+const productCategoryBadgeStyles = {
   Cervejas: {
     background: "bg-red-950",
     border: "border-red-700",
@@ -24,4 +24,4 @@ const productCategoryBadges = {
   },
 };
 
-export { productCategoryBadges };
+export { productCategoryBadgeStyles };

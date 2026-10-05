@@ -39,7 +39,7 @@ export { updateReviewSchema } from "@/lib/validations/events/updateReviewSchema"
 
 /* - Users - */
 
-export { buyTicketsSchema } from "@/lib/validations/users/buyTicketsSchema";
+export { orderIdSchema, buyTicketsSchema, buyVouchersSchema } from "@/lib/validations/users/orderSchemas";
 export { profileSchema } from "@/lib/validations/users/profileSchema";
 export { updateProfileSchema } from "@/lib/validations/users/updateProfileSchema";
 
@@ -47,4 +47,4 @@ export { updateProfileSchema } from "@/lib/validations/users/updateProfileSchema
 
 export { imageFileSchema } from "@/lib/validations/shared/imageFileSchema";
 export { periodSchema } from "@/lib/validations/shared/periodSchema";
-export { tagSchema } from "@/lib/validations/shared/tagSchema";
+export { tagSchema, tagFilterSchema } from "@/lib/validations/shared/tagSchemas";

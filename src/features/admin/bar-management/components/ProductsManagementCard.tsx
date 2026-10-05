@@ -16,37 +16,52 @@ const ProductsManagementCard = () => {
   const lowerProductLimit = 6;
   const noneLeft = 0;
 
+  const now = new Date();
+  const totalProducts = productList.length;
+
+  const totalCreatedThisMonth = productList.filter((product) => {
+    const createdAt = new Date(product.createdAt);
+
+    return createdAt.getFullYear() === now.getFullYear() && createdAt.getMonth() === now.getMonth();
+  }).length;
+
+  const totalActive = productList.filter((product) => product.status === "active").length;
+  const totalLowOnStock = productList.filter((product) => product.quantity < lowerProductLimit).length;
+  const totalNoneOnStock = productList.filter((product) => product.quantity === noneLeft).length;
+
+  const percentageOfTotal = (quantity: number) => (totalProducts === 0 ? "0% do total" : `${Math.round((quantity / totalProducts) * 100)}% do total`);
+
   const cardData = [
     {
       id: "all",
       icon: <FaGlassMartini size={24} />,
-      message: "+3 este mês",
+      message: `+${totalCreatedThisMonth} este mês`,
       title: "Total de produtos",
-      quantity: productList.length,
+      quantity: totalProducts,
     },
 
     {
       id: "active",
       icon: <FaCheckCircle size={24} />,
-      message: "86% do total",
+      message: percentageOfTotal(totalActive),
       title: "Produtos ativos",
-      quantity: productList.filter((product) => product.status === "active").length,
+      quantity: totalActive,
     },
 
     {
       id: "low_on_stock",
       icon: <FaShoppingBag size={24} />,
-      message: "Requer atenção",
+      message: totalLowOnStock > 0 ? "Requer atenção" : "Tudo em dia",
       title: "Estoque baixo",
-      quantity: productList.filter((product) => product.quantity < lowerProductLimit).length,
+      quantity: totalLowOnStock,
     },
 
     {
       id: "none_on_stock",
       icon: <FaArrowCircleDown size={24} />,
-      message: "+12,5%",
+      message: percentageOfTotal(totalNoneOnStock),
       title: "Esgotados",
-      quantity: productList.filter((product) => product.quantity === noneLeft).length,
+      quantity: totalNoneOnStock,
     },
   ];
 

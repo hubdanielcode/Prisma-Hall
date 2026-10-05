@@ -4,9 +4,9 @@ export { checkIsAdmin } from "@/actions/admin/checkIsAdmin";
 
 // 1.  Analytics Management
 
-// export { getNewVisitors } from "@/actions/admin/analytics-management/getNewVisitors";
-// export { getTicketIncome } from "@/actions/admin/analytics-management/getTicketIncome";
-// export { getVoucherIncome } from "@/actions/admin/analytics-management/getVoucherIncome";
+export { getNewVisitors } from "@/actions/admin/analytics-management/getNewVisitors";
+export { getTicketIncome } from "@/actions/admin/analytics-management/getTicketIncome";
+export { getVoucherIncome } from "@/actions/admin/analytics-management/getVoucherIncome";
 
 // 2. Bar Management
 
@@ -26,8 +26,10 @@ export { editEvent } from "@/actions/admin/events-management/editEvent";
 
 // 4. Users Management
 
-// export { editUser } from "@/actions/admin/users-management/editUser";
-// export { deleteUser } from "@/actions/admin/users-management/deleteUser";
+export { deleteUser } from "@/actions/admin/users-management/deleteUser";
+export { editUser } from "@/actions/admin/users-management/editUser";
+export { getAllUsers } from "@/actions/admin/users-management/getAllUsers";
+export { getSingleUser } from "@/actions/admin/users-management/getSingleUser";
 
 /* - Authentication - */
 
@@ -79,7 +81,7 @@ export { validateSession } from "@/actions/session/validateSession";
 
 /* - Users - */
 
-// export { getShoppingHistory } from "@/actions/users/getShoppingHistory";
+export { getShoppingHistory } from "@/actions/users/getShoppingHistory";
 
 // 1. Profile
 
@@ -89,14 +91,14 @@ export { updateProfile } from "@/actions/users/profile/updateProfile";
 
 // 2. Tickets
 
-// export { buyTickets } from "@/actions/users/tickets/buyTickets";
-// export { cancelTicketOrders } from "@/actions/users/tickets/cancelTicketOrders";
-// export { getMyTickets } from "@/actions/users/tickets/getMyTickets";
-// export { getTicketOrder } from "@/actions/users/tickets/getTicketOrder";
+export { buyTickets } from "@/actions/users/tickets/buyTickets";
+export { cancelTicketOrder } from "@/actions/users/tickets/cancelTicketOrder";
+export { getMyTickets } from "@/actions/users/tickets/getMyTickets";
+export { getTicketOrder } from "@/actions/users/tickets/getTicketOrder";
 
 // 3. Vouchers
 
-// export { buyVouchers } from "@/actions/users/vouchers/buyVouchers";
-// export { cancelVoucherOrders } from "@/actions/users/vouchers/cancelVoucherOrders";
-// export { getMyVouchers } from "@/actions/users/vouchers/getMyVouchers";
-// export { getVoucherOrder } from "@/actions/users/vouchers/getVoucherOrder";
+export { buyVouchers } from "@/actions/users/vouchers/buyVouchers";
+export { cancelVoucherOrder } from "@/actions/users/vouchers/cancelVoucherOrder";
+export { getMyVouchers } from "@/actions/users/vouchers/getMyVouchers";
+export { getVoucherOrder } from "@/actions/users/vouchers/getVoucherOrder";

@@ -1,19 +1,77 @@
-// O QUE ESSA ACTION PRECISA FAZER?
+"use server";
 
-// 3. CONVERTER O PERIOD NUM INTERVALO DE DATAS REAL (gte/lte)
-//    - Ainda não existe um util pra isso no projeto: decidir se nasce aqui dentro ou vira compartilhado
+import { checkIsAdmin } from "../checkIsAdmin";
+import { formattedStringToDate } from "@/shared/utils/functions/dates";
+import { newVisitorsSchema, tagSchema } from "@/lib/validations";
+import { prisma } from "@/lib/prisma";
+import z from "zod";
 
-// 4. CONTAR OS NOVOS USUÁRIOS NO PERÍODO
-//   - User.validatedAt dentro do intervalo do passo 3
+const getNewVisitors = async (newVisitor: z.infer<typeof newVisitorsSchema>) => {
+  const isAdmin = await checkIsAdmin();
 
-// 5. DOS USUÁRIOS DO PASSO 4, CONTAR QUANTOS COMPRARAM INGRESSO
-//   - Tem que ter pelo menos 1 TicketOrder com status: confirmed
-//   - Contar USUÁRIOS distintos, não pedidos (1 usuário com 3 pedidos = 1 comprador)
+  if (!isAdmin) {
+    return false;
+  }
 
-// 6. DOS COMPRADORES DO PASSO 5, QUEBRAR POR TAG DE EVENTO
-//   - Caminho: TicketOrder (confirmed) -> Ticket -> Event.tag
-//   - Se tag === "all_tags": devolver a contagem quebrada por CADA tag
-//   - Se tag for uma tag específica: devolver só a contagem daquela tag
-//   - Decisão pendente: um usuário que comprou pra tags diferentes conta em mais de um grupo, ou só numa (qual critério de desempate)?
+  const parsedNewVisitor = newVisitorsSchema.safeParse(newVisitor);
 
-// 7. RETORNAR OS TRÊS NÚMEROS JUNTOS: novos usuários, compradores, quebra por tag
+  if (!parsedNewVisitor.success) {
+    return false;
+  }
+
+  const { intervalStart, intervalEnd } = formattedStringToDate(parsedNewVisitor.data.label);
+
+  const startDate = new Date(intervalStart);
+  const endDate = new Date(intervalEnd);
+
+  try {
+    const newUsers = await prisma.user.count({
+      where: { validatedAt: { gte: startDate, lt: endDate } },
+    });
+
+    const confirmedPayments = await prisma.ticketPayment.findMany({
+      where: { status: "confirmed", confirmedAt: { not: null } },
+      distinct: ["userId"],
+      orderBy: { confirmedAt: "asc" },
+      select: {
+        userId: true,
+        confirmedAt: true,
+        order: {
+          select: {
+            tickets: {
+              select: {
+                event: {
+                  select: { tag: true },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    const firstPurchaseFromEachUser = confirmedPayments.filter((payment) => payment.confirmedAt && payment.confirmedAt >= startDate);
+
+    const buyersList = firstPurchaseFromEachUser.map((payment) => ({
+      userId: payment.userId,
+      tags: payment.order.tickets.map((ticket) => ticket.event.tag),
+    }));
+
+    const buyersByTag = tagSchema.options.map((eventTag) => ({
+      tag: eventTag,
+      totalBuyers: buyersList.filter((buyer) => buyer.tags.includes(eventTag)).length,
+    }));
+
+    if (parsedNewVisitor.data.tag === "all_tags") {
+      return { newUsers, buyers: buyersList.length, buyersByTag };
+    }
+
+    const selectedTag = buyersByTag.filter((event) => event.tag === parsedNewVisitor.data.tag);
+
+    return { newUsers, buyers: selectedTag[0].totalBuyers, buyersByTag: selectedTag };
+  } catch {
+    return false;
+  }
+};
+
+export { getNewVisitors };

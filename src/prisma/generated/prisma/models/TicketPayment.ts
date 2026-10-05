@@ -41,6 +41,8 @@ export type TicketPaymentMinAggregateOutputType = {
   method: $Enums.PaymentMethod | null
   status: $Enums.PaymentStatus | null
   totalValue: runtime.Decimal | null
+  confirmedAt: Date | null
+  pickedUpAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -52,6 +54,8 @@ export type TicketPaymentMaxAggregateOutputType = {
   method: $Enums.PaymentMethod | null
   status: $Enums.PaymentStatus | null
   totalValue: runtime.Decimal | null
+  confirmedAt: Date | null
+  pickedUpAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -63,6 +67,8 @@ export type TicketPaymentCountAggregateOutputType = {
   method: number
   status: number
   totalValue: number
+  confirmedAt: number
+  pickedUpAt: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -84,6 +90,8 @@ export type TicketPaymentMinAggregateInputType = {
   method?: true
   status?: true
   totalValue?: true
+  confirmedAt?: true
+  pickedUpAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -95,6 +103,8 @@ export type TicketPaymentMaxAggregateInputType = {
   method?: true
   status?: true
   totalValue?: true
+  confirmedAt?: true
+  pickedUpAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -106,6 +116,8 @@ export type TicketPaymentCountAggregateInputType = {
   method?: true
   status?: true
   totalValue?: true
+  confirmedAt?: true
+  pickedUpAt?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -204,6 +216,8 @@ export type TicketPaymentGroupByOutputType = {
   method: $Enums.PaymentMethod
   status: $Enums.PaymentStatus
   totalValue: runtime.Decimal
+  confirmedAt: Date | null
+  pickedUpAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: TicketPaymentCountAggregateOutputType | null
@@ -238,6 +252,8 @@ export type TicketPaymentWhereInput = {
   method?: Prisma.EnumPaymentMethodFilter<"TicketPayment"> | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusFilter<"TicketPayment"> | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalFilter<"TicketPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.DateTimeNullableFilter<"TicketPayment"> | Date | string | null
+  pickedUpAt?: Prisma.DateTimeNullableFilter<"TicketPayment"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"TicketPayment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TicketPayment"> | Date | string
   order?: Prisma.XOR<Prisma.TicketOrderScalarRelationFilter, Prisma.TicketOrderWhereInput>
@@ -251,6 +267,8 @@ export type TicketPaymentOrderByWithRelationInput = {
   method?: Prisma.SortOrder
   status?: Prisma.SortOrder
   totalValue?: Prisma.SortOrder
+  confirmedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  pickedUpAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   order?: Prisma.TicketOrderOrderByWithRelationInput
@@ -267,6 +285,8 @@ export type TicketPaymentWhereUniqueInput = Prisma.AtLeast<{
   method?: Prisma.EnumPaymentMethodFilter<"TicketPayment"> | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusFilter<"TicketPayment"> | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalFilter<"TicketPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.DateTimeNullableFilter<"TicketPayment"> | Date | string | null
+  pickedUpAt?: Prisma.DateTimeNullableFilter<"TicketPayment"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"TicketPayment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TicketPayment"> | Date | string
   order?: Prisma.XOR<Prisma.TicketOrderScalarRelationFilter, Prisma.TicketOrderWhereInput>
@@ -280,6 +300,8 @@ export type TicketPaymentOrderByWithAggregationInput = {
   method?: Prisma.SortOrder
   status?: Prisma.SortOrder
   totalValue?: Prisma.SortOrder
+  confirmedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  pickedUpAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.TicketPaymentCountOrderByAggregateInput
@@ -299,6 +321,8 @@ export type TicketPaymentScalarWhereWithAggregatesInput = {
   method?: Prisma.EnumPaymentMethodWithAggregatesFilter<"TicketPayment"> | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusWithAggregatesFilter<"TicketPayment"> | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalWithAggregatesFilter<"TicketPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"TicketPayment"> | Date | string | null
+  pickedUpAt?: Prisma.DateTimeNullableWithAggregatesFilter<"TicketPayment"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"TicketPayment"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"TicketPayment"> | Date | string
 }
@@ -308,6 +332,8 @@ export type TicketPaymentCreateInput = {
   method: $Enums.PaymentMethod
   status: $Enums.PaymentStatus
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Date | string | null
+  pickedUpAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   order: Prisma.TicketOrderCreateNestedOneWithoutTicketPaymentsInput
@@ -321,6 +347,8 @@ export type TicketPaymentUncheckedCreateInput = {
   method: $Enums.PaymentMethod
   status: $Enums.PaymentStatus
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Date | string | null
+  pickedUpAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -330,6 +358,8 @@ export type TicketPaymentUpdateInput = {
   method?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   order?: Prisma.TicketOrderUpdateOneRequiredWithoutTicketPaymentsNestedInput
@@ -343,6 +373,8 @@ export type TicketPaymentUncheckedUpdateInput = {
   method?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -354,6 +386,8 @@ export type TicketPaymentCreateManyInput = {
   method: $Enums.PaymentMethod
   status: $Enums.PaymentStatus
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Date | string | null
+  pickedUpAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -363,6 +397,8 @@ export type TicketPaymentUpdateManyMutationInput = {
   method?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -374,6 +410,8 @@ export type TicketPaymentUncheckedUpdateManyInput = {
   method?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -395,6 +433,8 @@ export type TicketPaymentCountOrderByAggregateInput = {
   method?: Prisma.SortOrder
   status?: Prisma.SortOrder
   totalValue?: Prisma.SortOrder
+  confirmedAt?: Prisma.SortOrder
+  pickedUpAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -410,6 +450,8 @@ export type TicketPaymentMaxOrderByAggregateInput = {
   method?: Prisma.SortOrder
   status?: Prisma.SortOrder
   totalValue?: Prisma.SortOrder
+  confirmedAt?: Prisma.SortOrder
+  pickedUpAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -421,6 +463,8 @@ export type TicketPaymentMinOrderByAggregateInput = {
   method?: Prisma.SortOrder
   status?: Prisma.SortOrder
   totalValue?: Prisma.SortOrder
+  confirmedAt?: Prisma.SortOrder
+  pickedUpAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -518,6 +562,8 @@ export type TicketPaymentCreateWithoutUserInput = {
   method: $Enums.PaymentMethod
   status: $Enums.PaymentStatus
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Date | string | null
+  pickedUpAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   order: Prisma.TicketOrderCreateNestedOneWithoutTicketPaymentsInput
@@ -529,6 +575,8 @@ export type TicketPaymentUncheckedCreateWithoutUserInput = {
   method: $Enums.PaymentMethod
   status: $Enums.PaymentStatus
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Date | string | null
+  pickedUpAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -569,6 +617,8 @@ export type TicketPaymentScalarWhereInput = {
   method?: Prisma.EnumPaymentMethodFilter<"TicketPayment"> | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusFilter<"TicketPayment"> | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalFilter<"TicketPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.DateTimeNullableFilter<"TicketPayment"> | Date | string | null
+  pickedUpAt?: Prisma.DateTimeNullableFilter<"TicketPayment"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"TicketPayment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TicketPayment"> | Date | string
 }
@@ -578,6 +628,8 @@ export type TicketPaymentCreateWithoutOrderInput = {
   method: $Enums.PaymentMethod
   status: $Enums.PaymentStatus
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Date | string | null
+  pickedUpAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutTicketPaymentsInput
@@ -589,6 +641,8 @@ export type TicketPaymentUncheckedCreateWithoutOrderInput = {
   method: $Enums.PaymentMethod
   status: $Enums.PaymentStatus
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Date | string | null
+  pickedUpAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -625,6 +679,8 @@ export type TicketPaymentCreateManyUserInput = {
   method: $Enums.PaymentMethod
   status: $Enums.PaymentStatus
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Date | string | null
+  pickedUpAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -634,6 +690,8 @@ export type TicketPaymentUpdateWithoutUserInput = {
   method?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   order?: Prisma.TicketOrderUpdateOneRequiredWithoutTicketPaymentsNestedInput
@@ -645,6 +703,8 @@ export type TicketPaymentUncheckedUpdateWithoutUserInput = {
   method?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -655,6 +715,8 @@ export type TicketPaymentUncheckedUpdateManyWithoutUserInput = {
   method?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -665,6 +727,8 @@ export type TicketPaymentCreateManyOrderInput = {
   method: $Enums.PaymentMethod
   status: $Enums.PaymentStatus
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Date | string | null
+  pickedUpAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -674,6 +738,8 @@ export type TicketPaymentUpdateWithoutOrderInput = {
   method?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutTicketPaymentsNestedInput
@@ -685,6 +751,8 @@ export type TicketPaymentUncheckedUpdateWithoutOrderInput = {
   method?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -695,6 +763,8 @@ export type TicketPaymentUncheckedUpdateManyWithoutOrderInput = {
   method?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -708,6 +778,8 @@ export type TicketPaymentSelect<ExtArgs extends runtime.Types.Extensions.Interna
   method?: boolean
   status?: boolean
   totalValue?: boolean
+  confirmedAt?: boolean
+  pickedUpAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   order?: boolean | Prisma.TicketOrderDefaultArgs<ExtArgs>
@@ -721,6 +793,8 @@ export type TicketPaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   method?: boolean
   status?: boolean
   totalValue?: boolean
+  confirmedAt?: boolean
+  pickedUpAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   order?: boolean | Prisma.TicketOrderDefaultArgs<ExtArgs>
@@ -734,6 +808,8 @@ export type TicketPaymentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   method?: boolean
   status?: boolean
   totalValue?: boolean
+  confirmedAt?: boolean
+  pickedUpAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   order?: boolean | Prisma.TicketOrderDefaultArgs<ExtArgs>
@@ -747,11 +823,13 @@ export type TicketPaymentSelectScalar = {
   method?: boolean
   status?: boolean
   totalValue?: boolean
+  confirmedAt?: boolean
+  pickedUpAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type TicketPaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "orderId" | "method" | "status" | "totalValue" | "createdAt" | "updatedAt", ExtArgs["result"]["ticketPayment"]>
+export type TicketPaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "orderId" | "method" | "status" | "totalValue" | "confirmedAt" | "pickedUpAt" | "createdAt" | "updatedAt", ExtArgs["result"]["ticketPayment"]>
 export type TicketPaymentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   order?: boolean | Prisma.TicketOrderDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -778,6 +856,8 @@ export type $TicketPaymentPayload<ExtArgs extends runtime.Types.Extensions.Inter
     method: $Enums.PaymentMethod
     status: $Enums.PaymentStatus
     totalValue: runtime.Decimal
+    confirmedAt: Date | null
+    pickedUpAt: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["ticketPayment"]>
@@ -1211,6 +1291,8 @@ export interface TicketPaymentFieldRefs {
   readonly method: Prisma.FieldRef<"TicketPayment", 'PaymentMethod'>
   readonly status: Prisma.FieldRef<"TicketPayment", 'PaymentStatus'>
   readonly totalValue: Prisma.FieldRef<"TicketPayment", 'Decimal'>
+  readonly confirmedAt: Prisma.FieldRef<"TicketPayment", 'DateTime'>
+  readonly pickedUpAt: Prisma.FieldRef<"TicketPayment", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"TicketPayment", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"TicketPayment", 'DateTime'>
 }

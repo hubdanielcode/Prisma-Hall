@@ -39,11 +39,54 @@ const EventsManagementCard = () => {
     return ratedEvents.reduce((accumulator, event) => accumulator + event.rating, 0.0) / ratedEvents.length;
   }, [eventList]);
 
+  // Datas de referência
+
+  const now = new Date();
+  const previousMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+
+  const isInMonth = (date: string, year: number, month: number) => {
+    const parsedDate = new Date(date);
+
+    return parsedDate.getFullYear() === year && parsedDate.getMonth() === month;
+  };
+
+  // Eventos criados neste mês
+
+  const totalCreatedThisMonth = eventList.filter((event) => isInMonth(event.createdAt, now.getFullYear(), now.getMonth())).length;
+
+  // Eventos dos próximos 7 dias
+
+  const totalUpcoming = eventList.filter((event) => {
+    const eventStartDate = new Date(event.startsAt);
+
+    return eventStartDate >= now && eventStartDate <= new Date(Date.now() + 60 * 60 * 24 * 7 * 1000);
+  }).length;
+
+  const upcomingMessage = eventList.length === 0 ? "0% do total" : `${Math.round((totalUpcoming / eventList.length) * 100)}% do total`;
+
+  // Variação do público em relação ao mês anterior
+
+  const audienceThisMonth = eventList
+    .filter((event) => isInMonth(event.startsAt, now.getFullYear(), now.getMonth()) && new Date(event.startsAt) <= now)
+    .reduce((accumulator, event) => accumulator + event.attendees, 0);
+
+  const audienceLastMonth = eventList
+    .filter((event) => isInMonth(event.startsAt, previousMonth.getFullYear(), previousMonth.getMonth()))
+    .reduce((accumulator, event) => accumulator + event.attendees, 0);
+
+  const audienceChange = audienceLastMonth === 0 ? null : Math.round(((audienceThisMonth - audienceLastMonth) / audienceLastMonth) * 100);
+  const audienceMessage = audienceChange === null ? "Sem comparação" : `${audienceChange >= 0 ? "+" : ""}${audienceChange}% este mês`;
+
+  // Eventos que entraram na avaliação média
+
+  const totalRated = eventList.filter((event) => event.rating > 0.0 && new Date(event.startsAt) <= now).length;
+  const ratingMessage = totalRated === 0 ? "Sem avaliações" : `${totalRated} ${totalRated === 1 ? "evento avaliado" : "eventos avaliados"}`;
+
   const cardData = [
     {
       id: "all",
       icon: <FaTicketAlt size={24} />,
-      message: "",
+      message: `+${totalCreatedThisMonth} este mês`,
       title: "Todos os eventos",
       quantity: eventList.length,
     },
@@ -51,19 +94,15 @@ const EventsManagementCard = () => {
     {
       id: "upcoming_eventss",
       icon: <FaCalendarAlt size={24} />,
-      message: "",
+      message: upcomingMessage,
       title: "Próximos 7 dias",
-      quantity: eventList.filter((event) => {
-        const eventStartDate = new Date(event.startsAt);
-
-        return eventStartDate >= new Date() && eventStartDate <= new Date(Date.now() + 60 * 60 * 24 * 7 * 1000);
-      }).length,
+      quantity: totalUpcoming,
     },
 
     {
       id: "total_audience",
       icon: <FaUser size={24} />,
-      message: "",
+      message: audienceMessage,
       title: "Público Total",
       quantity: totalAudience,
     },
@@ -71,7 +110,7 @@ const EventsManagementCard = () => {
     {
       id: "average_ratting",
       icon: <FaStar size={24} />,
-      message: "",
+      message: ratingMessage,
       title: "Avaliação média",
       quantity: averageRating?.toFixed(1),
     },

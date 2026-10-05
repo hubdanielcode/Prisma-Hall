@@ -1,11 +1,11 @@
-import { CalendarProvider } from "@/features/events";
+import { CalendarProvider } from "@/features/events/agenda/context/CalendarContext";
 import { CreateEventModal } from "@/features/admin/events-management/components/CreateEventModal";
 import { EventProvider } from "@/features/events/event/context/EventContext";
 import { MobileProvider } from "@/shared/context/MobileContext";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
 
 export default {
-  title: "Layouts/Admin/Events Management/Modals",
+  title: "Layouts/Admin/Events Management/Event Modals",
   component: CreateEventModal,
   parameters: {
     layout: "fullscreen",

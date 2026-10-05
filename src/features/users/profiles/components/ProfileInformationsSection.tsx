@@ -2,13 +2,14 @@
 
 import { CustomTextInput } from "@/shared/components/ui/CustomTextInput";
 import { EditProfileModal } from "@/features/users/profiles/components/EditProfileModal";
-import { FaUser, FaIdCard, FaCalendarAlt, FaPhone, FaMapMarkerAlt, FaCity, FaHome, FaSortNumericUp } from "react-icons/fa";
+import { FaUser, FaIdCard, FaCalendarAlt, FaPhone, FaMapMarkerAlt, FaCity, FaHome, FaSortNumericUp, FaTrophy, FaMedal } from "react-icons/fa";
 import { FirstTimeProfileModal } from "./FirstTimeProfileModal";
-import { MdAlternateEmail, MdApartment, MdMyLocation } from "react-icons/md";
+import { MdAlternateEmail, MdApartment, MdMyLocation, MdVerified } from "react-icons/md";
 import { motion } from "motion/react";
 import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
 import { useProfileContext } from "../hooks/useProfileContext";
 import { useState, useEffect } from "react";
+import { tierBadgeStyles } from "../../user";
 
 const ProfileInformationsSection = () => {
   /* - Puxando do context - */
@@ -20,6 +21,60 @@ const ProfileInformationsSection = () => {
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isFirstTimeModalOpen, setIsFirstTimeModalOpen] = useState<boolean>(false);
+
+  /* - Definições - */
+
+  type BadgeTier = "none" | "bronze" | "silver" | "gold";
+
+  const baseBadge = "h-10 w-10 border rounded-lg p-1.5";
+  const lockedBadge = "text-white/25 bg-white/5 border-white/15 border-dashed";
+  const verifiedBadge = "text-[#B8860B] bg-[#3D2B0A] border-[#B8860B]";
+
+  const unlockedTierClass = {
+    bronze: "bg-[#2A1A15] border-[#C17F63]",
+    silver: "bg-[#25282A] border-[#C0C0C0]",
+    gold: "bg-[#3D2B0A] border-[#B8860B]",
+  };
+
+  const getTierBadge = (tier: BadgeTier) => {
+    if (tier === "none") {
+      return `${baseBadge} ${lockedBadge}`;
+    }
+
+    return `${baseBadge} ${tierBadgeStyles[tier].tableIconColor} ${unlockedTierClass[tier]}`;
+  };
+
+  const verifiedUserBadge = profile ? profile.verifiedBadge : false;
+  const oldUserBadge: BadgeTier = profile ? profile.oldUser : "none";
+  const frequentUserBadge: BadgeTier = profile ? profile.frequentUser : "none";
+
+  /* - Textos que aparecem ao passar o mouse sobre as badges - */
+
+  const verifiedBadgeTitle = verifiedUserBadge
+    ? "Usuário verificado"
+    : "Avalie eventos dos quais você participou para desbloquear o selo de usuário verificado";
+
+  const eventsByTier = {
+    bronze: 3,
+    silver: 8,
+    gold: 13,
+  };
+
+  const frequentBadgeTitle =
+    frequentUserBadge !== "none"
+      ? `Participou de ${eventsByTier[frequentUserBadge]} eventos`
+      : "Participe de 3 eventos para desbloquear o selo de frequência";
+
+  const accountTimeByTier = {
+    bronze: "1 ano",
+    silver: "2 anos",
+    gold: "3 anos",
+  };
+
+  const oldBadgeTitle =
+    oldUserBadge !== "none"
+      ? `Conta criada há mais de ${accountTimeByTier[oldUserBadge]}`
+      : "Mantenha sua conta por mais de 1 ano para desbloquear o selo de tempo de conta";
 
   /* - Funções - */
 
@@ -82,7 +137,6 @@ const ProfileInformationsSection = () => {
           {/* - Input de email - */}
 
           <CustomTextInput
-            className="[&_input]:min-w-0 [&_input]:truncate"
             label="Seu Email"
             icon={<MdAlternateEmail />}
             placeholder="exemplo@email.com"
@@ -90,6 +144,35 @@ const ProfileInformationsSection = () => {
             maxLength={50}
             readOnly
           />
+
+          {/* - Área de Badges - */}
+
+          <div className="flex flex-col justify-start pt-2">
+            <span className="bg-transparent flex-1 outline-none text-sm text-white/60 placeholder:text-white/40 font-semibold"> Suas Conquistas</span>
+
+            <div className="flex flex-wrap justify-start gap-3 p-4">
+              {/* - Badge de verificado - */}
+
+              <MdVerified
+                className={`${baseBadge} ${verifiedUserBadge ? verifiedBadge : lockedBadge}`}
+                title={verifiedBadgeTitle}
+              />
+
+              {/* - Badge de frequência em eventos - */}
+
+              <FaTrophy
+                className={getTierBadge(frequentUserBadge)}
+                title={frequentBadgeTitle}
+              />
+
+              {/* - Badge de tempo de conta - */}
+
+              <FaMedal
+                className={getTierBadge(oldUserBadge)}
+                title={oldBadgeTitle}
+              />
+            </div>
+          </div>
         </div>
 
         {/* - Coluna Direita: Dados do comprador - */}

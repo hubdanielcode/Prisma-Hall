@@ -3,7 +3,7 @@
 import { useBarContext } from "@/features/bar";
 import { motion } from "motion/react";
 import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
-import { productCategoryBadges } from "../types/productCategoryBadges";
+import { productCategoryBadgeStyles } from "..";
 import { masks } from "@/shared/utils/functions/masks";
 import { useMobileContext } from "@/shared/hooks/useMobileContext";
 import { ProductsTablePagination } from "./ProductsTablePagination";
@@ -37,7 +37,7 @@ const ProductsManagementTable = ({ currentPage, onPageChange }: ProductsManageme
         <div className="flex flex-col gap-3 text-white">
           {paginatedProducts.map((product) => {
             const displayName = masks.productCategory(product.category);
-            const badge = productCategoryBadges[displayName];
+            const badge = productCategoryBadgeStyles[displayName];
             return (
               <motion.div
                 key={product.id}
@@ -184,7 +184,7 @@ const ProductsManagementTable = ({ currentPage, onPageChange }: ProductsManageme
             {paginatedProducts.map((product, index) => {
               const isLast = index === paginatedProducts.length - 1;
               const displayName = masks.productCategory(product.category);
-              const badge = productCategoryBadges[displayName];
+              const badge = productCategoryBadgeStyles[displayName];
 
               return (
                 <tr

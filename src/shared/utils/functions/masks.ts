@@ -1,4 +1,4 @@
-import { EventStatus, EventTag, ProductCategory, ProductStatus } from "@/prisma/generated/prisma/enums";
+import { EventStatus, EventTag, OrderStatus, PaymentStatus, ProductCategory, ProductStatus } from "@/prisma/generated/prisma/enums";
 
 const masks = {
   /* - Autenticação - */
@@ -125,6 +125,38 @@ const masks = {
     } as Record<ProductStatus, "Ativo" | "Inativo">;
 
     return productStatusLabel[value];
+  },
+
+  /* - Pedido - */
+
+  paymentStatus: (value: PaymentStatus) => {
+    const paymentStatusLabel = {
+      confirmed: "Pago",
+      pending: "Pagamento pendente",
+      failed: "Pagamento falhou",
+      refunded: "Reembolsado",
+    } as Record<PaymentStatus, "Pago" | "Pagamento pendente" | "Pagamento falhou" | "Reembolsado">;
+
+    return paymentStatusLabel[value];
+  },
+
+  orderStatus: (value: OrderStatus) => {
+    const orderStatusLabel = {
+      confirmed: "Pedido confirmado",
+      pending: "Pedido pendente",
+      cancelled: "Pedido cancelado",
+    } as Record<OrderStatus, "Pedido confirmado" | "Pedido pendente" | "Pedido cancelado">;
+
+    return orderStatusLabel[value];
+  },
+
+  pickupStatus: (value: "pickedUp" | "notPickedUp") => {
+    const pickupStatusLabel = {
+      pickedUp: "Retirado",
+      notPickedUp: "Não retirado",
+    } as Record<"pickedUp" | "notPickedUp", "Retirado" | "Não retirado">;
+
+    return pickupStatusLabel[value];
   },
 
   /* - Evento - */

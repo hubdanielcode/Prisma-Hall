@@ -5,7 +5,7 @@ import { createProductSchema } from "@/lib/validations/admin/bar-management/crea
 import { ImagePlus, X } from "lucide-react";
 import { masks } from "@/shared/utils/functions/masks";
 import { productCategories } from "@/features/bar";
-import { productCategoryBadges } from "@/features/admin/bar-management/types/productCategoryBadges";
+import { productCategoryBadgeStyles } from "@/features/admin/bar-management/types/productCategoryBadgeStyles";
 import { useBarContext } from "@/features/bar/hooks/useBarContext";
 import { useBlockScroll, useMobileContext } from "@/shared/hooks";
 import { useRef, useState } from "react";
@@ -347,7 +347,7 @@ const EditProductModal = ({ isOpen, onClose }: EditProductModalProps) => {
                 <div className="flex flex-wrap gap-2">
                   {productCategories.map((category) => {
                     const displayName = masks.productCategory(category.id);
-                    const badge = productCategoryBadges[displayName];
+                    const badge = productCategoryBadgeStyles[displayName];
                     const isSelected = newProduct.category === category.id;
 
                     return (

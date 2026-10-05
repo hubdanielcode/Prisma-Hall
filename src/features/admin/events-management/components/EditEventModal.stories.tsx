@@ -5,7 +5,7 @@ import { MobileProvider } from "@/shared/context/MobileContext";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
 
 export default {
-  title: "Layouts/Admin/Events Management/Modals",
+  title: "Layouts/Admin/Events Management/Event Modals",
   component: EditEventModal,
   parameters: {
     layout: "fullscreen",

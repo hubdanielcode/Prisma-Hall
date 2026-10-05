@@ -31,6 +31,8 @@ export type UserMinAggregateOutputType = {
   password: string | null
   role: $Enums.UserRole | null
   verifiedBadge: boolean | null
+  frequentUser: $Enums.UserBadgeLevel | null
+  oldUser: $Enums.UserBadgeLevel | null
   token: string | null
   tokenExpiresAt: Date | null
   profilePicture: string | null
@@ -46,6 +48,8 @@ export type UserMaxAggregateOutputType = {
   password: string | null
   role: $Enums.UserRole | null
   verifiedBadge: boolean | null
+  frequentUser: $Enums.UserBadgeLevel | null
+  oldUser: $Enums.UserBadgeLevel | null
   token: string | null
   tokenExpiresAt: Date | null
   profilePicture: string | null
@@ -61,6 +65,8 @@ export type UserCountAggregateOutputType = {
   password: number
   role: number
   verifiedBadge: number
+  frequentUser: number
+  oldUser: number
   token: number
   tokenExpiresAt: number
   profilePicture: number
@@ -78,6 +84,8 @@ export type UserMinAggregateInputType = {
   password?: true
   role?: true
   verifiedBadge?: true
+  frequentUser?: true
+  oldUser?: true
   token?: true
   tokenExpiresAt?: true
   profilePicture?: true
@@ -93,6 +101,8 @@ export type UserMaxAggregateInputType = {
   password?: true
   role?: true
   verifiedBadge?: true
+  frequentUser?: true
+  oldUser?: true
   token?: true
   tokenExpiresAt?: true
   profilePicture?: true
@@ -108,6 +118,8 @@ export type UserCountAggregateInputType = {
   password?: true
   role?: true
   verifiedBadge?: true
+  frequentUser?: true
+  oldUser?: true
   token?: true
   tokenExpiresAt?: true
   profilePicture?: true
@@ -196,6 +208,8 @@ export type UserGroupByOutputType = {
   password: string
   role: $Enums.UserRole
   verifiedBadge: boolean
+  frequentUser: $Enums.UserBadgeLevel
+  oldUser: $Enums.UserBadgeLevel
   token: string | null
   tokenExpiresAt: Date | null
   profilePicture: string | null
@@ -232,6 +246,8 @@ export type UserWhereInput = {
   password?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFilter<"User"> | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFilter<"User"> | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFilter<"User"> | $Enums.UserBadgeLevel
   token?: Prisma.StringNullableFilter<"User"> | string | null
   tokenExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   profilePicture?: Prisma.StringNullableFilter<"User"> | string | null
@@ -259,6 +275,8 @@ export type UserOrderByWithRelationInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   verifiedBadge?: Prisma.SortOrder
+  frequentUser?: Prisma.SortOrder
+  oldUser?: Prisma.SortOrder
   token?: Prisma.SortOrderInput | Prisma.SortOrder
   tokenExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   profilePicture?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -290,6 +308,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   password?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFilter<"User"> | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFilter<"User"> | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFilter<"User"> | $Enums.UserBadgeLevel
   tokenExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   profilePicture?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -316,6 +336,8 @@ export type UserOrderByWithAggregationInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   verifiedBadge?: Prisma.SortOrder
+  frequentUser?: Prisma.SortOrder
+  oldUser?: Prisma.SortOrder
   token?: Prisma.SortOrderInput | Prisma.SortOrder
   tokenExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   profilePicture?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -337,6 +359,8 @@ export type UserScalarWhereWithAggregatesInput = {
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
   role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
   verifiedBadge?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelWithAggregatesFilter<"User"> | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelWithAggregatesFilter<"User"> | $Enums.UserBadgeLevel
   token?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   tokenExpiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   profilePicture?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
@@ -352,6 +376,8 @@ export type UserCreateInput = {
   password: string
   role?: $Enums.UserRole
   verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
   profilePicture?: string | null
@@ -379,6 +405,8 @@ export type UserUncheckedCreateInput = {
   password: string
   role?: $Enums.UserRole
   verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
   profilePicture?: string | null
@@ -406,6 +434,8 @@ export type UserUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -433,6 +463,8 @@ export type UserUncheckedUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -460,6 +492,8 @@ export type UserCreateManyInput = {
   password: string
   role?: $Enums.UserRole
   verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
   profilePicture?: string | null
@@ -475,6 +509,8 @@ export type UserUpdateManyMutationInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -490,6 +526,8 @@ export type UserUncheckedUpdateManyInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -510,6 +548,8 @@ export type UserCountOrderByAggregateInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   verifiedBadge?: Prisma.SortOrder
+  frequentUser?: Prisma.SortOrder
+  oldUser?: Prisma.SortOrder
   token?: Prisma.SortOrder
   tokenExpiresAt?: Prisma.SortOrder
   profilePicture?: Prisma.SortOrder
@@ -525,6 +565,8 @@ export type UserMaxOrderByAggregateInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   verifiedBadge?: Prisma.SortOrder
+  frequentUser?: Prisma.SortOrder
+  oldUser?: Prisma.SortOrder
   token?: Prisma.SortOrder
   tokenExpiresAt?: Prisma.SortOrder
   profilePicture?: Prisma.SortOrder
@@ -540,6 +582,8 @@ export type UserMinOrderByAggregateInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   verifiedBadge?: Prisma.SortOrder
+  frequentUser?: Prisma.SortOrder
+  oldUser?: Prisma.SortOrder
   token?: Prisma.SortOrder
   tokenExpiresAt?: Prisma.SortOrder
   profilePicture?: Prisma.SortOrder
@@ -568,6 +612,10 @@ export type EnumUserRoleFieldUpdateOperationsInput = {
 
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
+}
+
+export type EnumUserBadgeLevelFieldUpdateOperationsInput = {
+  set?: $Enums.UserBadgeLevel
 }
 
 export type NullableStringFieldUpdateOperationsInput = {
@@ -735,6 +783,8 @@ export type UserCreateWithoutSessionsInput = {
   password: string
   role?: $Enums.UserRole
   verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
   profilePicture?: string | null
@@ -761,6 +811,8 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   password: string
   role?: $Enums.UserRole
   verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
   profilePicture?: string | null
@@ -803,6 +855,8 @@ export type UserUpdateWithoutSessionsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -829,6 +883,8 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -855,6 +911,8 @@ export type UserCreateWithoutProfilesInput = {
   password: string
   role?: $Enums.UserRole
   verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
   profilePicture?: string | null
@@ -881,6 +939,8 @@ export type UserUncheckedCreateWithoutProfilesInput = {
   password: string
   role?: $Enums.UserRole
   verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
   profilePicture?: string | null
@@ -923,6 +983,8 @@ export type UserUpdateWithoutProfilesInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -949,6 +1011,8 @@ export type UserUncheckedUpdateWithoutProfilesInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -975,6 +1039,8 @@ export type UserCreateWithoutCartsInput = {
   password: string
   role?: $Enums.UserRole
   verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
   profilePicture?: string | null
@@ -1001,6 +1067,8 @@ export type UserUncheckedCreateWithoutCartsInput = {
   password: string
   role?: $Enums.UserRole
   verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
   profilePicture?: string | null
@@ -1043,6 +1111,8 @@ export type UserUpdateWithoutCartsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1069,6 +1139,8 @@ export type UserUncheckedUpdateWithoutCartsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1095,6 +1167,8 @@ export type UserCreateWithoutVoucherPaymentsInput = {
   password: string
   role?: $Enums.UserRole
   verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
   profilePicture?: string | null
@@ -1121,6 +1195,8 @@ export type UserUncheckedCreateWithoutVoucherPaymentsInput = {
   password: string
   role?: $Enums.UserRole
   verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
   profilePicture?: string | null
@@ -1163,6 +1239,8 @@ export type UserUpdateWithoutVoucherPaymentsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1189,6 +1267,8 @@ export type UserUncheckedUpdateWithoutVoucherPaymentsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1215,6 +1295,8 @@ export type UserCreateWithoutVoucherOrdersInput = {
   password: string
   role?: $Enums.UserRole
   verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
   profilePicture?: string | null
@@ -1241,6 +1323,8 @@ export type UserUncheckedCreateWithoutVoucherOrdersInput = {
   password: string
   role?: $Enums.UserRole
   verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
   profilePicture?: string | null
@@ -1283,6 +1367,8 @@ export type UserUpdateWithoutVoucherOrdersInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1309,6 +1395,8 @@ export type UserUncheckedUpdateWithoutVoucherOrdersInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1335,6 +1423,8 @@ export type UserCreateWithoutVouchersInput = {
   password: string
   role?: $Enums.UserRole
   verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
   profilePicture?: string | null
@@ -1361,6 +1451,8 @@ export type UserUncheckedCreateWithoutVouchersInput = {
   password: string
   role?: $Enums.UserRole
   verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
   profilePicture?: string | null
@@ -1403,6 +1495,8 @@ export type UserUpdateWithoutVouchersInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1429,6 +1523,8 @@ export type UserUncheckedUpdateWithoutVouchersInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1455,6 +1551,8 @@ export type UserCreateWithoutReviewsInput = {
   password: string
   role?: $Enums.UserRole
   verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
   profilePicture?: string | null
@@ -1481,6 +1579,8 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   password: string
   role?: $Enums.UserRole
   verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
   profilePicture?: string | null
@@ -1523,6 +1623,8 @@ export type UserUpdateWithoutReviewsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1549,6 +1651,8 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1575,6 +1679,8 @@ export type UserCreateWithoutGalleriesInput = {
   password: string
   role?: $Enums.UserRole
   verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
   profilePicture?: string | null
@@ -1601,6 +1707,8 @@ export type UserUncheckedCreateWithoutGalleriesInput = {
   password: string
   role?: $Enums.UserRole
   verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
   profilePicture?: string | null
@@ -1643,6 +1751,8 @@ export type UserUpdateWithoutGalleriesInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1669,6 +1779,8 @@ export type UserUncheckedUpdateWithoutGalleriesInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1695,6 +1807,8 @@ export type UserCreateWithoutGalleryLikesInput = {
   password: string
   role?: $Enums.UserRole
   verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
   profilePicture?: string | null
@@ -1721,6 +1835,8 @@ export type UserUncheckedCreateWithoutGalleryLikesInput = {
   password: string
   role?: $Enums.UserRole
   verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
   profilePicture?: string | null
@@ -1763,6 +1879,8 @@ export type UserUpdateWithoutGalleryLikesInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1789,6 +1907,8 @@ export type UserUncheckedUpdateWithoutGalleryLikesInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1815,6 +1935,8 @@ export type UserCreateWithoutTicketsInput = {
   password: string
   role?: $Enums.UserRole
   verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
   profilePicture?: string | null
@@ -1841,6 +1963,8 @@ export type UserUncheckedCreateWithoutTicketsInput = {
   password: string
   role?: $Enums.UserRole
   verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
   profilePicture?: string | null
@@ -1883,6 +2007,8 @@ export type UserUpdateWithoutTicketsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1909,6 +2035,8 @@ export type UserUncheckedUpdateWithoutTicketsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1935,6 +2063,8 @@ export type UserCreateWithoutTicketOrdersInput = {
   password: string
   role?: $Enums.UserRole
   verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
   profilePicture?: string | null
@@ -1961,6 +2091,8 @@ export type UserUncheckedCreateWithoutTicketOrdersInput = {
   password: string
   role?: $Enums.UserRole
   verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
   profilePicture?: string | null
@@ -2003,6 +2135,8 @@ export type UserUpdateWithoutTicketOrdersInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2029,6 +2163,8 @@ export type UserUncheckedUpdateWithoutTicketOrdersInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2055,6 +2191,8 @@ export type UserCreateWithoutTicketPaymentsInput = {
   password: string
   role?: $Enums.UserRole
   verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
   profilePicture?: string | null
@@ -2081,6 +2219,8 @@ export type UserUncheckedCreateWithoutTicketPaymentsInput = {
   password: string
   role?: $Enums.UserRole
   verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
   profilePicture?: string | null
@@ -2123,6 +2263,8 @@ export type UserUpdateWithoutTicketPaymentsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2149,6 +2291,8 @@ export type UserUncheckedUpdateWithoutTicketPaymentsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2296,6 +2440,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   password?: boolean
   role?: boolean
   verifiedBadge?: boolean
+  frequentUser?: boolean
+  oldUser?: boolean
   token?: boolean
   tokenExpiresAt?: boolean
   profilePicture?: boolean
@@ -2324,6 +2470,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   password?: boolean
   role?: boolean
   verifiedBadge?: boolean
+  frequentUser?: boolean
+  oldUser?: boolean
   token?: boolean
   tokenExpiresAt?: boolean
   profilePicture?: boolean
@@ -2339,6 +2487,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   password?: boolean
   role?: boolean
   verifiedBadge?: boolean
+  frequentUser?: boolean
+  oldUser?: boolean
   token?: boolean
   tokenExpiresAt?: boolean
   profilePicture?: boolean
@@ -2354,6 +2504,8 @@ export type UserSelectScalar = {
   password?: boolean
   role?: boolean
   verifiedBadge?: boolean
+  frequentUser?: boolean
+  oldUser?: boolean
   token?: boolean
   tokenExpiresAt?: boolean
   profilePicture?: boolean
@@ -2362,7 +2514,7 @@ export type UserSelectScalar = {
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "verifiedBadge" | "token" | "tokenExpiresAt" | "profilePicture" | "createdAt" | "validatedAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "verifiedBadge" | "frequentUser" | "oldUser" | "token" | "tokenExpiresAt" | "profilePicture" | "createdAt" | "validatedAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   carts?: boolean | Prisma.User$cartsArgs<ExtArgs>
   galleries?: boolean | Prisma.User$galleriesArgs<ExtArgs>
@@ -2404,6 +2556,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     password: string
     role: $Enums.UserRole
     verifiedBadge: boolean
+    frequentUser: $Enums.UserBadgeLevel
+    oldUser: $Enums.UserBadgeLevel
     token: string | null
     tokenExpiresAt: Date | null
     profilePicture: string | null
@@ -2851,6 +3005,8 @@ export interface UserFieldRefs {
   readonly password: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'UserRole'>
   readonly verifiedBadge: Prisma.FieldRef<"User", 'Boolean'>
+  readonly frequentUser: Prisma.FieldRef<"User", 'UserBadgeLevel'>
+  readonly oldUser: Prisma.FieldRef<"User", 'UserBadgeLevel'>
   readonly token: Prisma.FieldRef<"User", 'String'>
   readonly tokenExpiresAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly profilePicture: Prisma.FieldRef<"User", 'String'>

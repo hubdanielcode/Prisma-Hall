@@ -2,6 +2,7 @@
 
 import { Calendar, Star, Users } from "lucide-react";
 import { formattedDate } from "@/shared/utils/functions/dates";
+import { masks } from "@/shared/utils/functions/masks";
 import { motion } from "motion/react";
 import type { EventProps } from "../types/event";
 
@@ -32,7 +33,7 @@ const EventCard = ({ event, index, footer }: EventCardProps) => {
       {/* - Tag do evento - */}
 
       <div className="absolute top-4 left-4 px-4 py-2 min-h-fit bg-[#B8860B] border border-black/30 rounded-full">
-        <span className="flex items-center justify-center text-xs font-bold text-black tracking-wider">{event.tag}</span>
+        <span className="flex items-center justify-center text-xs font-bold text-black tracking-wider">{masks.eventTag(event.tag)}</span>
       </div>
 
       {/* - Rating - */}

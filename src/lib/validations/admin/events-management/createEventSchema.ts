@@ -1,6 +1,6 @@
 import { imageFileSchema } from "../../shared/imageFileSchema";
 import { regex } from "@/shared/utils/constants/regex";
-import { tagSchema } from "../../shared/tagSchema";
+import { tagSchema } from "../../shared/tagSchemas";
 import { z } from "zod";
 
 const createEventSchema = z.object({

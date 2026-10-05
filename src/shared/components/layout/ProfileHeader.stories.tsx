@@ -1,7 +1,7 @@
 import { AuthenticationProvider } from "@/features/authentication";
 import { MobileProvider } from "@/shared/context/MobileContext";
 import { ProfileHeader } from "@/shared/components/layout/ProfileHeader";
-import { ProfileProvider } from "@/features/users";
+import { ProfileProvider } from "@/features/users/profiles/context/ProfileContext";
 import { QueryProvider } from "../../providers/QueryProvider";
 
 export default {

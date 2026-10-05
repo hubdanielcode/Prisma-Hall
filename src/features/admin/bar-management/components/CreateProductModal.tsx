@@ -5,7 +5,7 @@ import { ImagePlus, X } from "lucide-react";
 import { masks } from "@/shared/utils/functions/masks";
 import { motion, AnimatePresence } from "motion/react";
 import { productCategories } from "@/features/bar";
-import { productCategoryBadges } from "../types/productCategoryBadges";
+import { productCategoryBadgeStyles } from "../types/productCategoryBadgeStyles";
 import { useBarContext } from "@/features/bar/hooks/useBarContext";
 import { useBlockScroll, useMobileContext } from "@/shared/hooks";
 import { useRef, useState } from "react";
@@ -333,7 +333,7 @@ const CreateProductModal = ({ isOpen, onClose }: CreateProductModalProps) => {
 
                 <div className="flex flex-wrap gap-2">
                   {productCategories.map(({ id, title }) => {
-                    const badge = productCategoryBadges[title];
+                    const badge = productCategoryBadgeStyles[title];
                     const isSelected = newProduct.category === id;
 
                     return (

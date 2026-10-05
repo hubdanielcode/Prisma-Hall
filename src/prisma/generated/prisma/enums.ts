@@ -39,7 +39,8 @@ export type PaymentMethod = (typeof PaymentMethod)[keyof typeof PaymentMethod]
 export const PaymentStatus = {
   confirmed: 'confirmed',
   pending: 'pending',
-  failed: 'failed'
+  failed: 'failed',
+  refunded: 'refunded'
 } as const
 
 export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
@@ -51,6 +52,16 @@ export const UserRole = {
 } as const
 
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+
+
+export const UserBadgeLevel = {
+  none: 'none',
+  bronze: 'bronze',
+  silver: 'silver',
+  gold: 'gold'
+} as const
+
+export type UserBadgeLevel = (typeof UserBadgeLevel)[keyof typeof UserBadgeLevel]
 
 
 export const ProductCategory = {

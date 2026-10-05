@@ -299,7 +299,7 @@ const FirstTimeProfileModal = ({ onClose, isOpen }: FirstTimeProfileModalProps) 
                 {/* - Seção de erro - */}
 
                 <div
-                  className="min-h-20"
+                  className="min-h-12 w-full mt-5"
                   ref={profileSubmitRef}
                 >
                   {profileSubmitError && (

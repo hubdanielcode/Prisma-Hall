@@ -1,11 +1,11 @@
 import { DeleteEventModal } from "./DeleteEventModal";
 import { EventProvider } from "@/features/events/event/context/EventContext";
-import { fakeEvent } from "../../../../../.storybook/mocks/hooks/useEvents";
+import { fakeEvent } from "../../../../../.storybook/mocks/hooks/events/event/useEvents";
 import { MobileProvider } from "@/shared/context/MobileContext";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
 
 export default {
-  title: "Layouts/Admin/Events Management/Modals",
+  title: "Layouts/Admin/Events Management/Event Modals",
   component: DeleteEventModal,
   parameters: {
     layout: "fullscreen",
