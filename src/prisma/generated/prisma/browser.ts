@@ -28,6 +28,16 @@ export type Session = Prisma.SessionModel
  */
 export type User = Prisma.UserModel
 /**
+ * Model NotificationPreference
+ * 
+ */
+export type NotificationPreference = Prisma.NotificationPreferenceModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel
+/**
  * Model Profile
  * 
  */
@@ -43,20 +53,35 @@ export type Cart = Prisma.CartModel
  */
 export type Product = Prisma.ProductModel
 /**
- * Model VoucherPayment
+ * Model Voucher
  * 
  */
-export type VoucherPayment = Prisma.VoucherPaymentModel
+export type Voucher = Prisma.VoucherModel
 /**
  * Model VoucherOrder
  * 
  */
 export type VoucherOrder = Prisma.VoucherOrderModel
 /**
- * Model Voucher
+ * Model VoucherPayment
  * 
  */
-export type Voucher = Prisma.VoucherModel
+export type VoucherPayment = Prisma.VoucherPaymentModel
+/**
+ * Model Ticket
+ * 
+ */
+export type Ticket = Prisma.TicketModel
+/**
+ * Model TicketOrder
+ * 
+ */
+export type TicketOrder = Prisma.TicketOrderModel
+/**
+ * Model TicketPayment
+ * 
+ */
+export type TicketPayment = Prisma.TicketPaymentModel
 /**
  * Model Event
  * 
@@ -83,17 +108,7 @@ export type Gallery = Prisma.GalleryModel
  */
 export type GalleryLikes = Prisma.GalleryLikesModel
 /**
- * Model Ticket
+ * Model Newsletter
  * 
  */
-export type Ticket = Prisma.TicketModel
-/**
- * Model TicketOrder
- * 
- */
-export type TicketOrder = Prisma.TicketOrderModel
-/**
- * Model TicketPayment
- * 
- */
-export type TicketPayment = Prisma.TicketPaymentModel
+export type Newsletter = Prisma.NewsletterModel

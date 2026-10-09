@@ -2,8 +2,11 @@ import { fakeProduct } from "../../../../.storybook/mocks/hooks/bar/useProducts"
 import { MotionCard } from "./MotionCard";
 
 export default {
-  title: "Layouts/Public/Bar",
+  title: "Layouts/Public/Home Page/Bar",
   component: MotionCard,
+  parameters: {
+    layout: "fullscreen",
+  },
 };
 
 const Card = () => {

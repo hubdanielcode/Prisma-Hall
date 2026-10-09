@@ -2,6 +2,7 @@
 
 import { checkIsAdmin } from "../checkIsAdmin";
 import { createEventSchema } from "@/lib/validations/admin/events-management/createEventSchema";
+import { notifyPromotionSubscribers } from "@/lib/notifications/notifyUsers";
 import { prisma } from "@/lib/prisma";
 import { put } from "@vercel/blob";
 import z from "zod";
@@ -36,6 +37,17 @@ const createEvent = async (event: z.infer<typeof createEventSchema>) => {
         startsAt: parsedEvent.data.startsAt,
       },
     });
+
+    /* - Avisa quem ativou as notificações de promoções que existe um novo evento na agenda - */
+
+    if (newEvent.status === "soon") {
+      await notifyPromotionSubscribers({
+        type: "new_event",
+        title: "Novo evento na agenda",
+        message: `${newEvent.title} com ${newEvent.attractionName} já está na agenda.`,
+      });
+    }
+
     return {
       id: newEvent.id,
       title: newEvent.title,

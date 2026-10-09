@@ -2,10 +2,11 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import { CartDrawer, useCartContext } from "@/features/cart";
-import { FaSearch, FaUser } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import { GiShoppingCart } from "react-icons/gi";
 import { ImExit } from "react-icons/im";
 import { Menu } from "lucide-react";
+import { NotificationBell } from "@/features/users/notifications/components/NotificationBell";
 import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
 import { useEffect, useState } from "react";
 import { useMobileContext } from "../../hooks/useMobileContext";
@@ -15,7 +16,7 @@ import Image from "next/image";
 const Header = () => {
   /* - Puxando do context - */
 
-  const { isPortraitMobile, isLandscapeMobile } = useMobileContext();
+  const { isPortraitMobile } = useMobileContext();
   const { isAuthenticated, revokeSessionMutation } = useAuthenticationContext();
   const { handleOpenCart, isCartOpen, setIsCartOpen, totalItems } = useCartContext();
 
@@ -29,11 +30,11 @@ const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
   const navLinks = [
-    { title: "Agenda", id: "schedule" },
-    { title: "Eventos", id: "events" },
-    { title: "Bar & Drinks", id: "bar" },
-    { title: "Galeria", id: "gallery" },
-    { title: "Sobre", id: "about" },
+    { id: "schedule", title: "Agenda" },
+    { id: "events", title: "Eventos" },
+    { id: "bar", title: "Bar & Drinks" },
+    { id: "gallery", title: "Galeria" },
+    { id: "about", title: "Sobre" },
   ];
 
   /* - Observando a sessão ativa enquanto o usuário scrolla na página - */
@@ -65,6 +66,8 @@ const Header = () => {
 
     return () => observer.disconnect();
   }, [pathname]);
+
+  /* - Funções - */
 
   const navigateToActiveSection = (link: { title: string; id: string }) => {
     setSelectedCategory(link.id);
@@ -121,18 +124,6 @@ const Header = () => {
                 </div>
               </motion.div>
 
-              {/* - Searchbar - */}
-
-              <div className="flex bg-[#111] border border-[#B8860B] w-[50%] sm:w-[50%] md:w-[30%] h-10 rounded-lg text-xs sm:text-sm md:text-sm text-white/60 outline-none px-2">
-                <FaSearch className="my-auto mx-2 text-white/60 pointer-events-none" />
-
-                <input
-                  className="w-full bg-transparent outline-none text-white font-semibold placeholder:text-white/40"
-                  placeholder={`${isPortraitMobile ? "Buscar eventos, bandas..." : "Buscar eventos, bandas, artistas..."}`}
-                  type="text"
-                />
-              </div>
-
               {/* - Links - */}
 
               <div>
@@ -161,10 +152,17 @@ const Header = () => {
             {/* - Carrinho - */}
 
             {isAuthenticated && (
-              <div className="flex items-center justify-center">
+              <div className="flex items-center justify-center gap-3 mr-3 sm:mr-0 md:mr-0">
+                {/* - Notificações - */}
+
+                <NotificationBell />
+
                 <motion.button
-                  className="relative group mr-3 sm:mx-6 md:mx-6 border bg-[#0A0A0A] hover:bg-[#1A1A1A] border-[#B8860B] rounded-full p-2 cursor-pointer"
+                  className="relative group border bg-[#0A0A0A] hover:bg-[#1A1A1A] border-[#B8860B] rounded-full p-2 cursor-pointer"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={handleOpenCart}
+                  aria-label="Abrir carrinho"
                 >
                   <GiShoppingCart className="h-6 w-6 text-[#B8860B] group-hover:text-[#DDAE56]" />
 
@@ -186,10 +184,14 @@ const Header = () => {
 
             {/* - Botões - */}
 
-            <div className="hidden sm:flex md:flex gap-4">
+            <div
+              className={`hidden sm:flex md:flex items-center gap-3 ${
+                isAuthenticated ? "sm:ml-3 sm:pl-3 sm:border-l sm:border-[#B8860B] md:ml-3 md:pl-3 md:border-l md:border-[#B8860B]" : ""
+              }`}
+            >
               {isAuthenticated && (
                 <motion.button
-                  className="flex justify-center items-center w-fit bg-[#1A1A1A] hover:bg-[#333] shadow-sm shadow-[#1A1A1A] hover:shadow-md hover:shadow-[#333] text-white font-semibold px-4 py-2 rounded-lg cursor-pointer"
+                  className="flex justify-center items-center w-fit bg-[#1A1A1A] hover:bg-[#333] border border-[#B8860B] hover:border-[#B8860B] text-white text-sm font-semibold px-4 py-2 rounded-lg cursor-pointer"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => router.push("/perfil")}
@@ -200,7 +202,7 @@ const Header = () => {
               )}
 
               <motion.button
-                className="flex justify-center items-center w-full h-fit bg-[#B8860B] hover:bg-[#7A5A08] shadow-sm shadow-[#B8860B] hover:shadow-[#7A5A08] text-black font-semibold px-4 py-2 rounded-lg cursor-pointer"
+                className="flex justify-center items-center w-fit h-fit bg-[#B8860B] hover:bg-[#7A5A08] shadow-sm shadow-[#B8860B] hover:shadow-[#7A5A08] text-black text-sm font-semibold px-4 py-2 rounded-lg cursor-pointer"
                 onClick={() => {
                   if (isAuthenticated) {
                     revokeSessionMutation();
@@ -228,20 +230,21 @@ const Header = () => {
         onClose={() => setIsCartOpen(false)}
       />
 
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {isPortraitMobile && isMobileMenuOpen && (
           <motion.div
-            className="fixed top-20 left-0 w-full flex flex-col bg-black/80 backdrop-blur-lg border rounded-lg border-[#B8860B] z-40"
-            initial={{ x: 500 }}
-            animate={{ x: 250 }}
-            exit={{ x: 500 }}
-            transition={{ duration: 0.8 }}
+            className="fixed top-20 right-0 left-auto w-40 flex flex-col bg-black/80 backdrop-blur-lg border rounded-lg border-[#B8860B] z-40"
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ duration: 0.6 }}
           >
             <ul>
               {navLinks.map((link, index) => (
                 <li
                   key={index}
-                  className="px-6 py-4 text-white font-semibold border-b border-[#B8870B60] last:border-none cursor-pointer"
+                  className="px-6 py-4 text-white font-semibold border-b border-[#B8870B60] last:border-none whitespace-nowrap cursor-pointer"
+
                   role="button"
                   onClick={() => navigateToActiveSection(link)}
                 >
@@ -249,7 +252,7 @@ const Header = () => {
                 </li>
               ))}
 
-              <li className="px-6 py-4">
+              <li className="px-6 py-4 whitespace-nowrap">
                 <motion.button
                   className="flex justify-center items-center text-white font-semibold cursor-pointer"
                   onClick={() => router.push(`/login?from=${encodeURIComponent(pathname)}`)}
@@ -260,29 +263,6 @@ const Header = () => {
                   {isAuthenticated ? "Sair" : "Entrar"}
                 </motion.button>
               </li>
-            </ul>
-          </motion.div>
-        )}
-
-        {isLandscapeMobile && isMobileMenuOpen && (
-          <motion.div
-            className="fixed top-16 sm:top-20 left-0 w-full flex flex-col bg-black/80 backdrop-blur-lg border rounded-lg border-[#B8860B] z-40"
-            initial={{ x: 850 }}
-            animate={{ x: 600 }}
-            exit={{ x: 850 }}
-            transition={{ duration: 0.8 }}
-          >
-            <ul>
-              {navLinks.map((link, index) => (
-                <li
-                  key={index}
-                  className="px-6 py-4 text-white font-semibold border-b border-[#B8870B60] last:border-none cursor-pointer"
-                  role="button"
-                  onClick={() => navigateToActiveSection(link)}
-                >
-                  {link.title}
-                </li>
-              ))}
             </ul>
           </motion.div>
         )}

@@ -1,4 +1,4 @@
-import { fakeUsers } from "../../../../../.storybook/mocks/hooks/users/user/useUsers";
+import { fakeUsers } from "../../../../../.storybook/mocks/hooks/users/useUsers";
 import { UserAvatar } from "./UserAvatar";
 
 export default {

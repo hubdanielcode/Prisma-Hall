@@ -17,6 +17,7 @@ export { useCalendarContext } from "@/features/events/event/hooks/useCalendarCon
 
 export type { EventProps } from "@/features/events/event/types/event";
 export type { AttractionProps } from "@/features/events/event/types/attraction";
+export type { TagProps } from "@/features/events/event/types/tag";
 
 /* - Utils - */
 

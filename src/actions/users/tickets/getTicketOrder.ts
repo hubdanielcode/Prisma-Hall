@@ -3,8 +3,9 @@
 import { orderIdSchema } from "@/lib/validations";
 import { prisma } from "@/lib/prisma";
 import { validateSession } from "@/actions/session/validateSession";
+import type { TicketOrderProps } from "@/features/users/tickets/types/ticketOrder";
 
-const getTicketOrder = async (orderId: string) => {
+const getTicketOrder = async (orderId: string): Promise<TicketOrderProps | false> => {
   const validSession = await validateSession();
 
   if (!validSession) {
@@ -25,8 +26,6 @@ const getTicketOrder = async (orderId: string) => {
         ticketPayments: { orderBy: { createdAt: "desc" } },
       },
     });
-
-    /* - O usuário só enxerga os próprios pedidos - */
 
     if (!order || order.userId !== validSession.user.id) {
       return false;

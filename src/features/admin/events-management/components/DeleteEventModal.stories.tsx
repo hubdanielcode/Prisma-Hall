@@ -1,6 +1,6 @@
 import { DeleteEventModal } from "./DeleteEventModal";
 import { EventProvider } from "@/features/events/event/context/EventContext";
-import { fakeEvent } from "../../../../../.storybook/mocks/hooks/events/event/useEvents";
+import { fakeEvent } from "../../../../../.storybook/mocks/hooks/events/useEvents";
 import { MobileProvider } from "@/shared/context/MobileContext";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
+import { Check, ChevronDown } from "lucide-react";
 import { FaSearch } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 import { useEventContext } from "@/features/events";
@@ -17,53 +17,49 @@ const EventsManagementFilter = ({ onPageChange }: EventsManagementFilterProps) =
   const { isPortraitMobile } = useMobileContext();
   const { tags, selectedTag, setSelectedTag, selectedStatus, setSelectedStatus, searchQuery, setSearchQuery } = useEventContext();
 
-  /* - Estados dos dropdowns - */
+  /* - Estado do dropdown - */
 
   const [isTagDropdownOpen, setIsTagDropdownOpen] = useState<boolean>(false);
-  const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState<boolean>(false);
 
   /* - Definições - */
 
   const statusOptions = [
     { id: "all_status", title: "Ambos" },
     { id: "soon", title: "Em Breve" },
-    { id: "happened", title: "Já Aconteceu" },
+    { id: "happened", title: "Encerrados" },
   ] as const;
 
   const tagDropdownRef = useRef<HTMLDivElement | null>(null);
-  const statusDropdownRef = useRef<HTMLDivElement | null>(null);
 
   const selectedTagData = tags.find((tag) => tag.id === selectedTag);
-  const selectStatusData = statusOptions.find((status) => status.id === selectedStatus);
 
   /* - Funções - */
 
-  // 1. Fechando os dropdowns ao clicar fora
+  // 1. Fechando o dropdown ao clicar fora
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (tagDropdownRef.current && !tagDropdownRef.current.contains(e.target as Node)) {
         setIsTagDropdownOpen(false);
       }
-
-      if (statusDropdownRef.current && !statusDropdownRef.current.contains(e.target as Node)) {
-        setIsStatusDropdownOpen(false);
-      }
-
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => document.removeEventListener("mousedown", handleClickOutside);
     };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // 2. Selecionando uma tag
+  // 2. Confere se um status está marcado
 
-  const handleSelectStatus = (statusId: (typeof statusOptions)[number]["id"]) => {
-    setSelectedStatus(statusId);
-    setIsStatusDropdownOpen(false);
+  const isStatusChecked = (statusId: (typeof statusOptions)[number]["id"]) => selectedStatus === statusId;
+
+  // 3. Marcando um status, desmarcar o que já está marcado volta para "all_status"
+
+  const handleToggleStatus = (statusId: (typeof statusOptions)[number]["id"]) => {
+    setSelectedStatus(selectedStatus === statusId ? "all_status" : statusId);
     onPageChange(1);
   };
 
-  // 3. Selecionando um status
+  // 4. Selecionando uma tag
 
   const handleSelectTag = (tagId: string) => {
     setSelectedTag(tagId);
@@ -128,37 +124,41 @@ const EventsManagementFilter = ({ onPageChange }: EventsManagementFilterProps) =
           )}
         </div>
 
+        {/* - Status - */}
+
         <div
-          className={`relative shrink-0 ${isPortraitMobile ? "flex-1" : "w-48"}`}
-          ref={statusDropdownRef}
+          className={`flex items-center justify-center gap-3 bg-[#0A0A0A] border border-[#B8860B] h-12 rounded-lg text-xs sm:text-sm px-3 shrink-0 ${
+            isPortraitMobile ? "flex-1" : "w-auto"
+          }`}
         >
-          <button
-            type="button"
-            className="flex items-center justify-between w-full bg-[#0A0A0A] border border-[#B8860B] h-12 rounded-lg text-xs sm:text-sm text-white/60 outline-none px-3 shrink-0 cursor-pointer"
-            onClick={() => setIsStatusDropdownOpen((prev) => !prev)}
-          >
-            <span className="text-white font-semibold">{selectStatusData?.title ?? "Ambos"}</span>
+          {statusOptions.map((status) => (
+            <label
+              key={status.id}
+              className="flex items-center gap-2 cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                className="peer sr-only"
+                checked={isStatusChecked(status.id)}
+                onChange={() => handleToggleStatus(status.id)}
+              />
 
-            <ChevronDown className={`h-4 w-4 text-[#B8860B] transition-transform ${isStatusDropdownOpen ? "rotate-180" : ""}`} />
-          </button>
+              <span
+                className={`flex items-center justify-center h-5 w-5 shrink-0 rounded border border-[#B8860B] transition-colors peer-focus-visible:ring-2 peer-focus-visible:ring-[#B8860B]/50 ${
+                  isStatusChecked(status.id) ? "bg-[#B8860B]" : "bg-transparent"
+                }`}
+              >
+                {isStatusChecked(status.id) && (
+                  <Check
+                    className="h-4 w-4 text-black"
+                    strokeWidth={3}
+                  />
+                )}
+              </span>
 
-          {isStatusDropdownOpen && (
-            <ul className="absolute z-20 mt-2 w-full bg-[#0A0A0A] border border-[#B8860B] rounded-lg overflow-hidden shadow-lg shadow-black/40">
-              {statusOptions.map((status) => (
-                <li key={status.id}>
-                  <button
-                    type="button"
-                    className={`flex items-center w-full px-3 py-2.5 text-xs sm:text-sm text-left cursor-pointer transition-colors ${
-                      selectedStatus === status.id ? "bg-[#B8860B] text-black font-semibold" : "text-white/80 hover:bg-[#1A1A1A]"
-                    }`}
-                    onClick={() => handleSelectStatus(status.id)}
-                  >
-                    {status.title}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
+              <span className="text-white/60">{status.title}</span>
+            </label>
+          ))}
         </div>
       </div>
     </div>

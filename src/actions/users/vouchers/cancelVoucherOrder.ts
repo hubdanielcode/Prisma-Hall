@@ -1,5 +1,6 @@
 "use server";
 
+import { notifyUsers } from "@/lib/notifications/notifyUsers";
 import { orderIdSchema } from "@/lib/validations/users/orderSchemas";
 import { prisma } from "@/lib/prisma";
 import { validateSession } from "@/actions/session/validateSession";
@@ -40,6 +41,14 @@ const cancelVoucherOrder = async (orderId: string) => {
       for (const voucher of order.vouchers) {
         await transaction.product.update({ where: { id: voucher.productId }, data: { quantity: { increment: voucher.quantity } } });
       }
+    });
+
+    /* - Avisa o usuário que o pedido foi cancelado - */
+
+    await notifyUsers([validSession.user.id], {
+      type: "order_cancelled",
+      title: "Pedido cancelado",
+      message: `O seu pedido de vouchers #${order.id.slice(0, 8).toUpperCase()} foi cancelado.`,
     });
 
     return true;

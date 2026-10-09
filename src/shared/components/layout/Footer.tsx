@@ -1,44 +1,79 @@
 "use client";
 
-import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
+import { contactInformation } from "@/shared/utils/constants/contactInformation";
 import { FiPhone } from "react-icons/fi";
 import { GoMail } from "react-icons/go";
 import { IoLocationOutline } from "react-icons/io5";
 import { masks } from "../../utils/functions/masks";
 import { MdAlternateEmail } from "react-icons/md";
 import { motion } from "motion/react";
-import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { newsletterSchema } from "@/lib/validations/newsletter/newsletterSchema";
+import { socialLinks } from "@/shared/utils/constants/socialLinks";
+import { useNewsletter } from "@/features/newsletter/hooks/useNewsletter";
+import { useState, type FormEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+interface FeedbackProps {
+  type: "success" | "error";
+  message: string;
+}
+
 const Footer = () => {
+  /* - Puxando do hook - */
+
+  const { subscribeToNewsletterMutation, isSubscribing } = useNewsletter();
+
   /* - Estados do email - */
 
   const [email, setEmail] = useState<string>("");
 
+  /* - Estados de feedback - */
+
+  const [feedback, setFeedback] = useState<FeedbackProps | null>(null);
+
   /* - Definições - */
 
-  const router = useRouter();
-  const pathname = usePathname();
-  const appVersion = "v.1.0.0";
+  const appVersion = "v.1.1.0";
   const year = new Date().getFullYear();
 
   /* - Funções - */
 
-  // 1. Redireciona o usuário para a seção que foi clicada
+  // 1. Inscreve o email na newsletter
 
-  const navigateToActiveSection = (link: { title: string; id: string }) => {
-    const destination = link.title === "Agenda" ? "/agenda" : "/";
+  const handleSubscription = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setFeedback(null);
 
-    if (pathname !== destination) {
-      router.push(destination);
+    const parsedSubscription = newsletterSchema.safeParse({ email });
+
+    if (!parsedSubscription.success) {
+      setFeedback({ type: "error", message: parsedSubscription.error.issues[0].message });
+      return;
     }
 
-    if (link.title !== "Agenda") {
-      setTimeout(() => {
-        document.getElementById(link.id)?.scrollIntoView({ behavior: "smooth" });
-      }, 700);
+    try {
+      const result = await subscribeToNewsletterMutation(parsedSubscription.data);
+
+      if (result === "unauthenticated") {
+        setFeedback({ type: "error", message: "Entre na sua conta para se inscrever na newsletter." });
+        return;
+      }
+
+      if (result === "email_mismatch") {
+        setFeedback({ type: "error", message: "Use o mesmo e-mail da sua conta para se inscrever." });
+        return;
+      }
+
+      if (!result) {
+        setFeedback({ type: "error", message: "Não foi possível concluir a inscrição. Tente novamente." });
+        return;
+      }
+
+      setEmail("");
+      setFeedback({ type: "success", message: "Inscrição realizada! Você vai receber as novidades por email." });
+    } catch {
+      setFeedback({ type: "error", message: "Não foi possível concluir a inscrição. Tente novamente." });
     }
   };
 
@@ -50,7 +85,11 @@ const Footer = () => {
         <p className="my-2 text-white/60 text-xs sm:text-sm md:text-base">Receba em primeira mão promoções exclusivas e novidades!</p>
       </div>
 
-      <div className="flex flex-col sm:flex-row md:flex-row justify-center items-center gap-3 sm:gap-6 flex-1 w-full sm:w-[80%] md:w-[45%] mb-4 px-4 sm:px-0">
+      <form
+        className="flex flex-col sm:flex-row md:flex-row justify-center items-center gap-3 sm:gap-6 flex-1 w-full sm:w-[80%] md:w-[45%] mb-4 px-4 sm:px-0"
+        onSubmit={handleSubscription}
+        noValidate
+      >
         {/* - Input wrapper - */}
 
         <div className="flex w-full sm:w-[60%] md:w-[70%] h-13 bg-[#1A1A1A] border border-[#B8860B] rounded-lg text-sm text-white/60 outline-none mx-3 mb-1 sm:mb-0 md:mb-0">
@@ -61,29 +100,36 @@ const Footer = () => {
           <input
             className="w-full bg-transparent outline-none text-white font-semibold placeholder:text-white/40 py-3"
             placeholder="Seu melhor email"
+            aria-label="Email para receber novidades"
             value={email}
             onChange={(e) => setEmail(masks.email(e.target.value))}
-            type="text"
+            type="email"
           />
         </div>
 
         {/* - Botão de inscrever-se - */}
 
         <motion.button
-          className="flex justify-center items-center w-full sm:w-fit md:w-fit h-13 bg-[#B8860B] hover:bg-[#7A5A08] shadow-sm shadow-[#B8860B] hover:shadow-[#7A5A08] text-black font-semibold px-4 py-2 rounded-lg cursor-pointer"
+          className="flex justify-center items-center w-full sm:w-fit md:w-fit h-13 bg-[#B8860B] hover:bg-[#7A5A08] shadow-sm shadow-[#B8860B] hover:shadow-[#7A5A08] text-black font-semibold px-4 py-2 rounded-lg cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          disabled={isSubscribing}
+          type="submit"
         >
-          <span
-            className="flex items-center"
-            onClick={() => {
-              router.replace("/");
-            }}
-          >
-            Inscrever-se
-          </span>
+          {isSubscribing ? "Inscrevendo..." : "Inscrever-se"}
         </motion.button>
-      </div>
+      </form>
+
+      {/* - Feedback da inscrição - */}
+
+      {feedback && (
+        <p
+          className={`mb-4 text-sm font-semibold text-center ${feedback.type === "success" ? "text-green-400" : "text-red-500"}`}
+          role="status"
+        >
+          {feedback.message}
+        </p>
+      )}
 
       {/* - Links - */}
 
@@ -120,21 +166,21 @@ const Footer = () => {
           {/* - Redes sociais - */}
 
           <div className="flex gap-3">
-            <div className="bg-[#1A1A1A] hover:bg-[#B8860B] p-3 text-white rounded-lg mt-4 cursor-pointer">
-              <FaInstagram className="h-4 w-4" />
-            </div>
+            {socialLinks.map((socialLink) => {
+              const Icon = socialLink.icon;
 
-            <div className="bg-[#1A1A1A] hover:bg-[#B8860B] p-3 text-white rounded-lg mt-4 cursor-pointer">
-              <FaFacebook className="h-4 w-4" />
-            </div>
-
-            <div className="bg-[#1A1A1A] hover:bg-[#B8860B] p-3 text-white rounded-lg mt-4 cursor-pointer">
-              <FaTwitter className="h-4 w-4" />
-            </div>
-
-            <div className="bg-[#1A1A1A] hover:bg-[#B8860B] p-3 text-white rounded-lg mt-4 cursor-pointer">
-              <FaYoutube className="h-4 w-4" />
-            </div>
+              return (
+                <a
+                  className="bg-[#1A1A1A] hover:bg-[#B8860B] p-3 text-white rounded-lg mt-4 cursor-pointer"
+                  key={socialLink.id}
+                  href={socialLink.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon className="h-4 w-4" />
+                </a>
+              );
+            })}
           </div>
         </div>
 
@@ -146,43 +192,37 @@ const Footer = () => {
               <span className="text-white text-base font-bold">Links Rápidos</span>
 
               <div className="flex flex-col">
-                <motion.span
+                <Link
                   className="text-sm text-white/60 hover:bg-clip-text hover:text-transparent hover:bg-linear-to-br hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700 hover:underline pt-3 cursor-pointer"
-                  onClick={() => {
-                    navigateToActiveSection({ title: "Próximos Eventos", id: "events" });
-                  }}
+                  href="/#events"
                 >
                   Próximos Eventos
-                </motion.span>
+                </Link>
 
                 <Link
                   className="text-sm text-white/60 hover:bg-clip-text hover:text-transparent hover:bg-linear-to-br hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700 hover:underline pt-3 cursor-pointer"
-                  href={"/agenda"}
+                  href="/agenda"
                 >
                   Agenda Completa
                 </Link>
 
-                <motion.span
+                <Link
                   className="text-sm text-white/60 hover:bg-clip-text hover:text-transparent hover:bg-linear-to-br hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700 hover:underline pt-3 cursor-pointer"
-                  onClick={() => {
-                    navigateToActiveSection({ title: "Cardápio Bar", id: "bar" });
-                  }}
+                  href="/#bar"
                 >
                   Cardápio Bar
-                </motion.span>
-
-                <motion.span
-                  className="text-sm text-white/60 hover:bg-clip-text hover:text-transparent hover:bg-linear-to-br hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700 hover:underline pt-3 cursor-pointer"
-                  onClick={() => {
-                    navigateToActiveSection({ title: "Galeria de Fotos", id: "gallery" });
-                  }}
-                >
-                  Galeria de Fotos
-                </motion.span>
+                </Link>
 
                 <Link
                   className="text-sm text-white/60 hover:bg-clip-text hover:text-transparent hover:bg-linear-to-br hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700 hover:underline pt-3 cursor-pointer"
-                  href={"/agenda"}
+                  href="/#gallery"
+                >
+                  Galeria de Fotos
+                </Link>
+
+                <Link
+                  className="text-sm text-white/60 hover:bg-clip-text hover:text-transparent hover:bg-linear-to-br hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700 hover:underline pt-3 cursor-pointer"
+                  href="/agenda"
                 >
                   Comprar Ingressos
                 </Link>
@@ -208,42 +248,42 @@ const Footer = () => {
               <div className="flex flex-col">
                 <Link
                   className="text-sm text-white/60 hover:bg-clip-text hover:text-transparent hover:bg-linear-to-br hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700 hover:underline pt-3 cursor-pointer"
-                  href={"/central-de-ajuda"}
+                  href="/central-de-ajuda"
                 >
                   Central de Ajuda
                 </Link>
 
                 <Link
                   className="text-sm text-white/60 hover:bg-clip-text hover:text-transparent hover:bg-linear-to-br hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700 hover:underline pt-3 cursor-pointer"
-                  href={"/perguntas-frequentes"}
+                  href="/perguntas-frequentes"
                 >
                   FAQ - Perguntas Frequentes
                 </Link>
 
                 <Link
                   className="text-sm text-white/60 hover:bg-clip-text hover:text-transparent hover:bg-linear-to-br hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700 hover:underline pt-3 cursor-pointer"
-                  href={"/politica-de-privacidade"}
+                  href="/politica-de-privacidade"
                 >
                   Política de Privacidade
                 </Link>
 
                 <Link
                   className="text-sm text-white/60 hover:bg-clip-text hover:text-transparent hover:bg-linear-to-br hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700 hover:underline pt-3 cursor-pointer"
-                  href={"/termos-de-uso"}
+                  href="/termos-de-uso"
                 >
                   Termos de Uso
                 </Link>
 
                 <Link
                   className="text-sm text-white/60 hover:bg-clip-text hover:text-transparent hover:bg-linear-to-br hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700 hover:underline pt-3 cursor-pointer"
-                  href={"/politica-de-reembolso"}
+                  href="/politica-de-reembolso"
                 >
                   Política de Reembolso
                 </Link>
 
                 <Link
                   className="text-sm text-white/60 hover:bg-clip-text hover:text-transparent hover:bg-linear-to-br hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700 hover:underline pt-3 cursor-pointer"
-                  href={"/trabalhe-conosco"}
+                  href="/trabalhe-conosco"
                 >
                   Trabalhe Conosco
                 </Link>
@@ -266,9 +306,9 @@ const Footer = () => {
                   <IoLocationOutline className="h-5 w-5 mr-2 text-[#B8860B] shrink-0" />
 
                   <div className="flex flex-col text-sm text-white/60">
-                    <span>Rua das Palmeiras, 247</span>
+                    <span>{contactInformation.street}</span>
 
-                    <span>Salvador - BA, 41720-180</span>
+                    <span>{contactInformation.city}</span>
                   </div>
                 </div>
 
@@ -278,7 +318,7 @@ const Footer = () => {
                   <FiPhone className="h-5 w-5 mr-2 text-[#B8860B] shrink-0" />
 
                   <div className="flex flex-col text-sm text-white/60">
-                    <span>(71) 99999-9999</span>
+                    <span>{contactInformation.phone}</span>
                   </div>
                 </div>
 
@@ -288,7 +328,7 @@ const Footer = () => {
                   <GoMail className="h-5 w-5 mr-2 text-[#B8860B] shrink-0" />
 
                   <div className="flex flex-col text-sm text-white/60">
-                    <span>contato@prismahallhouse.com</span>
+                    <span>{contactInformation.email}</span>
                   </div>
                 </div>
 
@@ -297,7 +337,7 @@ const Footer = () => {
                 <div className="flex flex-col bg-[#101010] w-full h-fit px-4 py-2 border border-[#B8860B] rounded-lg">
                   <span className="text-xs text-white/60 mb-1">Horário de Funcionamento:</span>
 
-                  <span className="text-white font-semibold">Qui - Sáb: 20h - 05h</span>
+                  <span className="text-white font-semibold">{contactInformation.openingHours}</span>
                 </div>
               </div>
             </div>

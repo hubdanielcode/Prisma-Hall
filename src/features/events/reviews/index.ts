@@ -2,14 +2,11 @@
 
 export { ReviewsSection } from "@/features/events/reviews/components/ReviewsSection";
 export { ReviewCard } from "@/features/events/reviews/components/ReviewCard";
+export { CreateReviewModal } from "@/features/events/reviews/components/CreateReviewModal";
 
 /* - Hooks - */
 
 export { useReviews } from "@/features/events/reviews/hooks/useReviews";
-
-/* - Services - */
-
-export { createReview, deleteReview, updateReview, getReviews, getSingleReview } from "@/features/events/reviews/services/reviewsServices";
 
 /* - Types - */
 

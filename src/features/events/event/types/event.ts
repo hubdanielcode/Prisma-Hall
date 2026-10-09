@@ -1,11 +1,13 @@
+import { EventStatus, EventTag } from "@/prisma/generated/prisma/enums";
+
 export interface EventProps {
   id: string;
   title: string;
   description: string;
-  tag: "trap_and_hiphop" | "forro" | "samba_and_pagode" | "metal" | "eletronica" | "funk" | "rock" | "pop";
+  tag: EventTag;
   attractionName: string;
   image: string;
-  status: "happened" | "soon";
+  status: EventStatus;
   price: number;
   startsAt: string;
   attendees: number;

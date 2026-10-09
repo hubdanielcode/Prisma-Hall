@@ -3,8 +3,9 @@
 import { orderIdSchema } from "@/lib/validations";
 import { prisma } from "@/lib/prisma";
 import { validateSession } from "@/actions/session/validateSession";
+import type { VoucherOrderProps } from "@/features/users/vouchers/types/voucherOrder";
 
-const getVoucherOrder = async (orderId: string) => {
+const getVoucherOrder = async (orderId: string): Promise<VoucherOrderProps | false> => {
   const validSession = await validateSession();
 
   if (!validSession) {
@@ -26,8 +27,6 @@ const getVoucherOrder = async (orderId: string) => {
       },
     });
 
-    /* - O usuário só enxerga os próprios pedidos - */
-
     if (!order || order.userId !== validSession.user.id) {
       return false;
     }
@@ -45,6 +44,7 @@ const getVoucherOrder = async (orderId: string) => {
           id: voucher.product.id,
           name: voucher.product.name,
           category: voucher.product.category,
+          description: voucher.product.description,
           image: voucher.product.image,
           price: voucher.product.price.toNumber(),
         },

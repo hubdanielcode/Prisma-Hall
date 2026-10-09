@@ -22,7 +22,12 @@ const PasswordResetEmailTemplate = ({ resetLink }: { resetLink: string }) => {
     generateHtml();
   }, [resetLink]);
 
-  return <div dangerouslySetInnerHTML={{ __html: html }}></div>;
+  return (
+    <div
+      className="min-h-screen bg-[#0A0A0A]"
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  );
 };
 
 export { PasswordResetEmailTemplate as "Password Reset" };

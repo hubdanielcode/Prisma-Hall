@@ -58,7 +58,7 @@ const BarManagement = () => {
             {/* - Botão de adicionar produto - */}
 
             <motion.button
-              className={`flex justify-center items-center bg-[#B8860B] hover:bg-[#7A5A08] shadow-[#B8860B] hover:shadow-[#7A5A08] text-black font-semibold px-4 py-2 rounded-lg cursor-pointer ${
+              className={`flex justify-center items-center bg-[#B8860B] hover:bg-[#7A5A08] shadow-[#B8860B] hover:shadow-[#7A5A08] text-black font-semibold px-4 py-2 rounded-lg cursor-pointer mb-18 ${
                 isPortraitMobile ? "w-full h-12" : isLandscapeMobile ? "w-fit h-15" : "w-auto h-fit"
               }`}
               whileHover={{ scale: 1.05 }}

@@ -1,37 +1,52 @@
 "use client";
 
+import { eventTags } from "@/features/events/event/utils/eventTags";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { formattedDateToString } from "@/shared/utils/functions/dates";
 import { Image } from "lucide-react";
 import { motion } from "motion/react";
-import { parsedDate } from "@/shared/utils/functions/dates";
-import { photos, photosCategories } from "@/shared/utils/constants/photos";
+import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
+import { useGallery } from "../hooks/useGallery";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const GallerySection = () => {
+  /* - Puxando do context - */
+
+  const { pictures, isLoading, error, likePictureMutation } = useGallery();
+  const { isAuthenticated } = useAuthenticationContext();
+
   /* - Estados de categoria - */
 
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [showMore, setShowMore] = useState<boolean>(false);
 
-  /* - Estados de curtida - */
+  /* - Definições - */
 
-  const [isLiked, setIsLiked] = useState<Record<number, boolean>>({});
+  const router = useRouter();
+
+  const categories = [{ id: "all", name: "Todos" }, ...eventTags.map((tag) => ({ id: tag.id, name: tag.title }))];
 
   /* - Funções - */
 
-  // 1. Filtra as fotos por categoria
+  // 1. Filtra as fotos pela tag do evento em que foram tiradas
 
-  const filteredPhotos = selectedCategory === "all" ? photos : photos.filter((photo) => photo.category === selectedCategory);
+  const filteredPictures = selectedCategory === "all" ? pictures : pictures.filter((picture) => picture.tag === selectedCategory);
 
-  // 2. Dá like na foto
+  // 2. Curte (ou descurte) a foto; quem não está logado vai para o login
 
-  const handleLikePicture = (id: number) => {
-    setIsLiked((prev) => ({ ...prev, [id]: !prev[id] }));
+  const handleLikePicture = async (pictureId: string) => {
+    if (!isAuthenticated) {
+      router.replace("/login");
+      return;
+    }
+
+    await likePictureMutation(pictureId);
   };
 
   return (
     <div
-      className="flex flex-col w-full h-fit items-center justify-center border-t border-[#B8860B60] p-12"
+      className="flex flex-col w-full h-fit items-center justify-center bg-black border-t border-[#B8860B60] p-12"
       id="gallery"
     >
       {/* - Tag de galeria - */}
@@ -72,7 +87,7 @@ const GallerySection = () => {
       {/* - Filtro - */}
 
       <div className="flex flex-wrap pb-6 gap-3 justify-center">
-        {photosCategories.map((category) => (
+        {categories.map((category) => (
           <button
             className={`flex items-center justify-center w-40 h-12 px-4 py-2 border rounded-lg text-sm font-semibold cursor-pointer transition-colors ${selectedCategory === category.id ? "bg-[#B8860B] hover:bg-[#DDAE56] text-black border-black" : "bg-[#1A1A1A] hover:bg-[#333] text-white border-[#B8860B]"}`}
             key={category.id}
@@ -83,12 +98,20 @@ const GallerySection = () => {
         ))}
       </div>
 
+      {/* - Estados de carregamento, erro e lista vazia - */}
+
+      {isLoading && !error && <p className="text-white/60 text-center p-12">Carregando fotos...</p>}
+
+      {!isLoading && error && <p className="text-red-500 text-center p-12">Erro ao buscar fotos da galeria.</p>}
+
+      {!isLoading && !error && filteredPictures.length === 0 && <p className="text-white/60 text-center p-12">Ainda não há fotos nessa categoria.</p>}
+
       {/* - Card das fotos - */}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {filteredPhotos
-          .sort((a, b) => parsedDate(b.date).getTime() - parsedDate(a.date).getTime())
-          .slice(0, showMore ? photos.length : 6)
+        {[...filteredPictures]
+          .sort((a, b) => new Date(b.happenedAt).getTime() - new Date(a.happenedAt).getTime())
+          .slice(0, showMore ? filteredPictures.length : 6)
           .map((photo) => (
             <motion.div
               className="group relative w-full h-fit md:w-90 bg-[#0A0A0A] rounded-lg overflow-hidden border border-[#B8860B] shadow-2xs hover:shadow-md shadow-[#DDAE56] hover:-translate-y-2.5 transition-transform duration-200 cursor-pointer"
@@ -104,14 +127,14 @@ const GallerySection = () => {
                 <div className="flex flex-col">
                   <span className="text-white text-sm sm:text-base md:text-lg font-semibold">{photo.title}</span>
 
-                  <span className="text-xs sm:text-sm md:text-base text-white/60">{photo.date}</span>
+                  <span className="text-xs sm:text-sm md:text-base text-white/60">{formattedDateToString(new Date(photo.happenedAt))}</span>
                 </div>
 
                 <button
                   className="flex justify-center items-center border border-[#B8860B60] px-4 py-2 rounded-lg ml-auto cursor-pointer"
                   onClick={() => handleLikePicture(photo.id)}
                 >
-                  {isLiked[photo.id] ? (
+                  {photo.likedByMe ? (
                     <FaHeart
                       className="text-red-600 mr-3"
                       role="button"
@@ -123,7 +146,7 @@ const GallerySection = () => {
                     />
                   )}
 
-                  <span className="text-white">{photo.likes + (isLiked[photo.id] ? 1 : 0)}</span>
+                  <span className="text-white">{photo.likes}</span>
                 </button>
               </div>
             </motion.div>

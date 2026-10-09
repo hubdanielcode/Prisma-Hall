@@ -45,10 +45,12 @@ export { getSingleProduct } from "@/actions/bar/getSingleProduct";
 
 /* - Cart - */
 
-// export { addItemToCart } from "@/actions/cart/addItemToCart";
-// export { getCartItems } from "@/actions/cart/getCartItems";
-// export { removeItemFromCart } from "@/actions/cart/removeItemFromCart";
-// export { updateItemQuantity } from "@/actions/cart/updateItemQuantity";
+export { addItemToCart } from "@/actions/cart/addItemToCart";
+export { checkoutCart } from "@/actions/cart/checkoutCart";
+export { clearCart } from "@/actions/cart/clearCart";
+export { getCartItems } from "@/actions/cart/getCartItems";
+export { removeItemFromCart } from "@/actions/cart/removeItemFromCart";
+export { updateItemQuantity } from "@/actions/cart/updateItemQuantity";
 
 /* - Events - */
 
@@ -64,14 +66,24 @@ export { getSingleEvent } from "@/actions/events/event/getSingleEvent";
 
 // 3. Gallery
 
-// export { getEventPicture } from "@/actions/events/gallery/getEventPictures";
-// export { likeEventPicture } from "@/actions/events/gallery/likeEventPictures";
+export { getEventPictures } from "@/actions/events/gallery/getEventPictures";
+export { likeEventPicture } from "@/actions/events/gallery/likeEventPicture";
 
 // 4. Reviews
 
-// export { deleteReview } from "@/actions/events/reviews/deleteReview";
-// export { postReview } from "@/actions/events/reviews/postReview";
-// export { updateReview } from "@/actions/events/reviews/updateReview";
+export { deleteReview } from "@/actions/events/reviews/deleteReview";
+export { getAllReviews } from "@/actions/events/reviews/getAllReviews";
+export { postReview } from "@/actions/events/reviews/postReview";
+export { updateReview } from "@/actions/events/reviews/updateReview";
+
+/* - Newsletter - */
+
+export { subscribeToNewsletter } from "@/actions/newsletter/subscribeToNewsletter";
+export { getMySubscription } from "@/actions/newsletter/getMySubscription";
+
+/* - Payments - */
+
+export { createStripeCheckoutSession } from "@/actions/payments/createStripeCheckoutSession";
 
 /* - Session - */
 
@@ -81,22 +93,32 @@ export { validateSession } from "@/actions/session/validateSession";
 
 /* - Users - */
 
-export { getShoppingHistory } from "@/actions/users/getShoppingHistory";
+// 1. Notifications
 
-// 1. Profile
+export { getMyNotifications } from "@/actions/users/notifications/getMyNotifications";
+export { getNotificationPreferences } from "@/actions/users/notifications/getNotificationPreferences";
+export { markAllNotificationsAsRead } from "@/actions/users/notifications/markAllNotificationsAsRead";
+export { markSingleNotificationAsRead } from "@/actions/users/notifications/markSingleNotificationAsRead";
+export { updateNotificationPreferences } from "@/actions/users/notifications/updateNotificationPreferences";
+
+// 2. Profile
 
 export { deleteProfile } from "@/actions/users/profile/deleteProfile";
 export { getProfile } from "@/actions/users/profile/getProfile";
 export { updateProfile } from "@/actions/users/profile/updateProfile";
 
-// 2. Tickets
+// 3. Tickets
 
 export { buyTickets } from "@/actions/users/tickets/buyTickets";
 export { cancelTicketOrder } from "@/actions/users/tickets/cancelTicketOrder";
 export { getMyTickets } from "@/actions/users/tickets/getMyTickets";
 export { getTicketOrder } from "@/actions/users/tickets/getTicketOrder";
 
-// 3. Vouchers
+// 4. User
+
+export { getShoppingHistory } from "@/actions/users/user/getShoppingHistory";
+
+// 5. Vouchers
 
 export { buyVouchers } from "@/actions/users/vouchers/buyVouchers";
 export { cancelVoucherOrder } from "@/actions/users/vouchers/cancelVoucherOrder";

@@ -1,4 +1,4 @@
-import { BarProvider } from "@/features/bar";
+import { BarProvider } from "@/features/bar/context/BarContext";
 import { DeleteProductModal } from "@/features/admin/bar-management/components/DeleteProductModal";
 import { fakeProduct } from "../../../../../.storybook/mocks/hooks/bar/useProducts";
 import { MobileProvider } from "@/shared/context/MobileContext";

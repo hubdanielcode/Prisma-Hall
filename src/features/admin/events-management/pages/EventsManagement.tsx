@@ -59,26 +59,6 @@ const EventsManagementContent = () => {
     <>
       <div className={`bg-[#1A1A1A] min-h-screen w-full ${isPortraitMobile ? "pb-10" : isLandscapeMobile ? "pb-12 px-6" : "pb-14 px-8"}`}>
         <div className="flex flex-col max-w-6xl w-full mx-auto gap-6 px-4">
-          {/* - Abas - */}
-
-          <ul className="flex justify-center gap-4 sm:gap-6">
-            {navLinks.map((link) => (
-              <motion.li
-                className={`my-auto font-semibold cursor-pointer ${
-                  activeTab === link.id
-                    ? "bg-clip-text text-transparent bg-linear-to-br from-yellow-500 via-yellow-600 to-yellow-700 underline"
-                    : "text-white/60 hover:bg-clip-text hover:text-transparent hover:bg-linear-to-br hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700 hover:underline"
-                }`}
-                key={link.id}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setActiveTab(link.id)}
-              >
-                {link.title}
-              </motion.li>
-            ))}
-          </ul>
-
           {/* - Área de gestão dos eventos - */}
 
           {activeTab === "events" && (
@@ -110,6 +90,26 @@ const EventsManagementContent = () => {
                   Novo Evento
                 </motion.button>
               </div>
+
+              {/* - Abas - */}
+
+              <ul className="flex justify-center gap-4 sm:gap-6">
+                {navLinks.map((link) => (
+                  <motion.li
+                    className={`my-auto font-semibold cursor-pointer ${
+                      activeTab === link.id
+                        ? "bg-clip-text text-transparent bg-linear-to-br from-yellow-500 via-yellow-600 to-yellow-700 underline"
+                        : "text-white/60 hover:bg-clip-text hover:text-transparent hover:bg-linear-to-br hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700 hover:underline"
+                    }`}
+                    key={link.id}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setActiveTab(link.id)}
+                  >
+                    {link.title}
+                  </motion.li>
+                ))}
+              </ul>
 
               {/* - Cards dos eventos - */}
 
@@ -192,6 +192,26 @@ const EventsManagementContent = () => {
                   Nova Atração
                 </motion.button>
               </div>
+
+              {/* - Abas - */}
+
+              <ul className="flex justify-center gap-4 sm:gap-6">
+                {navLinks.map((link) => (
+                  <motion.li
+                    className={`my-auto font-semibold cursor-pointer ${
+                      activeTab === link.id
+                        ? "bg-clip-text text-transparent bg-linear-to-br from-yellow-500 via-yellow-600 to-yellow-700 underline"
+                        : "text-white/60 hover:bg-clip-text hover:text-transparent hover:bg-linear-to-br hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700 hover:underline"
+                    }`}
+                    key={link.id}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setActiveTab(link.id)}
+                  >
+                    {link.title}
+                  </motion.li>
+                ))}
+              </ul>
 
               {/* - Lista de atrações - */}
 

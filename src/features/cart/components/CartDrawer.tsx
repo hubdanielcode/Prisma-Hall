@@ -6,7 +6,9 @@ import { GiShoppingCart, GiTicket } from "react-icons/gi";
 import { motion, AnimatePresence } from "motion/react";
 import { useCartContext } from "../hooks/useCartContext";
 import { useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { X } from "lucide-react";
+import { PayNowButton } from "./PayNowButton";
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -29,6 +31,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
 
   /* - Definições - */
 
+  const router = useRouter();
   const cartDrawerRef = useRef<HTMLDivElement | null>(null);
   const tickets = cartItems.filter((item) => item.type === "tickets");
   const drinks = cartItems.filter((item) => item.type === "drinks");
@@ -50,6 +53,13 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  // 2. Leva o usuário para a tela de finalização da compra
+
+  const handleGoToCheckout = () => {
+    setIsCartOpen(false);
+    router.push("/carrinho");
+  };
 
   return (
     <AnimatePresence>
@@ -116,10 +126,10 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                       <div className="flex-1 h-px bg-[#B8860B30]" />
                     </div>
 
-                    {tickets.map((item, id) => (
+                    {tickets.map((item) => (
                       <CartItemCard
                         item={item}
-                        key={id}
+                        key={item.id}
                         handleIncreaseItemQuantity={handleIncreaseItemQuantity}
                         handleDecreaseItemQuantity={handleDecreaseItemQuantity}
                       />
@@ -188,12 +198,14 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                 {cartItems.length >= 1 && <span className="text-[#B8860B] text-sm font-semibold">R$ {totalPrice.toFixed(2).replace(".", ",")}</span>}
               </div>
 
-              {/* - Botão - */}
+              {/* - Botões - */}
 
               <motion.button
-                className="flex justify-center px-4 py-2 text-[#B8860B] font-semibold bg-[#3D2B0A] backdrop-blur-sm border border-[#B8860B] rounded-lg gap-2 cursor-pointer hover:shadow-sm shadow-[#DDAE56]"
+                className="flex justify-center px-4 py-2 text-[#B8860B] font-semibold bg-[#3D2B0A] hover:bg-[#7A5A08] backdrop-blur-sm border border-[#B8860B] rounded-lg gap-2 cursor-pointer hover:shadow-sm shadow-[#DDAE56] disabled:opacity-50 disabled:cursor-not-allowed"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                disabled={cartItems.length === 0}
+                onClick={handleGoToCheckout}
               >
                 <GiTicket className="w-6 h-6" />
                 Finalizar Compra

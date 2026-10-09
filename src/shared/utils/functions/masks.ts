@@ -1,4 +1,4 @@
-import { EventStatus, EventTag, OrderStatus, PaymentStatus, ProductCategory, ProductStatus } from "@/prisma/generated/prisma/enums";
+import { EventStatus, EventTag, OrderStatus, PaymentMethod, PaymentStatus, ProductCategory, ProductStatus } from "@/prisma/generated/prisma/enums";
 
 const masks = {
   /* - Autenticação - */
@@ -140,6 +140,17 @@ const masks = {
     return paymentStatusLabel[value];
   },
 
+  paymentMethod: (value: PaymentMethod) => {
+    const paymentMethodLabel = {
+      cash: "Dinheiro",
+      pix: "Pix",
+      creditCard: "Cartão de crédito",
+      debitCard: "Cartão de débito",
+    } as Record<PaymentMethod, "Dinheiro" | "Pix" | "Cartão de crédito" | "Cartão de débito">;
+
+    return paymentMethodLabel[value];
+  },
+
   orderStatus: (value: OrderStatus) => {
     const orderStatusLabel = {
       confirmed: "Pedido confirmado",
@@ -211,8 +222,8 @@ const masks = {
   eventStatus: (value: EventStatus) => {
     const eventStatusLabel = {
       soon: "Em Breve",
-      happened: "Já Aconteceu",
-    } as Record<EventStatus, "Em Breve" | "Já Aconteceu">;
+      happened: "Encerrado",
+    } as Record<EventStatus, "Em Breve" | "Encerrado">;
 
     return eventStatusLabel[value];
   },

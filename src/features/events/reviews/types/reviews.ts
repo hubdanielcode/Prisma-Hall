@@ -1,20 +1,21 @@
 import type { LucideIcon } from "lucide-react";
 
 export interface ReviewProps {
-  review_id: string;
-  user_id: string;
-  event_id: string;
+  id: string;
+  userId: string;
+  eventId: string;
   rating: number;
-  comment?: string;
-  verified: boolean;
+  comment: string | null;
 
-  created_at: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface ReviewWithDetails extends ReviewProps {
-  user_photo: string;
-  user_name: string;
-  event_name: string;
+  userPhoto: string | null;
+  userName: string;
+  eventName: string;
+  verifiedBadge: boolean;
 }
 
 export interface ReviewBadges {

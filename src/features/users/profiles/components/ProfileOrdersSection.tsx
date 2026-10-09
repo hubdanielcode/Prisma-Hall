@@ -44,25 +44,25 @@ const ProfileOrdersSection = () => {
 
   const navLinks = [
     { id: "tickets", title: "Ingressos" },
-    { id: "vouchers", title: "Vouchers" },
+    { id: "vouchers", title: "Pedidos" },
   ];
 
   const paymentOptions = [
-    { id: "all", title: "Todos os Pagamentos" },
-    { id: "confirmed", title: "Pago" },
+    { id: "all", title: "Status de Pagamento" },
+    { id: "confirmed", title: "Confirmado" },
     { id: "pending", title: "Pendente" },
     { id: "failed", title: "Falhou" },
     { id: "refunded", title: "Reembolsado" },
   ] as const;
 
   const eventOptions = [
-    { id: "all", title: "Todos os Eventos" },
+    { id: "all", title: "Status de Evento" },
     { id: "soon", title: "Em breve" },
     { id: "happened", title: "Encerrado" },
   ] as const;
 
   const pickupOptions = [
-    { id: "all", title: "Todas as Retiradas" },
+    { id: "all", title: "Status de Retirada" },
     { id: "pickedUp", title: "Retirado" },
     { id: "notPickedUp", title: "Não retirado" },
   ] as const;
@@ -194,15 +194,16 @@ const ProfileOrdersSection = () => {
 
   // 9. Links de ação do rodapé, o cancelamento só aparece se o pedido ainda pode ser cancelado
 
-  const renderLinks = (canCancel: boolean) => (
+  const renderLinks = (orderId: string, canCancel: boolean) => (
     <>
       {/* - Ver pedido - */}
 
       <Link
         className="flex items-center gap-3 text-sm text-white/60 uppercase pt-3 cursor-pointer group/link"
-        href="/"
+        href={`/pedidos/${orderId}`}
       >
         <IoTicketOutline className="group-hover/link:text-[#B8860B]" />
+
         <span className="group-hover/link:text-transparent group-hover/link:bg-clip-text group-hover/link:bg-linear-to-br group-hover/link:from-yellow-500 group-hover/link:via-[#B8860B] group-hover/link:to-yellow-700 group-hover/link:underline">
           Ver Pedido
         </span>
@@ -215,6 +216,7 @@ const ProfileOrdersSection = () => {
         href="/central-de-ajuda"
       >
         <IoHelp className="group-hover/link:text-[#B8860B]" />
+
         <span className="group-hover/link:text-transparent group-hover/link:bg-clip-text group-hover/link:bg-linear-to-br group-hover/link:from-yellow-500 group-hover/link:via-[#B8860B] group-hover/link:to-yellow-700 group-hover/link:underline">
           Preciso de Ajuda
         </span>
@@ -225,9 +227,10 @@ const ProfileOrdersSection = () => {
       {canCancel && (
         <Link
           className="flex items-center gap-3 text-sm text-white/60 uppercase pt-3 cursor-pointer group/link"
-          href="/"
+          href={`/pedidos/${orderId}/cancelar`}
         >
           <MdOutlineCancel className="group-hover/link:text-[#B8860B]" />
+
           <span className="group-hover/link:text-transparent group-hover/link:bg-clip-text group-hover/link:bg-linear-to-br group-hover/link:from-yellow-500 group-hover/link:via-[#B8860B] group-hover/link:to-yellow-700 group-hover/link:underline">
             Cancelar Pedido
           </span>
@@ -258,7 +261,7 @@ const ProfileOrdersSection = () => {
         footer={
           <div className="flex flex-col w-full items-start justify-center gap-2 pt-4">
             {renderBadges(ticket.orderStatus, ticket.paymentStatus, ticket.pickedUpAt)}
-            {renderLinks(ticket.orderStatus !== "cancelled" && ticket.event.status === "soon" && !ticket.pickedUpAt)}
+            {renderLinks(ticket.orderId, ticket.orderStatus !== "cancelled" && ticket.event.status === "soon" && !ticket.pickedUpAt)}
           </div>
         }
       />
@@ -280,7 +283,7 @@ const ProfileOrdersSection = () => {
         footer={
           <div className="flex flex-col w-full items-start justify-center gap-2 p-4">
             {renderBadges(voucher.orderStatus, voucher.paymentStatus, voucher.pickedUpAt)}
-            {renderLinks(voucher.orderStatus !== "cancelled" && !voucher.pickedUpAt)}
+            {renderLinks(voucher.orderId, voucher.orderStatus !== "cancelled" && !voucher.pickedUpAt)}
           </div>
         }
       />
@@ -288,7 +291,7 @@ const ProfileOrdersSection = () => {
 
   const isLoading = activeTab === "tickets" ? isLoadingTickets : isLoadingVouchers;
   const filteredItems = activeTab === "tickets" ? filteredTickets : filteredVouchers;
-  const emptyMessage = activeTab === "tickets" ? "Nenhum ingresso encontrado com esses filtros." : "Nenhum voucher encontrado com esses filtros.";
+  const emptyMessage = activeTab === "tickets" ? "Nenhum ingresso encontrado com esses filtros." : "Nenhum pedido encontrado com esses filtros.";
 
   return (
     <div className="flex flex-col min-h-screen max-w-full pt-32 px-4 sm:px-6">
@@ -296,7 +299,7 @@ const ProfileOrdersSection = () => {
 
       <div className="flex items-center justify-center w-full pb-4 sm:p-6">
         <span className="text-white font-semibold text-2xl sm:text-3xl md:text-4xl whitespace-nowrap pb-8">
-          {activeTab === "tickets" ? "Meus Ingressos" : "Meus Vouchers"}
+          {activeTab === "tickets" ? "Meus Ingressos" : "Meus Pedidos"}
         </span>
       </div>
 

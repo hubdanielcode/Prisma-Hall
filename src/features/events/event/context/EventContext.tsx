@@ -5,7 +5,7 @@ import { EventProps } from "../types/event";
 import { TagProps } from "../types/tag";
 import { createEventSchema, editEventSchema } from "@/lib/validations";
 import { createContext, useState } from "react";
-import { useEvents } from "../hooks/useEvents";
+import { useEvents } from "@/features/events/event/hooks/useEvents";
 import { eventTags } from "../utils/eventTags";
 
 interface EventContextType {

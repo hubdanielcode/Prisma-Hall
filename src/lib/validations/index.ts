@@ -21,6 +21,7 @@ export { editEventSchema } from "@/lib/validations/admin/events-management/editE
 // 4. Users Management
 
 export { editUserSchema } from "@/lib/validations/admin/user-management/editUserSchema";
+export { userSchema, badgeLevelSchema } from "@/lib/validations/admin/user-management/userSchemas";
 
 /* - Authentication - */
 
@@ -30,15 +31,26 @@ export { signUpSchema } from "@/lib/validations/authentication/signUpSchema";
 
 /* - Cart - */
 
-export { cartItemSchema } from "@/lib/validations/cart/cartItemSchema";
+export { cartItemIdSchema, cartItemSchema, checkoutCartSchema } from "@/lib/validations/cart/cartItemSchemas";
+export { updateCartItemSchema } from "@/lib/validations/cart/updateCartItemSchema";
 
 /* - Events - */
 
 export { createReviewSchema } from "@/lib/validations/events/createReviewSchema";
 export { updateReviewSchema } from "@/lib/validations/events/updateReviewSchema";
 
+/* - Newsletter - */
+
+export { newsletterSchema } from "@/lib/validations/newsletter/newsletterSchema";
+
+/* - Payments - */
+
+export { stripeCheckoutSchema } from "@/lib/validations/payments/stripeCheckoutSchema";
+
 /* - Users - */
 
+export { notificationIdSchema } from "@/lib/validations/users/notificationSchemas";
+export { updateNotificationPreferencesSchema } from "@/lib/validations/users/updateNotificationPreferencesSchema";
 export { orderIdSchema, buyTicketsSchema, buyVouchersSchema } from "@/lib/validations/users/orderSchemas";
 export { profileSchema } from "@/lib/validations/users/profileSchema";
 export { updateProfileSchema } from "@/lib/validations/users/updateProfileSchema";

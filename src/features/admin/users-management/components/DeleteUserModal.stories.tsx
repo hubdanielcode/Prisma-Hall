@@ -1,5 +1,5 @@
 import { DeleteUserModal } from "./DeleteUserModal";
-import { fakeUser } from "../../../../../.storybook/mocks/hooks/users/user/useUsers";
+import { fakeUser } from "../../../../../.storybook/mocks/hooks/users/useUsers";
 import { MobileProvider } from "@/shared/context/MobileContext";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
 import { UserProvider } from "@/features/users/user/context/UserContext";

@@ -307,9 +307,9 @@ export type VoucherOrderOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type VoucherOrderNullableScalarRelationFilter = {
-  is?: Prisma.VoucherOrderWhereInput | null
-  isNot?: Prisma.VoucherOrderWhereInput | null
+export type VoucherOrderScalarRelationFilter = {
+  is?: Prisma.VoucherOrderWhereInput
+  isNot?: Prisma.VoucherOrderWhereInput
 }
 
 export type VoucherOrderCountOrderByAggregateInput = {
@@ -336,9 +336,9 @@ export type VoucherOrderMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type VoucherOrderScalarRelationFilter = {
-  is?: Prisma.VoucherOrderWhereInput
-  isNot?: Prisma.VoucherOrderWhereInput
+export type VoucherOrderNullableScalarRelationFilter = {
+  is?: Prisma.VoucherOrderWhereInput | null
+  isNot?: Prisma.VoucherOrderWhereInput | null
 }
 
 export type VoucherOrderCreateNestedManyWithoutUserInput = {
@@ -383,6 +383,24 @@ export type VoucherOrderUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.VoucherOrderScalarWhereInput | Prisma.VoucherOrderScalarWhereInput[]
 }
 
+export type VoucherOrderCreateNestedOneWithoutVouchersInput = {
+  create?: Prisma.XOR<Prisma.VoucherOrderCreateWithoutVouchersInput, Prisma.VoucherOrderUncheckedCreateWithoutVouchersInput>
+  connectOrCreate?: Prisma.VoucherOrderCreateOrConnectWithoutVouchersInput
+  connect?: Prisma.VoucherOrderWhereUniqueInput
+}
+
+export type VoucherOrderUpdateOneRequiredWithoutVouchersNestedInput = {
+  create?: Prisma.XOR<Prisma.VoucherOrderCreateWithoutVouchersInput, Prisma.VoucherOrderUncheckedCreateWithoutVouchersInput>
+  connectOrCreate?: Prisma.VoucherOrderCreateOrConnectWithoutVouchersInput
+  upsert?: Prisma.VoucherOrderUpsertWithoutVouchersInput
+  connect?: Prisma.VoucherOrderWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.VoucherOrderUpdateToOneWithWhereWithoutVouchersInput, Prisma.VoucherOrderUpdateWithoutVouchersInput>, Prisma.VoucherOrderUncheckedUpdateWithoutVouchersInput>
+}
+
+export type EnumOrderStatusFieldUpdateOperationsInput = {
+  set?: $Enums.OrderStatus
+}
+
 export type VoucherOrderCreateNestedOneWithoutVoucherPaymentInput = {
   create?: Prisma.XOR<Prisma.VoucherOrderCreateWithoutVoucherPaymentInput, Prisma.VoucherOrderUncheckedCreateWithoutVoucherPaymentInput>
   connectOrCreate?: Prisma.VoucherOrderCreateOrConnectWithoutVoucherPaymentInput
@@ -397,24 +415,6 @@ export type VoucherOrderUpdateOneWithoutVoucherPaymentNestedInput = {
   delete?: Prisma.VoucherOrderWhereInput | boolean
   connect?: Prisma.VoucherOrderWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.VoucherOrderUpdateToOneWithWhereWithoutVoucherPaymentInput, Prisma.VoucherOrderUpdateWithoutVoucherPaymentInput>, Prisma.VoucherOrderUncheckedUpdateWithoutVoucherPaymentInput>
-}
-
-export type EnumOrderStatusFieldUpdateOperationsInput = {
-  set?: $Enums.OrderStatus
-}
-
-export type VoucherOrderCreateNestedOneWithoutVouchersInput = {
-  create?: Prisma.XOR<Prisma.VoucherOrderCreateWithoutVouchersInput, Prisma.VoucherOrderUncheckedCreateWithoutVouchersInput>
-  connectOrCreate?: Prisma.VoucherOrderCreateOrConnectWithoutVouchersInput
-  connect?: Prisma.VoucherOrderWhereUniqueInput
-}
-
-export type VoucherOrderUpdateOneRequiredWithoutVouchersNestedInput = {
-  create?: Prisma.XOR<Prisma.VoucherOrderCreateWithoutVouchersInput, Prisma.VoucherOrderUncheckedCreateWithoutVouchersInput>
-  connectOrCreate?: Prisma.VoucherOrderCreateOrConnectWithoutVouchersInput
-  upsert?: Prisma.VoucherOrderUpsertWithoutVouchersInput
-  connect?: Prisma.VoucherOrderWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.VoucherOrderUpdateToOneWithWhereWithoutVouchersInput, Prisma.VoucherOrderUpdateWithoutVouchersInput>, Prisma.VoucherOrderUncheckedUpdateWithoutVouchersInput>
 }
 
 export type VoucherOrderCreateWithoutUserInput = {
@@ -472,58 +472,6 @@ export type VoucherOrderScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"VoucherOrder"> | Date | string
 }
 
-export type VoucherOrderCreateWithoutVoucherPaymentInput = {
-  id?: string
-  status: $Enums.OrderStatus
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  vouchers?: Prisma.VoucherCreateNestedManyWithoutOrderInput
-  user: Prisma.UserCreateNestedOneWithoutVoucherOrdersInput
-}
-
-export type VoucherOrderUncheckedCreateWithoutVoucherPaymentInput = {
-  id?: string
-  userId: string
-  status: $Enums.OrderStatus
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  vouchers?: Prisma.VoucherUncheckedCreateNestedManyWithoutOrderInput
-}
-
-export type VoucherOrderCreateOrConnectWithoutVoucherPaymentInput = {
-  where: Prisma.VoucherOrderWhereUniqueInput
-  create: Prisma.XOR<Prisma.VoucherOrderCreateWithoutVoucherPaymentInput, Prisma.VoucherOrderUncheckedCreateWithoutVoucherPaymentInput>
-}
-
-export type VoucherOrderUpsertWithoutVoucherPaymentInput = {
-  update: Prisma.XOR<Prisma.VoucherOrderUpdateWithoutVoucherPaymentInput, Prisma.VoucherOrderUncheckedUpdateWithoutVoucherPaymentInput>
-  create: Prisma.XOR<Prisma.VoucherOrderCreateWithoutVoucherPaymentInput, Prisma.VoucherOrderUncheckedCreateWithoutVoucherPaymentInput>
-  where?: Prisma.VoucherOrderWhereInput
-}
-
-export type VoucherOrderUpdateToOneWithWhereWithoutVoucherPaymentInput = {
-  where?: Prisma.VoucherOrderWhereInput
-  data: Prisma.XOR<Prisma.VoucherOrderUpdateWithoutVoucherPaymentInput, Prisma.VoucherOrderUncheckedUpdateWithoutVoucherPaymentInput>
-}
-
-export type VoucherOrderUpdateWithoutVoucherPaymentInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  vouchers?: Prisma.VoucherUpdateManyWithoutOrderNestedInput
-  user?: Prisma.UserUpdateOneRequiredWithoutVoucherOrdersNestedInput
-}
-
-export type VoucherOrderUncheckedUpdateWithoutVoucherPaymentInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  vouchers?: Prisma.VoucherUncheckedUpdateManyWithoutOrderNestedInput
-}
-
 export type VoucherOrderCreateWithoutVouchersInput = {
   id?: string
   status: $Enums.OrderStatus
@@ -574,6 +522,58 @@ export type VoucherOrderUncheckedUpdateWithoutVouchersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   voucherPayment?: Prisma.VoucherPaymentUncheckedUpdateManyWithoutVoucherOrderNestedInput
+}
+
+export type VoucherOrderCreateWithoutVoucherPaymentInput = {
+  id?: string
+  status: $Enums.OrderStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  vouchers?: Prisma.VoucherCreateNestedManyWithoutOrderInput
+  user: Prisma.UserCreateNestedOneWithoutVoucherOrdersInput
+}
+
+export type VoucherOrderUncheckedCreateWithoutVoucherPaymentInput = {
+  id?: string
+  userId: string
+  status: $Enums.OrderStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  vouchers?: Prisma.VoucherUncheckedCreateNestedManyWithoutOrderInput
+}
+
+export type VoucherOrderCreateOrConnectWithoutVoucherPaymentInput = {
+  where: Prisma.VoucherOrderWhereUniqueInput
+  create: Prisma.XOR<Prisma.VoucherOrderCreateWithoutVoucherPaymentInput, Prisma.VoucherOrderUncheckedCreateWithoutVoucherPaymentInput>
+}
+
+export type VoucherOrderUpsertWithoutVoucherPaymentInput = {
+  update: Prisma.XOR<Prisma.VoucherOrderUpdateWithoutVoucherPaymentInput, Prisma.VoucherOrderUncheckedUpdateWithoutVoucherPaymentInput>
+  create: Prisma.XOR<Prisma.VoucherOrderCreateWithoutVoucherPaymentInput, Prisma.VoucherOrderUncheckedCreateWithoutVoucherPaymentInput>
+  where?: Prisma.VoucherOrderWhereInput
+}
+
+export type VoucherOrderUpdateToOneWithWhereWithoutVoucherPaymentInput = {
+  where?: Prisma.VoucherOrderWhereInput
+  data: Prisma.XOR<Prisma.VoucherOrderUpdateWithoutVoucherPaymentInput, Prisma.VoucherOrderUncheckedUpdateWithoutVoucherPaymentInput>
+}
+
+export type VoucherOrderUpdateWithoutVoucherPaymentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  vouchers?: Prisma.VoucherUpdateManyWithoutOrderNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutVoucherOrdersNestedInput
+}
+
+export type VoucherOrderUncheckedUpdateWithoutVoucherPaymentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  vouchers?: Prisma.VoucherUncheckedUpdateManyWithoutOrderNestedInput
 }
 
 export type VoucherOrderCreateManyUserInput = {

@@ -6,6 +6,9 @@ import { QueryProvider } from "@/shared/providers/QueryProvider";
 export default {
   title: "Layouts/Admin/Events Management",
   component: EventsManagementCard,
+  parameters: {
+    layout: "fullscreen",
+  },
 };
 
 const EventCards = () => {

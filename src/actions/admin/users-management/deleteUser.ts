@@ -24,6 +24,9 @@ const deleteUser = async (userId: string) => {
       prisma.galleryLikes.deleteMany({ where: { userId: userId } }),
       prisma.review.deleteMany({ where: { userId: userId } }),
       prisma.cart.deleteMany({ where: { userId: userId } }),
+      prisma.notification.deleteMany({ where: { userId: userId } }),
+      prisma.notificationPreference.deleteMany({ where: { userId: userId } }),
+      prisma.newsletter.deleteMany({ where: { userId: userId } }),
       prisma.session.deleteMany({ where: { userId: userId } }),
 
       prisma.profile.deleteMany({ where: { userId: userId } }),

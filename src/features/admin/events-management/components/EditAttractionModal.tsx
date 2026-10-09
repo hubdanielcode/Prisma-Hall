@@ -1,19 +1,20 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { useAttractionContext } from "@/features/events/event/hooks/useAttractionContext";
+import { createAttractionSchema } from "@/lib/validations";
 import { ImagePlus, X } from "lucide-react";
 import { masks } from "@/shared/utils";
+import { useAttractionContext } from "@/features/events/event/hooks/useAttractionContext";
 import { useBlockScroll, useMobileContext } from "@/shared/hooks";
 import { useRef, useState } from "react";
+import z from "zod";
 
 interface EditAttractionModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-type EditableAttractionType = {
-  name: string;
+type EditableAttractionType = Omit<z.infer<typeof createAttractionSchema>, "image" | "description"> & {
   description: string;
 };
 
@@ -96,19 +97,18 @@ const EditAttractionModal = ({ isOpen, onClose }: EditAttractionModalProps) => {
     setAttractionImageError("");
     setAttractionSubmitError("");
 
+    if (!attractionBeingEdited) {
+      return false;
+    }
+
     if (!newAttraction.name.trim()) {
       setAttractionNameError("Insira um nome válido.");
       return false;
     }
 
-    if (!attractionBeingEdited) {
-      setAttractionSubmitError("Nenhuma atração selecionada para edição.");
-      return false;
-    }
-
     const attractionData = {
       attractionId: attractionBeingEdited.id,
-      name: newAttraction.name,
+      ...newAttraction,
       description: newAttraction.description.trim() ? newAttraction.description : undefined,
       ...(attractionImageFile ? { image: attractionImageFile } : {}),
     };
@@ -126,16 +126,20 @@ const EditAttractionModal = ({ isOpen, onClose }: EditAttractionModalProps) => {
   // 4. Reseta o formulário para os valores originais da atração
 
   const handleResetForm = () => {
+    if (!attractionBeingEdited) {
+      return;
+    }
+
     setAttractionNameError("");
     setAttractionImageError("");
     setAttractionSubmitError("");
 
     setNewAttraction({
-      name: attractionBeingEdited?.name ?? "",
-      description: attractionBeingEdited?.description ?? "",
+      name: attractionBeingEdited.name,
+      description: attractionBeingEdited.description ?? "",
     });
 
-    setAttractionImagePreview(attractionBeingEdited?.image ?? "");
+    setAttractionImagePreview(attractionBeingEdited.image);
     setAttractionImageFile(null);
   };
 

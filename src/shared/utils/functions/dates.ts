@@ -1,4 +1,4 @@
-import { LabelProps } from "@/features/admin/analytics-management/types/labels";
+import { PeriodLabelProps } from "@/features/admin/analytics-management/types/period";
 import { regex } from "@/shared/utils/constants/regex";
 
 // 1 Converte data DD/MM/YYYY (string) para um objeto Date
@@ -51,7 +51,7 @@ const formattedDateToISOString = (year: number, monthIndex: number, day: number,
 
 // 5. Converte o período do filtro em datas de início e fim do intervalo (como milissegundos)
 
-const formattedStringToDate = (label: LabelProps) => {
+const formattedStringToDate = (label: PeriodLabelProps) => {
   const threeHours = 60 * 60 * 3 * 1000;
   const twentyFourHours = 60 * 60 * 24 * 1000;
   const sevenDays = 60 * 60 * 24 * 7 * 1000;
@@ -71,7 +71,7 @@ const formattedStringToDate = (label: LabelProps) => {
     return [monthStart(year, firstMonthOfTheBlock), monthStart(year, firstMonthOfTheBlock + blockSize)];
   };
 
-  const intervals: Record<LabelProps, [intervalStart: number, invervalEnd: number]> = {
+  const intervals: Record<PeriodLabelProps, [intervalStart: number, invervalEnd: number]> = {
     today: [dayStart, dayStart + twentyFourHours],
     "this week": [weekStart, weekStart + sevenDays],
     "this month": blockOfMonths(1),

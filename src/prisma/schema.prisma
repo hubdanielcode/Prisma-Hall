@@ -37,20 +37,54 @@ model User {
   validatedAt DateTime? @map("validated_at")
   updatedAt   DateTime  @updatedAt @map("updated_at")
 
-  carts           Cart[]
-  galleries       Gallery[]
-  galleryLikes    GalleryLikes[]
-  profiles        Profile?
-  reviews         Review[]
-  sessions        Session[]
-  ticketOrders    TicketOrder[]
-  ticketPayments  TicketPayment[]
-  tickets         Ticket[]
-  vouchers        Voucher[]
-  voucherOrders   VoucherOrder[]
-  voucherPayments VoucherPayment[]
+  carts                   Cart[]
+  galleries               Gallery[]
+  galleryLikes            GalleryLikes[]
+  profiles                Profile?
+  reviews                 Review[]
+  sessions                Session[]
+  ticketOrders            TicketOrder[]
+  ticketPayments          TicketPayment[]
+  tickets                 Ticket[]
+  vouchers                Voucher[]
+  voucherOrders           VoucherOrder[]
+  voucherPayments         VoucherPayment[]
+  notifications           Notification[]
+  notificationPreferences NotificationPreference?
+  newsletters             Newsletter[]
 
   @@map("users")
+}
+
+model NotificationPreference {
+  id                   String  @id @default(uuid())
+  userId               String  @unique @map("user_id")
+  notifyFavoriteEvents Boolean @default(false) @map("notify_favorite_events")
+  notifyPromotions     Boolean @default(false) @map("notify_promotions")
+  notifyByEmail        Boolean @default(false) @map("notify_by_email")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("notification_preferences")
+}
+
+model Notification {
+  id      String           @id @default(uuid())
+  userId  String           @map("user_id")
+  type    NotificationType
+  title   String
+  message String
+  readAt  DateTime?        @map("read_at")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("notifications")
 }
 
 model Profile {
@@ -91,6 +125,8 @@ model Cart {
   product Product? @relation(fields: [productId], references: [id])
   user    User     @relation(fields: [userId], references: [id])
 
+  @@unique([userId, productId])
+  @@unique([userId, eventId])
   @@map("cart")
 }
 
@@ -113,22 +149,21 @@ model Product {
   @@map("products")
 }
 
-model VoucherPayment {
-  id         String        @id @default(uuid())
-  userId     String        @map("user_id")
-  orderId    String?       @map("order_id")
-  method     PaymentMethod @map("payment_method")
-  status     PaymentStatus @map("payment_status")
-  totalValue Decimal       @map("total_value")
+model Voucher {
+  id        String @id @default(uuid())
+  orderId   String @default(uuid()) @map("order_id")
+  userId    String @map("user_id")
+  productId String @map("product_id")
+  quantity  Int
 
-  createdAt  DateTime  @default(now()) @map("created_at")
-  updatedAt  DateTime  @updatedAt @map("updated_at")
-  pickedUpAt DateTime? @map("picked_up_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
-  voucherOrder VoucherOrder? @relation(fields: [orderId], references: [id])
-  user         User          @relation(fields: [userId], references: [id])
+  order   VoucherOrder @relation(fields: [orderId], references: [id])
+  product Product      @relation(fields: [productId], references: [id])
+  user    User         @relation(fields: [userId], references: [id])
 
-  @@map("voucher_payments")
+  @@map("voucher")
 }
 
 model VoucherOrder {
@@ -146,21 +181,74 @@ model VoucherOrder {
   @@map("voucher_orders")
 }
 
-model Voucher {
-  id        String @id @default(uuid())
-  orderId   String @default(uuid()) @map("order_id")
-  userId    String @map("user_id")
-  productId String @map("product_id")
+model VoucherPayment {
+  id         String        @id @default(uuid())
+  userId     String        @map("user_id")
+  orderId    String        @map("order_id")
+  method     PaymentMethod @map("payment_method")
+  status     PaymentStatus @map("payment_status")
+  totalValue Decimal       @map("total_value")
+
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+  pickedUpAt DateTime? @map("picked_up_at")
+
+  voucherOrder VoucherOrder? @relation(fields: [orderId], references: [id])
+  user         User          @relation(fields: [userId], references: [id])
+
+  @@map("voucher_payments")
+}
+
+model Ticket {
+  id        String  @id @default(uuid())
+  orderId   String  @default(uuid()) @map("order_id")
+  userId    String  @map("user_id")
+  eventId   String  @map("event_id")
   quantity  Int
+  unitPrice Decimal @map("unit_price")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  order   VoucherOrder @relation(fields: [orderId], references: [id])
-  product Product      @relation(fields: [productId], references: [id])
-  user    User         @relation(fields: [userId], references: [id])
+  event Event       @relation(fields: [eventId], references: [id])
+  order TicketOrder @relation(fields: [orderId], references: [id])
+  user  User        @relation(fields: [userId], references: [id])
 
-  @@map("voucher")
+  @@map("tickets")
+}
+
+model TicketOrder {
+  id     String      @id @default(uuid())
+  userId String      @map("user_id")
+  status OrderStatus
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user           User            @relation(fields: [userId], references: [id])
+  ticketPayments TicketPayment[]
+  tickets        Ticket[]
+
+  @@map("ticket_orders")
+}
+
+model TicketPayment {
+  id          String        @id @default(uuid())
+  userId      String        @map("user_id")
+  orderId     String        @map("order_id")
+  method      PaymentMethod @map("payment_method")
+  status      PaymentStatus
+  totalValue  Decimal       @map("total_value")
+  confirmedAt DateTime?     @map("confirmed_at")
+  pickedUpAt  DateTime?     @map("picked_up_at")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  order TicketOrder @relation(fields: [orderId], references: [id])
+  user  User        @relation(fields: [userId], references: [id])
+
+  @@map("ticket_payments")
 }
 
 model Event {
@@ -248,56 +336,15 @@ model GalleryLikes {
   @@map("gallery_likes")
 }
 
-model Ticket {
-  id        String  @id @default(uuid())
-  orderId   String  @default(uuid()) @map("order_id")
-  userId    String  @map("user_id")
-  eventId   String  @map("event_id")
-  quantity  Int
-  unitPrice Decimal @map("unit_price")
+model Newsletter {
+  userId       String  @map("user_id")
+  email        String
+  isSubscribed Boolean @default(false) @map("is_subscribed")
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  user User @relation(fields: [userId], references: [id])
 
-  event Event       @relation(fields: [eventId], references: [id])
-  order TicketOrder @relation(fields: [orderId], references: [id])
-  user  User        @relation(fields: [userId], references: [id])
-
-  @@map("tickets")
-}
-
-model TicketOrder {
-  id     String      @id @default(uuid())
-  userId String      @map("user_id")
-  status OrderStatus
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  user           User            @relation(fields: [userId], references: [id])
-  ticketPayments TicketPayment[]
-  tickets        Ticket[]
-
-  @@map("ticket_orders")
-}
-
-model TicketPayment {
-  id          String        @id @default(uuid())
-  userId      String        @map("user_id")
-  orderId     String        @map("order_id")
-  method      PaymentMethod @map("payment_method")
-  status      PaymentStatus
-  totalValue  Decimal       @map("total_value")
-  confirmedAt DateTime?     @map("confirmed_at")
-  pickedUpAt  DateTime?     @map("picked_up_at")
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  order TicketOrder @relation(fields: [orderId], references: [id])
-  user  User        @relation(fields: [userId], references: [id])
-
-  @@map("ticket_payments")
+  @@id([userId, email])
+  @@map("newsletters")
 }
 
 // 1. Geral
@@ -324,6 +371,7 @@ enum PaymentStatus {
   confirmed
   pending
   failed
+  cancelled
   refunded
 }
 
@@ -341,7 +389,14 @@ enum UserBadgeLevel {
   gold
 }
 
-// 3. Produtos
+// 3. Notificações
+
+enum NotificationType {
+  order_cancelled
+  new_event
+}
+
+// 4. Produtos
 
 enum ProductCategory {
   beers
@@ -355,7 +410,7 @@ enum ProductStatus {
   inactive
 }
 
-// 4. Eventos
+// 5. Eventos
 
 enum EventTag {
   trap_and_hiphop

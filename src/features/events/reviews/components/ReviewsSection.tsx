@@ -1,11 +1,13 @@
 "use client";
 
 import { motion } from "motion/react";
-import { parsedDate } from "@/shared/utils/functions/dates";
+import { CreateReviewModal } from "./CreateReviewModal";
 import { Quote, Star, Users } from "lucide-react";
 import { ReviewCard } from "./ReviewCard";
+import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
 import { useEvents } from "@/features/events/event/hooks/useEvents";
-import { useReviews } from "../hooks/useReviews";
+import { useReviews } from "@/features/events/reviews/hooks/useReviews";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const ReviewsSection = () => {
@@ -13,12 +15,19 @@ const ReviewsSection = () => {
 
   const { reviews, isLoading, error, averageRating } = useReviews();
   const { events } = useEvents();
+  const { isAuthenticated } = useAuthenticationContext();
 
   /* - Estados das avaliações - */
 
   const [showMore, setShowMore] = useState<boolean>(false);
 
+  /* - Estados do modal - */
+
+  const [isCreateReviewModalOpen, setIsCreateReviewModalOpen] = useState<boolean>(false);
+
   /* - Definições - */
+
+  const router = useRouter();
 
   const reviewBadges = [
     { label: "Avaliação Média", value: averageRating.toFixed(1), icon: Star },
@@ -66,9 +75,35 @@ const ReviewsSection = () => {
         Confira os depoimentos de quem já viveu experiências inesquecíveis conosco!
       </motion.span>
 
+      {/* - Botão de avaliar um evento - */}
+
+      <motion.button
+        className="w-fit mt-6 px-4 py-2 text-[#B8860B] font-semibold bg-[#3D2B0A] border border-[#B8860B] rounded-lg cursor-pointer hover:shadow-sm shadow-[#DDAE56]"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        onClick={() => {
+          if (isAuthenticated) {
+            setIsCreateReviewModalOpen(true);
+          } else {
+            router.replace("/login");
+          }
+        }}
+      >
+        Avaliar um Evento
+      </motion.button>
+
+      {/* - Modal de criação de avaliações - */}
+
+      {isCreateReviewModalOpen ? (
+        <CreateReviewModal
+          isOpen={isCreateReviewModalOpen}
+          onClose={() => setIsCreateReviewModalOpen(false)}
+        />
+      ) : null}
+
       {isLoading && !error && <p className="text-white/60 text-center p-12">Carregando avaliações...</p>}
 
-      {!isLoading && error && <p className="text-red-500 text-center p-12">{error}</p>}
+      {!isLoading && error && <p className="text-red-500 text-center p-12">Erro ao buscar avaliações.</p>}
 
       {/* - Card dos stats - */}
 
@@ -101,12 +136,12 @@ const ReviewsSection = () => {
         <p className="text-white/60 text-center p-12">Ainda não há avaliações. Seja o primeiro a avaliar!</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 h-fit gap-4">
-          {reviews
-            .sort((a, b) => parsedDate(b.created_at).getTime() - parsedDate(a.created_at).getTime())
+          {[...reviews]
+            .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
             .slice(0, showMore ? reviews.length : 6)
             .map((review, index) => (
               <ReviewCard
-                key={review.review_id}
+                key={review.id}
                 review={review}
                 index={index}
               />

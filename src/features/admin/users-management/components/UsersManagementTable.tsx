@@ -1,13 +1,14 @@
 "use client";
 
-import { roleBadgeLabels, roleBadgeStyles, tierBadgeLabels, tierBadgeStyles, useUserContext } from "@/features/users";
-import { useMobileContext } from "@/shared/hooks";
-import { masks } from "@/shared/utils";
-import { motion } from "motion/react";
 import { FaMedal, FaPencilAlt, FaTrashAlt, FaTrophy } from "react-icons/fa";
+import { masks } from "@/shared/utils";
 import { MdVerified } from "react-icons/md";
+import { motion } from "motion/react";
+import { roleBadgeLabels, roleBadgeStyles, tierBadgeLabels, tierBadgeStyles } from "@/shared/utils";
+import { useMobileContext } from "@/shared/hooks";
 import { UserAvatar } from "./UserAvatar";
 import { UsersTablePagination } from "./UsersTablePagination";
+import { useUserContext } from "@/features/users/user/hooks/useUserContext";
 
 interface UsersManagementTableProps {
   currentPage: number;

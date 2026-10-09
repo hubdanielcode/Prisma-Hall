@@ -147,8 +147,6 @@ Crie um arquivo `.env.local` com suas credenciais:
 DATABASE_URL=your_database_url
 DIRECT_URL=your_direct_url
 NEXT_PUBLIC_APP_URL=http://localhost:3000
-NEXT_PUBLIC_SUPABASE_URL=your_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_key
 RESEND_API_KEY=your_resend_key
 BLOB_READ_WRITE_TOKEN=your_blob_token
 ```
@@ -784,9 +782,6 @@ PrismaHall/
 │           │   └── theme.ts
 │           │
 │           └── index.ts
-│
-├── supabase/
-│   └── supabase.ts
 │
 ├── .env.local
 ├── .gitignore

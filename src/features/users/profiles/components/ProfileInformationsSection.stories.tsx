@@ -1,5 +1,5 @@
 import { AuthenticationContext } from "@/features/authentication/context/AuthenticationContext";
-import { fakeUser } from "../../../../../.storybook/mocks/hooks/users/user/useUsers";
+import { fakeUser } from "../../../../../.storybook/mocks/hooks/users/useUsers";
 import { fn } from "storybook/test";
 import { ProfileInformationsSection } from "./ProfileInformationsSection";
 import { ProfileProvider } from "../context/ProfileContext";

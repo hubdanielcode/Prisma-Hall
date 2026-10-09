@@ -19,9 +19,12 @@ const getTicketIncome = async (ticketIncome: z.infer<typeof ticketIncomeSchema>)
     return false;
   }
 
-  const { label, tag, name } = parsedTicketIncome.data;
+  const label = parsedTicketIncome.data.label;
+  const name = parsedTicketIncome.data.name;
+  const tag = parsedTicketIncome.data.tag;
 
   const { intervalStart, intervalEnd } = formattedStringToDate(label);
+
   const startDate = new Date(intervalStart);
   const endDate = new Date(intervalEnd);
 

@@ -7,6 +7,7 @@ import { motion } from "motion/react";
 import { requestPasswordReset } from "@/actions/authentication/requestPasswordReset";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
+import { useNotificationPreferences } from "@/features/users/notifications/hooks/useNotificationPreferences";
 import { useEffect, useRef, useState } from "react";
 import { useProfileContext } from "../hooks/useProfileContext";
 import { useRouter } from "next/navigation";
@@ -16,12 +17,13 @@ const ProfileSettingsSection = () => {
 
   const { user, revokeSessionMutation } = useAuthenticationContext();
   const { deleteProfileMutation } = useProfileContext();
+  const { preferences, updateNotificationPreferencesMutation } = useNotificationPreferences();
 
-  /* - Estados de notificação - */
+  /* - Estados de notificação (vêm do banco, não do estado local) - */
 
-  const [notifyFavoriteEvents, setNotifyFavoriteEvents] = useState<boolean>(false);
-  const [notifyByEmail, setNotifyByEmail] = useState<boolean>(false);
-  const [notifyPromotions, setNotifyPromotions] = useState<boolean>(false);
+  const notifyFavoriteEvents = preferences ? preferences.notifyFavoriteEvents : false;
+  const notifyPromotions = preferences ? preferences.notifyPromotions : false;
+  const notifyByEmail = preferences ? preferences.notifyByEmail : false;
 
   /* - Estados de modal - */
 
@@ -30,6 +32,7 @@ const ProfileSettingsSection = () => {
   /* - Estados de Erro - */
 
   const [deleteAccountError, setDeleteAccountError] = useState<string>("");
+  const [notificationError, setNotificationError] = useState<string>("");
 
   /* - Definições - */
 
@@ -87,7 +90,24 @@ const ProfileSettingsSection = () => {
     router.replace("/");
   };
 
-  // 5. Fecha os erros ao clicar fora
+  // 5. Liga ou desliga uma preferência de notificação e salva no banco
+
+  const handleTogglePreference = async (preference: "notifyFavoriteEvents" | "notifyPromotions" | "notifyByEmail") => {
+    setNotificationError("");
+
+    const currentPreferences = { notifyFavoriteEvents, notifyPromotions, notifyByEmail };
+
+    const result = await updateNotificationPreferencesMutation({
+      ...currentPreferences,
+      [preference]: !currentPreferences[preference],
+    });
+
+    if (!result) {
+      setNotificationError("Não foi possível salvar a preferência. Tente novamente.");
+    }
+  };
+
+  // 6. Fecha os erros ao clicar fora
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -160,6 +180,14 @@ const ProfileSettingsSection = () => {
         <div className="flex flex-col p-6 gap-4 border-b border-[#B8860B60]">
           <span className="text-white font-semibold text-xl sm:text-2xl md:text-3xl mb-1">Notificações</span>
 
+          {/* - Seção de erro - */}
+
+          {notificationError && (
+            <p className="flex items-center justify-center h-12 rounded-xl bg-red-100 border border-red-300 text-red-700 text-sm font-semibold px-4 text-center">
+              {notificationError}
+            </p>
+          )}
+
           {/* - Notificar eventos favoritos - */}
 
           <div className="flex items-center gap-3">
@@ -169,8 +197,7 @@ const ProfileSettingsSection = () => {
 
             <div
               className={`relative w-15 h-7 rounded-full transition-colors duration-300 cursor-pointer ${notifyFavoriteEvents ? "bg-[#B8860B]" : "bg-[#333]"}`}
-              onClick={() => setNotifyFavoriteEvents(!notifyFavoriteEvents)}
-              aria-label="Alternar notificações de eventos favoritos"
+              onClick={() => handleTogglePreference("notifyFavoriteEvents")}
             >
               <span
                 className={`absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform duration-300  ${
@@ -189,8 +216,7 @@ const ProfileSettingsSection = () => {
 
             <div
               className={`relative w-15 h-7 rounded-full transition-colors duration-300 cursor-pointer ${notifyPromotions ? "bg-[#B8860B]" : "bg-[#333]"}`}
-              onClick={() => setNotifyPromotions(!notifyPromotions)}
-              aria-label="Alternar notificações de promoções"
+              onClick={() => handleTogglePreference("notifyPromotions")}
             >
               <span
                 className={`absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform duration-300 ${
@@ -209,8 +235,7 @@ const ProfileSettingsSection = () => {
 
             <div
               className={`relative w-15 h-7 rounded-full transition-colors duration-300 cursor-pointer ${notifyByEmail ? "bg-[#B8860B]" : "bg-[#333]"}`}
-              onClick={() => setNotifyByEmail(!notifyByEmail)}
-              aria-label="Alternar notificações de promoções"
+              onClick={() => handleTogglePreference("notifyByEmail")}
             >
               <span
                 className={`absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform duration-300 ${

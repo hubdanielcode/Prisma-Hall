@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { roleBadgeLabels, roleBadgeStyles } from "@/features/users/user/utils/roleBadges";
+import { roleBadgeLabels, roleBadgeStyles } from "@/shared/utils/constants/roleBadges";
 import { useMobileContext } from "@/shared/hooks/useMobileContext";
 import { UserAvatar } from "./UserAvatar";
 import { useState } from "react";

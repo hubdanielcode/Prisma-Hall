@@ -24,8 +24,11 @@ const deleteProfile = async () => {
       prisma.galleryLikes.deleteMany({ where: { userId: validSession.user.id } }),
       prisma.review.deleteMany({ where: { userId: validSession.user.id } }),
       prisma.cart.deleteMany({ where: { userId: validSession.user.id } }),
-      prisma.session.deleteMany({ where: { userId: validSession.user.id } }),
+      prisma.notification.deleteMany({ where: { userId: validSession.user.id } }),
+      prisma.notificationPreference.deleteMany({ where: { userId: validSession.user.id } }),
+      prisma.newsletter.deleteMany({ where: { userId: validSession.user.id } }),
 
+      prisma.session.deleteMany({ where: { userId: validSession.user.id } }),
       prisma.profile.deleteMany({ where: { userId: validSession.user.id } }),
       prisma.user.delete({ where: { id: validSession.user.id } }),
     ]);

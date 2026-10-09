@@ -266,6 +266,9 @@ export type UserWhereInput = {
   vouchers?: Prisma.VoucherListRelationFilter
   voucherOrders?: Prisma.VoucherOrderListRelationFilter
   voucherPayments?: Prisma.VoucherPaymentListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
+  notificationPreferences?: Prisma.XOR<Prisma.NotificationPreferenceNullableScalarRelationFilter, Prisma.NotificationPreferenceWhereInput> | null
+  newsletters?: Prisma.NewsletterListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -295,6 +298,9 @@ export type UserOrderByWithRelationInput = {
   vouchers?: Prisma.VoucherOrderByRelationAggregateInput
   voucherOrders?: Prisma.VoucherOrderOrderByRelationAggregateInput
   voucherPayments?: Prisma.VoucherPaymentOrderByRelationAggregateInput
+  notifications?: Prisma.NotificationOrderByRelationAggregateInput
+  notificationPreferences?: Prisma.NotificationPreferenceOrderByWithRelationInput
+  newsletters?: Prisma.NewsletterOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -327,6 +333,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   vouchers?: Prisma.VoucherListRelationFilter
   voucherOrders?: Prisma.VoucherOrderListRelationFilter
   voucherPayments?: Prisma.VoucherPaymentListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
+  notificationPreferences?: Prisma.XOR<Prisma.NotificationPreferenceNullableScalarRelationFilter, Prisma.NotificationPreferenceWhereInput> | null
+  newsletters?: Prisma.NewsletterListRelationFilter
 }, "id" | "email" | "token">
 
 export type UserOrderByWithAggregationInput = {
@@ -396,6 +405,9 @@ export type UserCreateInput = {
   vouchers?: Prisma.VoucherCreateNestedManyWithoutUserInput
   voucherOrders?: Prisma.VoucherOrderCreateNestedManyWithoutUserInput
   voucherPayments?: Prisma.VoucherPaymentCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -425,6 +437,9 @@ export type UserUncheckedCreateInput = {
   vouchers?: Prisma.VoucherUncheckedCreateNestedManyWithoutUserInput
   voucherOrders?: Prisma.VoucherOrderUncheckedCreateNestedManyWithoutUserInput
   voucherPayments?: Prisma.VoucherPaymentUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -454,6 +469,9 @@ export type UserUpdateInput = {
   vouchers?: Prisma.VoucherUpdateManyWithoutUserNestedInput
   voucherOrders?: Prisma.VoucherOrderUpdateManyWithoutUserNestedInput
   voucherPayments?: Prisma.VoucherPaymentUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -483,6 +501,9 @@ export type UserUncheckedUpdateInput = {
   vouchers?: Prisma.VoucherUncheckedUpdateManyWithoutUserNestedInput
   voucherOrders?: Prisma.VoucherOrderUncheckedUpdateManyWithoutUserNestedInput
   voucherPayments?: Prisma.VoucherPaymentUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -622,6 +643,34 @@ export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
 }
 
+export type UserCreateNestedOneWithoutNotificationPreferencesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationPreferencesInput, Prisma.UserUncheckedCreateWithoutNotificationPreferencesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationPreferencesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutNotificationPreferencesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationPreferencesInput, Prisma.UserUncheckedCreateWithoutNotificationPreferencesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationPreferencesInput
+  upsert?: Prisma.UserUpsertWithoutNotificationPreferencesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationPreferencesInput, Prisma.UserUpdateWithoutNotificationPreferencesInput>, Prisma.UserUncheckedUpdateWithoutNotificationPreferencesInput>
+}
+
+export type UserCreateNestedOneWithoutNotificationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutNotificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
+  upsert?: Prisma.UserUpsertWithoutNotificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationsInput, Prisma.UserUpdateWithoutNotificationsInput>, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+}
+
 export type UserCreateNestedOneWithoutProfilesInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutProfilesInput, Prisma.UserUncheckedCreateWithoutProfilesInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutProfilesInput
@@ -650,18 +699,18 @@ export type UserUpdateOneRequiredWithoutCartsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCartsInput, Prisma.UserUpdateWithoutCartsInput>, Prisma.UserUncheckedUpdateWithoutCartsInput>
 }
 
-export type UserCreateNestedOneWithoutVoucherPaymentsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutVoucherPaymentsInput, Prisma.UserUncheckedCreateWithoutVoucherPaymentsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVoucherPaymentsInput
+export type UserCreateNestedOneWithoutVouchersInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutVouchersInput, Prisma.UserUncheckedCreateWithoutVouchersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVouchersInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutVoucherPaymentsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutVoucherPaymentsInput, Prisma.UserUncheckedCreateWithoutVoucherPaymentsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVoucherPaymentsInput
-  upsert?: Prisma.UserUpsertWithoutVoucherPaymentsInput
+export type UserUpdateOneRequiredWithoutVouchersNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutVouchersInput, Prisma.UserUncheckedCreateWithoutVouchersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVouchersInput
+  upsert?: Prisma.UserUpsertWithoutVouchersInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutVoucherPaymentsInput, Prisma.UserUpdateWithoutVoucherPaymentsInput>, Prisma.UserUncheckedUpdateWithoutVoucherPaymentsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutVouchersInput, Prisma.UserUpdateWithoutVouchersInput>, Prisma.UserUncheckedUpdateWithoutVouchersInput>
 }
 
 export type UserCreateNestedOneWithoutVoucherOrdersInput = {
@@ -678,60 +727,18 @@ export type UserUpdateOneRequiredWithoutVoucherOrdersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutVoucherOrdersInput, Prisma.UserUpdateWithoutVoucherOrdersInput>, Prisma.UserUncheckedUpdateWithoutVoucherOrdersInput>
 }
 
-export type UserCreateNestedOneWithoutVouchersInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutVouchersInput, Prisma.UserUncheckedCreateWithoutVouchersInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVouchersInput
+export type UserCreateNestedOneWithoutVoucherPaymentsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutVoucherPaymentsInput, Prisma.UserUncheckedCreateWithoutVoucherPaymentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVoucherPaymentsInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutVouchersNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutVouchersInput, Prisma.UserUncheckedCreateWithoutVouchersInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVouchersInput
-  upsert?: Prisma.UserUpsertWithoutVouchersInput
+export type UserUpdateOneRequiredWithoutVoucherPaymentsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutVoucherPaymentsInput, Prisma.UserUncheckedCreateWithoutVoucherPaymentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVoucherPaymentsInput
+  upsert?: Prisma.UserUpsertWithoutVoucherPaymentsInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutVouchersInput, Prisma.UserUpdateWithoutVouchersInput>, Prisma.UserUncheckedUpdateWithoutVouchersInput>
-}
-
-export type UserCreateNestedOneWithoutReviewsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutReviewsInput, Prisma.UserUncheckedCreateWithoutReviewsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReviewsInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutReviewsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutReviewsInput, Prisma.UserUncheckedCreateWithoutReviewsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReviewsInput
-  upsert?: Prisma.UserUpsertWithoutReviewsInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReviewsInput, Prisma.UserUpdateWithoutReviewsInput>, Prisma.UserUncheckedUpdateWithoutReviewsInput>
-}
-
-export type UserCreateNestedOneWithoutGalleriesInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutGalleriesInput, Prisma.UserUncheckedCreateWithoutGalleriesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutGalleriesInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutGalleriesNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutGalleriesInput, Prisma.UserUncheckedCreateWithoutGalleriesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutGalleriesInput
-  upsert?: Prisma.UserUpsertWithoutGalleriesInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutGalleriesInput, Prisma.UserUpdateWithoutGalleriesInput>, Prisma.UserUncheckedUpdateWithoutGalleriesInput>
-}
-
-export type UserCreateNestedOneWithoutGalleryLikesInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutGalleryLikesInput, Prisma.UserUncheckedCreateWithoutGalleryLikesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutGalleryLikesInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutGalleryLikesNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutGalleryLikesInput, Prisma.UserUncheckedCreateWithoutGalleryLikesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutGalleryLikesInput
-  upsert?: Prisma.UserUpsertWithoutGalleryLikesInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutGalleryLikesInput, Prisma.UserUpdateWithoutGalleryLikesInput>, Prisma.UserUncheckedUpdateWithoutGalleryLikesInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutVoucherPaymentsInput, Prisma.UserUpdateWithoutVoucherPaymentsInput>, Prisma.UserUncheckedUpdateWithoutVoucherPaymentsInput>
 }
 
 export type UserCreateNestedOneWithoutTicketsInput = {
@@ -776,6 +783,62 @@ export type UserUpdateOneRequiredWithoutTicketPaymentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTicketPaymentsInput, Prisma.UserUpdateWithoutTicketPaymentsInput>, Prisma.UserUncheckedUpdateWithoutTicketPaymentsInput>
 }
 
+export type UserCreateNestedOneWithoutReviewsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReviewsInput, Prisma.UserUncheckedCreateWithoutReviewsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReviewsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutReviewsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReviewsInput, Prisma.UserUncheckedCreateWithoutReviewsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReviewsInput
+  upsert?: Prisma.UserUpsertWithoutReviewsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReviewsInput, Prisma.UserUpdateWithoutReviewsInput>, Prisma.UserUncheckedUpdateWithoutReviewsInput>
+}
+
+export type UserCreateNestedOneWithoutGalleriesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutGalleriesInput, Prisma.UserUncheckedCreateWithoutGalleriesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutGalleriesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutGalleriesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutGalleriesInput, Prisma.UserUncheckedCreateWithoutGalleriesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutGalleriesInput
+  upsert?: Prisma.UserUpsertWithoutGalleriesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutGalleriesInput, Prisma.UserUpdateWithoutGalleriesInput>, Prisma.UserUncheckedUpdateWithoutGalleriesInput>
+}
+
+export type UserCreateNestedOneWithoutGalleryLikesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutGalleryLikesInput, Prisma.UserUncheckedCreateWithoutGalleryLikesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutGalleryLikesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutGalleryLikesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutGalleryLikesInput, Prisma.UserUncheckedCreateWithoutGalleryLikesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutGalleryLikesInput
+  upsert?: Prisma.UserUpsertWithoutGalleryLikesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutGalleryLikesInput, Prisma.UserUpdateWithoutGalleryLikesInput>, Prisma.UserUncheckedUpdateWithoutGalleryLikesInput>
+}
+
+export type UserCreateNestedOneWithoutNewslettersInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNewslettersInput, Prisma.UserUncheckedCreateWithoutNewslettersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNewslettersInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutNewslettersNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNewslettersInput, Prisma.UserUncheckedCreateWithoutNewslettersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNewslettersInput
+  upsert?: Prisma.UserUpsertWithoutNewslettersInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNewslettersInput, Prisma.UserUpdateWithoutNewslettersInput>, Prisma.UserUncheckedUpdateWithoutNewslettersInput>
+}
+
 export type UserCreateWithoutSessionsInput = {
   id?: string
   name: string
@@ -802,6 +865,9 @@ export type UserCreateWithoutSessionsInput = {
   vouchers?: Prisma.VoucherCreateNestedManyWithoutUserInput
   voucherOrders?: Prisma.VoucherOrderCreateNestedManyWithoutUserInput
   voucherPayments?: Prisma.VoucherPaymentCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -830,6 +896,9 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   vouchers?: Prisma.VoucherUncheckedCreateNestedManyWithoutUserInput
   voucherOrders?: Prisma.VoucherOrderUncheckedCreateNestedManyWithoutUserInput
   voucherPayments?: Prisma.VoucherPaymentUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -874,6 +943,9 @@ export type UserUpdateWithoutSessionsInput = {
   vouchers?: Prisma.VoucherUpdateManyWithoutUserNestedInput
   voucherOrders?: Prisma.VoucherOrderUpdateManyWithoutUserNestedInput
   voucherPayments?: Prisma.VoucherPaymentUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -902,6 +974,289 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   vouchers?: Prisma.VoucherUncheckedUpdateManyWithoutUserNestedInput
   voucherOrders?: Prisma.VoucherOrderUncheckedUpdateManyWithoutUserNestedInput
   voucherPayments?: Prisma.VoucherPaymentUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutNotificationPreferencesInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role?: $Enums.UserRole
+  verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
+  token?: string | null
+  tokenExpiresAt?: Date | string | null
+  profilePicture?: string | null
+  createdAt?: Date | string
+  validatedAt?: Date | string | null
+  updatedAt?: Date | string
+  carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  galleries?: Prisma.GalleryCreateNestedManyWithoutUserInput
+  galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutUserInput
+  profiles?: Prisma.ProfileCreateNestedOneWithoutUserInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  ticketOrders?: Prisma.TicketOrderCreateNestedManyWithoutUserInput
+  ticketPayments?: Prisma.TicketPaymentCreateNestedManyWithoutUserInput
+  tickets?: Prisma.TicketCreateNestedManyWithoutUserInput
+  vouchers?: Prisma.VoucherCreateNestedManyWithoutUserInput
+  voucherOrders?: Prisma.VoucherOrderCreateNestedManyWithoutUserInput
+  voucherPayments?: Prisma.VoucherPaymentCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  newsletters?: Prisma.NewsletterCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutNotificationPreferencesInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role?: $Enums.UserRole
+  verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
+  token?: string | null
+  tokenExpiresAt?: Date | string | null
+  profilePicture?: string | null
+  createdAt?: Date | string
+  validatedAt?: Date | string | null
+  updatedAt?: Date | string
+  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutUserInput
+  galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutUserInput
+  profiles?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  ticketOrders?: Prisma.TicketOrderUncheckedCreateNestedManyWithoutUserInput
+  ticketPayments?: Prisma.TicketPaymentUncheckedCreateNestedManyWithoutUserInput
+  tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutUserInput
+  vouchers?: Prisma.VoucherUncheckedCreateNestedManyWithoutUserInput
+  voucherOrders?: Prisma.VoucherOrderUncheckedCreateNestedManyWithoutUserInput
+  voucherPayments?: Prisma.VoucherPaymentUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  newsletters?: Prisma.NewsletterUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutNotificationPreferencesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationPreferencesInput, Prisma.UserUncheckedCreateWithoutNotificationPreferencesInput>
+}
+
+export type UserUpsertWithoutNotificationPreferencesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutNotificationPreferencesInput, Prisma.UserUncheckedUpdateWithoutNotificationPreferencesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationPreferencesInput, Prisma.UserUncheckedCreateWithoutNotificationPreferencesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutNotificationPreferencesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutNotificationPreferencesInput, Prisma.UserUncheckedUpdateWithoutNotificationPreferencesInput>
+}
+
+export type UserUpdateWithoutNotificationPreferencesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  galleries?: Prisma.GalleryUpdateManyWithoutUserNestedInput
+  galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutUserNestedInput
+  profiles?: Prisma.ProfileUpdateOneWithoutUserNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  ticketOrders?: Prisma.TicketOrderUpdateManyWithoutUserNestedInput
+  ticketPayments?: Prisma.TicketPaymentUpdateManyWithoutUserNestedInput
+  tickets?: Prisma.TicketUpdateManyWithoutUserNestedInput
+  vouchers?: Prisma.VoucherUpdateManyWithoutUserNestedInput
+  voucherOrders?: Prisma.VoucherOrderUpdateManyWithoutUserNestedInput
+  voucherPayments?: Prisma.VoucherPaymentUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutNotificationPreferencesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  galleries?: Prisma.GalleryUncheckedUpdateManyWithoutUserNestedInput
+  galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutUserNestedInput
+  profiles?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  ticketOrders?: Prisma.TicketOrderUncheckedUpdateManyWithoutUserNestedInput
+  ticketPayments?: Prisma.TicketPaymentUncheckedUpdateManyWithoutUserNestedInput
+  tickets?: Prisma.TicketUncheckedUpdateManyWithoutUserNestedInput
+  vouchers?: Prisma.VoucherUncheckedUpdateManyWithoutUserNestedInput
+  voucherOrders?: Prisma.VoucherOrderUncheckedUpdateManyWithoutUserNestedInput
+  voucherPayments?: Prisma.VoucherPaymentUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutNotificationsInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role?: $Enums.UserRole
+  verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
+  token?: string | null
+  tokenExpiresAt?: Date | string | null
+  profilePicture?: string | null
+  createdAt?: Date | string
+  validatedAt?: Date | string | null
+  updatedAt?: Date | string
+  carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  galleries?: Prisma.GalleryCreateNestedManyWithoutUserInput
+  galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutUserInput
+  profiles?: Prisma.ProfileCreateNestedOneWithoutUserInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  ticketOrders?: Prisma.TicketOrderCreateNestedManyWithoutUserInput
+  ticketPayments?: Prisma.TicketPaymentCreateNestedManyWithoutUserInput
+  tickets?: Prisma.TicketCreateNestedManyWithoutUserInput
+  vouchers?: Prisma.VoucherCreateNestedManyWithoutUserInput
+  voucherOrders?: Prisma.VoucherOrderCreateNestedManyWithoutUserInput
+  voucherPayments?: Prisma.VoucherPaymentCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutNotificationsInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role?: $Enums.UserRole
+  verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
+  token?: string | null
+  tokenExpiresAt?: Date | string | null
+  profilePicture?: string | null
+  createdAt?: Date | string
+  validatedAt?: Date | string | null
+  updatedAt?: Date | string
+  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutUserInput
+  galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutUserInput
+  profiles?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  ticketOrders?: Prisma.TicketOrderUncheckedCreateNestedManyWithoutUserInput
+  ticketPayments?: Prisma.TicketPaymentUncheckedCreateNestedManyWithoutUserInput
+  tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutUserInput
+  vouchers?: Prisma.VoucherUncheckedCreateNestedManyWithoutUserInput
+  voucherOrders?: Prisma.VoucherOrderUncheckedCreateNestedManyWithoutUserInput
+  voucherPayments?: Prisma.VoucherPaymentUncheckedCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutNotificationsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+}
+
+export type UserUpsertWithoutNotificationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutNotificationsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type UserUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  galleries?: Prisma.GalleryUpdateManyWithoutUserNestedInput
+  galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutUserNestedInput
+  profiles?: Prisma.ProfileUpdateOneWithoutUserNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  ticketOrders?: Prisma.TicketOrderUpdateManyWithoutUserNestedInput
+  ticketPayments?: Prisma.TicketPaymentUpdateManyWithoutUserNestedInput
+  tickets?: Prisma.TicketUpdateManyWithoutUserNestedInput
+  vouchers?: Prisma.VoucherUpdateManyWithoutUserNestedInput
+  voucherOrders?: Prisma.VoucherOrderUpdateManyWithoutUserNestedInput
+  voucherPayments?: Prisma.VoucherPaymentUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  galleries?: Prisma.GalleryUncheckedUpdateManyWithoutUserNestedInput
+  galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutUserNestedInput
+  profiles?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  ticketOrders?: Prisma.TicketOrderUncheckedUpdateManyWithoutUserNestedInput
+  ticketPayments?: Prisma.TicketPaymentUncheckedUpdateManyWithoutUserNestedInput
+  tickets?: Prisma.TicketUncheckedUpdateManyWithoutUserNestedInput
+  vouchers?: Prisma.VoucherUncheckedUpdateManyWithoutUserNestedInput
+  voucherOrders?: Prisma.VoucherOrderUncheckedUpdateManyWithoutUserNestedInput
+  voucherPayments?: Prisma.VoucherPaymentUncheckedUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutProfilesInput = {
@@ -930,6 +1285,9 @@ export type UserCreateWithoutProfilesInput = {
   vouchers?: Prisma.VoucherCreateNestedManyWithoutUserInput
   voucherOrders?: Prisma.VoucherOrderCreateNestedManyWithoutUserInput
   voucherPayments?: Prisma.VoucherPaymentCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutProfilesInput = {
@@ -958,6 +1316,9 @@ export type UserUncheckedCreateWithoutProfilesInput = {
   vouchers?: Prisma.VoucherUncheckedCreateNestedManyWithoutUserInput
   voucherOrders?: Prisma.VoucherOrderUncheckedCreateNestedManyWithoutUserInput
   voucherPayments?: Prisma.VoucherPaymentUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutProfilesInput = {
@@ -1002,6 +1363,9 @@ export type UserUpdateWithoutProfilesInput = {
   vouchers?: Prisma.VoucherUpdateManyWithoutUserNestedInput
   voucherOrders?: Prisma.VoucherOrderUpdateManyWithoutUserNestedInput
   voucherPayments?: Prisma.VoucherPaymentUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProfilesInput = {
@@ -1030,6 +1394,9 @@ export type UserUncheckedUpdateWithoutProfilesInput = {
   vouchers?: Prisma.VoucherUncheckedUpdateManyWithoutUserNestedInput
   voucherOrders?: Prisma.VoucherOrderUncheckedUpdateManyWithoutUserNestedInput
   voucherPayments?: Prisma.VoucherPaymentUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCartsInput = {
@@ -1058,6 +1425,9 @@ export type UserCreateWithoutCartsInput = {
   vouchers?: Prisma.VoucherCreateNestedManyWithoutUserInput
   voucherOrders?: Prisma.VoucherOrderCreateNestedManyWithoutUserInput
   voucherPayments?: Prisma.VoucherPaymentCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCartsInput = {
@@ -1086,6 +1456,9 @@ export type UserUncheckedCreateWithoutCartsInput = {
   vouchers?: Prisma.VoucherUncheckedCreateNestedManyWithoutUserInput
   voucherOrders?: Prisma.VoucherOrderUncheckedCreateNestedManyWithoutUserInput
   voucherPayments?: Prisma.VoucherPaymentUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCartsInput = {
@@ -1130,6 +1503,9 @@ export type UserUpdateWithoutCartsInput = {
   vouchers?: Prisma.VoucherUpdateManyWithoutUserNestedInput
   voucherOrders?: Prisma.VoucherOrderUpdateManyWithoutUserNestedInput
   voucherPayments?: Prisma.VoucherPaymentUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCartsInput = {
@@ -1158,262 +1534,9 @@ export type UserUncheckedUpdateWithoutCartsInput = {
   vouchers?: Prisma.VoucherUncheckedUpdateManyWithoutUserNestedInput
   voucherOrders?: Prisma.VoucherOrderUncheckedUpdateManyWithoutUserNestedInput
   voucherPayments?: Prisma.VoucherPaymentUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutVoucherPaymentsInput = {
-  id?: string
-  name: string
-  email: string
-  password: string
-  role?: $Enums.UserRole
-  verifiedBadge?: boolean
-  frequentUser?: $Enums.UserBadgeLevel
-  oldUser?: $Enums.UserBadgeLevel
-  token?: string | null
-  tokenExpiresAt?: Date | string | null
-  profilePicture?: string | null
-  createdAt?: Date | string
-  validatedAt?: Date | string | null
-  updatedAt?: Date | string
-  carts?: Prisma.CartCreateNestedManyWithoutUserInput
-  galleries?: Prisma.GalleryCreateNestedManyWithoutUserInput
-  galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutUserInput
-  profiles?: Prisma.ProfileCreateNestedOneWithoutUserInput
-  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  ticketOrders?: Prisma.TicketOrderCreateNestedManyWithoutUserInput
-  ticketPayments?: Prisma.TicketPaymentCreateNestedManyWithoutUserInput
-  tickets?: Prisma.TicketCreateNestedManyWithoutUserInput
-  vouchers?: Prisma.VoucherCreateNestedManyWithoutUserInput
-  voucherOrders?: Prisma.VoucherOrderCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutVoucherPaymentsInput = {
-  id?: string
-  name: string
-  email: string
-  password: string
-  role?: $Enums.UserRole
-  verifiedBadge?: boolean
-  frequentUser?: $Enums.UserBadgeLevel
-  oldUser?: $Enums.UserBadgeLevel
-  token?: string | null
-  tokenExpiresAt?: Date | string | null
-  profilePicture?: string | null
-  createdAt?: Date | string
-  validatedAt?: Date | string | null
-  updatedAt?: Date | string
-  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
-  galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutUserInput
-  galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutUserInput
-  profiles?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
-  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  ticketOrders?: Prisma.TicketOrderUncheckedCreateNestedManyWithoutUserInput
-  ticketPayments?: Prisma.TicketPaymentUncheckedCreateNestedManyWithoutUserInput
-  tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutUserInput
-  vouchers?: Prisma.VoucherUncheckedCreateNestedManyWithoutUserInput
-  voucherOrders?: Prisma.VoucherOrderUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutVoucherPaymentsInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutVoucherPaymentsInput, Prisma.UserUncheckedCreateWithoutVoucherPaymentsInput>
-}
-
-export type UserUpsertWithoutVoucherPaymentsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutVoucherPaymentsInput, Prisma.UserUncheckedUpdateWithoutVoucherPaymentsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutVoucherPaymentsInput, Prisma.UserUncheckedCreateWithoutVoucherPaymentsInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutVoucherPaymentsInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutVoucherPaymentsInput, Prisma.UserUncheckedUpdateWithoutVoucherPaymentsInput>
-}
-
-export type UserUpdateWithoutVoucherPaymentsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
-  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
-  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
-  galleries?: Prisma.GalleryUpdateManyWithoutUserNestedInput
-  galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutUserNestedInput
-  profiles?: Prisma.ProfileUpdateOneWithoutUserNestedInput
-  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  ticketOrders?: Prisma.TicketOrderUpdateManyWithoutUserNestedInput
-  ticketPayments?: Prisma.TicketPaymentUpdateManyWithoutUserNestedInput
-  tickets?: Prisma.TicketUpdateManyWithoutUserNestedInput
-  vouchers?: Prisma.VoucherUpdateManyWithoutUserNestedInput
-  voucherOrders?: Prisma.VoucherOrderUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutVoucherPaymentsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
-  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
-  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
-  galleries?: Prisma.GalleryUncheckedUpdateManyWithoutUserNestedInput
-  galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutUserNestedInput
-  profiles?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
-  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  ticketOrders?: Prisma.TicketOrderUncheckedUpdateManyWithoutUserNestedInput
-  ticketPayments?: Prisma.TicketPaymentUncheckedUpdateManyWithoutUserNestedInput
-  tickets?: Prisma.TicketUncheckedUpdateManyWithoutUserNestedInput
-  vouchers?: Prisma.VoucherUncheckedUpdateManyWithoutUserNestedInput
-  voucherOrders?: Prisma.VoucherOrderUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutVoucherOrdersInput = {
-  id?: string
-  name: string
-  email: string
-  password: string
-  role?: $Enums.UserRole
-  verifiedBadge?: boolean
-  frequentUser?: $Enums.UserBadgeLevel
-  oldUser?: $Enums.UserBadgeLevel
-  token?: string | null
-  tokenExpiresAt?: Date | string | null
-  profilePicture?: string | null
-  createdAt?: Date | string
-  validatedAt?: Date | string | null
-  updatedAt?: Date | string
-  carts?: Prisma.CartCreateNestedManyWithoutUserInput
-  galleries?: Prisma.GalleryCreateNestedManyWithoutUserInput
-  galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutUserInput
-  profiles?: Prisma.ProfileCreateNestedOneWithoutUserInput
-  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  ticketOrders?: Prisma.TicketOrderCreateNestedManyWithoutUserInput
-  ticketPayments?: Prisma.TicketPaymentCreateNestedManyWithoutUserInput
-  tickets?: Prisma.TicketCreateNestedManyWithoutUserInput
-  vouchers?: Prisma.VoucherCreateNestedManyWithoutUserInput
-  voucherPayments?: Prisma.VoucherPaymentCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutVoucherOrdersInput = {
-  id?: string
-  name: string
-  email: string
-  password: string
-  role?: $Enums.UserRole
-  verifiedBadge?: boolean
-  frequentUser?: $Enums.UserBadgeLevel
-  oldUser?: $Enums.UserBadgeLevel
-  token?: string | null
-  tokenExpiresAt?: Date | string | null
-  profilePicture?: string | null
-  createdAt?: Date | string
-  validatedAt?: Date | string | null
-  updatedAt?: Date | string
-  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
-  galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutUserInput
-  galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutUserInput
-  profiles?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
-  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  ticketOrders?: Prisma.TicketOrderUncheckedCreateNestedManyWithoutUserInput
-  ticketPayments?: Prisma.TicketPaymentUncheckedCreateNestedManyWithoutUserInput
-  tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutUserInput
-  vouchers?: Prisma.VoucherUncheckedCreateNestedManyWithoutUserInput
-  voucherPayments?: Prisma.VoucherPaymentUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutVoucherOrdersInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutVoucherOrdersInput, Prisma.UserUncheckedCreateWithoutVoucherOrdersInput>
-}
-
-export type UserUpsertWithoutVoucherOrdersInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutVoucherOrdersInput, Prisma.UserUncheckedUpdateWithoutVoucherOrdersInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutVoucherOrdersInput, Prisma.UserUncheckedCreateWithoutVoucherOrdersInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutVoucherOrdersInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutVoucherOrdersInput, Prisma.UserUncheckedUpdateWithoutVoucherOrdersInput>
-}
-
-export type UserUpdateWithoutVoucherOrdersInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
-  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
-  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
-  galleries?: Prisma.GalleryUpdateManyWithoutUserNestedInput
-  galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutUserNestedInput
-  profiles?: Prisma.ProfileUpdateOneWithoutUserNestedInput
-  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  ticketOrders?: Prisma.TicketOrderUpdateManyWithoutUserNestedInput
-  ticketPayments?: Prisma.TicketPaymentUpdateManyWithoutUserNestedInput
-  tickets?: Prisma.TicketUpdateManyWithoutUserNestedInput
-  vouchers?: Prisma.VoucherUpdateManyWithoutUserNestedInput
-  voucherPayments?: Prisma.VoucherPaymentUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutVoucherOrdersInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
-  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
-  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
-  galleries?: Prisma.GalleryUncheckedUpdateManyWithoutUserNestedInput
-  galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutUserNestedInput
-  profiles?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
-  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  ticketOrders?: Prisma.TicketOrderUncheckedUpdateManyWithoutUserNestedInput
-  ticketPayments?: Prisma.TicketPaymentUncheckedUpdateManyWithoutUserNestedInput
-  tickets?: Prisma.TicketUncheckedUpdateManyWithoutUserNestedInput
-  vouchers?: Prisma.VoucherUncheckedUpdateManyWithoutUserNestedInput
-  voucherPayments?: Prisma.VoucherPaymentUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutVouchersInput = {
@@ -1442,6 +1565,9 @@ export type UserCreateWithoutVouchersInput = {
   tickets?: Prisma.TicketCreateNestedManyWithoutUserInput
   voucherOrders?: Prisma.VoucherOrderCreateNestedManyWithoutUserInput
   voucherPayments?: Prisma.VoucherPaymentCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutVouchersInput = {
@@ -1470,6 +1596,9 @@ export type UserUncheckedCreateWithoutVouchersInput = {
   tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutUserInput
   voucherOrders?: Prisma.VoucherOrderUncheckedCreateNestedManyWithoutUserInput
   voucherPayments?: Prisma.VoucherPaymentUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutVouchersInput = {
@@ -1514,6 +1643,9 @@ export type UserUpdateWithoutVouchersInput = {
   tickets?: Prisma.TicketUpdateManyWithoutUserNestedInput
   voucherOrders?: Prisma.VoucherOrderUpdateManyWithoutUserNestedInput
   voucherPayments?: Prisma.VoucherPaymentUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutVouchersInput = {
@@ -1542,9 +1674,12 @@ export type UserUncheckedUpdateWithoutVouchersInput = {
   tickets?: Prisma.TicketUncheckedUpdateManyWithoutUserNestedInput
   voucherOrders?: Prisma.VoucherOrderUncheckedUpdateManyWithoutUserNestedInput
   voucherPayments?: Prisma.VoucherPaymentUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUncheckedUpdateManyWithoutUserNestedInput
 }
 
-export type UserCreateWithoutReviewsInput = {
+export type UserCreateWithoutVoucherOrdersInput = {
   id?: string
   name: string
   email: string
@@ -1563,16 +1698,19 @@ export type UserCreateWithoutReviewsInput = {
   galleries?: Prisma.GalleryCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileCreateNestedOneWithoutUserInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   ticketOrders?: Prisma.TicketOrderCreateNestedManyWithoutUserInput
   ticketPayments?: Prisma.TicketPaymentCreateNestedManyWithoutUserInput
   tickets?: Prisma.TicketCreateNestedManyWithoutUserInput
   vouchers?: Prisma.VoucherCreateNestedManyWithoutUserInput
-  voucherOrders?: Prisma.VoucherOrderCreateNestedManyWithoutUserInput
   voucherPayments?: Prisma.VoucherPaymentCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutReviewsInput = {
+export type UserUncheckedCreateWithoutVoucherOrdersInput = {
   id?: string
   name: string
   email: string
@@ -1591,32 +1729,35 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   ticketOrders?: Prisma.TicketOrderUncheckedCreateNestedManyWithoutUserInput
   ticketPayments?: Prisma.TicketPaymentUncheckedCreateNestedManyWithoutUserInput
   tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutUserInput
   vouchers?: Prisma.VoucherUncheckedCreateNestedManyWithoutUserInput
-  voucherOrders?: Prisma.VoucherOrderUncheckedCreateNestedManyWithoutUserInput
   voucherPayments?: Prisma.VoucherPaymentUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterUncheckedCreateNestedManyWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutReviewsInput = {
+export type UserCreateOrConnectWithoutVoucherOrdersInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutReviewsInput, Prisma.UserUncheckedCreateWithoutReviewsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutVoucherOrdersInput, Prisma.UserUncheckedCreateWithoutVoucherOrdersInput>
 }
 
-export type UserUpsertWithoutReviewsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutReviewsInput, Prisma.UserUncheckedUpdateWithoutReviewsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutReviewsInput, Prisma.UserUncheckedCreateWithoutReviewsInput>
+export type UserUpsertWithoutVoucherOrdersInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutVoucherOrdersInput, Prisma.UserUncheckedUpdateWithoutVoucherOrdersInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutVoucherOrdersInput, Prisma.UserUncheckedCreateWithoutVoucherOrdersInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutReviewsInput = {
+export type UserUpdateToOneWithWhereWithoutVoucherOrdersInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutReviewsInput, Prisma.UserUncheckedUpdateWithoutReviewsInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutVoucherOrdersInput, Prisma.UserUncheckedUpdateWithoutVoucherOrdersInput>
 }
 
-export type UserUpdateWithoutReviewsInput = {
+export type UserUpdateWithoutVoucherOrdersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1635,16 +1776,19 @@ export type UserUpdateWithoutReviewsInput = {
   galleries?: Prisma.GalleryUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUpdateOneWithoutUserNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   ticketOrders?: Prisma.TicketOrderUpdateManyWithoutUserNestedInput
   ticketPayments?: Prisma.TicketPaymentUpdateManyWithoutUserNestedInput
   tickets?: Prisma.TicketUpdateManyWithoutUserNestedInput
   vouchers?: Prisma.VoucherUpdateManyWithoutUserNestedInput
-  voucherOrders?: Prisma.VoucherOrderUpdateManyWithoutUserNestedInput
   voucherPayments?: Prisma.VoucherPaymentUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUpdateManyWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutReviewsInput = {
+export type UserUncheckedUpdateWithoutVoucherOrdersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1663,144 +1807,19 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   galleries?: Prisma.GalleryUncheckedUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  ticketOrders?: Prisma.TicketOrderUncheckedUpdateManyWithoutUserNestedInput
-  ticketPayments?: Prisma.TicketPaymentUncheckedUpdateManyWithoutUserNestedInput
-  tickets?: Prisma.TicketUncheckedUpdateManyWithoutUserNestedInput
-  vouchers?: Prisma.VoucherUncheckedUpdateManyWithoutUserNestedInput
-  voucherOrders?: Prisma.VoucherOrderUncheckedUpdateManyWithoutUserNestedInput
-  voucherPayments?: Prisma.VoucherPaymentUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutGalleriesInput = {
-  id?: string
-  name: string
-  email: string
-  password: string
-  role?: $Enums.UserRole
-  verifiedBadge?: boolean
-  frequentUser?: $Enums.UserBadgeLevel
-  oldUser?: $Enums.UserBadgeLevel
-  token?: string | null
-  tokenExpiresAt?: Date | string | null
-  profilePicture?: string | null
-  createdAt?: Date | string
-  validatedAt?: Date | string | null
-  updatedAt?: Date | string
-  carts?: Prisma.CartCreateNestedManyWithoutUserInput
-  galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutUserInput
-  profiles?: Prisma.ProfileCreateNestedOneWithoutUserInput
-  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  ticketOrders?: Prisma.TicketOrderCreateNestedManyWithoutUserInput
-  ticketPayments?: Prisma.TicketPaymentCreateNestedManyWithoutUserInput
-  tickets?: Prisma.TicketCreateNestedManyWithoutUserInput
-  vouchers?: Prisma.VoucherCreateNestedManyWithoutUserInput
-  voucherOrders?: Prisma.VoucherOrderCreateNestedManyWithoutUserInput
-  voucherPayments?: Prisma.VoucherPaymentCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutGalleriesInput = {
-  id?: string
-  name: string
-  email: string
-  password: string
-  role?: $Enums.UserRole
-  verifiedBadge?: boolean
-  frequentUser?: $Enums.UserBadgeLevel
-  oldUser?: $Enums.UserBadgeLevel
-  token?: string | null
-  tokenExpiresAt?: Date | string | null
-  profilePicture?: string | null
-  createdAt?: Date | string
-  validatedAt?: Date | string | null
-  updatedAt?: Date | string
-  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
-  galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutUserInput
-  profiles?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
-  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  ticketOrders?: Prisma.TicketOrderUncheckedCreateNestedManyWithoutUserInput
-  ticketPayments?: Prisma.TicketPaymentUncheckedCreateNestedManyWithoutUserInput
-  tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutUserInput
-  vouchers?: Prisma.VoucherUncheckedCreateNestedManyWithoutUserInput
-  voucherOrders?: Prisma.VoucherOrderUncheckedCreateNestedManyWithoutUserInput
-  voucherPayments?: Prisma.VoucherPaymentUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutGalleriesInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutGalleriesInput, Prisma.UserUncheckedCreateWithoutGalleriesInput>
-}
-
-export type UserUpsertWithoutGalleriesInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutGalleriesInput, Prisma.UserUncheckedUpdateWithoutGalleriesInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutGalleriesInput, Prisma.UserUncheckedCreateWithoutGalleriesInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutGalleriesInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutGalleriesInput, Prisma.UserUncheckedUpdateWithoutGalleriesInput>
-}
-
-export type UserUpdateWithoutGalleriesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
-  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
-  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
-  galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutUserNestedInput
-  profiles?: Prisma.ProfileUpdateOneWithoutUserNestedInput
-  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  ticketOrders?: Prisma.TicketOrderUpdateManyWithoutUserNestedInput
-  ticketPayments?: Prisma.TicketPaymentUpdateManyWithoutUserNestedInput
-  tickets?: Prisma.TicketUpdateManyWithoutUserNestedInput
-  vouchers?: Prisma.VoucherUpdateManyWithoutUserNestedInput
-  voucherOrders?: Prisma.VoucherOrderUpdateManyWithoutUserNestedInput
-  voucherPayments?: Prisma.VoucherPaymentUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutGalleriesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
-  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
-  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
-  galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutUserNestedInput
-  profiles?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   ticketOrders?: Prisma.TicketOrderUncheckedUpdateManyWithoutUserNestedInput
   ticketPayments?: Prisma.TicketPaymentUncheckedUpdateManyWithoutUserNestedInput
   tickets?: Prisma.TicketUncheckedUpdateManyWithoutUserNestedInput
   vouchers?: Prisma.VoucherUncheckedUpdateManyWithoutUserNestedInput
-  voucherOrders?: Prisma.VoucherOrderUncheckedUpdateManyWithoutUserNestedInput
   voucherPayments?: Prisma.VoucherPaymentUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUncheckedUpdateManyWithoutUserNestedInput
 }
 
-export type UserCreateWithoutGalleryLikesInput = {
+export type UserCreateWithoutVoucherPaymentsInput = {
   id?: string
   name: string
   email: string
@@ -1817,6 +1836,7 @@ export type UserCreateWithoutGalleryLikesInput = {
   updatedAt?: Date | string
   carts?: Prisma.CartCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryCreateNestedManyWithoutUserInput
+  galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileCreateNestedOneWithoutUserInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
@@ -1825,10 +1845,12 @@ export type UserCreateWithoutGalleryLikesInput = {
   tickets?: Prisma.TicketCreateNestedManyWithoutUserInput
   vouchers?: Prisma.VoucherCreateNestedManyWithoutUserInput
   voucherOrders?: Prisma.VoucherOrderCreateNestedManyWithoutUserInput
-  voucherPayments?: Prisma.VoucherPaymentCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutGalleryLikesInput = {
+export type UserUncheckedCreateWithoutVoucherPaymentsInput = {
   id?: string
   name: string
   email: string
@@ -1845,6 +1867,7 @@ export type UserUncheckedCreateWithoutGalleryLikesInput = {
   updatedAt?: Date | string
   carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutUserInput
+  galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
@@ -1853,26 +1876,28 @@ export type UserUncheckedCreateWithoutGalleryLikesInput = {
   tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutUserInput
   vouchers?: Prisma.VoucherUncheckedCreateNestedManyWithoutUserInput
   voucherOrders?: Prisma.VoucherOrderUncheckedCreateNestedManyWithoutUserInput
-  voucherPayments?: Prisma.VoucherPaymentUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterUncheckedCreateNestedManyWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutGalleryLikesInput = {
+export type UserCreateOrConnectWithoutVoucherPaymentsInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutGalleryLikesInput, Prisma.UserUncheckedCreateWithoutGalleryLikesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutVoucherPaymentsInput, Prisma.UserUncheckedCreateWithoutVoucherPaymentsInput>
 }
 
-export type UserUpsertWithoutGalleryLikesInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutGalleryLikesInput, Prisma.UserUncheckedUpdateWithoutGalleryLikesInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutGalleryLikesInput, Prisma.UserUncheckedCreateWithoutGalleryLikesInput>
+export type UserUpsertWithoutVoucherPaymentsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutVoucherPaymentsInput, Prisma.UserUncheckedUpdateWithoutVoucherPaymentsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutVoucherPaymentsInput, Prisma.UserUncheckedCreateWithoutVoucherPaymentsInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutGalleryLikesInput = {
+export type UserUpdateToOneWithWhereWithoutVoucherPaymentsInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutGalleryLikesInput, Prisma.UserUncheckedUpdateWithoutGalleryLikesInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutVoucherPaymentsInput, Prisma.UserUncheckedUpdateWithoutVoucherPaymentsInput>
 }
 
-export type UserUpdateWithoutGalleryLikesInput = {
+export type UserUpdateWithoutVoucherPaymentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1889,6 +1914,7 @@ export type UserUpdateWithoutGalleryLikesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUpdateManyWithoutUserNestedInput
+  galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
@@ -1897,10 +1923,12 @@ export type UserUpdateWithoutGalleryLikesInput = {
   tickets?: Prisma.TicketUpdateManyWithoutUserNestedInput
   vouchers?: Prisma.VoucherUpdateManyWithoutUserNestedInput
   voucherOrders?: Prisma.VoucherOrderUpdateManyWithoutUserNestedInput
-  voucherPayments?: Prisma.VoucherPaymentUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUpdateManyWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutGalleryLikesInput = {
+export type UserUncheckedUpdateWithoutVoucherPaymentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1917,6 +1945,7 @@ export type UserUncheckedUpdateWithoutGalleryLikesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUncheckedUpdateManyWithoutUserNestedInput
+  galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
@@ -1925,7 +1954,9 @@ export type UserUncheckedUpdateWithoutGalleryLikesInput = {
   tickets?: Prisma.TicketUncheckedUpdateManyWithoutUserNestedInput
   vouchers?: Prisma.VoucherUncheckedUpdateManyWithoutUserNestedInput
   voucherOrders?: Prisma.VoucherOrderUncheckedUpdateManyWithoutUserNestedInput
-  voucherPayments?: Prisma.VoucherPaymentUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTicketsInput = {
@@ -1954,6 +1985,9 @@ export type UserCreateWithoutTicketsInput = {
   vouchers?: Prisma.VoucherCreateNestedManyWithoutUserInput
   voucherOrders?: Prisma.VoucherOrderCreateNestedManyWithoutUserInput
   voucherPayments?: Prisma.VoucherPaymentCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTicketsInput = {
@@ -1982,6 +2016,9 @@ export type UserUncheckedCreateWithoutTicketsInput = {
   vouchers?: Prisma.VoucherUncheckedCreateNestedManyWithoutUserInput
   voucherOrders?: Prisma.VoucherOrderUncheckedCreateNestedManyWithoutUserInput
   voucherPayments?: Prisma.VoucherPaymentUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTicketsInput = {
@@ -2026,6 +2063,9 @@ export type UserUpdateWithoutTicketsInput = {
   vouchers?: Prisma.VoucherUpdateManyWithoutUserNestedInput
   voucherOrders?: Prisma.VoucherOrderUpdateManyWithoutUserNestedInput
   voucherPayments?: Prisma.VoucherPaymentUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTicketsInput = {
@@ -2054,6 +2094,9 @@ export type UserUncheckedUpdateWithoutTicketsInput = {
   vouchers?: Prisma.VoucherUncheckedUpdateManyWithoutUserNestedInput
   voucherOrders?: Prisma.VoucherOrderUncheckedUpdateManyWithoutUserNestedInput
   voucherPayments?: Prisma.VoucherPaymentUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTicketOrdersInput = {
@@ -2082,6 +2125,9 @@ export type UserCreateWithoutTicketOrdersInput = {
   vouchers?: Prisma.VoucherCreateNestedManyWithoutUserInput
   voucherOrders?: Prisma.VoucherOrderCreateNestedManyWithoutUserInput
   voucherPayments?: Prisma.VoucherPaymentCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTicketOrdersInput = {
@@ -2110,6 +2156,9 @@ export type UserUncheckedCreateWithoutTicketOrdersInput = {
   vouchers?: Prisma.VoucherUncheckedCreateNestedManyWithoutUserInput
   voucherOrders?: Prisma.VoucherOrderUncheckedCreateNestedManyWithoutUserInput
   voucherPayments?: Prisma.VoucherPaymentUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTicketOrdersInput = {
@@ -2154,6 +2203,9 @@ export type UserUpdateWithoutTicketOrdersInput = {
   vouchers?: Prisma.VoucherUpdateManyWithoutUserNestedInput
   voucherOrders?: Prisma.VoucherOrderUpdateManyWithoutUserNestedInput
   voucherPayments?: Prisma.VoucherPaymentUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTicketOrdersInput = {
@@ -2182,6 +2234,9 @@ export type UserUncheckedUpdateWithoutTicketOrdersInput = {
   vouchers?: Prisma.VoucherUncheckedUpdateManyWithoutUserNestedInput
   voucherOrders?: Prisma.VoucherOrderUncheckedUpdateManyWithoutUserNestedInput
   voucherPayments?: Prisma.VoucherPaymentUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTicketPaymentsInput = {
@@ -2210,6 +2265,9 @@ export type UserCreateWithoutTicketPaymentsInput = {
   vouchers?: Prisma.VoucherCreateNestedManyWithoutUserInput
   voucherOrders?: Prisma.VoucherOrderCreateNestedManyWithoutUserInput
   voucherPayments?: Prisma.VoucherPaymentCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTicketPaymentsInput = {
@@ -2238,6 +2296,9 @@ export type UserUncheckedCreateWithoutTicketPaymentsInput = {
   vouchers?: Prisma.VoucherUncheckedCreateNestedManyWithoutUserInput
   voucherOrders?: Prisma.VoucherOrderUncheckedCreateNestedManyWithoutUserInput
   voucherPayments?: Prisma.VoucherPaymentUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTicketPaymentsInput = {
@@ -2282,6 +2343,9 @@ export type UserUpdateWithoutTicketPaymentsInput = {
   vouchers?: Prisma.VoucherUpdateManyWithoutUserNestedInput
   voucherOrders?: Prisma.VoucherOrderUpdateManyWithoutUserNestedInput
   voucherPayments?: Prisma.VoucherPaymentUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTicketPaymentsInput = {
@@ -2310,6 +2374,569 @@ export type UserUncheckedUpdateWithoutTicketPaymentsInput = {
   vouchers?: Prisma.VoucherUncheckedUpdateManyWithoutUserNestedInput
   voucherOrders?: Prisma.VoucherOrderUncheckedUpdateManyWithoutUserNestedInput
   voucherPayments?: Prisma.VoucherPaymentUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutReviewsInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role?: $Enums.UserRole
+  verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
+  token?: string | null
+  tokenExpiresAt?: Date | string | null
+  profilePicture?: string | null
+  createdAt?: Date | string
+  validatedAt?: Date | string | null
+  updatedAt?: Date | string
+  carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  galleries?: Prisma.GalleryCreateNestedManyWithoutUserInput
+  galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutUserInput
+  profiles?: Prisma.ProfileCreateNestedOneWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  ticketOrders?: Prisma.TicketOrderCreateNestedManyWithoutUserInput
+  ticketPayments?: Prisma.TicketPaymentCreateNestedManyWithoutUserInput
+  tickets?: Prisma.TicketCreateNestedManyWithoutUserInput
+  vouchers?: Prisma.VoucherCreateNestedManyWithoutUserInput
+  voucherOrders?: Prisma.VoucherOrderCreateNestedManyWithoutUserInput
+  voucherPayments?: Prisma.VoucherPaymentCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutReviewsInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role?: $Enums.UserRole
+  verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
+  token?: string | null
+  tokenExpiresAt?: Date | string | null
+  profilePicture?: string | null
+  createdAt?: Date | string
+  validatedAt?: Date | string | null
+  updatedAt?: Date | string
+  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutUserInput
+  galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutUserInput
+  profiles?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  ticketOrders?: Prisma.TicketOrderUncheckedCreateNestedManyWithoutUserInput
+  ticketPayments?: Prisma.TicketPaymentUncheckedCreateNestedManyWithoutUserInput
+  tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutUserInput
+  vouchers?: Prisma.VoucherUncheckedCreateNestedManyWithoutUserInput
+  voucherOrders?: Prisma.VoucherOrderUncheckedCreateNestedManyWithoutUserInput
+  voucherPayments?: Prisma.VoucherPaymentUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutReviewsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutReviewsInput, Prisma.UserUncheckedCreateWithoutReviewsInput>
+}
+
+export type UserUpsertWithoutReviewsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutReviewsInput, Prisma.UserUncheckedUpdateWithoutReviewsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutReviewsInput, Prisma.UserUncheckedCreateWithoutReviewsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutReviewsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutReviewsInput, Prisma.UserUncheckedUpdateWithoutReviewsInput>
+}
+
+export type UserUpdateWithoutReviewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  galleries?: Prisma.GalleryUpdateManyWithoutUserNestedInput
+  galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutUserNestedInput
+  profiles?: Prisma.ProfileUpdateOneWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  ticketOrders?: Prisma.TicketOrderUpdateManyWithoutUserNestedInput
+  ticketPayments?: Prisma.TicketPaymentUpdateManyWithoutUserNestedInput
+  tickets?: Prisma.TicketUpdateManyWithoutUserNestedInput
+  vouchers?: Prisma.VoucherUpdateManyWithoutUserNestedInput
+  voucherOrders?: Prisma.VoucherOrderUpdateManyWithoutUserNestedInput
+  voucherPayments?: Prisma.VoucherPaymentUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutReviewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  galleries?: Prisma.GalleryUncheckedUpdateManyWithoutUserNestedInput
+  galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutUserNestedInput
+  profiles?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  ticketOrders?: Prisma.TicketOrderUncheckedUpdateManyWithoutUserNestedInput
+  ticketPayments?: Prisma.TicketPaymentUncheckedUpdateManyWithoutUserNestedInput
+  tickets?: Prisma.TicketUncheckedUpdateManyWithoutUserNestedInput
+  vouchers?: Prisma.VoucherUncheckedUpdateManyWithoutUserNestedInput
+  voucherOrders?: Prisma.VoucherOrderUncheckedUpdateManyWithoutUserNestedInput
+  voucherPayments?: Prisma.VoucherPaymentUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutGalleriesInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role?: $Enums.UserRole
+  verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
+  token?: string | null
+  tokenExpiresAt?: Date | string | null
+  profilePicture?: string | null
+  createdAt?: Date | string
+  validatedAt?: Date | string | null
+  updatedAt?: Date | string
+  carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutUserInput
+  profiles?: Prisma.ProfileCreateNestedOneWithoutUserInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  ticketOrders?: Prisma.TicketOrderCreateNestedManyWithoutUserInput
+  ticketPayments?: Prisma.TicketPaymentCreateNestedManyWithoutUserInput
+  tickets?: Prisma.TicketCreateNestedManyWithoutUserInput
+  vouchers?: Prisma.VoucherCreateNestedManyWithoutUserInput
+  voucherOrders?: Prisma.VoucherOrderCreateNestedManyWithoutUserInput
+  voucherPayments?: Prisma.VoucherPaymentCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutGalleriesInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role?: $Enums.UserRole
+  verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
+  token?: string | null
+  tokenExpiresAt?: Date | string | null
+  profilePicture?: string | null
+  createdAt?: Date | string
+  validatedAt?: Date | string | null
+  updatedAt?: Date | string
+  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutUserInput
+  profiles?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  ticketOrders?: Prisma.TicketOrderUncheckedCreateNestedManyWithoutUserInput
+  ticketPayments?: Prisma.TicketPaymentUncheckedCreateNestedManyWithoutUserInput
+  tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutUserInput
+  vouchers?: Prisma.VoucherUncheckedCreateNestedManyWithoutUserInput
+  voucherOrders?: Prisma.VoucherOrderUncheckedCreateNestedManyWithoutUserInput
+  voucherPayments?: Prisma.VoucherPaymentUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutGalleriesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutGalleriesInput, Prisma.UserUncheckedCreateWithoutGalleriesInput>
+}
+
+export type UserUpsertWithoutGalleriesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutGalleriesInput, Prisma.UserUncheckedUpdateWithoutGalleriesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutGalleriesInput, Prisma.UserUncheckedCreateWithoutGalleriesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutGalleriesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutGalleriesInput, Prisma.UserUncheckedUpdateWithoutGalleriesInput>
+}
+
+export type UserUpdateWithoutGalleriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutUserNestedInput
+  profiles?: Prisma.ProfileUpdateOneWithoutUserNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  ticketOrders?: Prisma.TicketOrderUpdateManyWithoutUserNestedInput
+  ticketPayments?: Prisma.TicketPaymentUpdateManyWithoutUserNestedInput
+  tickets?: Prisma.TicketUpdateManyWithoutUserNestedInput
+  vouchers?: Prisma.VoucherUpdateManyWithoutUserNestedInput
+  voucherOrders?: Prisma.VoucherOrderUpdateManyWithoutUserNestedInput
+  voucherPayments?: Prisma.VoucherPaymentUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutGalleriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutUserNestedInput
+  profiles?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  ticketOrders?: Prisma.TicketOrderUncheckedUpdateManyWithoutUserNestedInput
+  ticketPayments?: Prisma.TicketPaymentUncheckedUpdateManyWithoutUserNestedInput
+  tickets?: Prisma.TicketUncheckedUpdateManyWithoutUserNestedInput
+  vouchers?: Prisma.VoucherUncheckedUpdateManyWithoutUserNestedInput
+  voucherOrders?: Prisma.VoucherOrderUncheckedUpdateManyWithoutUserNestedInput
+  voucherPayments?: Prisma.VoucherPaymentUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutGalleryLikesInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role?: $Enums.UserRole
+  verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
+  token?: string | null
+  tokenExpiresAt?: Date | string | null
+  profilePicture?: string | null
+  createdAt?: Date | string
+  validatedAt?: Date | string | null
+  updatedAt?: Date | string
+  carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  galleries?: Prisma.GalleryCreateNestedManyWithoutUserInput
+  profiles?: Prisma.ProfileCreateNestedOneWithoutUserInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  ticketOrders?: Prisma.TicketOrderCreateNestedManyWithoutUserInput
+  ticketPayments?: Prisma.TicketPaymentCreateNestedManyWithoutUserInput
+  tickets?: Prisma.TicketCreateNestedManyWithoutUserInput
+  vouchers?: Prisma.VoucherCreateNestedManyWithoutUserInput
+  voucherOrders?: Prisma.VoucherOrderCreateNestedManyWithoutUserInput
+  voucherPayments?: Prisma.VoucherPaymentCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutGalleryLikesInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role?: $Enums.UserRole
+  verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
+  token?: string | null
+  tokenExpiresAt?: Date | string | null
+  profilePicture?: string | null
+  createdAt?: Date | string
+  validatedAt?: Date | string | null
+  updatedAt?: Date | string
+  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutUserInput
+  profiles?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  ticketOrders?: Prisma.TicketOrderUncheckedCreateNestedManyWithoutUserInput
+  ticketPayments?: Prisma.TicketPaymentUncheckedCreateNestedManyWithoutUserInput
+  tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutUserInput
+  vouchers?: Prisma.VoucherUncheckedCreateNestedManyWithoutUserInput
+  voucherOrders?: Prisma.VoucherOrderUncheckedCreateNestedManyWithoutUserInput
+  voucherPayments?: Prisma.VoucherPaymentUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutGalleryLikesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutGalleryLikesInput, Prisma.UserUncheckedCreateWithoutGalleryLikesInput>
+}
+
+export type UserUpsertWithoutGalleryLikesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutGalleryLikesInput, Prisma.UserUncheckedUpdateWithoutGalleryLikesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutGalleryLikesInput, Prisma.UserUncheckedCreateWithoutGalleryLikesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutGalleryLikesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutGalleryLikesInput, Prisma.UserUncheckedUpdateWithoutGalleryLikesInput>
+}
+
+export type UserUpdateWithoutGalleryLikesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  galleries?: Prisma.GalleryUpdateManyWithoutUserNestedInput
+  profiles?: Prisma.ProfileUpdateOneWithoutUserNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  ticketOrders?: Prisma.TicketOrderUpdateManyWithoutUserNestedInput
+  ticketPayments?: Prisma.TicketPaymentUpdateManyWithoutUserNestedInput
+  tickets?: Prisma.TicketUpdateManyWithoutUserNestedInput
+  vouchers?: Prisma.VoucherUpdateManyWithoutUserNestedInput
+  voucherOrders?: Prisma.VoucherOrderUpdateManyWithoutUserNestedInput
+  voucherPayments?: Prisma.VoucherPaymentUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutGalleryLikesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  galleries?: Prisma.GalleryUncheckedUpdateManyWithoutUserNestedInput
+  profiles?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  ticketOrders?: Prisma.TicketOrderUncheckedUpdateManyWithoutUserNestedInput
+  ticketPayments?: Prisma.TicketPaymentUncheckedUpdateManyWithoutUserNestedInput
+  tickets?: Prisma.TicketUncheckedUpdateManyWithoutUserNestedInput
+  vouchers?: Prisma.VoucherUncheckedUpdateManyWithoutUserNestedInput
+  voucherOrders?: Prisma.VoucherOrderUncheckedUpdateManyWithoutUserNestedInput
+  voucherPayments?: Prisma.VoucherPaymentUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutNewslettersInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role?: $Enums.UserRole
+  verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
+  token?: string | null
+  tokenExpiresAt?: Date | string | null
+  profilePicture?: string | null
+  createdAt?: Date | string
+  validatedAt?: Date | string | null
+  updatedAt?: Date | string
+  carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  galleries?: Prisma.GalleryCreateNestedManyWithoutUserInput
+  galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutUserInput
+  profiles?: Prisma.ProfileCreateNestedOneWithoutUserInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  ticketOrders?: Prisma.TicketOrderCreateNestedManyWithoutUserInput
+  ticketPayments?: Prisma.TicketPaymentCreateNestedManyWithoutUserInput
+  tickets?: Prisma.TicketCreateNestedManyWithoutUserInput
+  vouchers?: Prisma.VoucherCreateNestedManyWithoutUserInput
+  voucherOrders?: Prisma.VoucherOrderCreateNestedManyWithoutUserInput
+  voucherPayments?: Prisma.VoucherPaymentCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutNewslettersInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role?: $Enums.UserRole
+  verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
+  token?: string | null
+  tokenExpiresAt?: Date | string | null
+  profilePicture?: string | null
+  createdAt?: Date | string
+  validatedAt?: Date | string | null
+  updatedAt?: Date | string
+  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutUserInput
+  galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutUserInput
+  profiles?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  ticketOrders?: Prisma.TicketOrderUncheckedCreateNestedManyWithoutUserInput
+  ticketPayments?: Prisma.TicketPaymentUncheckedCreateNestedManyWithoutUserInput
+  tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutUserInput
+  vouchers?: Prisma.VoucherUncheckedCreateNestedManyWithoutUserInput
+  voucherOrders?: Prisma.VoucherOrderUncheckedCreateNestedManyWithoutUserInput
+  voucherPayments?: Prisma.VoucherPaymentUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutNewslettersInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutNewslettersInput, Prisma.UserUncheckedCreateWithoutNewslettersInput>
+}
+
+export type UserUpsertWithoutNewslettersInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutNewslettersInput, Prisma.UserUncheckedUpdateWithoutNewslettersInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutNewslettersInput, Prisma.UserUncheckedCreateWithoutNewslettersInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutNewslettersInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutNewslettersInput, Prisma.UserUncheckedUpdateWithoutNewslettersInput>
+}
+
+export type UserUpdateWithoutNewslettersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  galleries?: Prisma.GalleryUpdateManyWithoutUserNestedInput
+  galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutUserNestedInput
+  profiles?: Prisma.ProfileUpdateOneWithoutUserNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  ticketOrders?: Prisma.TicketOrderUpdateManyWithoutUserNestedInput
+  ticketPayments?: Prisma.TicketPaymentUpdateManyWithoutUserNestedInput
+  tickets?: Prisma.TicketUpdateManyWithoutUserNestedInput
+  vouchers?: Prisma.VoucherUpdateManyWithoutUserNestedInput
+  voucherOrders?: Prisma.VoucherOrderUpdateManyWithoutUserNestedInput
+  voucherPayments?: Prisma.VoucherPaymentUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutNewslettersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  galleries?: Prisma.GalleryUncheckedUpdateManyWithoutUserNestedInput
+  galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutUserNestedInput
+  profiles?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  ticketOrders?: Prisma.TicketOrderUncheckedUpdateManyWithoutUserNestedInput
+  ticketPayments?: Prisma.TicketPaymentUncheckedUpdateManyWithoutUserNestedInput
+  tickets?: Prisma.TicketUncheckedUpdateManyWithoutUserNestedInput
+  vouchers?: Prisma.VoucherUncheckedUpdateManyWithoutUserNestedInput
+  voucherOrders?: Prisma.VoucherOrderUncheckedUpdateManyWithoutUserNestedInput
+  voucherPayments?: Prisma.VoucherPaymentUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
 }
 
 
@@ -2329,6 +2956,8 @@ export type UserCountOutputType = {
   vouchers: number
   voucherOrders: number
   voucherPayments: number
+  notifications: number
+  newsletters: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2343,6 +2972,8 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   vouchers?: boolean | UserCountOutputTypeCountVouchersArgs
   voucherOrders?: boolean | UserCountOutputTypeCountVoucherOrdersArgs
   voucherPayments?: boolean | UserCountOutputTypeCountVoucherPaymentsArgs
+  notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
+  newsletters?: boolean | UserCountOutputTypeCountNewslettersArgs
 }
 
 /**
@@ -2432,6 +3063,20 @@ export type UserCountOutputTypeCountVoucherPaymentsArgs<ExtArgs extends runtime.
   where?: Prisma.VoucherPaymentWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountNewslettersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NewsletterWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2460,6 +3105,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   vouchers?: boolean | Prisma.User$vouchersArgs<ExtArgs>
   voucherOrders?: boolean | Prisma.User$voucherOrdersArgs<ExtArgs>
   voucherPayments?: boolean | Prisma.User$voucherPaymentsArgs<ExtArgs>
+  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
+  notificationPreferences?: boolean | Prisma.User$notificationPreferencesArgs<ExtArgs>
+  newsletters?: boolean | Prisma.User$newslettersArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -2528,6 +3176,9 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   vouchers?: boolean | Prisma.User$vouchersArgs<ExtArgs>
   voucherOrders?: boolean | Prisma.User$voucherOrdersArgs<ExtArgs>
   voucherPayments?: boolean | Prisma.User$voucherPaymentsArgs<ExtArgs>
+  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
+  notificationPreferences?: boolean | Prisma.User$notificationPreferencesArgs<ExtArgs>
+  newsletters?: boolean | Prisma.User$newslettersArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -2548,6 +3199,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     vouchers: Prisma.$VoucherPayload<ExtArgs>[]
     voucherOrders: Prisma.$VoucherOrderPayload<ExtArgs>[]
     voucherPayments: Prisma.$VoucherPaymentPayload<ExtArgs>[]
+    notifications: Prisma.$NotificationPayload<ExtArgs>[]
+    notificationPreferences: Prisma.$NotificationPreferencePayload<ExtArgs> | null
+    newsletters: Prisma.$NewsletterPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2970,6 +3624,9 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   vouchers<T extends Prisma.User$vouchersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$vouchersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VoucherPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   voucherOrders<T extends Prisma.User$voucherOrdersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$voucherOrdersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VoucherOrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   voucherPayments<T extends Prisma.User$voucherPaymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$voucherPaymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VoucherPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notificationPreferences<T extends Prisma.User$notificationPreferencesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationPreferencesArgs<ExtArgs>>): Prisma.Prisma__NotificationPreferenceClient<runtime.Types.Result.GetResult<Prisma.$NotificationPreferencePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  newsletters<T extends Prisma.User$newslettersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$newslettersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NewsletterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3686,6 +4343,73 @@ export type User$voucherPaymentsArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.VoucherPaymentScalarFieldEnum | Prisma.VoucherPaymentScalarFieldEnum[]
+}
+
+/**
+ * User.notifications
+ */
+export type User$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Notification
+   */
+  select?: Prisma.NotificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Notification
+   */
+  omit?: Prisma.NotificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationInclude<ExtArgs> | null
+  where?: Prisma.NotificationWhereInput
+  orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
+}
+
+/**
+ * User.notificationPreferences
+ */
+export type User$notificationPreferencesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the NotificationPreference
+   */
+  select?: Prisma.NotificationPreferenceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the NotificationPreference
+   */
+  omit?: Prisma.NotificationPreferenceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationPreferenceInclude<ExtArgs> | null
+  where?: Prisma.NotificationPreferenceWhereInput
+}
+
+/**
+ * User.newsletters
+ */
+export type User$newslettersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Newsletter
+   */
+  select?: Prisma.NewsletterSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Newsletter
+   */
+  omit?: Prisma.NewsletterOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NewsletterInclude<ExtArgs> | null
+  where?: Prisma.NewsletterWhereInput
+  orderBy?: Prisma.NewsletterOrderByWithRelationInput | Prisma.NewsletterOrderByWithRelationInput[]
+  cursor?: Prisma.NewsletterWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NewsletterScalarFieldEnum | Prisma.NewsletterScalarFieldEnum[]
 }
 
 /**

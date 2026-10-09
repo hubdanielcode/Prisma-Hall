@@ -1,32 +1,23 @@
 "use client";
 
-import { createContext, useMemo, useState, useEffect } from "react";
-import type { CartItem } from "../types/cartItem";
-import {
-  createCartItem as createCartItemService,
-  getCartItems as getCartItemsService,
-  updateCartItem as updateCartItemService,
-  deleteCartItem as deleteCartItemService,
-  clearCartItems as clearCartItemsService,
-} from "@/features/cart/services/cartServices";
+import { cartItemSchema, checkoutCartSchema } from "@/lib/validations/cart/cartItemSchemas";
+import { createContext, useMemo, useState } from "react";
+import { useCartItems } from "@/features/cart/hooks/useCartItems";
+import type { CartItemProps } from "../types/cartItem";
+import type z from "zod";
+import { serviceFee } from "../utils/serviceFee";
 
 interface CartContextType {
-  /* - Estados dos itens - */
+  /* - Dados do carrinho - */
 
-  cartItems: CartItem[];
+  cartItems: CartItemProps[];
+  isLoading: boolean;
+  error: Error | null;
 
   /* - Estados do carrinho - */
 
   isCartOpen: boolean;
   setIsCartOpen: (isCartOpen: boolean) => void;
-
-  /* - Estados de carregamento - */
-
-  isLoading: boolean;
-
-  /* - Estados de erro - */
-
-  error: string;
 
   /* - Definições - */
 
@@ -37,35 +28,38 @@ interface CartContextType {
 
   /* - Funções - */
 
-  handleIsAlreadyOnCart: (item: CartItem) => boolean;
-  handleAddToCart: (item: CartItem) => void;
-  handleRemoveFromCart: (id: string) => void;
-  handleIncreaseItemQuantity: (item: CartItem) => void;
-  handleDecreaseItemQuantity: (item: CartItem) => void;
-  handleClearCart: () => void;
+  handleAddToCart: (item: z.infer<typeof cartItemSchema>) => Promise<boolean>;
+  handleRemoveFromCart: (cartItemId: string) => Promise<void>;
+  handleIncreaseItemQuantity: (item: CartItemProps) => Promise<void>;
+  handleDecreaseItemQuantity: (item: CartItemProps) => Promise<void>;
+  handleClearCart: () => Promise<void>;
+  handleCheckout: (checkout: z.infer<typeof checkoutCartSchema>) => Promise<{ ticketOrderId: string | null; voucherOrderId: string | null } | false>;
   handleOpenCart: () => void;
 }
 
 const CartContext = createContext<CartContextType | null>(null);
 
 const CartProvider = ({ children }: { children: React.ReactNode }) => {
-  /* - Estados dos itens - */
+  /* - Dados do carrinho - */
 
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const {
+    cartItems: fetchedCartItems,
+    isLoading,
+    error,
+    addItemToCartMutation,
+    updateItemQuantityMutation,
+    removeItemFromCartMutation,
+    clearCartMutation,
+    checkoutCartMutation,
+  } = useCartItems();
 
   /* - Estados do carrinho - */
 
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
 
-  /* - Estados de carregamento - */
-
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  /* - Estados de erro - */
-
-  const [error, setError] = useState<string>("");
-
   /* - Definições - */
+
+  const cartItems = useMemo(() => fetchedCartItems ?? [], [fetchedCartItems]);
 
   const totalItems = useMemo(() => {
     return cartItems.reduce((accumulator, item) => accumulator + item.quantity, 0);
@@ -75,138 +69,71 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
     return cartItems.reduce((accumulator, item) => accumulator + item.price * item.quantity, 0);
   }, [cartItems]);
 
-  const serviceFee = totalItemPrice * 0.1;
-  const totalPrice = totalItemPrice + serviceFee;
+  const transactionWithServiceFee = totalItemPrice * serviceFee;
+  const totalPrice = totalItemPrice + transactionWithServiceFee;
 
   /* - Funções - */
 
-  // 1. Busca os itens do carrinho no momento da renderização
+  // 1. Adiciona um item no carrinho (se ele já estiver lá, a action soma a quantidade)
 
-  useEffect(() => {
-    const fetchCartItems = async () => {
-      try {
-        const data = await getCartItemsService();
-        setCartItems(data as CartItem[]);
-      } catch (error) {
-        if (error instanceof Error) {
-          setError(error.message);
-        }
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchCartItems();
-  }, []);
+  const handleAddToCart = async (item: z.infer<typeof cartItemSchema>) => {
+    const addItemToCartResult = await addItemToCartMutation(item);
 
-  // 2. Verifica se um item já existe no carrinho
-
-  const handleIsAlreadyOnCart = (item: CartItem): boolean => {
-    return cartItems.some((cartItem) =>
-      item.type === "drinks" && cartItem.type === "drinks"
-        ? item.product_id === cartItem.product_id
-        : item.type === "tickets" && cartItem.type === "tickets"
-          ? item.event_id === cartItem.event_id
-          : false,
-    );
+    return addItemToCartResult ? true : false;
   };
 
-  // 3. Adiciona um item no carrinho
+  // 2. Remove um item específico do carrinho
 
-  const handleAddToCart = async (item: CartItem) => {
-    if (handleIsAlreadyOnCart(item)) {
-      await handleIncreaseItemQuantity(item);
+  const handleRemoveFromCart = async (cartItemId: string) => {
+    await removeItemFromCartMutation(cartItemId);
+  };
+
+  // 3. Aumenta a quantidade de um item específico do carrinho
+
+  const handleIncreaseItemQuantity = async (item: CartItemProps) => {
+    await updateItemQuantityMutation({ cartItemId: item.id, quantity: item.quantity + 1 });
+  };
+
+  // 4. Diminui a quantidade de um item específico do carrinho (com 1 unidade, remove o item)
+
+  const handleDecreaseItemQuantity = async (item: CartItemProps) => {
+    if (item.quantity === 1) {
+      await handleRemoveFromCart(item.id);
       return;
     }
 
-    await createCartItemService(item);
-    const updatedCart = await getCartItemsService();
-    setCartItems(updatedCart as CartItem[]);
+    await updateItemQuantityMutation({ cartItemId: item.id, quantity: item.quantity - 1 });
   };
 
-  // 4. Remove um item específico do carrinho
-
-  const handleRemoveFromCart = async (id: string) => {
-    await deleteCartItemService(id);
-    setCartItems(cartItems.filter((cartItem) => cartItem.id !== id));
-  };
-
-  // 5. Aumenta a quantidade de um item específico do carrinho
-
-  const handleIncreaseItemQuantity = async (item: CartItem) => {
-    const itemToUpdate = cartItems.find((cartItem) =>
-      cartItem.type === "drinks" && item.type === "drinks"
-        ? cartItem.product_id === item.product_id
-        : cartItem.type === "tickets" && item.type === "tickets"
-          ? cartItem.event_id === item.event_id
-          : false,
-    );
-
-    if (!itemToUpdate) {
-      return;
-    }
-
-    await updateCartItemService(itemToUpdate.id, {
-      quantity: itemToUpdate.quantity + 1,
-    });
-    setCartItems(cartItems.map((cartItem) => (cartItem.id === itemToUpdate.id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem)));
-  };
-
-  // 6. Diminui a quantidade de um item específico do carrinho
-
-  const handleDecreaseItemQuantity = async (item: CartItem) => {
-    const itemToUpdate = cartItems.find((cartItem) =>
-      cartItem.type === "drinks" && item.type === "drinks"
-        ? cartItem.product_id === item.product_id
-        : cartItem.type === "tickets" && item.type === "tickets"
-          ? cartItem.event_id === item.event_id
-          : false,
-    );
-
-    if (!itemToUpdate) {
-      return;
-    }
-
-    if (itemToUpdate.quantity === 1) {
-      await handleRemoveFromCart(itemToUpdate.id);
-      return;
-    }
-
-    await updateCartItemService(itemToUpdate.id, {
-      quantity: itemToUpdate.quantity - 1,
-    });
-    setCartItems(cartItems.map((cartItem) => (cartItem.id === itemToUpdate.id ? { ...cartItem, quantity: cartItem.quantity - 1 } : cartItem)));
-  };
-
-  // 7. Remove todos os itens do carrinho
+  // 5. Remove todos os itens do carrinho
 
   const handleClearCart = async () => {
-    await clearCartItemsService();
-    setCartItems([]);
+    await clearCartMutation();
   };
 
-  // 8. Abre e fecha o carrinho
+  // 6. Finaliza a compra
+
+  const handleCheckout = async (checkout: z.infer<typeof checkoutCartSchema>) => {
+    return await checkoutCartMutation(checkout);
+  };
+
+  // 7. Abre e fecha o carrinho
 
   const handleOpenCart = () => setIsCartOpen(!isCartOpen);
 
   return (
     <CartContext.Provider
       value={{
-        /* - Estados dos itens - */
+        /* - Dados do carrinho - */
 
         cartItems,
+        isLoading,
+        error,
 
         /* - Estados do carrinho - */
 
         isCartOpen,
         setIsCartOpen,
-
-        /* - Estados de carregamento - */
-
-        isLoading,
-
-        /* - Estados de erro - */
-
-        error,
 
         /* - Definições - */
 
@@ -217,12 +144,12 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
         /* - Funções - */
 
-        handleIsAlreadyOnCart,
         handleAddToCart,
         handleRemoveFromCart,
         handleIncreaseItemQuantity,
         handleDecreaseItemQuantity,
         handleClearCart,
+        handleCheckout,
         handleOpenCart,
       }}
     >

@@ -1,10 +1,10 @@
-import { UserBadgeLevel } from "@/prisma/generated/prisma/enums";
+import { UserBadgeLevel, UserRole } from "@/prisma/generated/prisma/enums";
 
 export interface ProfileProps {
   name: string;
   profilePicture: string | null;
   phoneNumber?: string;
-  role: "admin" | "user";
+  role: UserRole;
   verifiedBadge: boolean;
   oldUser: UserBadgeLevel;
   frequentUser: UserBadgeLevel;

@@ -40,6 +40,7 @@ export const PaymentStatus = {
   confirmed: 'confirmed',
   pending: 'pending',
   failed: 'failed',
+  cancelled: 'cancelled',
   refunded: 'refunded'
 } as const
 
@@ -62,6 +63,14 @@ export const UserBadgeLevel = {
 } as const
 
 export type UserBadgeLevel = (typeof UserBadgeLevel)[keyof typeof UserBadgeLevel]
+
+
+export const NotificationType = {
+  order_cancelled: 'order_cancelled',
+  new_event: 'new_event'
+} as const
+
+export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
 
 
 export const ProductCategory = {

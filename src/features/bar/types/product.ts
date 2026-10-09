@@ -1,12 +1,14 @@
+import { ProductCategory, ProductStatus } from "@/prisma/generated/prisma/enums";
+
 export type ProductProps = {
   id: string;
   name: string;
   description: string;
-  category: "beers" | "cocktails" | "drinks" | "no_alcohol";
+  category: ProductCategory;
   quantity: number;
   image: string;
   price: number;
-  status: "active" | "inactive";
+  status: ProductStatus;
 
   createdAt: string;
   updatedAt: string;

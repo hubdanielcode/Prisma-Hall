@@ -488,7 +488,7 @@ const EditEventModal = ({ isOpen, onClose }: EditEventModalProps) => {
                           : "bg-red-400 shadow-[0_0_6px_2px_rgba(248,113,113,0.6)]"
                       }`}
                     />
-                    <span className="text-white text-sm font-semibold">{isUpcoming ? "Em breve" : "Já aconteceu"}</span>
+                    <span className="text-white text-sm font-semibold">{isUpcoming ? "Em breve" : "Encerrado"}</span>
                   </div>
 
                   <button

@@ -4,13 +4,20 @@ import { motion } from "motion/react";
 import { Plus } from "lucide-react";
 import { ProductCard } from "./ProductCard";
 import { useBarContext } from "../hooks/useBarContext";
+import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
 import { useCartContext } from "@/features/cart/hooks/useCartContext";
+import { useRouter } from "next/navigation";
 
 const BarSection = () => {
   /* - Puxando do context - */
 
   const { filteredProducts, categories, selectedCategory, setSelectedCategory } = useBarContext();
   const { handleAddToCart, setIsCartOpen } = useCartContext();
+  const { isAuthenticated } = useAuthenticationContext();
+
+  /* - Definições - */
+
+  const router = useRouter();
 
   return (
     <div
@@ -69,6 +76,7 @@ const BarSection = () => {
               onClick={() => setSelectedCategory(category.id)}
             >
               <Icon className="h-5 w-5 mr-2" />
+
               <span>{category.title}</span>
             </button>
           );
@@ -95,14 +103,16 @@ const BarSection = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => {
-                    handleAddToCart({
-                      ...product,
-                      id: "",
-                      product_id: product.id,
-                      type: "drinks",
-                      quantity: 1,
-                    });
-                    setIsCartOpen(true);
+                    if (isAuthenticated) {
+                      handleAddToCart({
+                        productId: product.id,
+                        type: "drinks",
+                        quantity: 1,
+                      });
+                      setIsCartOpen(true);
+                    } else {
+                      router.replace("/login");
+                    }
                   }}
                 >
                   <Plus className="w-5 h-5 mr-1" />

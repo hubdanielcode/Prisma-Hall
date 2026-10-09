@@ -29,6 +29,9 @@ const useSession = () => {
       queryClient.invalidateQueries({ queryKey: [sessionQueryKey.protected] }),
       queryClient.invalidateQueries({ queryKey: ["profile"] }),
     ]);
+
+    queryClient.removeQueries({ queryKey: ["notifications"] });
+    queryClient.removeQueries({ queryKey: ["notificationPreferences"] });
   };
 
   /* - Query de leitura - */

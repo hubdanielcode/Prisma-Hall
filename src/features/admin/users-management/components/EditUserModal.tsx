@@ -2,8 +2,7 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import { editUserSchema } from "@/lib/validations";
-import { roleBadgeOptions, roleBadgeStyles } from "@/features/users/user/utils/roleBadges";
-import { tierBadgeOptions, tierBadgeStyles } from "@/features/users/user/utils/tierBadges";
+import { roleBadgeOptions, roleBadgeStyles, tierBadgeOptions, tierBadgeStyles } from "@/shared/utils";
 import { useBlockScroll, useMobileContext } from "@/shared/hooks";
 import { UserAvatar } from "./UserAvatar";
 import { useState } from "react";

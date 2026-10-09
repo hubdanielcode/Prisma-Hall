@@ -1,46 +1,73 @@
 "use client";
 
-import { getReviews } from "../services/reviewsServices";
-import { useState, useEffect } from "react";
-import type { ReviewWithDetails } from "../types/reviews";
+import { deleteReview as deleteReviewAction, getAllReviews, postReview as postReviewAction, updateReview as updateReviewAction } from "@/actions";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const useReviews = () => {
-  /* - Estados das avaliações - */
+  const queryClient = useQueryClient();
 
-  const [reviews, setReviews] = useState<ReviewWithDetails[]>([]);
+  /* - Query de leitura - */
 
-  /* - Estados de carregamento - */
-
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  /* - Estados de erro - */
-
-  const [error, setError] = useState<string>("");
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["reviews"],
+    queryFn: getAllReviews,
+  });
 
   /* - Definições - */
 
+  const reviews = Array.isArray(data) ? data : [];
+
   const averageRating = reviews.length > 0 ? reviews.reduce((accumulator, review) => accumulator + review.rating, 0) / reviews.length : 0;
 
-  /* - Funções - */
+  /* - Mutations - */
 
-  // 1. Busca as avaliações no momento em que a página renderiza
+  // 1. PostReviewMutation
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const data = await getReviews();
-        setReviews(data);
-      } catch (error) {
-        setError("Erro ao buscar eventos.");
-      } finally {
-        setIsLoading(false);
+  const { mutateAsync: postReviewMutation } = useMutation({
+    mutationFn: postReviewAction,
+    onSuccess: async (postReviewMutationResult) => {
+      if (postReviewMutationResult) {
+        await queryClient.invalidateQueries({ queryKey: ["reviews"] });
       }
-    };
+    },
+  });
 
-    fetchReviews();
-  }, []);
+  // 2. UpdateReviewMutation
 
-  return { reviews, isLoading, error, averageRating };
+  const { mutateAsync: updateReviewMutation } = useMutation({
+    mutationFn: updateReviewAction,
+    onSuccess: async (updateReviewMutationResult) => {
+      if (updateReviewMutationResult) {
+        await queryClient.invalidateQueries({ queryKey: ["reviews"] });
+      }
+    },
+  });
+
+  // 3. DeleteReviewMutation
+
+  const { mutateAsync: deleteReviewMutation } = useMutation({
+    mutationFn: deleteReviewAction,
+    onSuccess: async (deleteReviewMutationResult) => {
+      if (deleteReviewMutationResult) {
+        await queryClient.invalidateQueries({ queryKey: ["reviews"] });
+      }
+    },
+  });
+
+  return {
+    /* - Query de leitura - */
+
+    reviews,
+    averageRating,
+    isLoading,
+    error,
+
+    /* - Mutations - */
+
+    postReviewMutation,
+    updateReviewMutation,
+    deleteReviewMutation,
+  };
 };
 
 export { useReviews };

@@ -120,11 +120,8 @@ const EventModal = ({ event, isOpen, onClose }: EventModalProps) => {
                 onClick={() => {
                   if (isAuthenticated) {
                     handleAddToCart({
-                      ...event,
-                      id: "",
+                      eventId: event.id,
                       type: "tickets",
-                      ticket_id: crypto.randomUUID(),
-                      title: event.title,
                       quantity: 1,
                     });
 

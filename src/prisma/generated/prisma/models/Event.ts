@@ -512,6 +512,11 @@ export type EventNullableScalarRelationFilter = {
   isNot?: Prisma.EventWhereInput | null
 }
 
+export type EventScalarRelationFilter = {
+  is?: Prisma.EventWhereInput
+  isNot?: Prisma.EventWhereInput
+}
+
 export type EventCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
@@ -582,11 +587,6 @@ export type EventOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type EventScalarRelationFilter = {
-  is?: Prisma.EventWhereInput
-  isNot?: Prisma.EventWhereInput
-}
-
 export type EventCreateNestedOneWithoutCartsInput = {
   create?: Prisma.XOR<Prisma.EventCreateWithoutCartsInput, Prisma.EventUncheckedCreateWithoutCartsInput>
   connectOrCreate?: Prisma.EventCreateOrConnectWithoutCartsInput
@@ -601,6 +601,20 @@ export type EventUpdateOneWithoutCartsNestedInput = {
   delete?: Prisma.EventWhereInput | boolean
   connect?: Prisma.EventWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.EventUpdateToOneWithWhereWithoutCartsInput, Prisma.EventUpdateWithoutCartsInput>, Prisma.EventUncheckedUpdateWithoutCartsInput>
+}
+
+export type EventCreateNestedOneWithoutTicketsInput = {
+  create?: Prisma.XOR<Prisma.EventCreateWithoutTicketsInput, Prisma.EventUncheckedCreateWithoutTicketsInput>
+  connectOrCreate?: Prisma.EventCreateOrConnectWithoutTicketsInput
+  connect?: Prisma.EventWhereUniqueInput
+}
+
+export type EventUpdateOneRequiredWithoutTicketsNestedInput = {
+  create?: Prisma.XOR<Prisma.EventCreateWithoutTicketsInput, Prisma.EventUncheckedCreateWithoutTicketsInput>
+  connectOrCreate?: Prisma.EventCreateOrConnectWithoutTicketsInput
+  upsert?: Prisma.EventUpsertWithoutTicketsInput
+  connect?: Prisma.EventWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.EventUpdateToOneWithWhereWithoutTicketsInput, Prisma.EventUpdateWithoutTicketsInput>, Prisma.EventUncheckedUpdateWithoutTicketsInput>
 }
 
 export type EnumEventTagFieldUpdateOperationsInput = {
@@ -679,20 +693,6 @@ export type EventUpdateOneRequiredWithoutGalleriesNestedInput = {
   upsert?: Prisma.EventUpsertWithoutGalleriesInput
   connect?: Prisma.EventWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.EventUpdateToOneWithWhereWithoutGalleriesInput, Prisma.EventUpdateWithoutGalleriesInput>, Prisma.EventUncheckedUpdateWithoutGalleriesInput>
-}
-
-export type EventCreateNestedOneWithoutTicketsInput = {
-  create?: Prisma.XOR<Prisma.EventCreateWithoutTicketsInput, Prisma.EventUncheckedCreateWithoutTicketsInput>
-  connectOrCreate?: Prisma.EventCreateOrConnectWithoutTicketsInput
-  connect?: Prisma.EventWhereUniqueInput
-}
-
-export type EventUpdateOneRequiredWithoutTicketsNestedInput = {
-  create?: Prisma.XOR<Prisma.EventCreateWithoutTicketsInput, Prisma.EventUncheckedCreateWithoutTicketsInput>
-  connectOrCreate?: Prisma.EventCreateOrConnectWithoutTicketsInput
-  upsert?: Prisma.EventUpsertWithoutTicketsInput
-  connect?: Prisma.EventWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.EventUpdateToOneWithWhereWithoutTicketsInput, Prisma.EventUpdateWithoutTicketsInput>, Prisma.EventUncheckedUpdateWithoutTicketsInput>
 }
 
 export type EventCreateWithoutCartsInput = {
@@ -785,6 +785,98 @@ export type EventUncheckedUpdateWithoutCartsInput = {
   galleries?: Prisma.GalleryUncheckedUpdateManyWithoutEventNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutEventNestedInput
   tickets?: Prisma.TicketUncheckedUpdateManyWithoutEventNestedInput
+}
+
+export type EventCreateWithoutTicketsInput = {
+  id?: string
+  title: string
+  description: string
+  tag: $Enums.EventTag
+  image: string
+  status: $Enums.EventStatus
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  startsAt: Date | string
+  attendees?: number
+  rating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  carts?: Prisma.CartCreateNestedManyWithoutEventInput
+  attraction: Prisma.AttractionCreateNestedOneWithoutEventsInput
+  galleries?: Prisma.GalleryCreateNestedManyWithoutEventInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutEventInput
+}
+
+export type EventUncheckedCreateWithoutTicketsInput = {
+  id?: string
+  title: string
+  description: string
+  tag: $Enums.EventTag
+  attractionName: string
+  image: string
+  status: $Enums.EventStatus
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  startsAt: Date | string
+  attendees?: number
+  rating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  carts?: Prisma.CartUncheckedCreateNestedManyWithoutEventInput
+  galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutEventInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutEventInput
+}
+
+export type EventCreateOrConnectWithoutTicketsInput = {
+  where: Prisma.EventWhereUniqueInput
+  create: Prisma.XOR<Prisma.EventCreateWithoutTicketsInput, Prisma.EventUncheckedCreateWithoutTicketsInput>
+}
+
+export type EventUpsertWithoutTicketsInput = {
+  update: Prisma.XOR<Prisma.EventUpdateWithoutTicketsInput, Prisma.EventUncheckedUpdateWithoutTicketsInput>
+  create: Prisma.XOR<Prisma.EventCreateWithoutTicketsInput, Prisma.EventUncheckedCreateWithoutTicketsInput>
+  where?: Prisma.EventWhereInput
+}
+
+export type EventUpdateToOneWithWhereWithoutTicketsInput = {
+  where?: Prisma.EventWhereInput
+  data: Prisma.XOR<Prisma.EventUpdateWithoutTicketsInput, Prisma.EventUncheckedUpdateWithoutTicketsInput>
+}
+
+export type EventUpdateWithoutTicketsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
+  image?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  attendees?: Prisma.IntFieldUpdateOperationsInput | number
+  rating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  carts?: Prisma.CartUpdateManyWithoutEventNestedInput
+  attraction?: Prisma.AttractionUpdateOneRequiredWithoutEventsNestedInput
+  galleries?: Prisma.GalleryUpdateManyWithoutEventNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutEventNestedInput
+}
+
+export type EventUncheckedUpdateWithoutTicketsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
+  attractionName?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  attendees?: Prisma.IntFieldUpdateOperationsInput | number
+  rating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  carts?: Prisma.CartUncheckedUpdateManyWithoutEventNestedInput
+  galleries?: Prisma.GalleryUncheckedUpdateManyWithoutEventNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutEventNestedInput
 }
 
 export type EventCreateWithoutAttractionInput = {
@@ -1052,98 +1144,6 @@ export type EventUncheckedUpdateWithoutGalleriesInput = {
   carts?: Prisma.CartUncheckedUpdateManyWithoutEventNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutEventNestedInput
   tickets?: Prisma.TicketUncheckedUpdateManyWithoutEventNestedInput
-}
-
-export type EventCreateWithoutTicketsInput = {
-  id?: string
-  title: string
-  description: string
-  tag: $Enums.EventTag
-  image: string
-  status: $Enums.EventStatus
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  startsAt: Date | string
-  attendees?: number
-  rating?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  carts?: Prisma.CartCreateNestedManyWithoutEventInput
-  attraction: Prisma.AttractionCreateNestedOneWithoutEventsInput
-  galleries?: Prisma.GalleryCreateNestedManyWithoutEventInput
-  reviews?: Prisma.ReviewCreateNestedManyWithoutEventInput
-}
-
-export type EventUncheckedCreateWithoutTicketsInput = {
-  id?: string
-  title: string
-  description: string
-  tag: $Enums.EventTag
-  attractionName: string
-  image: string
-  status: $Enums.EventStatus
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  startsAt: Date | string
-  attendees?: number
-  rating?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  carts?: Prisma.CartUncheckedCreateNestedManyWithoutEventInput
-  galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutEventInput
-  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutEventInput
-}
-
-export type EventCreateOrConnectWithoutTicketsInput = {
-  where: Prisma.EventWhereUniqueInput
-  create: Prisma.XOR<Prisma.EventCreateWithoutTicketsInput, Prisma.EventUncheckedCreateWithoutTicketsInput>
-}
-
-export type EventUpsertWithoutTicketsInput = {
-  update: Prisma.XOR<Prisma.EventUpdateWithoutTicketsInput, Prisma.EventUncheckedUpdateWithoutTicketsInput>
-  create: Prisma.XOR<Prisma.EventCreateWithoutTicketsInput, Prisma.EventUncheckedCreateWithoutTicketsInput>
-  where?: Prisma.EventWhereInput
-}
-
-export type EventUpdateToOneWithWhereWithoutTicketsInput = {
-  where?: Prisma.EventWhereInput
-  data: Prisma.XOR<Prisma.EventUpdateWithoutTicketsInput, Prisma.EventUncheckedUpdateWithoutTicketsInput>
-}
-
-export type EventUpdateWithoutTicketsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
-  image?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  attendees?: Prisma.IntFieldUpdateOperationsInput | number
-  rating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  carts?: Prisma.CartUpdateManyWithoutEventNestedInput
-  attraction?: Prisma.AttractionUpdateOneRequiredWithoutEventsNestedInput
-  galleries?: Prisma.GalleryUpdateManyWithoutEventNestedInput
-  reviews?: Prisma.ReviewUpdateManyWithoutEventNestedInput
-}
-
-export type EventUncheckedUpdateWithoutTicketsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
-  attractionName?: Prisma.StringFieldUpdateOperationsInput | string
-  image?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  attendees?: Prisma.IntFieldUpdateOperationsInput | number
-  rating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  carts?: Prisma.CartUncheckedUpdateManyWithoutEventNestedInput
-  galleries?: Prisma.GalleryUncheckedUpdateManyWithoutEventNestedInput
-  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutEventNestedInput
 }
 
 export type EventCreateManyAttractionInput = {

@@ -1,9 +1,10 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { FaSearch, FaUser } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import { ImExit } from "react-icons/im";
 import { Menu, ShieldCheck } from "lucide-react";
+import { NotificationBell } from "@/features/users/notifications/components/NotificationBell";
 import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
 import { useMobileContext } from "../../hooks/useMobileContext";
 import { useRouter } from "next/navigation";
@@ -16,13 +17,18 @@ interface AdminHeaderProps {
 }
 
 const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
-  const { isPortraitMobile, isLandscapeMobile } = useMobileContext();
+  /* - Puxando do context - */
+
+  const { isPortraitMobile } = useMobileContext();
   const { isAuthenticated, isLoading, revokeSessionMutation } = useAuthenticationContext();
+
+  /* - Estados do menu - */
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
-  const router = useRouter();
+  /* - Definições - */
 
+  const router = useRouter();
   const navLinks = [
     { title: "Bar", id: "bar" },
     { title: "Eventos", id: "events" },
@@ -64,18 +70,6 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
                 </div>
               </motion.div>
 
-              {/* - Searchbar - */}
-
-              <div className="flex bg-[#111] border border-[#B8860B] w-[50%] sm:w-[50%] md:w-[30%] h-10 rounded-lg text-xs sm:text-sm md:text-sm text-white/60 outline-none px-2">
-                <FaSearch className="my-auto mx-2 text-white/60 pointer-events-none" />
-
-                <input
-                  className="w-full bg-transparent outline-none text-white font-semibold placeholder:text-white/40"
-                  placeholder={`${isPortraitMobile ? "Buscar eventos, bandas..." : "Buscar eventos, bandas, artistas..."}`}
-                  type="text"
-                />
-              </div>
-
               {/* - Links - */}
 
               <div>
@@ -99,6 +93,28 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
               </div>
             </div>
 
+            {/* - Notificações e início - */}
+
+            {isAuthenticated && (
+              <div className="flex items-center justify-center gap-3 mr-3 sm:mr-0 md:mr-0">
+                {/* - Notificações - */}
+
+                <NotificationBell />
+
+                {/* - Ir para o início - */}
+
+                <motion.button
+                  className="relative group border bg-[#0A0A0A] hover:bg-[#1A1A1A] border-[#B8860B] rounded-full p-2 cursor-pointer"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => router.push("/")}
+                  aria-label="Ir para o início"
+                >
+                  <ShieldCheck className="h-6 w-6 text-[#B8860B] group-hover:text-[#DDAE56]" />
+                </motion.button>
+              </div>
+            )}
+
             {/* - Menu - */}
 
             <div className="sm:hidden md:hidden flex items-center">
@@ -110,40 +126,33 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
 
             {/* - Botões - */}
 
-            <div className="hidden sm:flex md:flex gap-4">
+            <div
+              className={`hidden sm:flex md:flex items-center gap-3 ${
+                isAuthenticated ? "sm:ml-3 sm:pl-3 sm:border-l sm:border-[#B8860B] md:ml-3 md:pl-3 md:border-l md:border-[#B8860B]" : ""
+              }`}
+            >
               {isLoading ? (
                 <div className="w-24 h-10 rounded-lg bg-[#1A1A1A] animate-pulse" />
               ) : (
                 <>
+                  {/* - Perfil (desktop) - */}
+
                   {isAuthenticated && (
-                    <div className="flex items-center justify-center">
-                      <motion.button
-                        className="relative group mr-3 sm:mx-6 md:mx-6 border bg-[#0A0A0A] hover:bg-[#1A1A1A] border-[#B8860B] rounded-full p-2 cursor-pointer"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => router.push("/")}
-                      >
-                        <ShieldCheck className="h-6 w-6 text-[#B8860B] group-hover:text-[#DDAE56]" />
-                      </motion.button>
-
-                      <motion.button
-                        // 1. Botão de Perfil do desktop
-
-                        className="flex justify-center items-center w-full h-fit bg-[#1A1A1A] hover:bg-[#333] shadow-sm shadow-[#1A1A1A] hover:shadow-md hover:shadow-[#333] text-white font-semibold px-4 py-2 rounded-lg cursor-pointer"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => router.push("/perfil")}
-                      >
-                        <FaUser className="mr-2 h-4 w-4" />
-                        Perfil
-                      </motion.button>
-                    </div>
+                    <motion.button
+                      className="flex justify-center items-center w-fit bg-[#1A1A1A] hover:bg-[#333] border border-[#B8860B] hover:border-[#B8860B] text-white text-sm font-semibold px-4 py-2 rounded-lg cursor-pointer"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => router.push("/perfil")}
+                    >
+                      <FaUser className="mr-2 h-4 w-4" />
+                      Perfil
+                    </motion.button>
                   )}
 
-                  <motion.button
-                    // 2. Botão de sair/entrar do desktop
+                  {/* - Sair/Entrar (desktop) - */}
 
-                    className="flex justify-center items-center w-full h-fit bg-[#B8860B] hover:bg-[#7A5A08] shadow-sm shadow-[#B8860B] hover:shadow-[#7A5A08] text-black font-semibold px-4 py-2 rounded-lg cursor-pointer"
+                  <motion.button
+                    className="flex justify-center items-center w-fit h-fit bg-[#B8860B] hover:bg-[#7A5A08] shadow-sm shadow-[#B8860B] hover:shadow-[#7A5A08] text-black text-sm font-semibold px-4 py-2 rounded-lg cursor-pointer"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => {
@@ -165,38 +174,22 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
         </div>
       </header>
 
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {isPortraitMobile && isMobileMenuOpen && (
           <motion.div
-            className="fixed top-20 left-0 w-full flex flex-col bg-black/80 backdrop-blur-lg border rounded-lg border-[#B8860B] z-40"
-            initial={{ x: 500 }}
-            animate={{ x: 250 }}
-            exit={{ x: 500 }}
-            transition={{ duration: 0.8 }}
+            className="fixed top-20 sm:top-22 right-0 left-auto w-40 flex flex-col bg-black/80 backdrop-blur-lg border rounded-lg border-[#B8860B] z-40"
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ duration: 0.6 }}
           >
             <ul>
               {navLinks.map((link, index) => (
                 <li
-                  className="px-6 py-4 text-white font-semibold border-b border-[#B8870B60] last:border-none cursor-pointer"
                   key={index}
+                  className="px-6 py-4 text-white font-semibold border-b border-[#B8870B60] last:border-none cursor-pointer"
                   role="button"
-                  onClick={() => {
-                    if (link.title === "Bar") {
-                      setActiveTab("bar");
-                    }
-
-                    if (link.title === "Eventos") {
-                      setActiveTab("events");
-                    }
-
-                    if (link.title === "Estatísticas") {
-                      setActiveTab("analytics");
-                    }
-
-                    if (link.title === "Usuários") {
-                      setActiveTab("users");
-                    }
-                  }}
+                  onClick={() => setActiveTab(link.id)}
                 >
                   {link.title}
                 </li>
@@ -207,8 +200,6 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
                   <div className="w-20 h-6 rounded-md bg-[#1A1A1A] animate-pulse" />
                 ) : (
                   <motion.button
-                    // 3. Botão de sair/entrar do mobile (portrait)
-
                     className="flex justify-center items-center text-white font-semibold cursor-pointer"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -221,71 +212,6 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
                     }}
                   >
                     <ImExit className="mr-2 h-4 w-4" />
-
-                    {isAuthenticated ? "Sair" : "Entrar"}
-                  </motion.button>
-                )}
-              </li>
-            </ul>
-          </motion.div>
-        )}
-
-        {isLandscapeMobile && isMobileMenuOpen && (
-          <motion.div
-            className="fixed top-16 sm:top-20 left-0 w-full flex flex-col bg-black/80 backdrop-blur-lg border rounded-lg border-[#B8860B] z-40"
-            initial={{ x: 850 }}
-            animate={{ x: 600 }}
-            exit={{ x: 850 }}
-            transition={{ duration: 0.8 }}
-          >
-            <ul>
-              {navLinks.map((link, index) => (
-                <li
-                  className="px-6 py-4 text-white font-semibold border-b border-[#B8870B60] last:border-none cursor-pointer"
-                  key={index}
-                  role="button"
-                  onClick={() => {
-                    if (link.title === "Bar") {
-                      setActiveTab("bar");
-                    }
-
-                    if (link.title === "Eventos") {
-                      setActiveTab("events");
-                    }
-
-                    if (link.title === "Estatísticas") {
-                      setActiveTab("analytics");
-                    }
-
-                    if (link.title === "Usuários") {
-                      setActiveTab("users");
-                    }
-                  }}
-                >
-                  {link.title}
-                </li>
-              ))}
-
-              <li className="px-6 py-4">
-                {isLoading ? (
-                  <div className="w-20 h-6 rounded-md bg-[#1A1A1A] animate-pulse" />
-                ) : (
-                  <motion.button
-                    // 4. Botão de sair/entrar do mobile (landscape)
-
-                    className="flex justify-center items-center text-white font-semibold cursor-pointer"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => {
-                      if (isAuthenticated) {
-                        revokeSessionMutation();
-                      } else {
-                        router.replace("/login");
-                      }
-                    }}
-                  >
-                    <ImExit className="mr-2 h-4 w-4" />
-
                     {isAuthenticated ? "Sair" : "Entrar"}
                   </motion.button>
                 )}

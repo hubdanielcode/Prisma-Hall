@@ -53,20 +53,23 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   Session: 'Session',
   User: 'User',
+  NotificationPreference: 'NotificationPreference',
+  Notification: 'Notification',
   Profile: 'Profile',
   Cart: 'Cart',
   Product: 'Product',
-  VoucherPayment: 'VoucherPayment',
-  VoucherOrder: 'VoucherOrder',
   Voucher: 'Voucher',
+  VoucherOrder: 'VoucherOrder',
+  VoucherPayment: 'VoucherPayment',
+  Ticket: 'Ticket',
+  TicketOrder: 'TicketOrder',
+  TicketPayment: 'TicketPayment',
   Event: 'Event',
   Attraction: 'Attraction',
   Review: 'Review',
   Gallery: 'Gallery',
   GalleryLikes: 'GalleryLikes',
-  Ticket: 'Ticket',
-  TicketOrder: 'TicketOrder',
-  TicketPayment: 'TicketPayment'
+  Newsletter: 'Newsletter'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -115,6 +118,33 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const NotificationPreferenceScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  notifyFavoriteEvents: 'notifyFavoriteEvents',
+  notifyPromotions: 'notifyPromotions',
+  notifyByEmail: 'notifyByEmail',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NotificationPreferenceScalarFieldEnum = (typeof NotificationPreferenceScalarFieldEnum)[keyof typeof NotificationPreferenceScalarFieldEnum]
+
+
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  title: 'title',
+  message: 'message',
+  readAt: 'readAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
 
 
 export const ProfileScalarFieldEnum = {
@@ -168,6 +198,30 @@ export const ProductScalarFieldEnum = {
 export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
 
 
+export const VoucherScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  userId: 'userId',
+  productId: 'productId',
+  quantity: 'quantity',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VoucherScalarFieldEnum = (typeof VoucherScalarFieldEnum)[keyof typeof VoucherScalarFieldEnum]
+
+
+export const VoucherOrderScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VoucherOrderScalarFieldEnum = (typeof VoucherOrderScalarFieldEnum)[keyof typeof VoucherOrderScalarFieldEnum]
+
+
 export const VoucherPaymentScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -183,7 +237,21 @@ export const VoucherPaymentScalarFieldEnum = {
 export type VoucherPaymentScalarFieldEnum = (typeof VoucherPaymentScalarFieldEnum)[keyof typeof VoucherPaymentScalarFieldEnum]
 
 
-export const VoucherOrderScalarFieldEnum = {
+export const TicketScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  userId: 'userId',
+  eventId: 'eventId',
+  quantity: 'quantity',
+  unitPrice: 'unitPrice',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TicketScalarFieldEnum = (typeof TicketScalarFieldEnum)[keyof typeof TicketScalarFieldEnum]
+
+
+export const TicketOrderScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   status: 'status',
@@ -191,20 +259,23 @@ export const VoucherOrderScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type VoucherOrderScalarFieldEnum = (typeof VoucherOrderScalarFieldEnum)[keyof typeof VoucherOrderScalarFieldEnum]
+export type TicketOrderScalarFieldEnum = (typeof TicketOrderScalarFieldEnum)[keyof typeof TicketOrderScalarFieldEnum]
 
 
-export const VoucherScalarFieldEnum = {
+export const TicketPaymentScalarFieldEnum = {
   id: 'id',
-  orderId: 'orderId',
   userId: 'userId',
-  productId: 'productId',
-  quantity: 'quantity',
+  orderId: 'orderId',
+  method: 'method',
+  status: 'status',
+  totalValue: 'totalValue',
+  confirmedAt: 'confirmedAt',
+  pickedUpAt: 'pickedUpAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type VoucherScalarFieldEnum = (typeof VoucherScalarFieldEnum)[keyof typeof VoucherScalarFieldEnum]
+export type TicketPaymentScalarFieldEnum = (typeof TicketPaymentScalarFieldEnum)[keyof typeof TicketPaymentScalarFieldEnum]
 
 
 export const EventScalarFieldEnum = {
@@ -275,45 +346,13 @@ export const GalleryLikesScalarFieldEnum = {
 export type GalleryLikesScalarFieldEnum = (typeof GalleryLikesScalarFieldEnum)[keyof typeof GalleryLikesScalarFieldEnum]
 
 
-export const TicketScalarFieldEnum = {
-  id: 'id',
-  orderId: 'orderId',
+export const NewsletterScalarFieldEnum = {
   userId: 'userId',
-  eventId: 'eventId',
-  quantity: 'quantity',
-  unitPrice: 'unitPrice',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  email: 'email',
+  isSubscribed: 'isSubscribed'
 } as const
 
-export type TicketScalarFieldEnum = (typeof TicketScalarFieldEnum)[keyof typeof TicketScalarFieldEnum]
-
-
-export const TicketOrderScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  status: 'status',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type TicketOrderScalarFieldEnum = (typeof TicketOrderScalarFieldEnum)[keyof typeof TicketOrderScalarFieldEnum]
-
-
-export const TicketPaymentScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  orderId: 'orderId',
-  method: 'method',
-  status: 'status',
-  totalValue: 'totalValue',
-  confirmedAt: 'confirmedAt',
-  pickedUpAt: 'pickedUpAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type TicketPaymentScalarFieldEnum = (typeof TicketPaymentScalarFieldEnum)[keyof typeof TicketPaymentScalarFieldEnum]
+export type NewsletterScalarFieldEnum = (typeof NewsletterScalarFieldEnum)[keyof typeof NewsletterScalarFieldEnum]
 
 
 export const SortOrder = {

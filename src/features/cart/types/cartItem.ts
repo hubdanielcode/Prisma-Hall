@@ -1,18 +1,31 @@
-import { type ProductProps } from "@/features/bar";
-import { type EventProps } from "@/features/events/event";
+import type { EventStatus, ItemType, ProductCategory, ProductStatus } from "@/prisma/generated/prisma/enums";
 
-export type CartItem = CartProductProps | CartTicketProps;
-
-export interface CartProductProps extends Omit<ProductProps, "description" | "createdAt"> {
+export interface CartItemProps {
   id: string;
-  type: "drinks";
-  product_id: string;
+  type: ItemType;
+  productId: string | null;
+  eventId: string | null;
   quantity: number;
-}
+  price: number;
 
-export interface CartTicketProps extends Omit<EventProps, "attendees" | "description" | "artist" | "createdAt"> {
-  id: string;
-  type: "tickets";
-  ticket_id: string;
-  quantity: number;
+  product: {
+    id: string;
+    name: string;
+    category: ProductCategory;
+    image: string;
+    quantity: number;
+    status: ProductStatus;
+  } | null;
+
+  event: {
+    id: string;
+    title: string;
+    attractionName: string;
+    image: string;
+    startsAt: string;
+    status: EventStatus;
+  } | null;
+
+  createdAt: string;
+  updatedAt: string;
 }

@@ -9,7 +9,7 @@ import { motion } from "motion/react";
 import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
 import { useProfileContext } from "../hooks/useProfileContext";
 import { useState, useEffect } from "react";
-import { tierBadgeStyles } from "../../user";
+import { tierBadgeStyles } from "@/shared/utils";
 
 const ProfileInformationsSection = () => {
   /* - Puxando do context - */

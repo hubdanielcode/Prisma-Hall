@@ -1,4 +1,5 @@
 import type { EventProps } from "@/features/events/event/types/event";
+import { OrderStatus, PaymentStatus } from "@/prisma/generated/prisma/enums";
 
 export interface TicketProps {
   id: string;
@@ -6,8 +7,8 @@ export interface TicketProps {
   eventId: string;
   quantity: number;
   unitPrice: number;
-  orderStatus: "pending" | "confirmed" | "cancelled";
-  paymentStatus: "confirmed" | "pending" | "failed" | "refunded";
+  orderStatus: OrderStatus;
+  paymentStatus: PaymentStatus;
   pickedUpAt: string | null;
   event: EventProps;
 

@@ -1,6 +1,6 @@
 import { AttractionProvider } from "@/features/events/event/context/AttractionContext";
 import { DeleteAttractionModal } from "./DeleteAttractionModal";
-import { fakeAttraction } from "../../../../../.storybook/mocks/hooks/events/event/useAtrractions";
+import { fakeAttraction } from "../../../../../.storybook/mocks/hooks/events/useAttractions";
 import { MobileProvider } from "@/shared/context/MobileContext";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
 

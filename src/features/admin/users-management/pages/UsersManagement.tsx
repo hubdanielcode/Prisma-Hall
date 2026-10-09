@@ -46,7 +46,7 @@ const UsersManagementContent = () => {
 
               {/* - Subtítulo - */}
 
-              <span className="text-white/60">Gerencie papéis, selos e contas de quem frequenta a casa</span>
+              <span className="text-white/60 mb-12">Gerencie papéis, selos e contas de quem frequenta a casa</span>
             </div>
           </div>
 

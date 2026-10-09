@@ -1,14 +1,10 @@
-import { AuthenticationProvider, useAuthenticationContext } from "@/features/authentication";
-import { CartProvider } from "@/features/cart/context/CartContext";
 import { Footer } from "@/shared/components/layout/Footer";
-import { MobileProvider } from "../../context/MobileContext";
-import { QueryProvider } from "@/shared/providers/QueryProvider";
-import { useEffect } from "react";
 
 export default {
   title: "Components/Shared",
   component: Footer,
   parameters: {
+    layout: "fullscreen",
     nextjs: {
       appDirectory: true,
     },
@@ -16,29 +12,7 @@ export default {
 };
 
 const GeneralFooter = () => {
-  const AuthenticationContextConsumer = () => {
-    const { isAuthenticated } = useAuthenticationContext();
-
-    useEffect(() => {
-      if (!isAuthenticated) {
-        setIsAuthenticated(true);
-      }
-    }, [isAuthenticated, setIsAuthenticated]);
-
-    return <Footer />;
-  };
-
-  return (
-    <QueryProvider>
-      <AuthenticationProvider>
-        <CartProvider>
-          <MobileProvider>
-            <AuthenticationContextConsumer />
-          </MobileProvider>
-        </CartProvider>
-      </AuthenticationProvider>
-    </QueryProvider>
-  );
+  return <Footer />;
 };
 
 export { GeneralFooter as "Footer" };

@@ -55,28 +55,34 @@ const ReviewCard = ({ review, index }: ReviewCardProps) => {
 
       {/* - Nome do evento sendo avaliado - */}
 
-      <span className="text-sm font-semibold text-[#B8860B] pt-3 pb-5 mr-auto border-b border-[#B8860B60] w-full">{review.event_name}</span>
+      <span className="text-sm font-semibold text-[#B8860B] pt-3 pb-5 mr-auto border-b border-[#B8860B60] w-full">{review.eventName}</span>
 
       {/* - Foto e nome de quem avaliou - */}
 
       <div className="flex w-full items-center pt-4">
-        <img
-          className="h-11 w-11 rounded-full"
-          src={review.user_photo}
-          alt={review.user_name}
-        />
+        {review.userPhoto ? (
+          <img
+            className="h-11 w-11 object-cover rounded-full"
+            src={review.userPhoto}
+            alt={review.userName}
+          />
+        ) : (
+          <div className="flex justify-center items-center h-11 w-11 bg-[#3D2B0A] border border-[#B8860B] rounded-full shrink-0">
+            <span className="text-[#B8860B] font-bold">{review.userName.trim().charAt(0).toUpperCase()}</span>
+          </div>
+        )}
 
         <div className="flex flex-col text-white mt-1">
-          <span className="ml-3 text-sm font-semibold">{reviewNameMask(review.user_name)}</span>
+          <span className="ml-3 text-sm font-semibold">{reviewNameMask(review.userName)}</span>
 
           {/* - Data da avaliação - */}
 
-          <span className="ml-3 mt-1 text-xs font-semibold text-white/60">{elapsedTime(review.created_at)}</span>
+          <span className="ml-3 mt-1 text-xs font-semibold text-white/60">{elapsedTime(review.createdAt)}</span>
         </div>
 
         {/* - Badge de verificado - */}
 
-        {review.verified && (
+        {review.verifiedBadge && (
           <div className="flex justify-center items-center h-5 w-5 bg-[#B8860B] mb-4 ml-2 border border-[#3D2B0A] rounded-full">
             <Check className="h-3 w-3 text-black" />
           </div>

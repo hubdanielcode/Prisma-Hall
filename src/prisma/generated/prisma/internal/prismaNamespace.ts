@@ -399,20 +399,23 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   Session: 'Session',
   User: 'User',
+  NotificationPreference: 'NotificationPreference',
+  Notification: 'Notification',
   Profile: 'Profile',
   Cart: 'Cart',
   Product: 'Product',
-  VoucherPayment: 'VoucherPayment',
-  VoucherOrder: 'VoucherOrder',
   Voucher: 'Voucher',
+  VoucherOrder: 'VoucherOrder',
+  VoucherPayment: 'VoucherPayment',
+  Ticket: 'Ticket',
+  TicketOrder: 'TicketOrder',
+  TicketPayment: 'TicketPayment',
   Event: 'Event',
   Attraction: 'Attraction',
   Review: 'Review',
   Gallery: 'Gallery',
   GalleryLikes: 'GalleryLikes',
-  Ticket: 'Ticket',
-  TicketOrder: 'TicketOrder',
-  TicketPayment: 'TicketPayment'
+  Newsletter: 'Newsletter'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -428,7 +431,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "session" | "user" | "profile" | "cart" | "product" | "voucherPayment" | "voucherOrder" | "voucher" | "event" | "attraction" | "review" | "gallery" | "galleryLikes" | "ticket" | "ticketOrder" | "ticketPayment"
+    modelProps: "session" | "user" | "notificationPreference" | "notification" | "profile" | "cart" | "product" | "voucher" | "voucherOrder" | "voucherPayment" | "ticket" | "ticketOrder" | "ticketPayment" | "event" | "attraction" | "review" | "gallery" | "galleryLikes" | "newsletter"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -577,6 +580,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UserCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
+        }
+      }
+    }
+    NotificationPreference: {
+      payload: Prisma.$NotificationPreferencePayload<ExtArgs>
+      fields: Prisma.NotificationPreferenceFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.NotificationPreferenceFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPreferencePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.NotificationPreferenceFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPreferencePayload>
+        }
+        findFirst: {
+          args: Prisma.NotificationPreferenceFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPreferencePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.NotificationPreferenceFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPreferencePayload>
+        }
+        findMany: {
+          args: Prisma.NotificationPreferenceFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPreferencePayload>[]
+        }
+        create: {
+          args: Prisma.NotificationPreferenceCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPreferencePayload>
+        }
+        createMany: {
+          args: Prisma.NotificationPreferenceCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.NotificationPreferenceCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPreferencePayload>[]
+        }
+        delete: {
+          args: Prisma.NotificationPreferenceDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPreferencePayload>
+        }
+        update: {
+          args: Prisma.NotificationPreferenceUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPreferencePayload>
+        }
+        deleteMany: {
+          args: Prisma.NotificationPreferenceDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.NotificationPreferenceUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.NotificationPreferenceUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPreferencePayload>[]
+        }
+        upsert: {
+          args: Prisma.NotificationPreferenceUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPreferencePayload>
+        }
+        aggregate: {
+          args: Prisma.NotificationPreferenceAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateNotificationPreference>
+        }
+        groupBy: {
+          args: Prisma.NotificationPreferenceGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NotificationPreferenceGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.NotificationPreferenceCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NotificationPreferenceCountAggregateOutputType> | number
+        }
+      }
+    }
+    Notification: {
+      payload: Prisma.$NotificationPayload<ExtArgs>
+      fields: Prisma.NotificationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.NotificationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.NotificationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        findFirst: {
+          args: Prisma.NotificationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.NotificationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        findMany: {
+          args: Prisma.NotificationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>[]
+        }
+        create: {
+          args: Prisma.NotificationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        createMany: {
+          args: Prisma.NotificationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.NotificationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>[]
+        }
+        delete: {
+          args: Prisma.NotificationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        update: {
+          args: Prisma.NotificationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        deleteMany: {
+          args: Prisma.NotificationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.NotificationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.NotificationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>[]
+        }
+        upsert: {
+          args: Prisma.NotificationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        aggregate: {
+          args: Prisma.NotificationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateNotification>
+        }
+        groupBy: {
+          args: Prisma.NotificationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NotificationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.NotificationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NotificationCountAggregateOutputType> | number
         }
       }
     }
@@ -802,77 +953,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    VoucherPayment: {
-      payload: Prisma.$VoucherPaymentPayload<ExtArgs>
-      fields: Prisma.VoucherPaymentFieldRefs
+    Voucher: {
+      payload: Prisma.$VoucherPayload<ExtArgs>
+      fields: Prisma.VoucherFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.VoucherPaymentFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPaymentPayload> | null
+          args: Prisma.VoucherFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.VoucherPaymentFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPaymentPayload>
+          args: Prisma.VoucherFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPayload>
         }
         findFirst: {
-          args: Prisma.VoucherPaymentFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPaymentPayload> | null
+          args: Prisma.VoucherFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.VoucherPaymentFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPaymentPayload>
+          args: Prisma.VoucherFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPayload>
         }
         findMany: {
-          args: Prisma.VoucherPaymentFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPaymentPayload>[]
+          args: Prisma.VoucherFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPayload>[]
         }
         create: {
-          args: Prisma.VoucherPaymentCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPaymentPayload>
+          args: Prisma.VoucherCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPayload>
         }
         createMany: {
-          args: Prisma.VoucherPaymentCreateManyArgs<ExtArgs>
+          args: Prisma.VoucherCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.VoucherPaymentCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPaymentPayload>[]
+          args: Prisma.VoucherCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPayload>[]
         }
         delete: {
-          args: Prisma.VoucherPaymentDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPaymentPayload>
+          args: Prisma.VoucherDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPayload>
         }
         update: {
-          args: Prisma.VoucherPaymentUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPaymentPayload>
+          args: Prisma.VoucherUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPayload>
         }
         deleteMany: {
-          args: Prisma.VoucherPaymentDeleteManyArgs<ExtArgs>
+          args: Prisma.VoucherDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.VoucherPaymentUpdateManyArgs<ExtArgs>
+          args: Prisma.VoucherUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.VoucherPaymentUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPaymentPayload>[]
+          args: Prisma.VoucherUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPayload>[]
         }
         upsert: {
-          args: Prisma.VoucherPaymentUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPaymentPayload>
+          args: Prisma.VoucherUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPayload>
         }
         aggregate: {
-          args: Prisma.VoucherPaymentAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateVoucherPayment>
+          args: Prisma.VoucherAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateVoucher>
         }
         groupBy: {
-          args: Prisma.VoucherPaymentGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.VoucherPaymentGroupByOutputType>[]
+          args: Prisma.VoucherGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VoucherGroupByOutputType>[]
         }
         count: {
-          args: Prisma.VoucherPaymentCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.VoucherPaymentCountAggregateOutputType> | number
+          args: Prisma.VoucherCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VoucherCountAggregateOutputType> | number
         }
       }
     }
@@ -950,77 +1101,299 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Voucher: {
-      payload: Prisma.$VoucherPayload<ExtArgs>
-      fields: Prisma.VoucherFieldRefs
+    VoucherPayment: {
+      payload: Prisma.$VoucherPaymentPayload<ExtArgs>
+      fields: Prisma.VoucherPaymentFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.VoucherFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPayload> | null
+          args: Prisma.VoucherPaymentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPaymentPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.VoucherFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPayload>
+          args: Prisma.VoucherPaymentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPaymentPayload>
         }
         findFirst: {
-          args: Prisma.VoucherFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPayload> | null
+          args: Prisma.VoucherPaymentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPaymentPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.VoucherFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPayload>
+          args: Prisma.VoucherPaymentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPaymentPayload>
         }
         findMany: {
-          args: Prisma.VoucherFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPayload>[]
+          args: Prisma.VoucherPaymentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPaymentPayload>[]
         }
         create: {
-          args: Prisma.VoucherCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPayload>
+          args: Prisma.VoucherPaymentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPaymentPayload>
         }
         createMany: {
-          args: Prisma.VoucherCreateManyArgs<ExtArgs>
+          args: Prisma.VoucherPaymentCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.VoucherCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPayload>[]
+          args: Prisma.VoucherPaymentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPaymentPayload>[]
         }
         delete: {
-          args: Prisma.VoucherDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPayload>
+          args: Prisma.VoucherPaymentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPaymentPayload>
         }
         update: {
-          args: Prisma.VoucherUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPayload>
+          args: Prisma.VoucherPaymentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPaymentPayload>
         }
         deleteMany: {
-          args: Prisma.VoucherDeleteManyArgs<ExtArgs>
+          args: Prisma.VoucherPaymentDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.VoucherUpdateManyArgs<ExtArgs>
+          args: Prisma.VoucherPaymentUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.VoucherUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPayload>[]
+          args: Prisma.VoucherPaymentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPaymentPayload>[]
         }
         upsert: {
-          args: Prisma.VoucherUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPayload>
+          args: Prisma.VoucherPaymentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VoucherPaymentPayload>
         }
         aggregate: {
-          args: Prisma.VoucherAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateVoucher>
+          args: Prisma.VoucherPaymentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateVoucherPayment>
         }
         groupBy: {
-          args: Prisma.VoucherGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.VoucherGroupByOutputType>[]
+          args: Prisma.VoucherPaymentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VoucherPaymentGroupByOutputType>[]
         }
         count: {
-          args: Prisma.VoucherCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.VoucherCountAggregateOutputType> | number
+          args: Prisma.VoucherPaymentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VoucherPaymentCountAggregateOutputType> | number
+        }
+      }
+    }
+    Ticket: {
+      payload: Prisma.$TicketPayload<ExtArgs>
+      fields: Prisma.TicketFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TicketFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TicketFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPayload>
+        }
+        findFirst: {
+          args: Prisma.TicketFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TicketFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPayload>
+        }
+        findMany: {
+          args: Prisma.TicketFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPayload>[]
+        }
+        create: {
+          args: Prisma.TicketCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPayload>
+        }
+        createMany: {
+          args: Prisma.TicketCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TicketCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPayload>[]
+        }
+        delete: {
+          args: Prisma.TicketDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPayload>
+        }
+        update: {
+          args: Prisma.TicketUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPayload>
+        }
+        deleteMany: {
+          args: Prisma.TicketDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TicketUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TicketUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPayload>[]
+        }
+        upsert: {
+          args: Prisma.TicketUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPayload>
+        }
+        aggregate: {
+          args: Prisma.TicketAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTicket>
+        }
+        groupBy: {
+          args: Prisma.TicketGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TicketGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TicketCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TicketCountAggregateOutputType> | number
+        }
+      }
+    }
+    TicketOrder: {
+      payload: Prisma.$TicketOrderPayload<ExtArgs>
+      fields: Prisma.TicketOrderFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TicketOrderFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketOrderPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TicketOrderFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketOrderPayload>
+        }
+        findFirst: {
+          args: Prisma.TicketOrderFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketOrderPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TicketOrderFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketOrderPayload>
+        }
+        findMany: {
+          args: Prisma.TicketOrderFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketOrderPayload>[]
+        }
+        create: {
+          args: Prisma.TicketOrderCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketOrderPayload>
+        }
+        createMany: {
+          args: Prisma.TicketOrderCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TicketOrderCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketOrderPayload>[]
+        }
+        delete: {
+          args: Prisma.TicketOrderDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketOrderPayload>
+        }
+        update: {
+          args: Prisma.TicketOrderUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketOrderPayload>
+        }
+        deleteMany: {
+          args: Prisma.TicketOrderDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TicketOrderUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TicketOrderUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketOrderPayload>[]
+        }
+        upsert: {
+          args: Prisma.TicketOrderUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketOrderPayload>
+        }
+        aggregate: {
+          args: Prisma.TicketOrderAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTicketOrder>
+        }
+        groupBy: {
+          args: Prisma.TicketOrderGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TicketOrderGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TicketOrderCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TicketOrderCountAggregateOutputType> | number
+        }
+      }
+    }
+    TicketPayment: {
+      payload: Prisma.$TicketPaymentPayload<ExtArgs>
+      fields: Prisma.TicketPaymentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TicketPaymentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPaymentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TicketPaymentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPaymentPayload>
+        }
+        findFirst: {
+          args: Prisma.TicketPaymentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPaymentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TicketPaymentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPaymentPayload>
+        }
+        findMany: {
+          args: Prisma.TicketPaymentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPaymentPayload>[]
+        }
+        create: {
+          args: Prisma.TicketPaymentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPaymentPayload>
+        }
+        createMany: {
+          args: Prisma.TicketPaymentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TicketPaymentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPaymentPayload>[]
+        }
+        delete: {
+          args: Prisma.TicketPaymentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPaymentPayload>
+        }
+        update: {
+          args: Prisma.TicketPaymentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPaymentPayload>
+        }
+        deleteMany: {
+          args: Prisma.TicketPaymentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TicketPaymentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TicketPaymentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPaymentPayload>[]
+        }
+        upsert: {
+          args: Prisma.TicketPaymentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPaymentPayload>
+        }
+        aggregate: {
+          args: Prisma.TicketPaymentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTicketPayment>
+        }
+        groupBy: {
+          args: Prisma.TicketPaymentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TicketPaymentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TicketPaymentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TicketPaymentCountAggregateOutputType> | number
         }
       }
     }
@@ -1394,225 +1767,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Ticket: {
-      payload: Prisma.$TicketPayload<ExtArgs>
-      fields: Prisma.TicketFieldRefs
+    Newsletter: {
+      payload: Prisma.$NewsletterPayload<ExtArgs>
+      fields: Prisma.NewsletterFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.TicketFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPayload> | null
+          args: Prisma.NewsletterFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsletterPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.TicketFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPayload>
+          args: Prisma.NewsletterFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsletterPayload>
         }
         findFirst: {
-          args: Prisma.TicketFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPayload> | null
+          args: Prisma.NewsletterFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsletterPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.TicketFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPayload>
+          args: Prisma.NewsletterFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsletterPayload>
         }
         findMany: {
-          args: Prisma.TicketFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPayload>[]
+          args: Prisma.NewsletterFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsletterPayload>[]
         }
         create: {
-          args: Prisma.TicketCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPayload>
+          args: Prisma.NewsletterCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsletterPayload>
         }
         createMany: {
-          args: Prisma.TicketCreateManyArgs<ExtArgs>
+          args: Prisma.NewsletterCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.TicketCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPayload>[]
+          args: Prisma.NewsletterCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsletterPayload>[]
         }
         delete: {
-          args: Prisma.TicketDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPayload>
+          args: Prisma.NewsletterDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsletterPayload>
         }
         update: {
-          args: Prisma.TicketUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPayload>
+          args: Prisma.NewsletterUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsletterPayload>
         }
         deleteMany: {
-          args: Prisma.TicketDeleteManyArgs<ExtArgs>
+          args: Prisma.NewsletterDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.TicketUpdateManyArgs<ExtArgs>
+          args: Prisma.NewsletterUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.TicketUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPayload>[]
+          args: Prisma.NewsletterUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsletterPayload>[]
         }
         upsert: {
-          args: Prisma.TicketUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPayload>
+          args: Prisma.NewsletterUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsletterPayload>
         }
         aggregate: {
-          args: Prisma.TicketAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateTicket>
+          args: Prisma.NewsletterAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateNewsletter>
         }
         groupBy: {
-          args: Prisma.TicketGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.TicketGroupByOutputType>[]
+          args: Prisma.NewsletterGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NewsletterGroupByOutputType>[]
         }
         count: {
-          args: Prisma.TicketCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.TicketCountAggregateOutputType> | number
-        }
-      }
-    }
-    TicketOrder: {
-      payload: Prisma.$TicketOrderPayload<ExtArgs>
-      fields: Prisma.TicketOrderFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.TicketOrderFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketOrderPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.TicketOrderFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketOrderPayload>
-        }
-        findFirst: {
-          args: Prisma.TicketOrderFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketOrderPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.TicketOrderFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketOrderPayload>
-        }
-        findMany: {
-          args: Prisma.TicketOrderFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketOrderPayload>[]
-        }
-        create: {
-          args: Prisma.TicketOrderCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketOrderPayload>
-        }
-        createMany: {
-          args: Prisma.TicketOrderCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.TicketOrderCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketOrderPayload>[]
-        }
-        delete: {
-          args: Prisma.TicketOrderDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketOrderPayload>
-        }
-        update: {
-          args: Prisma.TicketOrderUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketOrderPayload>
-        }
-        deleteMany: {
-          args: Prisma.TicketOrderDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.TicketOrderUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.TicketOrderUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketOrderPayload>[]
-        }
-        upsert: {
-          args: Prisma.TicketOrderUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketOrderPayload>
-        }
-        aggregate: {
-          args: Prisma.TicketOrderAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateTicketOrder>
-        }
-        groupBy: {
-          args: Prisma.TicketOrderGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.TicketOrderGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.TicketOrderCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.TicketOrderCountAggregateOutputType> | number
-        }
-      }
-    }
-    TicketPayment: {
-      payload: Prisma.$TicketPaymentPayload<ExtArgs>
-      fields: Prisma.TicketPaymentFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.TicketPaymentFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPaymentPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.TicketPaymentFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPaymentPayload>
-        }
-        findFirst: {
-          args: Prisma.TicketPaymentFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPaymentPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.TicketPaymentFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPaymentPayload>
-        }
-        findMany: {
-          args: Prisma.TicketPaymentFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPaymentPayload>[]
-        }
-        create: {
-          args: Prisma.TicketPaymentCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPaymentPayload>
-        }
-        createMany: {
-          args: Prisma.TicketPaymentCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.TicketPaymentCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPaymentPayload>[]
-        }
-        delete: {
-          args: Prisma.TicketPaymentDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPaymentPayload>
-        }
-        update: {
-          args: Prisma.TicketPaymentUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPaymentPayload>
-        }
-        deleteMany: {
-          args: Prisma.TicketPaymentDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.TicketPaymentUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.TicketPaymentUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPaymentPayload>[]
-        }
-        upsert: {
-          args: Prisma.TicketPaymentUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketPaymentPayload>
-        }
-        aggregate: {
-          args: Prisma.TicketPaymentAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateTicketPayment>
-        }
-        groupBy: {
-          args: Prisma.TicketPaymentGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.TicketPaymentGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.TicketPaymentCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.TicketPaymentCountAggregateOutputType> | number
+          args: Prisma.NewsletterCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NewsletterCountAggregateOutputType> | number
         }
       }
     }
@@ -1687,6 +1912,33 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+export const NotificationPreferenceScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  notifyFavoriteEvents: 'notifyFavoriteEvents',
+  notifyPromotions: 'notifyPromotions',
+  notifyByEmail: 'notifyByEmail',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NotificationPreferenceScalarFieldEnum = (typeof NotificationPreferenceScalarFieldEnum)[keyof typeof NotificationPreferenceScalarFieldEnum]
+
+
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  title: 'title',
+  message: 'message',
+  readAt: 'readAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
 export const ProfileScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -1738,6 +1990,30 @@ export const ProductScalarFieldEnum = {
 export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
 
 
+export const VoucherScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  userId: 'userId',
+  productId: 'productId',
+  quantity: 'quantity',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VoucherScalarFieldEnum = (typeof VoucherScalarFieldEnum)[keyof typeof VoucherScalarFieldEnum]
+
+
+export const VoucherOrderScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VoucherOrderScalarFieldEnum = (typeof VoucherOrderScalarFieldEnum)[keyof typeof VoucherOrderScalarFieldEnum]
+
+
 export const VoucherPaymentScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -1753,7 +2029,21 @@ export const VoucherPaymentScalarFieldEnum = {
 export type VoucherPaymentScalarFieldEnum = (typeof VoucherPaymentScalarFieldEnum)[keyof typeof VoucherPaymentScalarFieldEnum]
 
 
-export const VoucherOrderScalarFieldEnum = {
+export const TicketScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  userId: 'userId',
+  eventId: 'eventId',
+  quantity: 'quantity',
+  unitPrice: 'unitPrice',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TicketScalarFieldEnum = (typeof TicketScalarFieldEnum)[keyof typeof TicketScalarFieldEnum]
+
+
+export const TicketOrderScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   status: 'status',
@@ -1761,20 +2051,23 @@ export const VoucherOrderScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type VoucherOrderScalarFieldEnum = (typeof VoucherOrderScalarFieldEnum)[keyof typeof VoucherOrderScalarFieldEnum]
+export type TicketOrderScalarFieldEnum = (typeof TicketOrderScalarFieldEnum)[keyof typeof TicketOrderScalarFieldEnum]
 
 
-export const VoucherScalarFieldEnum = {
+export const TicketPaymentScalarFieldEnum = {
   id: 'id',
-  orderId: 'orderId',
   userId: 'userId',
-  productId: 'productId',
-  quantity: 'quantity',
+  orderId: 'orderId',
+  method: 'method',
+  status: 'status',
+  totalValue: 'totalValue',
+  confirmedAt: 'confirmedAt',
+  pickedUpAt: 'pickedUpAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type VoucherScalarFieldEnum = (typeof VoucherScalarFieldEnum)[keyof typeof VoucherScalarFieldEnum]
+export type TicketPaymentScalarFieldEnum = (typeof TicketPaymentScalarFieldEnum)[keyof typeof TicketPaymentScalarFieldEnum]
 
 
 export const EventScalarFieldEnum = {
@@ -1845,45 +2138,13 @@ export const GalleryLikesScalarFieldEnum = {
 export type GalleryLikesScalarFieldEnum = (typeof GalleryLikesScalarFieldEnum)[keyof typeof GalleryLikesScalarFieldEnum]
 
 
-export const TicketScalarFieldEnum = {
-  id: 'id',
-  orderId: 'orderId',
+export const NewsletterScalarFieldEnum = {
   userId: 'userId',
-  eventId: 'eventId',
-  quantity: 'quantity',
-  unitPrice: 'unitPrice',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  email: 'email',
+  isSubscribed: 'isSubscribed'
 } as const
 
-export type TicketScalarFieldEnum = (typeof TicketScalarFieldEnum)[keyof typeof TicketScalarFieldEnum]
-
-
-export const TicketOrderScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  status: 'status',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type TicketOrderScalarFieldEnum = (typeof TicketOrderScalarFieldEnum)[keyof typeof TicketOrderScalarFieldEnum]
-
-
-export const TicketPaymentScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  orderId: 'orderId',
-  method: 'method',
-  status: 'status',
-  totalValue: 'totalValue',
-  confirmedAt: 'confirmedAt',
-  pickedUpAt: 'pickedUpAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type TicketPaymentScalarFieldEnum = (typeof TicketPaymentScalarFieldEnum)[keyof typeof TicketPaymentScalarFieldEnum]
+export type NewsletterScalarFieldEnum = (typeof NewsletterScalarFieldEnum)[keyof typeof NewsletterScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1980,6 +2241,20 @@ export type ListEnumUserBadgeLevelFieldRefInput<$PrismaModel> = FieldRefInputTyp
 
 
 /**
+ * Reference to a field of type 'NotificationType'
+ */
+export type EnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType'>
+    
+
+
+/**
+ * Reference to a field of type 'NotificationType[]'
+ */
+export type ListEnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType[]'>
+    
+
+
+/**
  * Reference to a field of type 'ItemType'
  */
 export type EnumItemTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ItemType'>
@@ -2050,6 +2325,20 @@ export type ListEnumProductStatusFieldRefInput<$PrismaModel> = FieldRefInputType
 
 
 /**
+ * Reference to a field of type 'OrderStatus'
+ */
+export type EnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'OrderStatus[]'
+ */
+export type ListEnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'PaymentMethod'
  */
 export type EnumPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentMethod'>
@@ -2074,20 +2363,6 @@ export type EnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
  * Reference to a field of type 'PaymentStatus[]'
  */
 export type ListEnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentStatus[]'>
-    
-
-
-/**
- * Reference to a field of type 'OrderStatus'
- */
-export type EnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderStatus'>
-    
-
-
-/**
- * Reference to a field of type 'OrderStatus[]'
- */
-export type ListEnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderStatus[]'>
     
 
 
@@ -2285,20 +2560,23 @@ export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaC
 export type GlobalOmitConfig = {
   session?: Prisma.SessionOmit
   user?: Prisma.UserOmit
+  notificationPreference?: Prisma.NotificationPreferenceOmit
+  notification?: Prisma.NotificationOmit
   profile?: Prisma.ProfileOmit
   cart?: Prisma.CartOmit
   product?: Prisma.ProductOmit
-  voucherPayment?: Prisma.VoucherPaymentOmit
-  voucherOrder?: Prisma.VoucherOrderOmit
   voucher?: Prisma.VoucherOmit
+  voucherOrder?: Prisma.VoucherOrderOmit
+  voucherPayment?: Prisma.VoucherPaymentOmit
+  ticket?: Prisma.TicketOmit
+  ticketOrder?: Prisma.TicketOrderOmit
+  ticketPayment?: Prisma.TicketPaymentOmit
   event?: Prisma.EventOmit
   attraction?: Prisma.AttractionOmit
   review?: Prisma.ReviewOmit
   gallery?: Prisma.GalleryOmit
   galleryLikes?: Prisma.GalleryLikesOmit
-  ticket?: Prisma.TicketOmit
-  ticketOrder?: Prisma.TicketOrderOmit
-  ticketPayment?: Prisma.TicketPaymentOmit
+  newsletter?: Prisma.NewsletterOmit
 }
 
 /* Types for Logging */

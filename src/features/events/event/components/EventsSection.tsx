@@ -5,7 +5,7 @@ import { motion } from "motion/react";
 import { Ticket } from "lucide-react";
 import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
 import { useCartContext } from "@/features/cart/hooks/useCartContext";
-import { useEvents } from "../hooks/useEvents";
+import { useEvents } from "@/features/events/event/hooks/useEvents";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { EventCard } from "./EventCard";
@@ -35,7 +35,7 @@ const EventsSection = () => {
       />
 
       <div
-        className="flex flex-col w-full h-fit items-center justify-center border-t border-[#B8860B60] p-12"
+        className="flex flex-col w-full h-fit items-center justify-center bg-black border-t border-[#B8860B60] p-12"
         id="events"
       >
         {/* - Tag de próximos eventos - */}
@@ -99,11 +99,8 @@ const EventsSection = () => {
                       onClick={() => {
                         if (isAuthenticated) {
                           handleAddToCart({
-                            ...event,
-                            id: "",
+                            eventId: event.id,
                             type: "tickets",
-                            ticketId: crypto.randomUUID(),
-                            event_name: event.title,
                             quantity: 1,
                           });
                           setIsCartOpen(true);

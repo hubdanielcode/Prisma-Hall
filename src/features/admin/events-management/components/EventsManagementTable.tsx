@@ -86,7 +86,7 @@ const EventsManagementTable = ({ currentPage, onPageChange }: EventsManagementTa
                     <div className="flex items-center gap-1.5">
                       <div
                         className={`h-2 w-2 rounded-full ${
-                          event.status === "happened"
+                          event.status === "soon"
                             ? "bg-green-400 shadow-[0_0_6px_2px_rgba(74,222,128,0.6)]"
                             : "bg-red-400 shadow-[0_0_6px_2px_rgba(248,113,113,0.6)]"
                         }`}
@@ -234,7 +234,7 @@ const EventsManagementTable = ({ currentPage, onPageChange }: EventsManagementTa
                     <div className="flex justify-center items-center gap-2">
                       <div
                         className={`h-2.5 w-2.5 rounded-full ${
-                          event.status === "happened"
+                          event.status === "soon"
                             ? "bg-green-400 shadow-[0_0_6px_2px_rgba(74,222,128,0.6)]"
                             : "bg-red-400 shadow-[0_0_6px_2px_rgba(248,113,113,0.6)]"
                         }`}
