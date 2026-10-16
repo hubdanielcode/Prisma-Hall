@@ -2,9 +2,59 @@
 
 import { checkIsAdmin } from "../checkIsAdmin";
 import { editEventSchema } from "@/lib/validations";
-import { prisma } from "@/lib/prisma";
+import { getEventStatus } from "@/lib/server/events/getEventStatus";
+import { getUserIdsThatFavoritedEvent, notifyFavoriteEventByEmail, notifyPromotionsByEmail } from "@/lib/server/notifications/notifyUsers";
+import { prisma } from "@/lib/server/services/prisma";
 import { put } from "@vercel/blob";
 import z from "zod";
+
+interface FavoriteEventChangesProps {
+  previousEvent: { startsAt: Date; price: number };
+  editedEvent: { id: string; title: string; status: string; startsAt: Date; price: number };
+}
+
+const notifyFavoriteEventChanges = async ({ previousEvent, editedEvent }: FavoriteEventChangesProps) => {
+  if (getEventStatus(editedEvent) !== "soon") {
+    return;
+  }
+
+  const dateChanged = previousEvent.startsAt.getTime() !== editedEvent.startsAt.getTime();
+  const priceDropped = editedEvent.price < previousEvent.price;
+
+  if (!dateChanged && !priceDropped) {
+    return;
+  }
+
+  const newPrice = `R$ ${editedEvent.price.toFixed(2).replace(".", ",")}`;
+  const changes: string[] = [];
+
+  if (dateChanged) {
+    changes.push("a data foi alterada");
+  }
+
+  if (priceDropped) {
+    changes.push(`o preço baixou para ${newPrice}`);
+  }
+
+  await notifyFavoriteEventByEmail(editedEvent.id, {
+    type: "event_update",
+    title: "Evento favorito atualizado",
+    message: `${editedEvent.title}: ${changes.join(" e ")}.`,
+  });
+
+  if (priceDropped) {
+    const favoriteUserIds = await getUserIdsThatFavoritedEvent(editedEvent.id);
+
+    await notifyPromotionsByEmail(
+      {
+        type: "event_update",
+        title: "Preço baixou",
+        message: `${editedEvent.title}: o preço baixou para ${newPrice}.`,
+      },
+      favoriteUserIds,
+    );
+  }
+};
 
 const editEvent = async (event: z.infer<typeof editEventSchema>) => {
   const isAdmin = await checkIsAdmin();
@@ -32,6 +82,14 @@ const editEvent = async (event: z.infer<typeof editEventSchema>) => {
   const imageFile = parsedEvent.data.image;
 
   try {
+    const previousEvent = await prisma.event.findUnique({ where: { id: parsedEvent.data.eventId } });
+
+    if (!previousEvent) {
+      return false;
+    }
+
+    const previousEventValues = { startsAt: previousEvent.startsAt, price: previousEvent.price.toNumber() };
+
     if (imageFile) {
       /* - Se houver troca de imagem - */
 
@@ -42,6 +100,11 @@ const editEvent = async (event: z.infer<typeof editEventSchema>) => {
         data: { ...baseEventData, image: blob.url },
       });
 
+      await notifyFavoriteEventChanges({
+        previousEvent: previousEventValues,
+        editedEvent: { ...editedEvent, price: editedEvent.price.toNumber() },
+      });
+
       return {
         id: editedEvent.id,
         title: editedEvent.title,
@@ -49,7 +112,7 @@ const editEvent = async (event: z.infer<typeof editEventSchema>) => {
         tag: editedEvent.tag,
         attractionName: editedEvent.attractionName,
         image: editedEvent.image,
-        status: editedEvent.status,
+        status: getEventStatus(editedEvent),
         price: editedEvent.price.toNumber(),
         startsAt: editedEvent.startsAt,
         attendees: editedEvent.attendees,
@@ -66,6 +129,11 @@ const editEvent = async (event: z.infer<typeof editEventSchema>) => {
       data: { ...baseEventData },
     });
 
+    await notifyFavoriteEventChanges({
+      previousEvent: previousEventValues,
+      editedEvent: { ...editedEvent, price: editedEvent.price.toNumber() },
+    });
+
     return {
       id: editedEvent.id,
       title: editedEvent.title,
@@ -74,7 +142,7 @@ const editEvent = async (event: z.infer<typeof editEventSchema>) => {
       tag: editedEvent.tag,
       attractionName: editedEvent.attractionName,
       image: editedEvent.image,
-      status: editedEvent.status,
+      status: getEventStatus(editedEvent),
       price: editedEvent.price.toNumber(),
       startsAt: editedEvent.startsAt,
       attendees: editedEvent.attendees,

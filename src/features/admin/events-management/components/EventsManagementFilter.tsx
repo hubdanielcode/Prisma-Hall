@@ -27,6 +27,7 @@ const EventsManagementFilter = ({ onPageChange }: EventsManagementFilterProps) =
     { id: "all_status", title: "Ambos" },
     { id: "soon", title: "Em Breve" },
     { id: "happened", title: "Encerrados" },
+    { id: "cancelled", title: "Cancelados" },
   ] as const;
 
   const tagDropdownRef = useRef<HTMLDivElement | null>(null);

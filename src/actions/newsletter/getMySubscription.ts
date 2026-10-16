@@ -1,6 +1,6 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/server/services/prisma";
 import { validateSession } from "../session/validateSession";
 
 const getMySubscription = async () => {

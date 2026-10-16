@@ -23,6 +23,11 @@ export * from './enums.ts';
  */
 export type Session = Prisma.SessionModel
 /**
+ * Model RateLimit
+ * 
+ */
+export type RateLimit = Prisma.RateLimitModel
+/**
  * Model User
  * 
  */
@@ -107,6 +112,11 @@ export type Gallery = Prisma.GalleryModel
  * 
  */
 export type GalleryLikes = Prisma.GalleryLikesModel
+/**
+ * Model FavoriteEvent
+ * 
+ */
+export type FavoriteEvent = Prisma.FavoriteEventModel
 /**
  * Model Newsletter
  * 

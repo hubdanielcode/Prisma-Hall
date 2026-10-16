@@ -63,7 +63,7 @@ const CancelVoucherOrder = ({ orderId }: CancelVoucherOrderProps) => {
         return;
       }
 
-      router.replace(`/pedidos/${orderId}`);
+      router.replace(`/pedidos/${orderId}/detalhes-do-pedido`);
     } catch {
       setCancelError("Não foi possível cancelar o pedido. Tente novamente.");
     } finally {
@@ -104,7 +104,7 @@ const CancelVoucherOrder = ({ orderId }: CancelVoucherOrderProps) => {
 
                 <Link
                   className="w-fit text-sm text-[#B8860B] hover:underline"
-                  href={`/pedidos/${order.id}`}
+                  href={`/pedidos/${order.id}/detalhes-do-pedido`}
                 >
                   Voltar para o pedido
                 </Link>
@@ -141,7 +141,7 @@ const CancelVoucherOrder = ({ orderId }: CancelVoucherOrderProps) => {
                   >
                     <Link
                       className="flex items-center justify-center h-full px-4 py-2 text-sm font-semibold text-white bg-[#1A1A1A] hover:bg-[#2A2A2A] border border-[#B8860B] rounded-lg"
-                      href={`/pedidos/${order.id}`}
+                      href={`/pedidos/${order.id}/detalhes-do-pedido`}
                     >
                       Manter Pedido
                     </Link>

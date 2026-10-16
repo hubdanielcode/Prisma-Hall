@@ -1,15 +1,15 @@
 "use server";
 
 import { checkoutCartSchema } from "@/lib/validations/cart/cartItemSchemas";
-import { getResend } from "@/lib/resend";
+import { getEventStatus } from "@/lib/server/events/getEventStatus";
+import { getResend } from "@/lib/server/services/resend";
 import { OrderConfirmationEmail } from "@/shared/emails/OrderConfirmationEmail";
-import { prisma } from "@/lib/prisma";
-
+import { prisma } from "@/lib/server/services/prisma";
+import { serviceFee } from "@/features/cart/utils/serviceFee";
 import { validateSession } from "@/actions/session/validateSession";
 import React from "react";
-import z from "zod";
-import { serviceFee } from "@/features/cart/utils/serviceFee";
 import type { ItemType } from "@/prisma/generated/prisma/enums";
+import z from "zod";
 
 interface OrderItemProps {
   type: ItemType;
@@ -36,7 +36,7 @@ const checkoutCart = async (checkout: z.infer<typeof checkoutCartSchema>) => {
   const appUrl = process.env.NEXT_PUBLIC_APP_URL;
 
   try {
-    const result = await prisma.$transaction(async (transaction) => {
+    const orderSummary = await prisma.$transaction(async (transaction) => {
       const cartItems = await transaction.cart.findMany({
         where: { userId: validSession.user.id },
         include: { product: true, event: true },
@@ -50,10 +50,13 @@ const checkoutCart = async (checkout: z.infer<typeof checkoutCartSchema>) => {
       const drinkItems = cartItems.filter((item) => item.type === "drinks");
 
       let ticketOrderId: string | null = null;
+      let ticketPaymentId: string | undefined;
       let voucherOrderId: string | null = null;
+      let voucherPaymentId: string | undefined;
+
+      let ordersTotalValue = 0;
 
       const orderItems: OrderItemProps[] = [];
-      let ordersTotalValue = 0;
 
       /* - Pedido de ingressos - */
 
@@ -61,7 +64,7 @@ const checkoutCart = async (checkout: z.infer<typeof checkoutCartSchema>) => {
         let ticketsSubtotal = 0;
 
         ticketItems.forEach((ticketItem) => {
-          if (!ticketItem.event || ticketItem.event.status !== "soon") {
+          if (!ticketItem.event || getEventStatus(ticketItem.event) !== "soon") {
             throw new Error("Evento indisponível.");
           }
 
@@ -93,9 +96,11 @@ const checkoutCart = async (checkout: z.infer<typeof checkoutCartSchema>) => {
               },
             },
           },
+          include: { ticketPayments: true },
         });
 
         ticketOrderId = newTicketOrder.id;
+        ticketPaymentId = newTicketOrder.ticketPayments[0].id;
 
         ordersTotalValue += ticketsTotalValue;
 
@@ -143,10 +148,11 @@ const checkoutCart = async (checkout: z.infer<typeof checkoutCartSchema>) => {
                 userId: validSession.user.id,
                 productId: item.product!.id,
                 quantity: item.quantity,
+                unitPrice: item.product!.price,
               })),
             },
 
-            voucherPayment: {
+            voucherPayments: {
               create: {
                 userId: validSession.user.id,
                 method: parsedCheckout.data.method,
@@ -155,9 +161,11 @@ const checkoutCart = async (checkout: z.infer<typeof checkoutCartSchema>) => {
               },
             },
           },
+          include: { voucherPayments: true },
         });
 
         voucherOrderId = newVoucherOrder.id;
+        voucherPaymentId = newVoucherOrder.voucherPayments[0].id;
 
         ordersTotalValue += drinksTotalValue;
 
@@ -175,7 +183,14 @@ const checkoutCart = async (checkout: z.infer<typeof checkoutCartSchema>) => {
 
       await transaction.cart.deleteMany({ where: { userId: validSession.user.id } });
 
-      return { ticketOrderId, voucherOrderId, orderItems, ordersTotalValue: Math.round(ordersTotalValue * 100) / 100 };
+      return {
+        ticketOrderId,
+        ticketPaymentId,
+        voucherOrderId,
+        voucherPaymentId,
+        orderItems,
+        ordersTotalValue: Math.round(ordersTotalValue * 100) / 100,
+      };
     });
 
     /* - Email de confirmação. Uma falha no envio não pode desfazer um pedido que já foi criado - */
@@ -193,16 +208,21 @@ const checkoutCart = async (checkout: z.infer<typeof checkoutCartSchema>) => {
 
           // 1. Pedido com ingressos tem tela própria. Pedido só de bebidas fica no perfil
 
-          link: result.ticketOrderId ? `${appUrl}/pedidos/${result.ticketOrderId}` : `${appUrl}/perfil`,
-          totalValue: result.ordersTotalValue,
-          items: result.orderItems,
+          link: orderSummary.ticketOrderId ? `${appUrl}/pedidos/${orderSummary.ticketOrderId}` : `${appUrl}/perfil`,
+          totalValue: orderSummary.ordersTotalValue,
+          items: orderSummary.orderItems,
         }),
       });
     } catch {
       // O pedido continua válido mesmo sem o email
     }
 
-    return { ticketOrderId: result.ticketOrderId, voucherOrderId: result.voucherOrderId };
+    return {
+      ticketOrderId: orderSummary.ticketOrderId,
+      ticketPaymentId: orderSummary.ticketPaymentId,
+      voucherOrderId: orderSummary.voucherOrderId,
+      voucherPaymentId: orderSummary.voucherPaymentId,
+    };
   } catch {
     return false;
   }

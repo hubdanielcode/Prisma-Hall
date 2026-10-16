@@ -28,10 +28,12 @@ export type AggregateVoucher = {
 
 export type VoucherAvgAggregateOutputType = {
   quantity: number | null
+  unitPrice: runtime.Decimal | null
 }
 
 export type VoucherSumAggregateOutputType = {
   quantity: number | null
+  unitPrice: runtime.Decimal | null
 }
 
 export type VoucherMinAggregateOutputType = {
@@ -40,6 +42,8 @@ export type VoucherMinAggregateOutputType = {
   userId: string | null
   productId: string | null
   quantity: number | null
+  unitPrice: runtime.Decimal | null
+  status: $Enums.VoucherStatus | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -50,6 +54,8 @@ export type VoucherMaxAggregateOutputType = {
   userId: string | null
   productId: string | null
   quantity: number | null
+  unitPrice: runtime.Decimal | null
+  status: $Enums.VoucherStatus | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -60,6 +66,8 @@ export type VoucherCountAggregateOutputType = {
   userId: number
   productId: number
   quantity: number
+  unitPrice: number
+  status: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -68,10 +76,12 @@ export type VoucherCountAggregateOutputType = {
 
 export type VoucherAvgAggregateInputType = {
   quantity?: true
+  unitPrice?: true
 }
 
 export type VoucherSumAggregateInputType = {
   quantity?: true
+  unitPrice?: true
 }
 
 export type VoucherMinAggregateInputType = {
@@ -80,6 +90,8 @@ export type VoucherMinAggregateInputType = {
   userId?: true
   productId?: true
   quantity?: true
+  unitPrice?: true
+  status?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -90,6 +102,8 @@ export type VoucherMaxAggregateInputType = {
   userId?: true
   productId?: true
   quantity?: true
+  unitPrice?: true
+  status?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -100,6 +114,8 @@ export type VoucherCountAggregateInputType = {
   userId?: true
   productId?: true
   quantity?: true
+  unitPrice?: true
+  status?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -197,6 +213,8 @@ export type VoucherGroupByOutputType = {
   userId: string
   productId: string
   quantity: number
+  unitPrice: runtime.Decimal
+  status: $Enums.VoucherStatus
   createdAt: Date
   updatedAt: Date
   _count: VoucherCountAggregateOutputType | null
@@ -230,6 +248,8 @@ export type VoucherWhereInput = {
   userId?: Prisma.StringFilter<"Voucher"> | string
   productId?: Prisma.StringFilter<"Voucher"> | string
   quantity?: Prisma.IntFilter<"Voucher"> | number
+  unitPrice?: Prisma.DecimalFilter<"Voucher"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumVoucherStatusFilter<"Voucher"> | $Enums.VoucherStatus
   createdAt?: Prisma.DateTimeFilter<"Voucher"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Voucher"> | Date | string
   order?: Prisma.XOR<Prisma.VoucherOrderScalarRelationFilter, Prisma.VoucherOrderWhereInput>
@@ -243,6 +263,8 @@ export type VoucherOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  unitPrice?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   order?: Prisma.VoucherOrderOrderByWithRelationInput
@@ -259,6 +281,8 @@ export type VoucherWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.StringFilter<"Voucher"> | string
   productId?: Prisma.StringFilter<"Voucher"> | string
   quantity?: Prisma.IntFilter<"Voucher"> | number
+  unitPrice?: Prisma.DecimalFilter<"Voucher"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumVoucherStatusFilter<"Voucher"> | $Enums.VoucherStatus
   createdAt?: Prisma.DateTimeFilter<"Voucher"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Voucher"> | Date | string
   order?: Prisma.XOR<Prisma.VoucherOrderScalarRelationFilter, Prisma.VoucherOrderWhereInput>
@@ -272,6 +296,8 @@ export type VoucherOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  unitPrice?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.VoucherCountOrderByAggregateInput
@@ -290,6 +316,8 @@ export type VoucherScalarWhereWithAggregatesInput = {
   userId?: Prisma.StringWithAggregatesFilter<"Voucher"> | string
   productId?: Prisma.StringWithAggregatesFilter<"Voucher"> | string
   quantity?: Prisma.IntWithAggregatesFilter<"Voucher"> | number
+  unitPrice?: Prisma.DecimalWithAggregatesFilter<"Voucher"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumVoucherStatusWithAggregatesFilter<"Voucher"> | $Enums.VoucherStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Voucher"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Voucher"> | Date | string
 }
@@ -297,6 +325,8 @@ export type VoucherScalarWhereWithAggregatesInput = {
 export type VoucherCreateInput = {
   id?: string
   quantity: number
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.VoucherStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   order?: Prisma.VoucherOrderCreateNestedOneWithoutVouchersInput
@@ -310,6 +340,8 @@ export type VoucherUncheckedCreateInput = {
   userId: string
   productId: string
   quantity: number
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.VoucherStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -317,6 +349,8 @@ export type VoucherUncheckedCreateInput = {
 export type VoucherUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumVoucherStatusFieldUpdateOperationsInput | $Enums.VoucherStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   order?: Prisma.VoucherOrderUpdateOneRequiredWithoutVouchersNestedInput
@@ -330,6 +364,8 @@ export type VoucherUncheckedUpdateInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumVoucherStatusFieldUpdateOperationsInput | $Enums.VoucherStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -340,6 +376,8 @@ export type VoucherCreateManyInput = {
   userId: string
   productId: string
   quantity: number
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.VoucherStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -347,6 +385,8 @@ export type VoucherCreateManyInput = {
 export type VoucherUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumVoucherStatusFieldUpdateOperationsInput | $Enums.VoucherStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -357,6 +397,8 @@ export type VoucherUncheckedUpdateManyInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumVoucherStatusFieldUpdateOperationsInput | $Enums.VoucherStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -377,12 +419,15 @@ export type VoucherCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  unitPrice?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type VoucherAvgOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
+  unitPrice?: Prisma.SortOrder
 }
 
 export type VoucherMaxOrderByAggregateInput = {
@@ -391,6 +436,8 @@ export type VoucherMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  unitPrice?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -401,12 +448,15 @@ export type VoucherMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  unitPrice?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type VoucherSumOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
+  unitPrice?: Prisma.SortOrder
 }
 
 export type VoucherCreateNestedManyWithoutUserInput = {
@@ -493,6 +543,10 @@ export type VoucherUncheckedUpdateManyWithoutProductNestedInput = {
   deleteMany?: Prisma.VoucherScalarWhereInput | Prisma.VoucherScalarWhereInput[]
 }
 
+export type EnumVoucherStatusFieldUpdateOperationsInput = {
+  set?: $Enums.VoucherStatus
+}
+
 export type VoucherCreateNestedManyWithoutOrderInput = {
   create?: Prisma.XOR<Prisma.VoucherCreateWithoutOrderInput, Prisma.VoucherUncheckedCreateWithoutOrderInput> | Prisma.VoucherCreateWithoutOrderInput[] | Prisma.VoucherUncheckedCreateWithoutOrderInput[]
   connectOrCreate?: Prisma.VoucherCreateOrConnectWithoutOrderInput | Prisma.VoucherCreateOrConnectWithoutOrderInput[]
@@ -538,6 +592,8 @@ export type VoucherUncheckedUpdateManyWithoutOrderNestedInput = {
 export type VoucherCreateWithoutUserInput = {
   id?: string
   quantity: number
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.VoucherStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   order?: Prisma.VoucherOrderCreateNestedOneWithoutVouchersInput
@@ -549,6 +605,8 @@ export type VoucherUncheckedCreateWithoutUserInput = {
   orderId?: string
   productId: string
   quantity: number
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.VoucherStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -588,6 +646,8 @@ export type VoucherScalarWhereInput = {
   userId?: Prisma.StringFilter<"Voucher"> | string
   productId?: Prisma.StringFilter<"Voucher"> | string
   quantity?: Prisma.IntFilter<"Voucher"> | number
+  unitPrice?: Prisma.DecimalFilter<"Voucher"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumVoucherStatusFilter<"Voucher"> | $Enums.VoucherStatus
   createdAt?: Prisma.DateTimeFilter<"Voucher"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Voucher"> | Date | string
 }
@@ -595,6 +655,8 @@ export type VoucherScalarWhereInput = {
 export type VoucherCreateWithoutProductInput = {
   id?: string
   quantity: number
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.VoucherStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   order?: Prisma.VoucherOrderCreateNestedOneWithoutVouchersInput
@@ -606,6 +668,8 @@ export type VoucherUncheckedCreateWithoutProductInput = {
   orderId?: string
   userId: string
   quantity: number
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.VoucherStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -639,6 +703,8 @@ export type VoucherUpdateManyWithWhereWithoutProductInput = {
 export type VoucherCreateWithoutOrderInput = {
   id?: string
   quantity: number
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.VoucherStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   product: Prisma.ProductCreateNestedOneWithoutVouchersInput
@@ -650,6 +716,8 @@ export type VoucherUncheckedCreateWithoutOrderInput = {
   userId: string
   productId: string
   quantity: number
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.VoucherStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -685,6 +753,8 @@ export type VoucherCreateManyUserInput = {
   orderId?: string
   productId: string
   quantity: number
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.VoucherStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -692,6 +762,8 @@ export type VoucherCreateManyUserInput = {
 export type VoucherUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumVoucherStatusFieldUpdateOperationsInput | $Enums.VoucherStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   order?: Prisma.VoucherOrderUpdateOneRequiredWithoutVouchersNestedInput
@@ -703,6 +775,8 @@ export type VoucherUncheckedUpdateWithoutUserInput = {
   orderId?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumVoucherStatusFieldUpdateOperationsInput | $Enums.VoucherStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -712,6 +786,8 @@ export type VoucherUncheckedUpdateManyWithoutUserInput = {
   orderId?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumVoucherStatusFieldUpdateOperationsInput | $Enums.VoucherStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -721,6 +797,8 @@ export type VoucherCreateManyProductInput = {
   orderId?: string
   userId: string
   quantity: number
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.VoucherStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -728,6 +806,8 @@ export type VoucherCreateManyProductInput = {
 export type VoucherUpdateWithoutProductInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumVoucherStatusFieldUpdateOperationsInput | $Enums.VoucherStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   order?: Prisma.VoucherOrderUpdateOneRequiredWithoutVouchersNestedInput
@@ -739,6 +819,8 @@ export type VoucherUncheckedUpdateWithoutProductInput = {
   orderId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumVoucherStatusFieldUpdateOperationsInput | $Enums.VoucherStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -748,6 +830,8 @@ export type VoucherUncheckedUpdateManyWithoutProductInput = {
   orderId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumVoucherStatusFieldUpdateOperationsInput | $Enums.VoucherStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -757,6 +841,8 @@ export type VoucherCreateManyOrderInput = {
   userId: string
   productId: string
   quantity: number
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.VoucherStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -764,6 +850,8 @@ export type VoucherCreateManyOrderInput = {
 export type VoucherUpdateWithoutOrderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumVoucherStatusFieldUpdateOperationsInput | $Enums.VoucherStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   product?: Prisma.ProductUpdateOneRequiredWithoutVouchersNestedInput
@@ -775,6 +863,8 @@ export type VoucherUncheckedUpdateWithoutOrderInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumVoucherStatusFieldUpdateOperationsInput | $Enums.VoucherStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -784,6 +874,8 @@ export type VoucherUncheckedUpdateManyWithoutOrderInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumVoucherStatusFieldUpdateOperationsInput | $Enums.VoucherStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -796,6 +888,8 @@ export type VoucherSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   userId?: boolean
   productId?: boolean
   quantity?: boolean
+  unitPrice?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   order?: boolean | Prisma.VoucherOrderDefaultArgs<ExtArgs>
@@ -809,6 +903,8 @@ export type VoucherSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   userId?: boolean
   productId?: boolean
   quantity?: boolean
+  unitPrice?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   order?: boolean | Prisma.VoucherOrderDefaultArgs<ExtArgs>
@@ -822,6 +918,8 @@ export type VoucherSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   userId?: boolean
   productId?: boolean
   quantity?: boolean
+  unitPrice?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   order?: boolean | Prisma.VoucherOrderDefaultArgs<ExtArgs>
@@ -835,11 +933,13 @@ export type VoucherSelectScalar = {
   userId?: boolean
   productId?: boolean
   quantity?: boolean
+  unitPrice?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type VoucherOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "userId" | "productId" | "quantity" | "createdAt" | "updatedAt", ExtArgs["result"]["voucher"]>
+export type VoucherOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "userId" | "productId" | "quantity" | "unitPrice" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["voucher"]>
 export type VoucherInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   order?: boolean | Prisma.VoucherOrderDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
@@ -869,6 +969,8 @@ export type $VoucherPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     userId: string
     productId: string
     quantity: number
+    unitPrice: runtime.Decimal
+    status: $Enums.VoucherStatus
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["voucher"]>
@@ -1302,6 +1404,8 @@ export interface VoucherFieldRefs {
   readonly userId: Prisma.FieldRef<"Voucher", 'String'>
   readonly productId: Prisma.FieldRef<"Voucher", 'String'>
   readonly quantity: Prisma.FieldRef<"Voucher", 'Int'>
+  readonly unitPrice: Prisma.FieldRef<"Voucher", 'Decimal'>
+  readonly status: Prisma.FieldRef<"Voucher", 'VoucherStatus'>
   readonly createdAt: Prisma.FieldRef<"Voucher", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Voucher", 'DateTime'>
 }

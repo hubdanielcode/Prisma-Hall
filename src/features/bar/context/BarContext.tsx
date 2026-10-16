@@ -4,7 +4,7 @@ import { createContext, useState } from "react";
 import { createProductSchema, editProductSchema } from "@/lib/validations";
 import { productCategories } from "../utils/productCategories";
 import { productCategoryIcons } from "../utils/productCategoryIcons";
-import { useProducts } from "../hooks/useProducts";
+import { useProducts } from "@/features/bar/hooks/useProducts";
 import { z } from "zod";
 import type { CategoryProps } from "../types/category";
 import type { ProductProps } from "../types/product";
@@ -40,7 +40,7 @@ interface BarContextType {
 
   createProductMutation: (product: z.infer<typeof createProductSchema>) => Promise<unknown>;
   editProductMutation: (product: z.infer<typeof editProductSchema>) => Promise<unknown>;
-  deleteProductMutation: (productId: string) => Promise<unknown>;
+  deleteProductMutation: (productId: string) => Promise<boolean | "product_in_use">;
 }
 
 const BarContext = createContext<BarContextType | null>(null);

@@ -1,6 +1,6 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/server/services/prisma";
 import { validateSession } from "@/actions/session/validateSession";
 
 const getShoppingHistory = async () => {
@@ -24,7 +24,7 @@ const getShoppingHistory = async () => {
         where: { userId: validSession.user.id },
         include: {
           vouchers: { include: { product: true } },
-          voucherPayment: { orderBy: { createdAt: "desc" }, take: 1 },
+          voucherPayments: { orderBy: { createdAt: "desc" }, take: 1 },
         },
       }),
     ]);
@@ -60,7 +60,7 @@ const getShoppingHistory = async () => {
     /* - Pedidos de vouchers - */
 
     const voucherHistory = voucherOrders.map((order) => {
-      const payment = order.voucherPayment[0];
+      const payment = order.voucherPayments[0];
 
       return {
         id: order.id,

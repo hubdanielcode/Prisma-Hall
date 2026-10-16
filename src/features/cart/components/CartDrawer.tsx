@@ -8,7 +8,6 @@ import { useCartContext } from "../hooks/useCartContext";
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { X } from "lucide-react";
-import { PayNowButton } from "./PayNowButton";
 
 interface CartDrawerProps {
   isOpen: boolean;

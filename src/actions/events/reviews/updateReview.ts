@@ -1,6 +1,7 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/server/services/prisma";
+import { recalculateUserBadges } from "@/lib/server/badges/achievementBadges";
 import { updateReviewSchema } from "@/lib/validations";
 import { validateSession } from "@/actions/session/validateSession";
 import z from "zod";
@@ -37,6 +38,10 @@ const updateReview = async (review: z.infer<typeof updateReviewSchema>) => {
       },
     });
 
+    /* - Editar o comentário pode fazer o usuário ganhar ou perder o selo de verificado - */
+
+    const recalculatedBadges = await recalculateUserBadges(validSession.user.id);
+
     return {
       id: editedReview.id,
       userId: editedReview.userId,
@@ -46,7 +51,7 @@ const updateReview = async (review: z.infer<typeof updateReviewSchema>) => {
       eventName: editedReview.event.title,
       userName: editedReview.user.name,
       userPhoto: editedReview.user.profilePicture,
-      verifiedBadge: editedReview.user.verifiedBadge,
+      verifiedBadge: recalculatedBadges ? recalculatedBadges.verifiedBadge : editedReview.user.verifiedBadge,
 
       createdAt: editedReview.createdAt.toISOString(),
       updatedAt: editedReview.updatedAt.toISOString(),

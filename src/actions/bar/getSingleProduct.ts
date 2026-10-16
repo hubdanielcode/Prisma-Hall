@@ -1,10 +1,10 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/server/services/prisma";
 
 const getSingleProduct = async (productId: string) => {
   try {
-    const product = await prisma.product.findUnique({ where: { id: productId } });
+    const product = await prisma.product.findUnique({ where: { id: productId, status: "active" } });
 
     if (!product) {
       return false;
@@ -17,6 +17,7 @@ const getSingleProduct = async (productId: string) => {
       category: product.category,
       image: product.image,
       price: product.price.toNumber(),
+      quantity: product.quantity,
       status: product.status,
 
       createdAt: product.createdAt.toISOString(),

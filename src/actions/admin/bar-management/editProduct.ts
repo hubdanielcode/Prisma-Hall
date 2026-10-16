@@ -1,9 +1,10 @@
 "use server";
 
 import { checkIsAdmin } from "../checkIsAdmin";
+import { del, put } from "@vercel/blob";
 import { editProductSchema } from "@/lib/validations/admin/bar-management/editProductSchema";
-import { prisma } from "@/lib/prisma";
-import { put } from "@vercel/blob";
+import { prisma } from "@/lib/server/services/prisma";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import z from "zod";
 
 const editProduct = async (product: z.infer<typeof editProductSchema>) => {
@@ -34,12 +35,24 @@ const editProduct = async (product: z.infer<typeof editProductSchema>) => {
     if (imageFile) {
       /* - Se houver troca de imagem - */
 
+      const productBeforeEdit = await prisma.product.findUnique({ where: { id: parsedProduct.data.productId }, select: { image: true } });
+
       const blob = await put(`${Date.now()}-${imageFile.name}`, imageFile, { access: "public" });
 
       const editedProduct = await prisma.product.update({
         where: { id: parsedProduct.data.productId },
         data: { ...baseProductData, image: blob.url },
       });
+
+      /* - A imagem antiga só é removida do Blob depois que a edição foi salva. Uma falha na remoção não desfaz a edição - */
+
+      if (productBeforeEdit) {
+        try {
+          await del(productBeforeEdit.image);
+        } catch {
+          // A edição continua salva mesmo sem a remoção da imagem antiga
+        }
+      }
 
       return {
         id: editedProduct.id,
@@ -76,7 +89,19 @@ const editProduct = async (product: z.infer<typeof editProductSchema>) => {
       createdAt: editedProduct.createdAt.toISOString(),
       updatedAt: editedProduct.updatedAt.toISOString(),
     };
-  } catch {
+  } catch (error) {
+    if (error instanceof PrismaClientKnownRequestError && error.code === "P2002") {
+      const errorMeta = JSON.stringify(error.meta);
+
+      if (errorMeta.includes("name")) {
+        return "name_is_not_unique";
+      }
+
+      if (errorMeta.includes("description")) {
+        return "description_is_not_unique";
+      }
+    }
+
     return false;
   }
 };

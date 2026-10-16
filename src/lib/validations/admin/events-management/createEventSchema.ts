@@ -34,7 +34,7 @@ const createEventSchema = z.object({
 
   // 6. Estado
 
-  status: z.enum(["happened", "soon"]),
+  status: z.enum(["happened", "soon", "cancelled"]),
 
   // 7. Preço
 

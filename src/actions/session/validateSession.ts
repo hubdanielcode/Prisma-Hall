@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/server/services/prisma";
 
 const validateSession = async () => {
   const cookieStore = await cookies();

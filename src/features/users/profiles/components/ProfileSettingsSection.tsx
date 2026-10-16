@@ -1,5 +1,6 @@
 "use client";
 
+import { CustomPasswordInput } from "@/shared/components";
 import { ImExit } from "react-icons/im";
 import { IoNotifications } from "react-icons/io5";
 import { MdDeleteForever } from "react-icons/md";
@@ -29,6 +30,10 @@ const ProfileSettingsSection = () => {
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
 
+  /* - Estados de exclusão de conta - */
+
+  const [deleteAccountPassword, setDeleteAccountPassword] = useState<string>("");
+
   /* - Estados de Erro - */
 
   const [deleteAccountError, setDeleteAccountError] = useState<string>("");
@@ -56,7 +61,7 @@ const ProfileSettingsSection = () => {
 
     const result = await requestPasswordReset(user.email);
 
-    if (!result) {
+    if (result !== true) {
       return;
     }
 
@@ -80,7 +85,27 @@ const ProfileSettingsSection = () => {
   const handleDeleteAccount = async () => {
     setDeleteAccountError("");
 
-    const result = await deleteProfileMutation();
+    if (!deleteAccountPassword) {
+      setDeleteAccountError("Digite sua senha para confirmar.");
+      return;
+    }
+
+    const result = await deleteProfileMutation(deleteAccountPassword);
+
+    if (result === "invalid_password") {
+      setDeleteAccountError("Senha incorreta.");
+      return;
+    }
+
+    if (result === "too_many_attempts") {
+      setDeleteAccountError("Muitas tentativas. Tente novamente em alguns minutos.");
+      return;
+    }
+
+    if (result === "active_orders") {
+      setDeleteAccountError("Você tem ingressos ou vouchers ativos. Cancele seus pedidos antes de excluir a conta.");
+      return;
+    }
 
     if (!result) {
       setDeleteAccountError("Não foi possível deletar a conta. Tente novamente.");
@@ -287,8 +312,18 @@ const ProfileSettingsSection = () => {
             <span className="text-white font-bold text-xl">Confirmar Exclusão</span>
 
             <p className="text-white/60 text-sm">
-              Tem certeza que deseja excluir sua conta? Todos os seus dados, ingressos e informações serão permanentemente removidos.
+              Tem certeza que deseja excluir sua conta? Todos os seus dados, ingressos e informações serão permanentemente removidos. Para confirmar,
+              digite sua senha.
             </p>
+
+            <CustomPasswordInput
+              className="bg-black/80"
+              label="Sua Senha"
+              placeholder="•••••••••"
+              value={deleteAccountPassword}
+              onChange={setDeleteAccountPassword}
+              maxLength={30}
+            />
 
             {/* - Seção de Erro - */}
 
@@ -308,7 +343,11 @@ const ProfileSettingsSection = () => {
                 className="flex-1 px-4 py-2 text-sm font-semibold text-white bg-[#1A1A1A] border border-[#B8860B] rounded-lg cursor-pointer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => setIsDeleteModalOpen(false)}
+                onClick={() => {
+                  setIsDeleteModalOpen(false);
+                  setDeleteAccountPassword("");
+                  setDeleteAccountError("");
+                }}
               >
                 Cancelar
               </motion.button>

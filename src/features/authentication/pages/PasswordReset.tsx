@@ -47,7 +47,12 @@ const PasswordReset = () => {
       return;
     }
 
-    await requestPasswordResetMutation(passwordResetEmail);
+    const requestPasswordResetResult = await requestPasswordResetMutation(passwordResetEmail);
+
+    if (requestPasswordResetResult === "too_many_attempts") {
+      setResetPasswordError("Muitas tentativas. Tente novamente em alguns minutos.");
+      return;
+    }
 
     setPasswordResetEmail("");
     setResetPasswordSuccess(true);
@@ -74,6 +79,11 @@ const PasswordReset = () => {
     }
 
     const resetPasswordResult = await passwordResetMutation({ token: token as string, password: newPassword, confirmPassword: confirmNewPassword });
+
+    if (resetPasswordResult === "too_many_attempts") {
+      setResetPasswordError("Muitas tentativas. Tente novamente em alguns minutos.");
+      return;
+    }
 
     if (!resetPasswordResult) {
       setResetPasswordError("Link inválido ou expirado. Por favor, solicite outro.");

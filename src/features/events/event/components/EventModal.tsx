@@ -1,11 +1,13 @@
 "use client";
 
 import { Clock, Star, Ticket, Users, X } from "lucide-react";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { formattedDate } from "@/shared/utils/functions/dates";
 import { motion, AnimatePresence } from "motion/react";
 import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
 import { useBlockScroll } from "@/shared/hooks/useBlockScroll";
 import { useCartContext } from "@/features/cart/hooks/useCartContext";
+import { useFavoriteEvents } from "@/features/events/event/hooks/useFavoriteEvents";
 import { useRouter } from "next/navigation";
 import type { EventProps } from "@/features/events/event/types/event";
 
@@ -20,16 +22,29 @@ const EventModal = ({ event, isOpen, onClose }: EventModalProps) => {
 
   const { handleAddToCart, setIsCartOpen } = useCartContext();
   const { isAuthenticated } = useAuthenticationContext();
+  const { favoriteEventIds, favoriteEventMutation } = useFavoriteEvents();
 
   /* - Definições - */
 
   const router = useRouter();
+
+  const isFavorite = event ? favoriteEventIds.has(event.id) : false;
 
   /* - Funções - */
 
   // 1. Impedindo o scroll enquanto o modal estiver aberto
 
   useBlockScroll(isOpen);
+
+  // 2. Favorita (ou desfavorita) o evento
+
+  const handleToggleFavorite = async () => {
+    if (!event) {
+      return;
+    }
+
+    await favoriteEventMutation(event.id);
+  };
 
   return (
     <AnimatePresence>
@@ -110,9 +125,23 @@ const EventModal = ({ event, isOpen, onClose }: EventModalProps) => {
               <span className="text-[#B8860B] font-bold text-2xl shrink-0">R$ {event.price.toFixed(2).replace(".", ",")}</span>
             </div>
 
-            {/* - Botão de comprar - */}
+            {/* - Botões de favoritar e comprar - */}
 
-            <div className="flex justify-center py-4 border-t border-[#B8860B30]">
+            <div className="flex items-center justify-center py-4 gap-3 border-t border-[#B8860B30]">
+              {/* - Botão de favoritar (só para usuário logado e eventos que ainda vão acontecer) - */}
+
+              {isAuthenticated && event.status === "soon" && (
+                <motion.button
+                  className="flex items-center px-5 py-2 text-base text-white font-semibold border border-[#B8860B60] rounded-lg gap-2 cursor-pointer"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={handleToggleFavorite}
+                >
+                  {isFavorite ? <FaHeart className="text-red-600" /> : <FaRegHeart className="text-red-600" />}
+                  {isFavorite ? "Favoritado" : "Favoritar"}
+                </motion.button>
+              )}
+
               <motion.button
                 className="flex items-center px-5 py-2 text-base text-[#B8860B] font-semibold bg-[#3D2B0A] backdrop-blur-sm border border-[#B8860B] rounded-lg gap-2 cursor-pointer hover:shadow-sm shadow-[#DDAE56]"
                 whileHover={{ scale: 1.05 }}

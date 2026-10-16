@@ -16,6 +16,9 @@ interface EventContextType {
 
   /* - Estados dos eventos - */
 
+  eventBeingCancelled: EventProps | null;
+  setEventBeingCancelled: (eventBeingCancelled: EventProps | null) => void;
+
   eventBeingEdited: EventProps | null;
   setEventBeingEdited: (eventBeingEdited: EventProps | null) => void;
 
@@ -25,8 +28,8 @@ interface EventContextType {
   selectedTag: string;
   setSelectedTag: (selectedTag: string) => void;
 
-  selectedStatus: "all_status" | "happened" | "soon";
-  setSelectedStatus: (selectedStatus: "all_status" | "happened" | "soon") => void;
+  selectedStatus: "all_status" | "happened" | "soon" | "cancelled";
+  setSelectedStatus: (selectedStatus: "all_status" | "happened" | "soon" | "cancelled") => void;
 
   /* - Query de leitura - */
 
@@ -35,6 +38,7 @@ interface EventContextType {
 
   /* - Mutations - */
 
+  cancelEventMutation: (eventId: string) => Promise<unknown>;
   createEventMutation: (event: z.infer<typeof createEventSchema>) => Promise<unknown>;
   editEventMutation: (event: z.infer<typeof editEventSchema>) => Promise<unknown>;
   deleteEventMutation: (eventId: string) => Promise<unknown>;
@@ -49,10 +53,17 @@ const EventProvider = ({ children }: { children: React.ReactNode }) => {
     events,
     isLoading,
     error,
+
+    eventBeingCancelled,
+    setEventBeingCancelled,
+
     eventBeingEdited,
     setEventBeingEdited,
+
     eventBeingDeleted,
     setEventBeingDeleted,
+
+    cancelEventMutation,
     createEventMutation,
     editEventMutation,
     deleteEventMutation,
@@ -65,7 +76,7 @@ const EventProvider = ({ children }: { children: React.ReactNode }) => {
   /* - Estados dos eventos - */
 
   const [selectedTag, setSelectedTag] = useState("all_tags");
-  const [selectedStatus, setSelectedStatus] = useState<"all_status" | "happened" | "soon">("soon");
+  const [selectedStatus, setSelectedStatus] = useState<"all_status" | "happened" | "soon" | "cancelled">("soon");
 
   /* - Definições - */
 
@@ -102,6 +113,9 @@ const EventProvider = ({ children }: { children: React.ReactNode }) => {
 
         /* - Estados dos produtos - */
 
+        eventBeingCancelled,
+        setEventBeingCancelled,
+
         eventBeingEdited,
         setEventBeingEdited,
 
@@ -116,6 +130,7 @@ const EventProvider = ({ children }: { children: React.ReactNode }) => {
 
         /* - Mutations - */
 
+        cancelEventMutation,
         createEventMutation,
         editEventMutation,
         deleteEventMutation,

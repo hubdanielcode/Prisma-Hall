@@ -27,7 +27,7 @@ const BarChartList = ({ items, isLoading, formatValue, emptyMessage }: BarChartL
 
   return (
     <div
-      className="w-full"
+      className="w-full border border-[#B8860B] rounded-lg"
       style={{ height: chartHeight }}
     >
       <ResponsiveContainer

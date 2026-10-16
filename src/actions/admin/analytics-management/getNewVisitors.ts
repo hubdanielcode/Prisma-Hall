@@ -3,7 +3,7 @@
 import { checkIsAdmin } from "../checkIsAdmin";
 import { formattedStringToDate } from "@/shared/utils/functions/dates";
 import { newVisitorsSchema, tagSchema } from "@/lib/validations";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/server/services/prisma";
 import z from "zod";
 
 const getNewVisitors = async (newVisitor: z.infer<typeof newVisitorsSchema>) => {

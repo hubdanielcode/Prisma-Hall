@@ -4,7 +4,7 @@ import { editAttractionSchema } from "@/lib/validations";
 import z from "zod";
 import { checkIsAdmin } from "../checkIsAdmin";
 import { put } from "@vercel/blob";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/server/services/prisma";
 
 const editAttraction = async (attraction: z.infer<typeof editAttractionSchema>) => {
   const isAdmin = await checkIsAdmin();

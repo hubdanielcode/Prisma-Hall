@@ -24,11 +24,16 @@ const OrderDetailsPage = async ({ params }: OrderDetailsPageProps) => {
     );
   }
 
-  if (!voucherOrder) {
-    redirect("/perfil");
+  if (voucherOrder) {
+    return (
+      <VoucherOrderDetails
+        orderId={orderId}
+        paymentMethod={voucherOrder.payments[0].method}
+      />
+    );
   }
 
-  return <VoucherOrderDetails orderId={orderId} />;
+  redirect("/perfil");
 };
 
 export default OrderDetailsPage;

@@ -3,8 +3,9 @@
 import { masks } from "@/shared/utils/functions/masks";
 import { motion, AnimatePresence } from "motion/react";
 import { productCategoryBadgeStyles } from "@/features/admin/bar-management/types/productCategoryBadgeStyles";
-import { useMobileContext } from "@/shared/hooks/useMobileContext";
 import { useBarContext } from "@/features/bar/hooks/useBarContext";
+import { useMobileContext } from "@/shared/hooks/useMobileContext";
+import { useState } from "react";
 import { X } from "lucide-react";
 import type { ProductProps } from "@/features/bar/types/product";
 
@@ -20,10 +21,36 @@ const DeleteProductModal = ({ isOpen, onClose, product }: DeleteProductModalProp
   const { isPortraitMobile, isLandscapeMobile } = useMobileContext();
   const { deleteProductMutation, setProductBeingDeleted } = useBarContext();
 
+  /* - Estados de erro - */
+
+  const [productSubmitError, setProductSubmitError] = useState<string>("");
+
   /* - Definições - */
 
   const displayName = masks.productCategory(product.category);
   const badge = productCategoryBadgeStyles[displayName];
+
+  /* - Funções - */
+
+  // 1. Exclui o produto
+
+  const handleDeleteProduct = async () => {
+    setProductSubmitError("");
+
+    const deletedProduct = await deleteProductMutation(product.id);
+
+    if (deletedProduct === "product_in_use") {
+      setProductSubmitError("Esse produto está vinculado a um pedido e não pôde ser deletado.");
+      return false;
+    }
+
+    if (!deletedProduct) {
+      setProductSubmitError("Não foi possível excluir o produto. Tente novamente.");
+      return false;
+    }
+
+    return true;
+  };
 
   return (
     <AnimatePresence>
@@ -115,6 +142,16 @@ const DeleteProductModal = ({ isOpen, onClose, product }: DeleteProductModalProp
               <span className="text-red-600/80 font-semibold text-sm sm:text-base md:text-base pt-6 pb-3">
                 Essa ação é permanente e não pode ser desfeita.
               </span>
+
+              {/* - Seção de erro - */}
+
+              <div className="min-h-20 w-full px-5">
+                {productSubmitError && (
+                  <p className="flex items-center justify-center h-12 rounded-xl bg-red-100 border border-red-300 text-red-700 text-sm font-semibold px-4 text-center">
+                    {productSubmitError}
+                  </p>
+                )}
+              </div>
             </div>
 
             {/* - Ações - */}
@@ -134,9 +171,12 @@ const DeleteProductModal = ({ isOpen, onClose, product }: DeleteProductModalProp
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={async () => {
-                  await deleteProductMutation(product.id);
-                  setProductBeingDeleted(null);
-                  onClose();
+                  const success = await handleDeleteProduct();
+
+                  if (success) {
+                    setProductBeingDeleted(null);
+                    onClose();
+                  }
                 }}
               >
                 Excluir Produto

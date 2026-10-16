@@ -1,6 +1,7 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
+import { getEventStatus } from "@/lib/server/events/getEventStatus";
+import { prisma } from "@/lib/server/services/prisma";
 
 const getSingleEvent = async (eventId: string) => {
   try {
@@ -17,7 +18,7 @@ const getSingleEvent = async (eventId: string) => {
       tag: event.tag,
       attractionName: event.attractionName,
       image: event.image,
-      status: event.status,
+      status: getEventStatus(event),
       price: event.price.toNumber(),
       startsAt: event.startsAt,
       attendees: event.attendees,

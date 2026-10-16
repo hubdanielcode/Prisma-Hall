@@ -67,7 +67,8 @@ export type UserBadgeLevel = (typeof UserBadgeLevel)[keyof typeof UserBadgeLevel
 
 export const NotificationType = {
   order_cancelled: 'order_cancelled',
-  new_event: 'new_event'
+  new_event: 'new_event',
+  event_update: 'event_update'
 } as const
 
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
@@ -107,7 +108,24 @@ export type EventTag = (typeof EventTag)[keyof typeof EventTag]
 
 export const EventStatus = {
   happened: 'happened',
-  soon: 'soon'
+  soon: 'soon',
+  cancelled: 'cancelled'
 } as const
 
 export type EventStatus = (typeof EventStatus)[keyof typeof EventStatus]
+
+
+export const TicketStatus = {
+  active: 'active',
+  cancelled: 'cancelled'
+} as const
+
+export type TicketStatus = (typeof TicketStatus)[keyof typeof TicketStatus]
+
+
+export const VoucherStatus = {
+  active: 'active',
+  cancelled: 'cancelled'
+} as const
+
+export type VoucherStatus = (typeof VoucherStatus)[keyof typeof VoucherStatus]

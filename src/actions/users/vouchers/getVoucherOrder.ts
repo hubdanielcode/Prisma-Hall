@@ -1,7 +1,7 @@
 "use server";
 
 import { orderIdSchema } from "@/lib/validations";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/server/services/prisma";
 import { validateSession } from "@/actions/session/validateSession";
 import type { VoucherOrderProps } from "@/features/users/vouchers/types/voucherOrder";
 
@@ -23,7 +23,7 @@ const getVoucherOrder = async (orderId: string): Promise<VoucherOrderProps | fal
       where: { id: parsedOrderId.data },
       include: {
         vouchers: { include: { product: true } },
-        voucherPayment: { orderBy: { createdAt: "desc" } },
+        voucherPayments: { orderBy: { createdAt: "desc" } },
       },
     });
 
@@ -50,7 +50,7 @@ const getVoucherOrder = async (orderId: string): Promise<VoucherOrderProps | fal
         },
       })),
 
-      payments: order.voucherPayment.map((payment) => ({
+      payments: order.voucherPayments.map((payment) => ({
         id: payment.id,
         method: payment.method,
         status: payment.status,

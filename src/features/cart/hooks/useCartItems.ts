@@ -86,7 +86,8 @@ const useCartItems = () => {
           queryClient.invalidateQueries({ queryKey: ["cartItems"] }),
           queryClient.invalidateQueries({ queryKey: ["tickets"] }),
           queryClient.invalidateQueries({ queryKey: ["vouchers"] }),
-          queryClient.invalidateQueries({ queryKey: ["products"] }),
+          queryClient.invalidateQueries({ queryKey: ["adminProduct"] }),
+          queryClient.invalidateQueries({ queryKey: ["userProduct"] }),
         ]);
       }
     },

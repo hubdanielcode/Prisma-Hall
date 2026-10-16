@@ -52,6 +52,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   Session: 'Session',
+  RateLimit: 'RateLimit',
   User: 'User',
   NotificationPreference: 'NotificationPreference',
   Notification: 'Notification',
@@ -69,6 +70,7 @@ export const ModelName = {
   Review: 'Review',
   Gallery: 'Gallery',
   GalleryLikes: 'GalleryLikes',
+  FavoriteEvent: 'FavoriteEvent',
   Newsletter: 'Newsletter'
 } as const
 
@@ -98,6 +100,15 @@ export const SessionScalarFieldEnum = {
 } as const
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
+
+
+export const RateLimitScalarFieldEnum = {
+  key: 'key',
+  count: 'count',
+  expiresAt: 'expiresAt'
+} as const
+
+export type RateLimitScalarFieldEnum = (typeof RateLimitScalarFieldEnum)[keyof typeof RateLimitScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {
@@ -204,6 +215,8 @@ export const VoucherScalarFieldEnum = {
   userId: 'userId',
   productId: 'productId',
   quantity: 'quantity',
+  unitPrice: 'unitPrice',
+  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -229,9 +242,10 @@ export const VoucherPaymentScalarFieldEnum = {
   method: 'method',
   status: 'status',
   totalValue: 'totalValue',
+  confirmedAt: 'confirmedAt',
+  pickedUpAt: 'pickedUpAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  pickedUpAt: 'pickedUpAt'
+  updatedAt: 'updatedAt'
 } as const
 
 export type VoucherPaymentScalarFieldEnum = (typeof VoucherPaymentScalarFieldEnum)[keyof typeof VoucherPaymentScalarFieldEnum]
@@ -244,6 +258,7 @@ export const TicketScalarFieldEnum = {
   eventId: 'eventId',
   quantity: 'quantity',
   unitPrice: 'unitPrice',
+  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -344,6 +359,16 @@ export const GalleryLikesScalarFieldEnum = {
 } as const
 
 export type GalleryLikesScalarFieldEnum = (typeof GalleryLikesScalarFieldEnum)[keyof typeof GalleryLikesScalarFieldEnum]
+
+
+export const FavoriteEventScalarFieldEnum = {
+  userId: 'userId',
+  eventId: 'eventId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FavoriteEventScalarFieldEnum = (typeof FavoriteEventScalarFieldEnum)[keyof typeof FavoriteEventScalarFieldEnum]
 
 
 export const NewsletterScalarFieldEnum = {

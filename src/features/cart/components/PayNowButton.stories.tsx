@@ -13,7 +13,7 @@ const TicketOrder = () => {
     <div className="flex justify-center w-85 py-4 bg-black">
       <PayNowButton
         type="tickets"
-        orderId="b1f2c3d4-0000-4000-8000-000000000001"
+        paymentId="b1f2c3d4-0000-4000-8000-000000000001"
       />
     </div>
   );
@@ -24,7 +24,7 @@ const DrinkOrder = () => {
     <div className="flex justify-center w-85 py-4 bg-black">
       <PayNowButton
         type="drinks"
-        orderId="b1f2c3d4-0000-4000-8000-000000000002"
+        paymentId="b1f2c3d4-0000-4000-8000-000000000002"
       />
     </div>
   );

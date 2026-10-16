@@ -1,8 +1,9 @@
 "use server";
 
-import { notifyUsers } from "@/lib/notifications/notifyUsers";
+import { notifyUsersByEmail } from "@/lib/server/notifications/notifyUsers";
 import { orderIdSchema } from "@/lib/validations/users/orderSchemas";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/server/services/prisma";
+import { refundStripePayment } from "@/lib/server/payments/refundStripePayment";
 import { validateSession } from "@/actions/session/validateSession";
 
 const cancelVoucherOrder = async (orderId: string) => {
@@ -21,31 +22,56 @@ const cancelVoucherOrder = async (orderId: string) => {
   try {
     const order = await prisma.voucherOrder.findUnique({
       where: { id: parsedOrderId.data },
-      include: { vouchers: true, voucherPayment: true },
+      include: { vouchers: true, voucherPayments: true },
     });
 
     if (!order || order.userId !== validSession.user.id) {
       return false;
     }
 
-    if (order.status === "cancelled" || order.voucherPayment.some((payment) => payment.pickedUpAt)) {
+    /* - Pedido com retirada registrada não pode mais ser cancelado - */
+
+    if (order.voucherPayments.some((payment) => payment.pickedUpAt)) {
       return false;
     }
 
+    /* - O reembolso no Stripe acontece com pagamentos que ainda estão marcados como "confirmed". Se falhar, o pedido continua como estava e o usuário pode tentar novamente - */
+
+    const confirmedPayment = order.voucherPayments.filter((payment) => payment.status === "confirmed");
+
+    for (const payment of confirmedPayment) {
+      const refundedPayment = await refundStripePayment({ paymentId: payment.id, type: "drinks" });
+
+      if (!refundedPayment) {
+        return false;
+      }
+    }
+
+    /* - Só cancela se o pedido ainda não estiver cancelado (protege contra duas chamadas ao mesmo tempo) - */
+
     await prisma.$transaction(async (transaction) => {
-      await transaction.voucherOrder.update({ where: { id: order.id }, data: { status: "cancelled" } });
+      const cancelledOrder = await transaction.voucherOrder.updateMany({
+        where: { id: order.id, status: { not: "cancelled" } },
+        data: { status: "cancelled" },
+      });
+
+      if (cancelledOrder.count === 0) {
+        throw new Error("Pedido já cancelado");
+      }
 
       await transaction.voucherPayment.updateMany({ where: { orderId: order.id, status: "confirmed" }, data: { status: "refunded" } });
       await transaction.voucherPayment.updateMany({ where: { orderId: order.id, status: "pending" }, data: { status: "failed" } });
+
+      /* - Devolve ao estoque o que foi reservado no checkout - */
 
       for (const voucher of order.vouchers) {
         await transaction.product.update({ where: { id: voucher.productId }, data: { quantity: { increment: voucher.quantity } } });
       }
     });
 
-    /* - Avisa o usuário que o pedido foi cancelado - */
+    /* - Avisa ao usuário que o pedido foi cancelado - */
 
-    await notifyUsers([validSession.user.id], {
+    await notifyUsersByEmail([validSession.user.id], {
       type: "order_cancelled",
       title: "Pedido cancelado",
       message: `O seu pedido de vouchers #${order.id.slice(0, 8).toUpperCase()} foi cancelado.`,

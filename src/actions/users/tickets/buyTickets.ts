@@ -1,7 +1,8 @@
 "use server";
 
 import { buyTicketsSchema } from "@/lib/validations/users/orderSchemas";
-import { prisma } from "@/lib/prisma";
+import { getEventStatus } from "@/lib/server/events/getEventStatus";
+import { prisma } from "@/lib/server/services/prisma";
 import { validateSession } from "@/actions/session/validateSession";
 import z from "zod";
 
@@ -21,7 +22,7 @@ const buyTickets = async (ticket: z.infer<typeof buyTicketsSchema>) => {
   try {
     const event = await prisma.event.findUnique({ where: { id: parsedTicket.data.eventId } });
 
-    if (!event || event.status !== "soon") {
+    if (!event || getEventStatus(event) !== "soon") {
       return false;
     }
 

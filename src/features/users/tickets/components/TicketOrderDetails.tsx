@@ -4,6 +4,7 @@ import { IoHelp } from "react-icons/io5";
 import { masks } from "@/shared/utils/functions/masks";
 import { MdOutlineCancel } from "react-icons/md";
 import { paymentStatusBadgeStyles } from "@/shared/utils/constants/orderBadgeStyles";
+import { PayNowButton } from "@/features/cart/components/PayNowButton";
 import { TicketOrderSummary } from "./TicketOrderSummary";
 import { useEffect } from "react";
 import { useTicketOrder } from "@/features/users/tickets/hooks/useTicketOrder";
@@ -22,13 +23,10 @@ const TicketOrderDetails = ({ orderId }: TicketOrderDetailsProps) => {
 
   /* - Definições - */
 
-  // 1. Enquanto a sessão não confirma, a query fica desabilitada e o order continua undefined
-
   const isLoadingOrder = isLoading || (order === undefined && !error);
-
-  // 2. Espelha a regra da action: só cancela pedido ainda não cancelado e de evento que ainda não aconteceu
-
+  const pendingPayment = order ? order.payments.find((payment) => payment.status === "pending") : undefined;
   const canCancel = order ? order.status !== "cancelled" && order.tickets.every((ticket) => ticket.event.status === "soon") : false;
+  const canPay = order ? order.status !== "cancelled" && Boolean(pendingPayment) : false;
 
   /* - Funções - */
 
@@ -110,7 +108,20 @@ const TicketOrderDetails = ({ orderId }: TicketOrderDetailsProps) => {
 
             {/* - Ações - */}
 
-            <div className="flex flex-wrap gap-6">
+            <div className="flex flex-wrap items-center gap-6">
+              {canPay && pendingPayment && pendingPayment.method !== "cash" ? (
+                <PayNowButton
+                  type="tickets"
+                  paymentId={pendingPayment.id}
+                />
+              ) : null}
+
+              {/* Dinheiro não passa pelo Stripe, o pagamento é feito no local */}
+
+              {canPay && pendingPayment?.method === "cash" ? (
+                <span className="text-sm font-semibold text-[#DDAE56]">Pagamento em dinheiro: pague no local</span>
+              ) : null}
+
               <Link
                 className="flex items-center gap-3 text-sm text-white/60 hover:text-[#B8860B] uppercase"
                 href="/central-de-ajuda"
@@ -123,7 +134,7 @@ const TicketOrderDetails = ({ orderId }: TicketOrderDetailsProps) => {
               {canCancel && (
                 <Link
                   className="flex items-center gap-3 text-sm text-white/60 hover:text-[#B8860B] uppercase"
-                  href={`/pedidos/${order.id}/cancelar`}
+                  href={`/pedidos/${order.id}/cancelar-pedidos`}
                 >
                   <MdOutlineCancel />
 

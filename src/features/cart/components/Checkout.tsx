@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import type { PaymentMethod } from "@/prisma/generated/prisma/enums";
+import { createStripeCheckoutSession } from "@/actions";
 
 const paymentMethods: { id: PaymentMethod; title: string }[] = [
   { id: "pix", title: "Pix" },
@@ -67,16 +68,24 @@ const Checkout = () => {
     setIsSubmitting(true);
 
     try {
-      const result = await handleCheckout({ method: selectedMethod });
+      const checkout = await handleCheckout({ method: selectedMethod });
 
-      if (!result) {
+      if (!checkout) {
         setCheckoutError("Não foi possível finalizar a compra. Verifique os itens do carrinho e tente novamente.");
         return;
       }
 
-      // 2.1. Pedido com ingressos tem tela própria. Pedido só de bebidas fica no perfil
+      const paymentUrl = await createStripeCheckoutSession({
+        ticketPaymentId: checkout.ticketPaymentId,
+        voucherPaymentId: checkout.voucherPaymentId,
+      });
 
-      router.replace(result.ticketOrderId ? `/pedidos/${result.ticketOrderId}` : "/perfil");
+      if (paymentUrl) {
+        location.href = paymentUrl;
+        return;
+      }
+
+      router.replace(checkout.ticketOrderId ? `/pedidos/${checkout.ticketOrderId}` : `/perfil/${checkout.voucherOrderId}`);
     } catch {
       setCheckoutError("Não foi possível finalizar a compra. Tente novamente.");
     } finally {

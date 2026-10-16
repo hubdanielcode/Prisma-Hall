@@ -1,6 +1,13 @@
 "use client";
 
-import { createEvent as createEventAction, editEvent as editEventAction, deleteEvent as deleteEventAction, getAllEvents } from "@/actions";
+import {
+  cancelEvent as cancelEventAction,
+  createEvent as createEventAction,
+  editEvent as editEventAction,
+  deleteEvent as deleteEventAction,
+  getAllEvents,
+} from "@/actions";
+
 import { EventProps } from "../types/event";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
@@ -12,6 +19,7 @@ const useEvents = () => {
 
   const [eventBeingEdited, setEventBeingEdited] = useState<EventProps | null>(null);
   const [eventBeingDeleted, setEventBeingDeleted] = useState<EventProps | null>(null);
+  const [eventBeingCancelled, setEventBeingCancelled] = useState<EventProps | null>(null);
 
   /* - Query de leitura - */
 
@@ -52,6 +60,17 @@ const useEvents = () => {
     },
   });
 
+  // 4. CancelEventMutation
+
+  const { mutateAsync: cancelEventMutation } = useMutation({
+    mutationFn: cancelEventAction,
+    onSuccess: async (cancelEventMutationResult) => {
+      if (cancelEventMutationResult) {
+        queryClient.invalidateQueries({ queryKey: ["events"] });
+      }
+    },
+  });
+
   return {
     /* - Query de leitura - */
 
@@ -64,6 +83,7 @@ const useEvents = () => {
     createEventMutation,
     editEventMutation,
     deleteEventMutation,
+    cancelEventMutation,
 
     /* - Estados dos eventos - */
 
@@ -71,6 +91,8 @@ const useEvents = () => {
     setEventBeingEdited,
     eventBeingDeleted,
     setEventBeingDeleted,
+    eventBeingCancelled,
+    setEventBeingCancelled,
   };
 };
 

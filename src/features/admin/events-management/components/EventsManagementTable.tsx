@@ -4,7 +4,7 @@ import { useEventContext } from "@/features/events";
 import { useMobileContext } from "@/shared/hooks";
 import { masks } from "@/shared/utils";
 import { motion } from "motion/react";
-import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
+import { FaBan, FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import { EventsTablePagination } from "./EventsTablePagination";
 
 interface EventsManagementTableProps {
@@ -15,7 +15,7 @@ interface EventsManagementTableProps {
 const EventsManagementTable = ({ currentPage, onPageChange }: EventsManagementTableProps) => {
   /* - Puxando do context - */
 
-  const { filteredEvents, setEventBeingEdited, setEventBeingDeleted } = useEventContext();
+  const { filteredEvents, setEventBeingEdited, setEventBeingDeleted, setEventBeingCancelled } = useEventContext();
   const { isPortraitMobile, isLandscapeMobile } = useMobileContext();
 
   /* - Definições - */
@@ -110,6 +110,17 @@ const EventsManagementTable = ({ currentPage, onPageChange }: EventsManagementTa
                     >
                       <FaPencilAlt className="group-hover:text-blue-400 text-xs" />
                     </motion.button>
+
+                    {event.status === "soon" && (
+                      <motion.button
+                        className="group flex justify-center items-center h-9 w-9 bg-[#1A1A1A] hover:bg-[#333] border border-[#B8860B60] rounded-lg cursor-pointer"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => setEventBeingCancelled(event)}
+                      >
+                        <FaBan className="group-hover:text-yellow-400 text-xs" />
+                      </motion.button>
+                    )}
 
                     <motion.button
                       className="group flex justify-center items-center h-9 w-9 bg-[#1A1A1A] hover:bg-[#333] border border-[#B8860B60] rounded-lg cursor-pointer"
@@ -269,6 +280,23 @@ const EventsManagementTable = ({ currentPage, onPageChange }: EventsManagementTa
                           <FaPencilAlt className="group-hover:text-blue-400" />
                         </span>
                       </motion.button>
+
+                      {/* - Botão de cancelar - */}
+
+                      {event.status === "soon" && (
+                        <motion.button
+                          className={`group flex justify-center items-center bg-[#1A1A1A] hover:bg-[#333] border border-[#B8860B60] rounded-lg cursor-pointer ${
+                            isLandscapeMobile ? "h-8 w-8" : "h-10 w-10"
+                          }`}
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => setEventBeingCancelled(event)}
+                        >
+                          <span>
+                            <FaBan className="group-hover:text-yellow-400" />
+                          </span>
+                        </motion.button>
+                      )}
 
                       {/* - Botão de deletar - */}
 

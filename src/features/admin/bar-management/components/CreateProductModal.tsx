@@ -139,6 +139,17 @@ const CreateProductModal = ({ isOpen, onClose }: CreateProductModalProps) => {
       setProductSubmitError("Não foi possível criar o produto.");
       return false;
     }
+
+    if (createdProduct === "name_is_not_unique") {
+      setProductSubmitError("Já existe um produto com esse nome.");
+      return false;
+    }
+
+    if (createdProduct === "description_is_not_unique") {
+      setProductSubmitError("Já existe um produto com essa descrição.");
+      return false;
+    }
+
     return true;
   };
 
@@ -373,6 +384,7 @@ const CreateProductModal = ({ isOpen, onClose }: CreateProductModalProps) => {
                         isActive ? "bg-green-400 shadow-[0_0_6px_2px_rgba(74,222,128,0.6)]" : "bg-red-400 shadow-[0_0_6px_2px_rgba(248,113,113,0.6)]"
                       }`}
                     />
+
                     <span className="text-white text-sm font-semibold">{isActive ? "Ativo" : "Inativo"}</span>
                   </div>
 
@@ -442,7 +454,7 @@ const CreateProductModal = ({ isOpen, onClose }: CreateProductModalProps) => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => {
-                  handleResetForm;
+                  handleResetForm();
                   onClose();
                 }}
               >

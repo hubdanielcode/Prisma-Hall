@@ -1,5 +1,5 @@
 import { atLeastOneFieldUpdated } from "@/shared/utils/functions/atLeastOneFieldUpdated";
-import { profileSchema } from "./profileSchema";
+import { profileSchema } from "./profileSchemas";
 
 const updateProfileSchema = profileSchema.partial().refine(
   (profile) => {

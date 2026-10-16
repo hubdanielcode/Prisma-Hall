@@ -2,10 +2,10 @@
 
 import { cartItemSchema, checkoutCartSchema } from "@/lib/validations/cart/cartItemSchemas";
 import { createContext, useMemo, useState } from "react";
+import { serviceFee } from "../utils/serviceFee";
 import { useCartItems } from "@/features/cart/hooks/useCartItems";
 import type { CartItemProps } from "../types/cartItem";
 import type z from "zod";
-import { serviceFee } from "../utils/serviceFee";
 
 interface CartContextType {
   /* - Dados do carrinho - */
@@ -33,7 +33,15 @@ interface CartContextType {
   handleIncreaseItemQuantity: (item: CartItemProps) => Promise<void>;
   handleDecreaseItemQuantity: (item: CartItemProps) => Promise<void>;
   handleClearCart: () => Promise<void>;
-  handleCheckout: (checkout: z.infer<typeof checkoutCartSchema>) => Promise<{ ticketOrderId: string | null; voucherOrderId: string | null } | false>;
+  handleCheckout: (checkout: z.infer<typeof checkoutCartSchema>) => Promise<
+    | {
+        ticketOrderId: string | null;
+        ticketPaymentId: string | undefined;
+        voucherOrderId: string | null;
+        voucherPaymentId: string | undefined;
+      }
+    | false
+  >;
   handleOpenCart: () => void;
 }
 

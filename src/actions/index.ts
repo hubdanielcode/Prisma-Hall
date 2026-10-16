@@ -13,15 +13,16 @@ export { getVoucherIncome } from "@/actions/admin/analytics-management/getVouche
 export { createProduct } from "@/actions/admin/bar-management/createProduct";
 export { deleteProduct } from "@/actions/admin/bar-management/deleteProduct";
 export { editProduct } from "@/actions/admin/bar-management/editProduct";
+export { getAllProductsAdmins } from "@/actions/admin/bar-management/getAllProductsAdmins";
 
 // 3. Events Management
 
+export { cancelEvent } from "@/actions/admin/events-management/cancelEvent";
 export { createAttraction } from "@/actions/admin/events-management/createAttraction";
-export { deleteAttraction } from "@/actions/admin/events-management/deleteAttraction";
-export { editAttraction } from "@/actions/admin/events-management/editAttraction";
-
 export { createEvent } from "@/actions/admin/events-management/createEvent";
+export { deleteAttraction } from "@/actions/admin/events-management/deleteAttraction";
 export { deleteEvent } from "@/actions/admin/events-management/deleteEvent";
+export { editAttraction } from "@/actions/admin/events-management/editAttraction";
 export { editEvent } from "@/actions/admin/events-management/editEvent";
 
 // 4. Users Management
@@ -40,7 +41,7 @@ export { signUp } from "@/actions/authentication/signUp";
 
 /* - Bar - */
 
-export { getAllProducts } from "@/actions/bar/getAllProducts";
+export { getAllProductsUsers } from "@/actions/bar/getAllProductsUsers";
 export { getSingleProduct } from "@/actions/bar/getSingleProduct";
 
 /* - Cart - */
@@ -76,6 +77,11 @@ export { getAllReviews } from "@/actions/events/reviews/getAllReviews";
 export { postReview } from "@/actions/events/reviews/postReview";
 export { updateReview } from "@/actions/events/reviews/updateReview";
 
+// 5. Favorites
+
+export { favoriteEvent } from "@/actions/events/event/favoriteEvent";
+export { getFavoriteEvents } from "@/actions/events/event/getFavoriteEvents";
+
 /* - Newsletter - */
 
 export { subscribeToNewsletter } from "@/actions/newsletter/subscribeToNewsletter";
@@ -87,7 +93,6 @@ export { createStripeCheckoutSession } from "@/actions/payments/createStripeChec
 
 /* - Session - */
 
-export { createSession } from "@/actions/session/createSession";
 export { revokeSession } from "@/actions/session/revokeSession";
 export { validateSession } from "@/actions/session/validateSession";
 

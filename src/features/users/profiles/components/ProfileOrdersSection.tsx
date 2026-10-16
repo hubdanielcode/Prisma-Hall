@@ -30,7 +30,7 @@ const ProfileOrdersSection = () => {
   /* - Estados de filtro - */
 
   const [paymentFilter, setPaymentFilter] = useState<"all" | "confirmed" | "pending" | "failed" | "refunded">("all");
-  const [eventFilter, setEventFilter] = useState<"all" | "soon" | "happened">("all");
+  const [eventFilter, setEventFilter] = useState<"all" | "soon" | "happened" | "cancelled">("all");
   const [pickupFilter, setPickupFilter] = useState<"all" | "pickedUp" | "notPickedUp">("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
 

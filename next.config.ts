@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    domains: ["images.unsplash.com"],
+    domains: ["images.unsplash.com", "eg0sg3hfmgd6c6ez.public.blob.vercel-storage.com"],
   },
 
   serverExternalPackages: ["pg"],

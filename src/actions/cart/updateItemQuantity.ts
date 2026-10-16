@@ -1,7 +1,8 @@
 "use server";
 
+import { getEventStatus } from "@/lib/server/events/getEventStatus";
 import { mapCartItem } from "@/features/cart/utils/mapCartItem";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/server/services/prisma";
 import { updateCartItemSchema } from "@/lib/validations/cart/updateCartItemSchema";
 import { validateSession } from "@/actions/session/validateSession";
 import z from "zod";
@@ -46,7 +47,7 @@ const updateItemQuantity = async (item: z.infer<typeof updateCartItemSchema>) =>
     /* - Se o item for um ingresso - */
 
     if (existingItem.type === "tickets") {
-      if (!existingItem.event || existingItem.event.status !== "soon") {
+      if (!existingItem.event || getEventStatus(existingItem.event) !== "soon") {
         return false;
       }
     }

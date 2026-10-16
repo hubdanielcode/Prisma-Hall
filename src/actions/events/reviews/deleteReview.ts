@@ -1,6 +1,7 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/server/services/prisma";
+import { recalculateUserBadges } from "@/lib/server/badges/achievementBadges";
 import { validateSession } from "@/actions/session/validateSession";
 
 const deleteReview = async (reviewId: string) => {
@@ -18,6 +19,10 @@ const deleteReview = async (reviewId: string) => {
     }
 
     await prisma.review.delete({ where: { id: existingReview.id } });
+
+    /* - Excluir a avaliação pode fazer o usuário perder o selo de verificado - */
+
+    await recalculateUserBadges(validSession.user.id);
 
     return true;
   } catch {

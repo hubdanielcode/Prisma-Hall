@@ -74,6 +74,16 @@ const Authentication = () => {
 
     const result = await signUpMutation({ name, email, password, confirmPassword });
 
+    if (result === "email_is_not_unique") {
+      setSignUpError("Email já cadastrado no nosso banco de dados.");
+      return;
+    }
+
+    if (result === "too_many_attempts") {
+      setSignUpError("Muitas tentativas. Tente novamente em alguns minutos.");
+      return;
+    }
+
     if (!result) {
       setSignUpError("Não foi possível criar a conta. Verifique os dados e tente novamente.");
       return;

@@ -114,6 +114,8 @@ const DeleteAttractionModal = ({ isOpen, onClose, attraction }: DeleteAttraction
                 Essa ação é permanente e não pode ser desfeita.
               </span>
 
+              {/* - Seção de erro - */}
+
               <div className="min-h-20 w-full px-5">
                 {attractionSubmitError && (
                   <p className="flex items-center justify-center h-12 rounded-xl bg-red-100 border border-red-300 text-red-700 text-sm font-semibold px-4 text-center">

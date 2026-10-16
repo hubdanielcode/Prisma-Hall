@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/server/services/prisma";
 import { validateSession } from "./validateSession";
 
 const revokeSession = async () => {

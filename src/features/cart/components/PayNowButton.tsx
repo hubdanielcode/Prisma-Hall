@@ -6,10 +6,10 @@ import { motion } from "motion/react";
 
 interface PayNowButtonProps {
   type: "tickets" | "drinks";
-  orderId: string;
+  paymentId: string;
 }
 
-const PayNowButton = ({ type, orderId }: PayNowButtonProps) => {
+const PayNowButton = ({ type, paymentId }: PayNowButtonProps) => {
   /* - Puxando do hook - */
 
   const { isPending, createStripeCheckoutSessionMutation } = usePayNow();
@@ -20,13 +20,13 @@ const PayNowButton = ({ type, orderId }: PayNowButtonProps) => {
 
   /* - Funções - */
 
-  // 1. Abre o pagamento no Stripe para um pedido que já existe
+  // 1. Abre o pagamento no Stripe para um pagamento pendente que já existe
 
   const handlePayNow = async () => {
     setErrorMessage("");
 
     try {
-      const url = await createStripeCheckoutSessionMutation(type === "tickets" ? { ticketOrderId: orderId } : { voucherOrderId: orderId });
+      const url = await createStripeCheckoutSessionMutation(type === "tickets" ? { ticketPaymentId: paymentId } : { voucherPaymentId: paymentId });
 
       if (url) {
         window.location.href = url;

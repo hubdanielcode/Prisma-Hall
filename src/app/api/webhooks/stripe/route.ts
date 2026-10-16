@@ -1,26 +1,30 @@
-import { cancelUnpaidOrders } from "@/lib/payments/cancelUnpaidOrder";
-import { markOrderAsPaid } from "@/lib/payments/markOrderAsPaid";
-import { stripe } from "@/lib/stripe";
+import { cancelUnpaidOrders } from "@/lib/server/payments/cancelUnpaidOrders";
+import { getRealCardMethod } from "@/lib/server/payments/getRealCardMethod";
+import { markOrderAsPaid } from "@/lib/server/payments/markOrderAsPaid";
+import { stripe } from "@/lib/server/services/stripe";
 import { NextResponse } from "next/server";
 import type Stripe from "stripe";
 
-export const runtime = "nodejs";
+const runtime = "nodejs";
 
-// Se o cliente abriu uma sessão nova para o mesmo pedido, a antiga expirar não pode cancelá-lo
+// Se o cliente abriu uma sessão nova para o mesmo pedido, o fato de a sessão antiga expirar não pode cancelar o pedido
 
-const hasOtherActiveSession = async (session: Stripe.Checkout.Session) => {
-  const recent = await stripe.checkout.sessions.list({ limit: 100, created: { gte: Math.floor(Date.now() / 1000) - 60 * 60 * 48 } });
+const hasOtherActiveSession = async (endedSession: Stripe.Checkout.Session) => {
+  const recentSessions = await stripe.checkout.sessions.list({
+    limit: 100,
+    created: { gte: Math.floor(Date.now() / 1000) - 60 * 60 * 48 },
+  });
 
-  return recent.data.some(
-    (other) =>
-      other.id !== session.id &&
-      (other.status === "open" || other.payment_status === "paid") &&
-      other.metadata?.ticketPaymentId === session.metadata?.ticketPaymentId &&
-      other.metadata?.voucherPaymentId === session.metadata?.voucherPaymentId,
+  return recentSessions.data.some(
+    (otherSession) =>
+      otherSession.id !== endedSession.id &&
+      (otherSession.status === "open" || otherSession.payment_status === "paid") &&
+      otherSession.metadata?.ticketPaymentId === endedSession.metadata?.ticketPaymentId &&
+      otherSession.metadata?.voucherPaymentId === endedSession.metadata?.voucherPaymentId,
   );
 };
 
-export async function POST(request: Request) {
+const POST = async (request: Request) => {
   const signature = request.headers.get("stripe-signature");
 
   if (!signature) {
@@ -28,7 +32,6 @@ export async function POST(request: Request) {
   }
 
   const body = await request.text();
-
   let event: Stripe.Event;
 
   try {
@@ -38,21 +41,36 @@ export async function POST(request: Request) {
   }
 
   try {
-    const session = event.data.object as Stripe.Checkout.Session;
-    const ticketPaymentId = session.metadata?.ticketPaymentId || undefined;
-    const voucherPaymentId = session.metadata?.voucherPaymentId || undefined;
+    const checkoutSession = event.data.object as Stripe.Checkout.Session;
+    const ticketPaymentId = checkoutSession.metadata?.ticketPaymentId || undefined;
+    const voucherPaymentId = checkoutSession.metadata?.voucherPaymentId || undefined;
 
     if (event.type === "checkout.session.completed" || event.type === "checkout.session.async_payment_succeeded") {
       // No Pix, o "completed" chega antes do dinheiro
 
-      if (session.payment_status === "paid") {
-        await markOrderAsPaid({ ticketPaymentId, voucherPaymentId });
+      if (checkoutSession.payment_status === "paid") {
+        // 1. Crédito ou débito reais, que o Stripe só informa depois do pagamento
+
+        const stripeMethod = await getRealCardMethod(checkoutSession);
+        const orderMarkedAsPaid = await markOrderAsPaid({ ticketPaymentId, voucherPaymentId, stripeMethod });
+
+        // 2. Se o banco falhou, responde erro para o Stripe reenviar o evento. O reenvio é seguro: pagamento que já saiu de "pendente" é ignorado
+
+        if (!orderMarkedAsPaid) {
+          return NextResponse.json({ error: "Falha ao confirmar o pagamento" }, { status: 500 });
+        }
       }
     }
 
     if (event.type === "checkout.session.expired" || event.type === "checkout.session.async_payment_failed") {
-      if (!(await hasOtherActiveSession(session))) {
-        await cancelUnpaidOrders({ ticketPaymentId, voucherPaymentId });
+      if (!(await hasOtherActiveSession(checkoutSession))) {
+        const unpaidOrdersCancelled = await cancelUnpaidOrders({ ticketPaymentId, voucherPaymentId });
+
+        /* - Mesma regra: se o cancelamento falhou, o Stripe precisa reenviar o evento - */
+
+        if (!unpaidOrdersCancelled) {
+          return NextResponse.json({ error: "Falha ao cancelar o pedido não pago" }, { status: 500 });
+        }
       }
     }
   } catch {
@@ -60,4 +78,6 @@ export async function POST(request: Request) {
   }
 
   return NextResponse.json({ received: true });
-}
+};
+
+export { POST, runtime };

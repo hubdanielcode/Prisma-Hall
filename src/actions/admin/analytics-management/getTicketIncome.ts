@@ -2,7 +2,7 @@
 
 import { checkIsAdmin } from "../checkIsAdmin";
 import { formattedStringToDate } from "@/shared/utils/functions/dates";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/server/services/prisma";
 import { ticketIncomeSchema } from "@/lib/validations";
 import z from "zod";
 

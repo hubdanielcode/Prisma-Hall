@@ -4,11 +4,13 @@ import {
   createProduct as createProductAction,
   deleteProduct as deleteProductAction,
   editProduct as editProductAction,
-  getAllProducts,
+  getAllProductsUsers,
+  getAllProductsAdmins,
 } from "@/actions";
 import { useQueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import type { ProductProps } from "../types/product";
+import { usePathname } from "next/navigation";
 
 const useProducts = () => {
   const queryClient = useQueryClient();
@@ -18,9 +20,33 @@ const useProducts = () => {
   const [productBeingEdited, setProductBeingEdited] = useState<ProductProps | null>(null);
   const [productBeingDeleted, setProductBeingDeleted] = useState<ProductProps | null>(null);
 
+  /* - Definições - */
+
+  const pathname = usePathname();
+  const isAdminArea = pathname.startsWith("/admin");
+
+  const productQueryKey = {
+    admin: "adminProduct",
+    user: "userProduct",
+  };
+
+  const invalidateAllProductQueries = async () => {
+    await Promise.all([
+      queryClient.invalidateQueries({ queryKey: [productQueryKey.admin] }),
+      queryClient.invalidateQueries({ queryKey: [productQueryKey.user] }),
+    ]);
+  };
+
   /* - Query de leitura - */
 
-  const { data: products, isLoading, error } = useQuery({ queryKey: ["products"], queryFn: getAllProducts });
+  const {
+    data: products,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: [isAdminArea ? productQueryKey.admin : productQueryKey.user],
+    queryFn: () => (isAdminArea ? getAllProductsAdmins() : getAllProductsUsers()),
+  });
 
   /* - Mutations - */
 
@@ -30,7 +56,7 @@ const useProducts = () => {
     mutationFn: createProductAction,
     onSuccess: async (createProductMutationResult) => {
       if (createProductMutationResult) {
-        queryClient.invalidateQueries({ queryKey: ["products"] });
+        await invalidateAllProductQueries();
       }
     },
   });
@@ -41,7 +67,7 @@ const useProducts = () => {
     mutationFn: editProductAction,
     onSuccess: async (editProductMutationResult) => {
       if (editProductMutationResult) {
-        queryClient.invalidateQueries({ queryKey: ["products"] });
+        await invalidateAllProductQueries();
       }
     },
   });
@@ -52,7 +78,7 @@ const useProducts = () => {
     mutationFn: deleteProductAction,
     onSuccess: async (deleteProductMutationResult) => {
       if (deleteProductMutationResult) {
-        queryClient.invalidateQueries({ queryKey: ["products"] });
+        await invalidateAllProductQueries();
       }
     },
   });

@@ -255,6 +255,7 @@ export type UserWhereInput = {
   validatedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   carts?: Prisma.CartListRelationFilter
+  favoriteEvents?: Prisma.FavoriteEventListRelationFilter
   galleries?: Prisma.GalleryListRelationFilter
   galleryLikes?: Prisma.GalleryLikesListRelationFilter
   profiles?: Prisma.XOR<Prisma.ProfileNullableScalarRelationFilter, Prisma.ProfileWhereInput> | null
@@ -287,6 +288,7 @@ export type UserOrderByWithRelationInput = {
   validatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   carts?: Prisma.CartOrderByRelationAggregateInput
+  favoriteEvents?: Prisma.FavoriteEventOrderByRelationAggregateInput
   galleries?: Prisma.GalleryOrderByRelationAggregateInput
   galleryLikes?: Prisma.GalleryLikesOrderByRelationAggregateInput
   profiles?: Prisma.ProfileOrderByWithRelationInput
@@ -322,6 +324,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   validatedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   carts?: Prisma.CartListRelationFilter
+  favoriteEvents?: Prisma.FavoriteEventListRelationFilter
   galleries?: Prisma.GalleryListRelationFilter
   galleryLikes?: Prisma.GalleryLikesListRelationFilter
   profiles?: Prisma.XOR<Prisma.ProfileNullableScalarRelationFilter, Prisma.ProfileWhereInput> | null
@@ -394,6 +397,7 @@ export type UserCreateInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileCreateNestedOneWithoutUserInput
@@ -426,6 +430,7 @@ export type UserUncheckedCreateInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
@@ -458,6 +463,7 @@ export type UserUpdateInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUpdateOneWithoutUserNestedInput
@@ -490,6 +496,7 @@ export type UserUncheckedUpdateInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUncheckedUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -825,6 +832,20 @@ export type UserUpdateOneRequiredWithoutGalleryLikesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutGalleryLikesInput, Prisma.UserUpdateWithoutGalleryLikesInput>, Prisma.UserUncheckedUpdateWithoutGalleryLikesInput>
 }
 
+export type UserCreateNestedOneWithoutFavoriteEventsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFavoriteEventsInput, Prisma.UserUncheckedCreateWithoutFavoriteEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFavoriteEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutFavoriteEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFavoriteEventsInput, Prisma.UserUncheckedCreateWithoutFavoriteEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFavoriteEventsInput
+  upsert?: Prisma.UserUpsertWithoutFavoriteEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFavoriteEventsInput, Prisma.UserUpdateWithoutFavoriteEventsInput>, Prisma.UserUncheckedUpdateWithoutFavoriteEventsInput>
+}
+
 export type UserCreateNestedOneWithoutNewslettersInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutNewslettersInput, Prisma.UserUncheckedCreateWithoutNewslettersInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutNewslettersInput
@@ -855,6 +876,7 @@ export type UserCreateWithoutSessionsInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileCreateNestedOneWithoutUserInput
@@ -886,6 +908,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
@@ -933,6 +956,7 @@ export type UserUpdateWithoutSessionsInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUpdateOneWithoutUserNestedInput
@@ -964,6 +988,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUncheckedUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -995,6 +1020,7 @@ export type UserCreateWithoutNotificationPreferencesInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileCreateNestedOneWithoutUserInput
@@ -1026,6 +1052,7 @@ export type UserUncheckedCreateWithoutNotificationPreferencesInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
@@ -1073,6 +1100,7 @@ export type UserUpdateWithoutNotificationPreferencesInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUpdateOneWithoutUserNestedInput
@@ -1104,6 +1132,7 @@ export type UserUncheckedUpdateWithoutNotificationPreferencesInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUncheckedUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -1135,6 +1164,7 @@ export type UserCreateWithoutNotificationsInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileCreateNestedOneWithoutUserInput
@@ -1166,6 +1196,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
@@ -1213,6 +1244,7 @@ export type UserUpdateWithoutNotificationsInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUpdateOneWithoutUserNestedInput
@@ -1244,6 +1276,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUncheckedUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -1275,6 +1308,7 @@ export type UserCreateWithoutProfilesInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutUserInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
@@ -1306,6 +1340,7 @@ export type UserUncheckedCreateWithoutProfilesInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutUserInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
@@ -1353,6 +1388,7 @@ export type UserUpdateWithoutProfilesInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutUserNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
@@ -1384,6 +1420,7 @@ export type UserUncheckedUpdateWithoutProfilesInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUncheckedUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutUserNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
@@ -1414,6 +1451,7 @@ export type UserCreateWithoutCartsInput = {
   createdAt?: Date | string
   validatedAt?: Date | string | null
   updatedAt?: Date | string
+  favoriteEvents?: Prisma.FavoriteEventCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileCreateNestedOneWithoutUserInput
@@ -1445,6 +1483,7 @@ export type UserUncheckedCreateWithoutCartsInput = {
   createdAt?: Date | string
   validatedAt?: Date | string | null
   updatedAt?: Date | string
+  favoriteEvents?: Prisma.FavoriteEventUncheckedCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
@@ -1492,6 +1531,7 @@ export type UserUpdateWithoutCartsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  favoriteEvents?: Prisma.FavoriteEventUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUpdateOneWithoutUserNestedInput
@@ -1523,6 +1563,7 @@ export type UserUncheckedUpdateWithoutCartsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  favoriteEvents?: Prisma.FavoriteEventUncheckedUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUncheckedUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -1555,6 +1596,7 @@ export type UserCreateWithoutVouchersInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileCreateNestedOneWithoutUserInput
@@ -1586,6 +1628,7 @@ export type UserUncheckedCreateWithoutVouchersInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
@@ -1633,6 +1676,7 @@ export type UserUpdateWithoutVouchersInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUpdateOneWithoutUserNestedInput
@@ -1664,6 +1708,7 @@ export type UserUncheckedUpdateWithoutVouchersInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUncheckedUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -1695,6 +1740,7 @@ export type UserCreateWithoutVoucherOrdersInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileCreateNestedOneWithoutUserInput
@@ -1726,6 +1772,7 @@ export type UserUncheckedCreateWithoutVoucherOrdersInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
@@ -1773,6 +1820,7 @@ export type UserUpdateWithoutVoucherOrdersInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUpdateOneWithoutUserNestedInput
@@ -1804,6 +1852,7 @@ export type UserUncheckedUpdateWithoutVoucherOrdersInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUncheckedUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -1835,6 +1884,7 @@ export type UserCreateWithoutVoucherPaymentsInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileCreateNestedOneWithoutUserInput
@@ -1866,6 +1916,7 @@ export type UserUncheckedCreateWithoutVoucherPaymentsInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
@@ -1913,6 +1964,7 @@ export type UserUpdateWithoutVoucherPaymentsInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUpdateOneWithoutUserNestedInput
@@ -1944,6 +1996,7 @@ export type UserUncheckedUpdateWithoutVoucherPaymentsInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUncheckedUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -1975,6 +2028,7 @@ export type UserCreateWithoutTicketsInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileCreateNestedOneWithoutUserInput
@@ -2006,6 +2060,7 @@ export type UserUncheckedCreateWithoutTicketsInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
@@ -2053,6 +2108,7 @@ export type UserUpdateWithoutTicketsInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUpdateOneWithoutUserNestedInput
@@ -2084,6 +2140,7 @@ export type UserUncheckedUpdateWithoutTicketsInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUncheckedUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -2115,6 +2172,7 @@ export type UserCreateWithoutTicketOrdersInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileCreateNestedOneWithoutUserInput
@@ -2146,6 +2204,7 @@ export type UserUncheckedCreateWithoutTicketOrdersInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
@@ -2193,6 +2252,7 @@ export type UserUpdateWithoutTicketOrdersInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUpdateOneWithoutUserNestedInput
@@ -2224,6 +2284,7 @@ export type UserUncheckedUpdateWithoutTicketOrdersInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUncheckedUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -2255,6 +2316,7 @@ export type UserCreateWithoutTicketPaymentsInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileCreateNestedOneWithoutUserInput
@@ -2286,6 +2348,7 @@ export type UserUncheckedCreateWithoutTicketPaymentsInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
@@ -2333,6 +2396,7 @@ export type UserUpdateWithoutTicketPaymentsInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUpdateOneWithoutUserNestedInput
@@ -2364,6 +2428,7 @@ export type UserUncheckedUpdateWithoutTicketPaymentsInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUncheckedUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -2395,6 +2460,7 @@ export type UserCreateWithoutReviewsInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileCreateNestedOneWithoutUserInput
@@ -2426,6 +2492,7 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
@@ -2473,6 +2540,7 @@ export type UserUpdateWithoutReviewsInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUpdateOneWithoutUserNestedInput
@@ -2504,6 +2572,7 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUncheckedUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -2535,6 +2604,7 @@ export type UserCreateWithoutGalleriesInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileCreateNestedOneWithoutUserInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
@@ -2566,6 +2636,7 @@ export type UserUncheckedCreateWithoutGalleriesInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
@@ -2613,6 +2684,7 @@ export type UserUpdateWithoutGalleriesInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
@@ -2644,6 +2716,7 @@ export type UserUncheckedUpdateWithoutGalleriesInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
@@ -2675,6 +2748,7 @@ export type UserCreateWithoutGalleryLikesInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileCreateNestedOneWithoutUserInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
@@ -2706,6 +2780,7 @@ export type UserUncheckedCreateWithoutGalleryLikesInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
@@ -2753,6 +2828,7 @@ export type UserUpdateWithoutGalleryLikesInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
@@ -2784,7 +2860,152 @@ export type UserUncheckedUpdateWithoutGalleryLikesInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUncheckedUpdateManyWithoutUserNestedInput
+  profiles?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  ticketOrders?: Prisma.TicketOrderUncheckedUpdateManyWithoutUserNestedInput
+  ticketPayments?: Prisma.TicketPaymentUncheckedUpdateManyWithoutUserNestedInput
+  tickets?: Prisma.TicketUncheckedUpdateManyWithoutUserNestedInput
+  vouchers?: Prisma.VoucherUncheckedUpdateManyWithoutUserNestedInput
+  voucherOrders?: Prisma.VoucherOrderUncheckedUpdateManyWithoutUserNestedInput
+  voucherPayments?: Prisma.VoucherPaymentUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutFavoriteEventsInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role?: $Enums.UserRole
+  verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
+  token?: string | null
+  tokenExpiresAt?: Date | string | null
+  profilePicture?: string | null
+  createdAt?: Date | string
+  validatedAt?: Date | string | null
+  updatedAt?: Date | string
+  carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  galleries?: Prisma.GalleryCreateNestedManyWithoutUserInput
+  galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutUserInput
+  profiles?: Prisma.ProfileCreateNestedOneWithoutUserInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  ticketOrders?: Prisma.TicketOrderCreateNestedManyWithoutUserInput
+  ticketPayments?: Prisma.TicketPaymentCreateNestedManyWithoutUserInput
+  tickets?: Prisma.TicketCreateNestedManyWithoutUserInput
+  vouchers?: Prisma.VoucherCreateNestedManyWithoutUserInput
+  voucherOrders?: Prisma.VoucherOrderCreateNestedManyWithoutUserInput
+  voucherPayments?: Prisma.VoucherPaymentCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutFavoriteEventsInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role?: $Enums.UserRole
+  verifiedBadge?: boolean
+  frequentUser?: $Enums.UserBadgeLevel
+  oldUser?: $Enums.UserBadgeLevel
+  token?: string | null
+  tokenExpiresAt?: Date | string | null
+  profilePicture?: string | null
+  createdAt?: Date | string
+  validatedAt?: Date | string | null
+  updatedAt?: Date | string
+  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutUserInput
+  galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutUserInput
+  profiles?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  ticketOrders?: Prisma.TicketOrderUncheckedCreateNestedManyWithoutUserInput
+  ticketPayments?: Prisma.TicketPaymentUncheckedCreateNestedManyWithoutUserInput
+  tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutUserInput
+  vouchers?: Prisma.VoucherUncheckedCreateNestedManyWithoutUserInput
+  voucherOrders?: Prisma.VoucherOrderUncheckedCreateNestedManyWithoutUserInput
+  voucherPayments?: Prisma.VoucherPaymentUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  newsletters?: Prisma.NewsletterUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutFavoriteEventsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutFavoriteEventsInput, Prisma.UserUncheckedCreateWithoutFavoriteEventsInput>
+}
+
+export type UserUpsertWithoutFavoriteEventsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutFavoriteEventsInput, Prisma.UserUncheckedUpdateWithoutFavoriteEventsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFavoriteEventsInput, Prisma.UserUncheckedCreateWithoutFavoriteEventsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutFavoriteEventsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutFavoriteEventsInput, Prisma.UserUncheckedUpdateWithoutFavoriteEventsInput>
+}
+
+export type UserUpdateWithoutFavoriteEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  galleries?: Prisma.GalleryUpdateManyWithoutUserNestedInput
+  galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutUserNestedInput
+  profiles?: Prisma.ProfileUpdateOneWithoutUserNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  ticketOrders?: Prisma.TicketOrderUpdateManyWithoutUserNestedInput
+  ticketPayments?: Prisma.TicketPaymentUpdateManyWithoutUserNestedInput
+  tickets?: Prisma.TicketUpdateManyWithoutUserNestedInput
+  vouchers?: Prisma.VoucherUpdateManyWithoutUserNestedInput
+  voucherOrders?: Prisma.VoucherOrderUpdateManyWithoutUserNestedInput
+  voucherPayments?: Prisma.VoucherPaymentUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  newsletters?: Prisma.NewsletterUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutFavoriteEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  verifiedBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  frequentUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  galleries?: Prisma.GalleryUncheckedUpdateManyWithoutUserNestedInput
+  galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
@@ -2815,6 +3036,7 @@ export type UserCreateWithoutNewslettersInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileCreateNestedOneWithoutUserInput
@@ -2846,6 +3068,7 @@ export type UserUncheckedCreateWithoutNewslettersInput = {
   validatedAt?: Date | string | null
   updatedAt?: Date | string
   carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedCreateNestedManyWithoutUserInput
   galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutUserInput
   galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutUserInput
   profiles?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
@@ -2893,6 +3116,7 @@ export type UserUpdateWithoutNewslettersInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUpdateOneWithoutUserNestedInput
@@ -2924,6 +3148,7 @@ export type UserUncheckedUpdateWithoutNewslettersInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  favoriteEvents?: Prisma.FavoriteEventUncheckedUpdateManyWithoutUserNestedInput
   galleries?: Prisma.GalleryUncheckedUpdateManyWithoutUserNestedInput
   galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutUserNestedInput
   profiles?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -2946,6 +3171,7 @@ export type UserUncheckedUpdateWithoutNewslettersInput = {
 
 export type UserCountOutputType = {
   carts: number
+  favoriteEvents: number
   galleries: number
   galleryLikes: number
   reviews: number
@@ -2962,6 +3188,7 @@ export type UserCountOutputType = {
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   carts?: boolean | UserCountOutputTypeCountCartsArgs
+  favoriteEvents?: boolean | UserCountOutputTypeCountFavoriteEventsArgs
   galleries?: boolean | UserCountOutputTypeCountGalleriesArgs
   galleryLikes?: boolean | UserCountOutputTypeCountGalleryLikesArgs
   reviews?: boolean | UserCountOutputTypeCountReviewsArgs
@@ -2991,6 +3218,13 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
  */
 export type UserCountOutputTypeCountCartsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.CartWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountFavoriteEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FavoriteEventWhereInput
 }
 
 /**
@@ -3094,6 +3328,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   validatedAt?: boolean
   updatedAt?: boolean
   carts?: boolean | Prisma.User$cartsArgs<ExtArgs>
+  favoriteEvents?: boolean | Prisma.User$favoriteEventsArgs<ExtArgs>
   galleries?: boolean | Prisma.User$galleriesArgs<ExtArgs>
   galleryLikes?: boolean | Prisma.User$galleryLikesArgs<ExtArgs>
   profiles?: boolean | Prisma.User$profilesArgs<ExtArgs>
@@ -3165,6 +3400,7 @@ export type UserSelectScalar = {
 export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "verifiedBadge" | "frequentUser" | "oldUser" | "token" | "tokenExpiresAt" | "profilePicture" | "createdAt" | "validatedAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   carts?: boolean | Prisma.User$cartsArgs<ExtArgs>
+  favoriteEvents?: boolean | Prisma.User$favoriteEventsArgs<ExtArgs>
   galleries?: boolean | Prisma.User$galleriesArgs<ExtArgs>
   galleryLikes?: boolean | Prisma.User$galleryLikesArgs<ExtArgs>
   profiles?: boolean | Prisma.User$profilesArgs<ExtArgs>
@@ -3188,6 +3424,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "User"
   objects: {
     carts: Prisma.$CartPayload<ExtArgs>[]
+    favoriteEvents: Prisma.$FavoriteEventPayload<ExtArgs>[]
     galleries: Prisma.$GalleryPayload<ExtArgs>[]
     galleryLikes: Prisma.$GalleryLikesPayload<ExtArgs>[]
     profiles: Prisma.$ProfilePayload<ExtArgs> | null
@@ -3613,6 +3850,7 @@ readonly fields: UserFieldRefs;
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   carts<T extends Prisma.User$cartsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$cartsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CartPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  favoriteEvents<T extends Prisma.User$favoriteEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$favoriteEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FavoriteEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   galleries<T extends Prisma.User$galleriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$galleriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GalleryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   galleryLikes<T extends Prisma.User$galleryLikesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$galleryLikesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GalleryLikesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   profiles<T extends Prisma.User$profilesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$profilesArgs<ExtArgs>>): Prisma.Prisma__ProfileClient<runtime.Types.Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -4084,6 +4322,30 @@ export type User$cartsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
   take?: number
   skip?: number
   distinct?: Prisma.CartScalarFieldEnum | Prisma.CartScalarFieldEnum[]
+}
+
+/**
+ * User.favoriteEvents
+ */
+export type User$favoriteEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FavoriteEvent
+   */
+  select?: Prisma.FavoriteEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FavoriteEvent
+   */
+  omit?: Prisma.FavoriteEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FavoriteEventInclude<ExtArgs> | null
+  where?: Prisma.FavoriteEventWhereInput
+  orderBy?: Prisma.FavoriteEventOrderByWithRelationInput | Prisma.FavoriteEventOrderByWithRelationInput[]
+  cursor?: Prisma.FavoriteEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FavoriteEventScalarFieldEnum | Prisma.FavoriteEventScalarFieldEnum[]
 }
 
 /**

@@ -7,7 +7,15 @@ export { regex } from "@/shared/utils/constants/regex";
 export { roleBadgeLabels, roleBadgeOptions, roleBadgeStyles } from "@/shared/utils/constants/roleBadges";
 export { rotatingImages } from "@/shared/utils/constants/rotatingImages";
 export { socialLinks } from "@/shared/utils/constants/socialLinks";
-export { tierBadgeLabels, tierBadgeOptions, tierBadgeStyles } from "@/shared/utils/constants/tierBadges";
+
+export {
+  frequentEventsByTier,
+  oldAccountYearsByTier,
+  tierBadgeLabels,
+  tierBadgeOptions,
+  tierBadgeStyles,
+  verifiedReviewsRequired,
+} from "@/shared/utils/constants/achievementBadges";
 
 /* - Functions - */
 

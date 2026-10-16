@@ -37,10 +37,13 @@ const AttractionProvider = ({ children }: { children: React.ReactNode }) => {
     attractions,
     isLoading,
     error,
+
     attractionBeingEdited,
     setAttractionBeingEdited,
+
     attractionBeingDeleted,
     setAttractionBeingDeleted,
+
     createAttractionMutation,
     editAttractionMutation,
     deleteAttractionMutation,

@@ -18,7 +18,10 @@ const Details = () => {
   return (
     <QueryProvider>
       <AuthenticationProvider>
-        <VoucherOrderDetails orderId={fakeVoucherOrder.id} />
+        <VoucherOrderDetails
+          orderId={fakeVoucherOrder.id}
+          paymentMethod="pix"
+        />
       </AuthenticationProvider>
     </QueryProvider>
   );

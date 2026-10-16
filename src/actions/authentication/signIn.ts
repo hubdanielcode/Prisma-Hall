@@ -1,10 +1,11 @@
 "use server";
 
-import { compare } from "bcrypt";
+import { checkRateLimit, resetRateLimit } from "@/lib/server/rate-limit/rateLimiter";
+import { compare } from "../../lib/server/services/bcrypt";
 import { cookies } from "next/headers";
-import { createSession } from "../session/createSession";
-import { prisma } from "@/lib/prisma";
-import { signInSchema } from "@/lib/validations/authentication/signInSchema";
+import { createSession } from "../../lib/server/session/createSession";
+import { prisma } from "../../lib/server/services/prisma";
+import { signInSchema } from "../../lib/validations/authentication/signInSchema";
 import z from "zod";
 
 const signIn = async ({ typedEmail, typedPassword, rememberMe }: z.infer<typeof signInSchema> & { rememberMe: boolean }) => {
@@ -12,6 +13,15 @@ const signIn = async ({ typedEmail, typedPassword, rememberMe }: z.infer<typeof 
 
   if (!parsedSignInUser.success) {
     return false;
+  }
+
+  /* - Limite por conta (força bruta numa conta) e por IP (varredura de várias contas) - */
+
+  const accountRateLimit = await checkRateLimit({ action: "signIn", identifier: typedEmail, limit: 5, windowSeconds: 15 * 60 });
+  const ipRateLimit = await checkRateLimit({ action: "signIn-ip", limit: 30, windowSeconds: 15 * 60 });
+
+  if (!accountRateLimit.allowed || !ipRateLimit.allowed) {
+    return "too_many_attempts";
   }
 
   const validUser = await prisma.user.findUnique({ where: { email: typedEmail } });
@@ -65,6 +75,8 @@ const signIn = async ({ typedEmail, typedPassword, rememberMe }: z.infer<typeof 
       expires: expiresAt,
       sameSite: "lax",
     });
+
+    await resetRateLimit("signIn", typedEmail);
 
     return newUser;
   } catch {

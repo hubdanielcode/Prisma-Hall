@@ -1,7 +1,8 @@
 "use server";
 
+import { getEventStatus } from "@/lib/server/events/getEventStatus";
 import { orderIdSchema } from "@/lib/validations";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/server/services/prisma";
 import { validateSession } from "@/actions/session/validateSession";
 import type { TicketOrderProps } from "@/features/users/tickets/types/ticketOrder";
 
@@ -47,7 +48,7 @@ const getTicketOrder = async (orderId: string): Promise<TicketOrderProps | false
           tag: ticket.event.tag,
           attractionName: ticket.event.attractionName,
           image: ticket.event.image,
-          status: ticket.event.status,
+          status: getEventStatus(ticket.event),
           startsAt: ticket.event.startsAt.toISOString(),
         },
       })),

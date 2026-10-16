@@ -56,6 +56,11 @@ const Login = () => {
 
     const result = await signInMutation({ typedEmail: email, typedPassword: password, rememberMe });
 
+    if (result === "too_many_attempts") {
+      setSignInError("Muitas tentativas. Tente novamente em alguns minutos.");
+      return;
+    }
+
     if (!result) {
       setSignInError("Email ou senha inválidos.");
       return;

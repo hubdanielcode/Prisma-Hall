@@ -4,13 +4,16 @@ import { IoHelp } from "react-icons/io5";
 import { masks } from "@/shared/utils/functions/masks";
 import { MdOutlineCancel } from "react-icons/md";
 import { paymentStatusBadgeStyles } from "@/shared/utils/constants/orderBadgeStyles";
+import { PayNowButton } from "@/features/cart/components/PayNowButton";
 import { useEffect } from "react";
 import { useVoucherOrder } from "@/features/users/vouchers/hooks/useVoucherOrder";
 import { VoucherOrderSummary } from "./VoucherOrderSummary";
 import Link from "next/link";
+import { PaymentMethod } from "@/prisma/generated/prisma/enums";
 
 interface VoucherOrderDetailsProps {
   orderId: string;
+  paymentMethod: PaymentMethod;
 }
 
 const VoucherOrderDetails = ({ orderId }: VoucherOrderDetailsProps) => {
@@ -20,13 +23,10 @@ const VoucherOrderDetails = ({ orderId }: VoucherOrderDetailsProps) => {
 
   /* - Definições - */
 
-  // 1. Enquanto a sessão não confirma, a query fica desabilitada e o order continua undefined
-
   const isLoadingOrder = isLoading || (order === undefined && !error);
-
-  // 2. Espelha a regra da action: só cancela pedido ainda não cancelado e sem voucher retirado
-
+  const pendingPayment = order ? order.payments.find((payment) => payment.status === "pending") : undefined;
   const canCancel = order ? order.status !== "cancelled" && order.payments.every((payment) => !payment.pickedUpAt) : false;
+  const canPay = order ? order.status !== "cancelled" && Boolean(pendingPayment) : false;
 
   /* - Funções - */
 
@@ -107,7 +107,14 @@ const VoucherOrderDetails = ({ orderId }: VoucherOrderDetailsProps) => {
 
             {/* - Ações - */}
 
-            <div className="flex flex-wrap gap-6">
+            <div className="flex flex-wrap items-center gap-6">
+              {canPay && pendingPayment ? (
+                <PayNowButton
+                  type="drinks"
+                  paymentId={pendingPayment.id}
+                />
+              ) : null}
+
               <Link
                 className="flex items-center gap-3 text-sm text-white/60 hover:text-[#B8860B] uppercase"
                 href="/central-de-ajuda"

@@ -1,6 +1,6 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/server/services/prisma";
 
 const getSingleAttraction = async (attractionId: string) => {
   try {

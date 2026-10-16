@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html
-      lang="en"
+      lang="pt-BR"
       data-scroll-behavior="smooth"
     >
       <body className="select-none">

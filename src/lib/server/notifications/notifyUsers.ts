@@ -1,5 +1,6 @@
-import { getResend } from "@/lib/resend";
-import { prisma } from "@/lib/prisma";
+import "server-only";
+import { getResend } from "@/lib/server/services/resend";
+import { prisma } from "@/lib/server/services/prisma";
 import type { NotificationType } from "@/prisma/generated/prisma/enums";
 
 interface NotificationPayload {
@@ -10,7 +11,7 @@ interface NotificationPayload {
 
 /* - Cria a notificação dentro do app e, para quem ativou o email, envia também por email - */
 
-const notifyUsers = async (userIds: string[], payload: NotificationPayload) => {
+const notifyUsersByEmail = async (userIds: string[], payload: NotificationPayload) => {
   if (userIds.length === 0) {
     return false;
   }
@@ -53,16 +54,16 @@ const notifyUsers = async (userIds: string[], payload: NotificationPayload) => {
   }
 };
 
-/* - Notifica só quem ativou as notificações de promoções - */
+/* - Notifica só quem ativou as notificações de promoções (excludedUserIds: quem já recebeu o aviso por outro caminho) - */
 
-const notifyPromotionSubscribers = async (payload: NotificationPayload) => {
+const notifyPromotionsByEmail = async (payload: NotificationPayload, excludedUserIds: string[] = []) => {
   try {
     const subscribers = await prisma.notificationPreference.findMany({
-      where: { notifyPromotions: true },
+      where: { notifyPromotions: true, userId: { notIn: excludedUserIds } },
       select: { userId: true },
     });
 
-    return await notifyUsers(
+    return await notifyUsersByEmail(
       subscribers.map((subscriber) => subscriber.userId),
       payload,
     );
@@ -71,4 +72,27 @@ const notifyPromotionSubscribers = async (payload: NotificationPayload) => {
   }
 };
 
-export { notifyUsers, notifyPromotionSubscribers };
+/* - Busca os ids dos usuários que favoritaram o evento e ativaram as notificações de eventos favoritos - */
+
+const getUserIdsThatFavoritedEvent = async (eventId: string) => {
+  try {
+    const favorites = await prisma.favoriteEvent.findMany({
+      where: { eventId, user: { notificationPreferences: { is: { notifyFavoriteEvents: true } } } },
+      select: { userId: true },
+    });
+
+    return favorites.map((favorite) => favorite.userId);
+  } catch {
+    return [];
+  }
+};
+
+/* - Notifica só quem favoritou o evento e ativou as notificações de eventos favoritos - */
+
+const notifyFavoriteEventByEmail = async (eventId: string, payload: NotificationPayload) => {
+  const userIds = await getUserIdsThatFavoritedEvent(eventId);
+
+  return await notifyUsersByEmail(userIds, payload);
+};
+
+export { notifyUsersByEmail, notifyPromotionsByEmail, getUserIdsThatFavoritedEvent, notifyFavoriteEventByEmail };

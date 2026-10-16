@@ -39,7 +39,7 @@ const CalendarGrid = () => {
     }, new Map<number, string[]>());
 
   return (
-    <div className="flex flex-col justify-center items-center w-full pb-8 pt-4">
+    <div className="flex flex-col justify-center items-center w-full pb-8 pt-4 bg-black">
       {/* - Nomes dos dias da semana - */}
 
       <motion.div

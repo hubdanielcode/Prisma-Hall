@@ -1,7 +1,7 @@
 "use server";
 
 import { checkIsAdmin } from "../checkIsAdmin";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/server/services/prisma";
 
 const getAllUsers = async () => {
   const isAdmin = await checkIsAdmin();

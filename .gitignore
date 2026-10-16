@@ -49,3 +49,4 @@ storybook-static
 /app/generated/prisma
 .vercel
 .env*
+*.tsbuildinfo

@@ -16,7 +16,7 @@ interface ProfileContextType {
   /* - Mutations - */
 
   updateProfileMutation: (newProfileData: z.input<typeof updateProfileSchema>) => Promise<unknown>;
-  deleteProfileMutation: () => Promise<unknown>;
+  deleteProfileMutation: (password: string) => Promise<unknown>;
 }
 
 const ProfileContext = createContext<ProfileContextType | null>(null);

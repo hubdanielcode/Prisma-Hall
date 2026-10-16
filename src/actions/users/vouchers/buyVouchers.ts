@@ -1,7 +1,7 @@
 "use server";
 
 import { buyVouchersSchema } from "@/lib/validations/users/orderSchemas";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/server/services/prisma";
 import { validateSession } from "@/actions/session/validateSession";
 import z from "zod";
 
@@ -51,6 +51,8 @@ const buyVouchers = async (voucher: z.infer<typeof buyVouchersSchema>) => {
         totalValue += product.price.toNumber() * quantity;
       }
 
+      const priceByProduct = new Map(products.map((product) => [product.id, product.price]));
+
       return await transaction.voucherOrder.create({
         data: {
           userId: validSession.user.id,
@@ -60,9 +62,10 @@ const buyVouchers = async (voucher: z.infer<typeof buyVouchersSchema>) => {
               userId: validSession.user.id,
               productId,
               quantity,
+              unitPrice: priceByProduct.get(productId)!,
             })),
           },
-          voucherPayment: {
+          voucherPayments: {
             create: {
               userId: validSession.user.id,
               method: parsedVoucher.data.method,
@@ -71,16 +74,16 @@ const buyVouchers = async (voucher: z.infer<typeof buyVouchersSchema>) => {
             },
           },
         },
-        include: { vouchers: true, voucherPayment: true },
+        include: { vouchers: true, voucherPayments: true },
       });
     });
 
     return {
       id: newOrder.id,
       status: newOrder.status,
-      method: newOrder.voucherPayment[0].method,
-      paymentStatus: newOrder.voucherPayment[0].status,
-      totalValue: newOrder.voucherPayment[0].totalValue.toNumber(),
+      method: newOrder.voucherPayments[0].method,
+      paymentStatus: newOrder.voucherPayments[0].status,
+      totalValue: newOrder.voucherPayments[0].totalValue,
 
       vouchers: newOrder.vouchers.map((newVoucher) => ({
         id: newVoucher.id,

@@ -1,8 +1,9 @@
 "use server";
 
-import { hash } from "bcrypt";
+import { checkRateLimit } from "@/lib/server/rate-limit/rateLimiter";
+import { hash } from "@/lib/server/services/bcrypt";
 import { passwordResetSchema } from "@/lib/validations/authentication/passwordResetSchemas";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/server/services/prisma";
 import z from "zod";
 
 const passwordReset = async (passwordResetRequest: z.infer<typeof passwordResetSchema>) => {
@@ -10,6 +11,12 @@ const passwordReset = async (passwordResetRequest: z.infer<typeof passwordResetS
 
   if (!parsedPasswordReset.success) {
     return false;
+  }
+
+  const rateLimit = await checkRateLimit({ action: "pwd-reset", limit: 10, windowSeconds: 15 * 60 });
+
+  if (!rateLimit.allowed) {
+    return "too_many_attempts";
   }
 
   const validToken = parsedPasswordReset.data.token;
@@ -30,14 +37,23 @@ const passwordReset = async (passwordResetRequest: z.infer<typeof passwordResetS
 
     const hashedResetedPassword = await hash(validResetedPassword, 10);
 
-    await prisma.user.update({
-      where: { token: validToken },
-      data: {
-        password: hashedResetedPassword,
-        token: null,
-        tokenExpiresAt: null,
-      },
-    });
+    await prisma.$transaction([
+      prisma.user.update({
+        where: { token: validToken },
+        data: {
+          password: hashedResetedPassword,
+          token: null,
+          tokenExpiresAt: null,
+        },
+      }),
+
+      /* - Revogando a sessão depois que a senha foi trocada - */
+
+      prisma.session.updateMany({
+        where: { userId: user.id, revokedAt: null },
+        data: { revokedAt: new Date() },
+      }),
+    ]);
 
     return true;
   } catch {

@@ -1,7 +1,8 @@
 "use server";
 
 import { createReviewSchema } from "@/lib/validations";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/server/services/prisma";
+import { recalculateUserBadges } from "@/lib/server/badges/achievementBadges";
 import { validateSession } from "@/actions/session/validateSession";
 import z from "zod";
 
@@ -19,6 +20,17 @@ const postReview = async (review: z.infer<typeof createReviewSchema>) => {
   }
 
   try {
+    /* - Só avalia quem participou do evento (ingresso comprado e pedido confirmado) - */
+
+    const existingTicket = await prisma.ticket.findFirst({
+      where: { userId: validSession.user.id, eventId: parsedReview.data.eventId, order: { status: "confirmed" } },
+      select: { id: true },
+    });
+
+    if (!existingTicket) {
+      return false;
+    }
+
     const newReview = await prisma.review.create({
       data: {
         userId: validSession.user.id,
@@ -32,6 +44,10 @@ const postReview = async (review: z.infer<typeof createReviewSchema>) => {
       },
     });
 
+    /* - Recalcula os badges com a nova avaliação - */
+
+    const recalculatedBadges = await recalculateUserBadges(validSession.user.id);
+
     return {
       id: newReview.id,
       userId: newReview.userId,
@@ -41,7 +57,7 @@ const postReview = async (review: z.infer<typeof createReviewSchema>) => {
       eventName: newReview.event.title,
       userName: newReview.user.name,
       userPhoto: newReview.user.profilePicture,
-      verifiedBadge: newReview.user.verifiedBadge,
+      verifiedBadge: recalculatedBadges ? recalculatedBadges.verifiedBadge : newReview.user.verifiedBadge,
 
       createdAt: newReview.createdAt.toISOString(),
       updatedAt: newReview.updatedAt.toISOString(),

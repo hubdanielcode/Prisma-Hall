@@ -223,7 +223,8 @@ const masks = {
     const eventStatusLabel = {
       soon: "Em Breve",
       happened: "Encerrado",
-    } as Record<EventStatus, "Em Breve" | "Encerrado">;
+      cancelled: "Cancelado",
+    } as Record<EventStatus, "Em Breve" | "Encerrado" | "Cancelado">;
 
     return eventStatusLabel[value];
   },

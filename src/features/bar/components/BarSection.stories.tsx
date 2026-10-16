@@ -2,6 +2,7 @@ import { BarProvider } from "@/features/bar/context/BarContext";
 import { BarSection } from "./BarSection";
 import { CartProvider } from "@/features/cart/context/CartContext";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
+import { AuthenticationProvider } from "@/features/authentication";
 
 export default {
   title: "Layouts/Public/Home Page/Bar",
@@ -17,11 +18,13 @@ export default {
 const Section = () => {
   return (
     <QueryProvider>
-      <BarProvider>
-        <CartProvider>
-          <BarSection />
-        </CartProvider>
-      </BarProvider>
+      <AuthenticationProvider>
+        <BarProvider>
+          <CartProvider>
+            <BarSection />
+          </CartProvider>
+        </BarProvider>
+      </AuthenticationProvider>
     </QueryProvider>
   );
 };

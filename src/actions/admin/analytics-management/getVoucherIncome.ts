@@ -2,7 +2,7 @@
 
 import { checkIsAdmin } from "../checkIsAdmin";
 import { formattedStringToDate } from "@/shared/utils/functions/dates";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/server/services/prisma";
 import { voucherIncomeSchema } from "@/lib/validations";
 import z from "zod";
 
@@ -25,7 +25,7 @@ const getVoucherIncome = async (voucherIncome: z.infer<typeof voucherIncomeSchem
   try {
     const vouchers = await prisma.voucher.findMany({
       where: {
-        order: { voucherPayment: { some: { status: "confirmed", createdAt: { gte: startDate } } } },
+        order: { voucherPayments: { some: { status: "confirmed", createdAt: { gte: startDate } } } },
         product: {
           category: parsedVoucherIncome.data.category,
           ...(parsedVoucherIncome.data.name ? { name: parsedVoucherIncome.data.name } : {}),

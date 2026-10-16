@@ -1,16 +1,24 @@
 "use server";
 
+import { checkRateLimit } from "@/lib/server/rate-limit/rateLimiter";
 import { cookies } from "next/headers";
-import { hash } from "bcrypt";
-import { prisma } from "@/lib/prisma";
+import { hash } from "@/lib/server/services/bcrypt";
+import { prisma } from "@/lib/server/services/prisma";
 import { signUpSchema } from "@/lib/validations";
 import z from "zod";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 
 const signUp = async (user: z.infer<typeof signUpSchema>) => {
   const parsedSignUpUser = signUpSchema.safeParse(user);
 
   if (!parsedSignUpUser.success) {
     return false;
+  }
+
+  const rateLimit = await checkRateLimit({ action: "signUp", limit: 5, windowSeconds: 60 * 60 });
+
+  if (!rateLimit.allowed) {
+    return "too_many_attempts";
   }
 
   const validPassword = parsedSignUpUser.data.password;
@@ -56,8 +64,10 @@ const signUp = async (user: z.infer<typeof signUpSchema>) => {
       email: newUser.email,
       role: newUser.role,
     };
-  } catch {
-    console.log("criação do user falhou");
+  } catch (error) {
+    if (error instanceof PrismaClientKnownRequestError && error.code === "P2002") {
+      return "email_is_not_unique";
+    }
 
     return false;
   }

@@ -6,6 +6,7 @@ export { UserAvatar } from "@/features/admin/users-management/components/UserAva
 export { UsersManagementCard } from "@/features/admin/users-management/components/UsersManagementCard";
 export { UsersManagementFilter } from "@/features/admin/users-management/components/UsersManagementFilter";
 export { UsersManagementTable } from "@/features/admin/users-management/components/UsersManagementTable";
+export { UsersTablePagination } from "@/features/admin/users-management/components/UsersTablePagination";
 
 /* - Pages - */
 

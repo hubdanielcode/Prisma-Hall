@@ -2,7 +2,8 @@
 
 import { checkIsAdmin } from "../checkIsAdmin";
 import { createProductSchema } from "@/lib/validations/admin/bar-management/createProductSchema";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/server/services/prisma";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import { put } from "@vercel/blob";
 import z from "zod";
 
@@ -49,7 +50,19 @@ const createProduct = async (product: z.infer<typeof createProductSchema>) => {
       createdAt: newProduct.createdAt.toISOString(),
       updatedAt: newProduct.updatedAt.toISOString(),
     };
-  } catch {
+  } catch (error) {
+    if (error instanceof PrismaClientKnownRequestError && error.code === "P2002") {
+      const errorMeta = JSON.stringify(error.meta);
+
+      if (errorMeta.includes("name")) {
+        return "name_is_not_unique";
+      }
+
+      if (errorMeta.includes("description")) {
+        return "description_is_not_unique";
+      }
+    }
+
     return false;
   }
 };

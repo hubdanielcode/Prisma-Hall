@@ -1,10 +1,10 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/server/services/prisma";
 
-const getAllProducts = async () => {
+const getAllProductsUsers = async () => {
   try {
-    const products = await prisma.product.findMany();
+    const products = await prisma.product.findMany({ where: { status: "active" } });
 
     return products.map((product) => ({
       id: product.id,
@@ -24,4 +24,4 @@ const getAllProducts = async () => {
   }
 };
 
-export { getAllProducts };
+export { getAllProductsUsers };

@@ -60,7 +60,7 @@ const useSession = () => {
   const { mutateAsync: signInMutation } = useMutation({
     mutationFn: signInAction,
     onSuccess: async (signInMutationResult) => {
-      if (signInMutationResult) {
+      if (typeof signInMutationResult === "object") {
         await invalidateAllSessionQueries();
       }
     },
@@ -71,7 +71,7 @@ const useSession = () => {
   const { mutateAsync: signUpMutation } = useMutation({
     mutationFn: signUpAction,
     onSuccess: async (signUpMutationResult) => {
-      if (signUpMutationResult) {
+      if (typeof signUpMutationResult === "object") {
         await invalidateAllSessionQueries();
       }
     },

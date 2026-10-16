@@ -1,7 +1,7 @@
 "use server";
 
 import { mapCartItem } from "@/features/cart/utils/mapCartItem";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/server/services/prisma";
 import { validateSession } from "@/actions/session/validateSession";
 
 const getCartItems = async () => {

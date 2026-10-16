@@ -1,3 +1,5 @@
+/* - Tiers - */
+
 const tierBadgeLabels = {
   none: "Nenhum",
   bronze: "Bronze",
@@ -38,4 +40,26 @@ const tierBadgeStyles = {
   },
 };
 
-export { tierBadgeLabels, tierBadgeOptions, tierBadgeStyles };
+/* - Regras - */
+
+// 1. Verificado: avaliações com nota E comentário, em eventos diferentes
+
+const verifiedReviewsRequired = 5;
+
+// 2. Frequente: eventos dos quais o usuário participou (ingresso comprado e pedido confirmado)
+
+const frequentEventsByTier = {
+  bronze: 3,
+  silver: 8,
+  gold: 13,
+} as const;
+
+// 3. Antigo: tempo de conta, em anos completos
+
+const oldAccountYearsByTier = {
+  bronze: 1,
+  silver: 2,
+  gold: 3,
+} as const;
+
+export { frequentEventsByTier, oldAccountYearsByTier, tierBadgeLabels, tierBadgeOptions, tierBadgeStyles, verifiedReviewsRequired };

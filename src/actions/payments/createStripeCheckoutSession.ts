@@ -1,11 +1,18 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
-import { stripe } from "@/lib/stripe";
+import { prisma } from "@/lib/server/services/prisma";
+import { stripe } from "@/lib/server/services/stripe";
 import { stripeCheckoutSchema } from "@/lib/validations/payments/stripeCheckoutSchema";
 import { validateSession } from "@/actions/session/validateSession";
+import type { PaymentMethod } from "@/prisma/generated/prisma/enums";
 import type Stripe from "stripe";
 import z from "zod";
+
+const stripePaymentMethodTypes: Partial<Record<PaymentMethod, Stripe.Checkout.SessionCreateParams.AllowedPaymentMethodType>> = {
+  pix: "pix",
+  creditCard: "card",
+  debitCard: "card",
+};
 
 const createStripeCheckoutSession = async (payments: z.infer<typeof stripeCheckoutSchema>) => {
   const appUrl = process.env.NEXT_PUBLIC_APP_URL;
@@ -33,15 +40,21 @@ const createStripeCheckoutSession = async (payments: z.infer<typeof stripeChecko
       voucherPaymentId ? prisma.voucherPayment.findUnique({ where: { id: voucherPaymentId } }) : null,
     ]);
 
-    // 1. Só segue com o que é do usuário e ainda está pendente
+    // 1. Só segue com o que é do usuário e ainda está pendente. Pagamento em dinheiro não passa pelo Stripe, ele é confirmado de outra forma
 
     const ticketPayment =
-      existingTicketPayment && existingTicketPayment.userId === validSession.user.id && existingTicketPayment.status === "pending"
+      existingTicketPayment &&
+      existingTicketPayment.userId === validSession.user.id &&
+      existingTicketPayment.status === "pending" &&
+      existingTicketPayment.method !== "cash"
         ? existingTicketPayment
         : null;
 
     const voucherPayment =
-      existingVoucherPayment && existingVoucherPayment.userId === validSession.user.id && existingVoucherPayment.status === "pending"
+      existingVoucherPayment &&
+      existingVoucherPayment.userId === validSession.user.id &&
+      existingVoucherPayment.status === "pending" &&
+      existingVoucherPayment.method !== "cash"
         ? existingVoucherPayment
         : null;
 
@@ -81,6 +94,18 @@ const createStripeCheckoutSession = async (payments: z.infer<typeof stripeChecko
       return false;
     }
 
+    // 1. A sessão só aceita o método escolhido no checkout, fazendo com que o método salvo no pagamento bata com o que, de fato, foi cobrado
+
+    const paymentMethodTypes = new Set<Stripe.Checkout.SessionCreateParams.AllowedPaymentMethodType>();
+
+    for (const payment of [ticketPayment, voucherPayment]) {
+      const paymentMethodType = payment ? stripePaymentMethodTypes[payment.method] : undefined;
+
+      if (paymentMethodType) {
+        paymentMethodTypes.add(paymentMethodType);
+      }
+    }
+
     const returnPath = ticketPayment ? `/pedidos/${ticketPayment.orderId}` : `/pedidos/${voucherPayment?.orderId}`;
 
     const metadata = {
@@ -94,6 +119,7 @@ const createStripeCheckoutSession = async (payments: z.infer<typeof stripeChecko
       mode: "payment",
       customer_email: validSession.user.email,
       line_items: lineItems,
+      allowed_payment_method_types: Array.from(paymentMethodTypes),
       success_url: `${appUrl}${returnPath}`,
       cancel_url: `${appUrl}${returnPath}`,
 

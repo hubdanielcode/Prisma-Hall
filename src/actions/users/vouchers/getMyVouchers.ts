@@ -1,6 +1,6 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/server/services/prisma";
 import { validateSession } from "@/actions/session/validateSession";
 
 const getMyVouchers = async () => {
@@ -15,7 +15,7 @@ const getMyVouchers = async () => {
       where: { userId: validSession.user.id },
       include: {
         product: true,
-        order: { include: { voucherPayment: { orderBy: { createdAt: "desc" }, take: 1 } } },
+        order: { include: { voucherPayments: { orderBy: { createdAt: "desc" }, take: 1 } } },
       },
       orderBy: { createdAt: "desc" },
     });
@@ -26,8 +26,8 @@ const getMyVouchers = async () => {
       productId: voucher.productId,
       quantity: voucher.quantity,
       orderStatus: voucher.order.status,
-      paymentStatus: voucher.order.voucherPayment[0]?.status ?? "pending",
-      pickedUpAt: voucher.order.voucherPayment[0]?.pickedUpAt ? voucher.order.voucherPayment[0].pickedUpAt.toISOString() : null,
+      paymentStatus: voucher.order.voucherPayments[0]?.status ?? "pending",
+      pickedUpAt: voucher.order.voucherPayments[0]?.pickedUpAt ? voucher.order.voucherPayments[0].pickedUpAt.toISOString() : null,
 
       product: {
         id: voucher.product.id,

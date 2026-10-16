@@ -231,10 +231,13 @@ const useEvents = () => ({
   createEventMutation: fn(),
   editEventMutation: fn(),
   deleteEventMutation: fn(),
+  cancelEventMutation: fn(),
   eventBeingEdited: null,
   setEventBeingEdited: fn(),
   eventBeingDeleted: null,
   setEventBeingDeleted: fn(),
+  eventBeingCancelled: null,
+  setEventBeingCancelled: fn(),
 });
 
 export { useEvents, fakeEvent, fakeEvents };

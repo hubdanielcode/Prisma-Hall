@@ -9,6 +9,7 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/Session.ts'
+export type * from './models/RateLimit.ts'
 export type * from './models/User.ts'
 export type * from './models/NotificationPreference.ts'
 export type * from './models/Notification.ts'
@@ -26,5 +27,6 @@ export type * from './models/Attraction.ts'
 export type * from './models/Review.ts'
 export type * from './models/Gallery.ts'
 export type * from './models/GalleryLikes.ts'
+export type * from './models/FavoriteEvent.ts'
 export type * from './models/Newsletter.ts'
 export type * from './commonInputTypes.ts'

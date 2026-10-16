@@ -13,6 +13,7 @@ export { editProductSchema } from "@/lib/validations/admin/bar-management/editPr
 
 // 3. Events Management
 
+export { cancelEventIdSchema } from "@/lib/validations/admin/events-management/cancelEventSchema";
 export { createAttractionSchema } from "@/lib/validations/admin/events-management/createAttractionSchema";
 export { createEventSchema } from "@/lib/validations/admin/events-management/createEventSchema";
 export { editAttractionSchema } from "@/lib/validations/admin/events-management/editAttractionSchema";
@@ -37,6 +38,7 @@ export { updateCartItemSchema } from "@/lib/validations/cart/updateCartItemSchem
 /* - Events - */
 
 export { createReviewSchema } from "@/lib/validations/events/createReviewSchema";
+export { favoriteEventIdSchema } from "@/lib/validations/events/favoriteEventSchema";
 export { updateReviewSchema } from "@/lib/validations/events/updateReviewSchema";
 
 /* - Newsletter - */
@@ -52,7 +54,7 @@ export { stripeCheckoutSchema } from "@/lib/validations/payments/stripeCheckoutS
 export { notificationIdSchema } from "@/lib/validations/users/notificationSchemas";
 export { updateNotificationPreferencesSchema } from "@/lib/validations/users/updateNotificationPreferencesSchema";
 export { orderIdSchema, buyTicketsSchema, buyVouchersSchema } from "@/lib/validations/users/orderSchemas";
-export { profileSchema } from "@/lib/validations/users/profileSchema";
+export { profileSchema } from "@/lib/validations/users/profileSchemas";
 export { updateProfileSchema } from "@/lib/validations/users/updateProfileSchema";
 
 /* - Shared - */

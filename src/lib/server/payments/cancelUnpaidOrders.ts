@@ -1,13 +1,14 @@
-import { prisma } from "@/lib/prisma";
+import "server-only";
+import { prisma } from "@/lib/server/services/prisma";
 
-interface MarkOrderAsPaidProps {
+interface CancelUnpaidOrdersProps {
   ticketPaymentId?: string;
   voucherPaymentId?: string;
 }
 
-/* - Confirma o pagamento e o pedido correspondente. Pagamentos que não estão mais pendentes são ignorados - */
+/* - Cancela o pagamento e o pedido correspondente. Pagamentos que não estão mais pendentes são ignorados - */
 
-const markOrderAsPaid = async ({ ticketPaymentId, voucherPaymentId }: MarkOrderAsPaidProps) => {
+const cancelUnpaidOrders = async ({ ticketPaymentId, voucherPaymentId }: CancelUnpaidOrdersProps) => {
   try {
     await prisma.$transaction(async (transaction) => {
       /* - Pagamento dos ingressos - */
@@ -18,12 +19,12 @@ const markOrderAsPaid = async ({ ticketPaymentId, voucherPaymentId }: MarkOrderA
         if (existingTicketPayment && existingTicketPayment.status === "pending") {
           await transaction.ticketPayment.update({
             where: { id: existingTicketPayment.id },
-            data: { status: "confirmed", confirmedAt: new Date() },
+            data: { status: "cancelled" },
           });
 
           await transaction.ticketOrder.update({
             where: { id: existingTicketPayment.orderId },
-            data: { status: "confirmed" },
+            data: { status: "cancelled" },
           });
         }
       }
@@ -33,16 +34,28 @@ const markOrderAsPaid = async ({ ticketPaymentId, voucherPaymentId }: MarkOrderA
       if (voucherPaymentId) {
         const existingVoucherPayment = await transaction.voucherPayment.findUnique({ where: { id: voucherPaymentId } });
 
+        // 1. Só cancela se ainda estiver pendente. Isso evita que o estoque reservado no pedido seja devolvido duas vezes.
+
         if (existingVoucherPayment && existingVoucherPayment.status === "pending") {
           await transaction.voucherPayment.update({
             where: { id: existingVoucherPayment.id },
-            data: { status: "confirmed" },
+            data: { status: "cancelled" },
           });
 
-          await transaction.voucherOrder.update({
+          const cancelledVoucherOrder = await transaction.voucherOrder.update({
             where: { id: existingVoucherPayment.orderId },
-            data: { status: "confirmed" },
+            data: { status: "cancelled" },
+            include: { vouchers: true },
           });
+
+          // 2. Devolve ao estoque o que foi reservado no checkout
+
+          for (const voucher of cancelledVoucherOrder.vouchers) {
+            await transaction.product.update({
+              where: { id: voucher.productId },
+              data: { quantity: { increment: voucher.quantity } },
+            });
+          }
         }
       }
     });
@@ -53,4 +66,4 @@ const markOrderAsPaid = async ({ ticketPaymentId, voucherPaymentId }: MarkOrderA
   }
 };
 
-export { markOrderAsPaid };
+export { cancelUnpaidOrders };

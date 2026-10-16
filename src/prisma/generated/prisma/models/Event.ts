@@ -289,6 +289,7 @@ export type EventWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   carts?: Prisma.CartListRelationFilter
+  favorites?: Prisma.FavoriteEventListRelationFilter
   attraction?: Prisma.XOR<Prisma.AttractionScalarRelationFilter, Prisma.AttractionWhereInput>
   galleries?: Prisma.GalleryListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
@@ -310,6 +311,7 @@ export type EventOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   carts?: Prisma.CartOrderByRelationAggregateInput
+  favorites?: Prisma.FavoriteEventOrderByRelationAggregateInput
   attraction?: Prisma.AttractionOrderByWithRelationInput
   galleries?: Prisma.GalleryOrderByRelationAggregateInput
   reviews?: Prisma.ReviewOrderByRelationAggregateInput
@@ -334,6 +336,7 @@ export type EventWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   carts?: Prisma.CartListRelationFilter
+  favorites?: Prisma.FavoriteEventListRelationFilter
   attraction?: Prisma.XOR<Prisma.AttractionScalarRelationFilter, Prisma.AttractionWhereInput>
   galleries?: Prisma.GalleryListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
@@ -394,6 +397,7 @@ export type EventCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   carts?: Prisma.CartCreateNestedManyWithoutEventInput
+  favorites?: Prisma.FavoriteEventCreateNestedManyWithoutEventInput
   attraction: Prisma.AttractionCreateNestedOneWithoutEventsInput
   galleries?: Prisma.GalleryCreateNestedManyWithoutEventInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutEventInput
@@ -415,6 +419,7 @@ export type EventUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   carts?: Prisma.CartUncheckedCreateNestedManyWithoutEventInput
+  favorites?: Prisma.FavoriteEventUncheckedCreateNestedManyWithoutEventInput
   galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutEventInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutEventInput
   tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutEventInput
@@ -434,6 +439,7 @@ export type EventUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUpdateManyWithoutEventNestedInput
+  favorites?: Prisma.FavoriteEventUpdateManyWithoutEventNestedInput
   attraction?: Prisma.AttractionUpdateOneRequiredWithoutEventsNestedInput
   galleries?: Prisma.GalleryUpdateManyWithoutEventNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutEventNestedInput
@@ -455,6 +461,7 @@ export type EventUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUncheckedUpdateManyWithoutEventNestedInput
+  favorites?: Prisma.FavoriteEventUncheckedUpdateManyWithoutEventNestedInput
   galleries?: Prisma.GalleryUncheckedUpdateManyWithoutEventNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutEventNestedInput
   tickets?: Prisma.TicketUncheckedUpdateManyWithoutEventNestedInput
@@ -695,6 +702,20 @@ export type EventUpdateOneRequiredWithoutGalleriesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.EventUpdateToOneWithWhereWithoutGalleriesInput, Prisma.EventUpdateWithoutGalleriesInput>, Prisma.EventUncheckedUpdateWithoutGalleriesInput>
 }
 
+export type EventCreateNestedOneWithoutFavoritesInput = {
+  create?: Prisma.XOR<Prisma.EventCreateWithoutFavoritesInput, Prisma.EventUncheckedCreateWithoutFavoritesInput>
+  connectOrCreate?: Prisma.EventCreateOrConnectWithoutFavoritesInput
+  connect?: Prisma.EventWhereUniqueInput
+}
+
+export type EventUpdateOneRequiredWithoutFavoritesNestedInput = {
+  create?: Prisma.XOR<Prisma.EventCreateWithoutFavoritesInput, Prisma.EventUncheckedCreateWithoutFavoritesInput>
+  connectOrCreate?: Prisma.EventCreateOrConnectWithoutFavoritesInput
+  upsert?: Prisma.EventUpsertWithoutFavoritesInput
+  connect?: Prisma.EventWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.EventUpdateToOneWithWhereWithoutFavoritesInput, Prisma.EventUpdateWithoutFavoritesInput>, Prisma.EventUncheckedUpdateWithoutFavoritesInput>
+}
+
 export type EventCreateWithoutCartsInput = {
   id?: string
   title: string
@@ -708,6 +729,7 @@ export type EventCreateWithoutCartsInput = {
   rating?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  favorites?: Prisma.FavoriteEventCreateNestedManyWithoutEventInput
   attraction: Prisma.AttractionCreateNestedOneWithoutEventsInput
   galleries?: Prisma.GalleryCreateNestedManyWithoutEventInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutEventInput
@@ -728,6 +750,7 @@ export type EventUncheckedCreateWithoutCartsInput = {
   rating?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  favorites?: Prisma.FavoriteEventUncheckedCreateNestedManyWithoutEventInput
   galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutEventInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutEventInput
   tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutEventInput
@@ -762,6 +785,7 @@ export type EventUpdateWithoutCartsInput = {
   rating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  favorites?: Prisma.FavoriteEventUpdateManyWithoutEventNestedInput
   attraction?: Prisma.AttractionUpdateOneRequiredWithoutEventsNestedInput
   galleries?: Prisma.GalleryUpdateManyWithoutEventNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutEventNestedInput
@@ -782,6 +806,7 @@ export type EventUncheckedUpdateWithoutCartsInput = {
   rating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  favorites?: Prisma.FavoriteEventUncheckedUpdateManyWithoutEventNestedInput
   galleries?: Prisma.GalleryUncheckedUpdateManyWithoutEventNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutEventNestedInput
   tickets?: Prisma.TicketUncheckedUpdateManyWithoutEventNestedInput
@@ -801,6 +826,7 @@ export type EventCreateWithoutTicketsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   carts?: Prisma.CartCreateNestedManyWithoutEventInput
+  favorites?: Prisma.FavoriteEventCreateNestedManyWithoutEventInput
   attraction: Prisma.AttractionCreateNestedOneWithoutEventsInput
   galleries?: Prisma.GalleryCreateNestedManyWithoutEventInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutEventInput
@@ -821,6 +847,7 @@ export type EventUncheckedCreateWithoutTicketsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   carts?: Prisma.CartUncheckedCreateNestedManyWithoutEventInput
+  favorites?: Prisma.FavoriteEventUncheckedCreateNestedManyWithoutEventInput
   galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutEventInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutEventInput
 }
@@ -855,6 +882,7 @@ export type EventUpdateWithoutTicketsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUpdateManyWithoutEventNestedInput
+  favorites?: Prisma.FavoriteEventUpdateManyWithoutEventNestedInput
   attraction?: Prisma.AttractionUpdateOneRequiredWithoutEventsNestedInput
   galleries?: Prisma.GalleryUpdateManyWithoutEventNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutEventNestedInput
@@ -875,6 +903,7 @@ export type EventUncheckedUpdateWithoutTicketsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUncheckedUpdateManyWithoutEventNestedInput
+  favorites?: Prisma.FavoriteEventUncheckedUpdateManyWithoutEventNestedInput
   galleries?: Prisma.GalleryUncheckedUpdateManyWithoutEventNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutEventNestedInput
 }
@@ -893,6 +922,7 @@ export type EventCreateWithoutAttractionInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   carts?: Prisma.CartCreateNestedManyWithoutEventInput
+  favorites?: Prisma.FavoriteEventCreateNestedManyWithoutEventInput
   galleries?: Prisma.GalleryCreateNestedManyWithoutEventInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutEventInput
   tickets?: Prisma.TicketCreateNestedManyWithoutEventInput
@@ -912,6 +942,7 @@ export type EventUncheckedCreateWithoutAttractionInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   carts?: Prisma.CartUncheckedCreateNestedManyWithoutEventInput
+  favorites?: Prisma.FavoriteEventUncheckedCreateNestedManyWithoutEventInput
   galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutEventInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutEventInput
   tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutEventInput
@@ -976,6 +1007,7 @@ export type EventCreateWithoutReviewsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   carts?: Prisma.CartCreateNestedManyWithoutEventInput
+  favorites?: Prisma.FavoriteEventCreateNestedManyWithoutEventInput
   attraction: Prisma.AttractionCreateNestedOneWithoutEventsInput
   galleries?: Prisma.GalleryCreateNestedManyWithoutEventInput
   tickets?: Prisma.TicketCreateNestedManyWithoutEventInput
@@ -996,6 +1028,7 @@ export type EventUncheckedCreateWithoutReviewsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   carts?: Prisma.CartUncheckedCreateNestedManyWithoutEventInput
+  favorites?: Prisma.FavoriteEventUncheckedCreateNestedManyWithoutEventInput
   galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutEventInput
   tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutEventInput
 }
@@ -1030,6 +1063,7 @@ export type EventUpdateWithoutReviewsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUpdateManyWithoutEventNestedInput
+  favorites?: Prisma.FavoriteEventUpdateManyWithoutEventNestedInput
   attraction?: Prisma.AttractionUpdateOneRequiredWithoutEventsNestedInput
   galleries?: Prisma.GalleryUpdateManyWithoutEventNestedInput
   tickets?: Prisma.TicketUpdateManyWithoutEventNestedInput
@@ -1050,6 +1084,7 @@ export type EventUncheckedUpdateWithoutReviewsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUncheckedUpdateManyWithoutEventNestedInput
+  favorites?: Prisma.FavoriteEventUncheckedUpdateManyWithoutEventNestedInput
   galleries?: Prisma.GalleryUncheckedUpdateManyWithoutEventNestedInput
   tickets?: Prisma.TicketUncheckedUpdateManyWithoutEventNestedInput
 }
@@ -1068,6 +1103,7 @@ export type EventCreateWithoutGalleriesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   carts?: Prisma.CartCreateNestedManyWithoutEventInput
+  favorites?: Prisma.FavoriteEventCreateNestedManyWithoutEventInput
   attraction: Prisma.AttractionCreateNestedOneWithoutEventsInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutEventInput
   tickets?: Prisma.TicketCreateNestedManyWithoutEventInput
@@ -1088,6 +1124,7 @@ export type EventUncheckedCreateWithoutGalleriesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   carts?: Prisma.CartUncheckedCreateNestedManyWithoutEventInput
+  favorites?: Prisma.FavoriteEventUncheckedCreateNestedManyWithoutEventInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutEventInput
   tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutEventInput
 }
@@ -1122,6 +1159,7 @@ export type EventUpdateWithoutGalleriesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUpdateManyWithoutEventNestedInput
+  favorites?: Prisma.FavoriteEventUpdateManyWithoutEventNestedInput
   attraction?: Prisma.AttractionUpdateOneRequiredWithoutEventsNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutEventNestedInput
   tickets?: Prisma.TicketUpdateManyWithoutEventNestedInput
@@ -1142,6 +1180,103 @@ export type EventUncheckedUpdateWithoutGalleriesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUncheckedUpdateManyWithoutEventNestedInput
+  favorites?: Prisma.FavoriteEventUncheckedUpdateManyWithoutEventNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutEventNestedInput
+  tickets?: Prisma.TicketUncheckedUpdateManyWithoutEventNestedInput
+}
+
+export type EventCreateWithoutFavoritesInput = {
+  id?: string
+  title: string
+  description: string
+  tag: $Enums.EventTag
+  image: string
+  status: $Enums.EventStatus
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  startsAt: Date | string
+  attendees?: number
+  rating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  carts?: Prisma.CartCreateNestedManyWithoutEventInput
+  attraction: Prisma.AttractionCreateNestedOneWithoutEventsInput
+  galleries?: Prisma.GalleryCreateNestedManyWithoutEventInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutEventInput
+  tickets?: Prisma.TicketCreateNestedManyWithoutEventInput
+}
+
+export type EventUncheckedCreateWithoutFavoritesInput = {
+  id?: string
+  title: string
+  description: string
+  tag: $Enums.EventTag
+  attractionName: string
+  image: string
+  status: $Enums.EventStatus
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  startsAt: Date | string
+  attendees?: number
+  rating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  carts?: Prisma.CartUncheckedCreateNestedManyWithoutEventInput
+  galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutEventInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutEventInput
+  tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutEventInput
+}
+
+export type EventCreateOrConnectWithoutFavoritesInput = {
+  where: Prisma.EventWhereUniqueInput
+  create: Prisma.XOR<Prisma.EventCreateWithoutFavoritesInput, Prisma.EventUncheckedCreateWithoutFavoritesInput>
+}
+
+export type EventUpsertWithoutFavoritesInput = {
+  update: Prisma.XOR<Prisma.EventUpdateWithoutFavoritesInput, Prisma.EventUncheckedUpdateWithoutFavoritesInput>
+  create: Prisma.XOR<Prisma.EventCreateWithoutFavoritesInput, Prisma.EventUncheckedCreateWithoutFavoritesInput>
+  where?: Prisma.EventWhereInput
+}
+
+export type EventUpdateToOneWithWhereWithoutFavoritesInput = {
+  where?: Prisma.EventWhereInput
+  data: Prisma.XOR<Prisma.EventUpdateWithoutFavoritesInput, Prisma.EventUncheckedUpdateWithoutFavoritesInput>
+}
+
+export type EventUpdateWithoutFavoritesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
+  image?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  attendees?: Prisma.IntFieldUpdateOperationsInput | number
+  rating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  carts?: Prisma.CartUpdateManyWithoutEventNestedInput
+  attraction?: Prisma.AttractionUpdateOneRequiredWithoutEventsNestedInput
+  galleries?: Prisma.GalleryUpdateManyWithoutEventNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutEventNestedInput
+  tickets?: Prisma.TicketUpdateManyWithoutEventNestedInput
+}
+
+export type EventUncheckedUpdateWithoutFavoritesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
+  attractionName?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  attendees?: Prisma.IntFieldUpdateOperationsInput | number
+  rating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  carts?: Prisma.CartUncheckedUpdateManyWithoutEventNestedInput
+  galleries?: Prisma.GalleryUncheckedUpdateManyWithoutEventNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutEventNestedInput
   tickets?: Prisma.TicketUncheckedUpdateManyWithoutEventNestedInput
 }
@@ -1175,6 +1310,7 @@ export type EventUpdateWithoutAttractionInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUpdateManyWithoutEventNestedInput
+  favorites?: Prisma.FavoriteEventUpdateManyWithoutEventNestedInput
   galleries?: Prisma.GalleryUpdateManyWithoutEventNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutEventNestedInput
   tickets?: Prisma.TicketUpdateManyWithoutEventNestedInput
@@ -1194,6 +1330,7 @@ export type EventUncheckedUpdateWithoutAttractionInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   carts?: Prisma.CartUncheckedUpdateManyWithoutEventNestedInput
+  favorites?: Prisma.FavoriteEventUncheckedUpdateManyWithoutEventNestedInput
   galleries?: Prisma.GalleryUncheckedUpdateManyWithoutEventNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutEventNestedInput
   tickets?: Prisma.TicketUncheckedUpdateManyWithoutEventNestedInput
@@ -1221,6 +1358,7 @@ export type EventUncheckedUpdateManyWithoutAttractionInput = {
 
 export type EventCountOutputType = {
   carts: number
+  favorites: number
   galleries: number
   reviews: number
   tickets: number
@@ -1228,6 +1366,7 @@ export type EventCountOutputType = {
 
 export type EventCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   carts?: boolean | EventCountOutputTypeCountCartsArgs
+  favorites?: boolean | EventCountOutputTypeCountFavoritesArgs
   galleries?: boolean | EventCountOutputTypeCountGalleriesArgs
   reviews?: boolean | EventCountOutputTypeCountReviewsArgs
   tickets?: boolean | EventCountOutputTypeCountTicketsArgs
@@ -1248,6 +1387,13 @@ export type EventCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extens
  */
 export type EventCountOutputTypeCountCartsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.CartWhereInput
+}
+
+/**
+ * EventCountOutputType without action
+ */
+export type EventCountOutputTypeCountFavoritesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FavoriteEventWhereInput
 }
 
 /**
@@ -1287,6 +1433,7 @@ export type EventSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   createdAt?: boolean
   updatedAt?: boolean
   carts?: boolean | Prisma.Event$cartsArgs<ExtArgs>
+  favorites?: boolean | Prisma.Event$favoritesArgs<ExtArgs>
   attraction?: boolean | Prisma.AttractionDefaultArgs<ExtArgs>
   galleries?: boolean | Prisma.Event$galleriesArgs<ExtArgs>
   reviews?: boolean | Prisma.Event$reviewsArgs<ExtArgs>
@@ -1347,6 +1494,7 @@ export type EventSelectScalar = {
 export type EventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "tag" | "attractionName" | "image" | "status" | "price" | "startsAt" | "attendees" | "rating" | "createdAt" | "updatedAt", ExtArgs["result"]["event"]>
 export type EventInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   carts?: boolean | Prisma.Event$cartsArgs<ExtArgs>
+  favorites?: boolean | Prisma.Event$favoritesArgs<ExtArgs>
   attraction?: boolean | Prisma.AttractionDefaultArgs<ExtArgs>
   galleries?: boolean | Prisma.Event$galleriesArgs<ExtArgs>
   reviews?: boolean | Prisma.Event$reviewsArgs<ExtArgs>
@@ -1364,6 +1512,7 @@ export type $EventPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   name: "Event"
   objects: {
     carts: Prisma.$CartPayload<ExtArgs>[]
+    favorites: Prisma.$FavoriteEventPayload<ExtArgs>[]
     attraction: Prisma.$AttractionPayload<ExtArgs>
     galleries: Prisma.$GalleryPayload<ExtArgs>[]
     reviews: Prisma.$ReviewPayload<ExtArgs>[]
@@ -1778,6 +1927,7 @@ readonly fields: EventFieldRefs;
 export interface Prisma__EventClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   carts<T extends Prisma.Event$cartsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$cartsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CartPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  favorites<T extends Prisma.Event$favoritesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$favoritesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FavoriteEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   attraction<T extends Prisma.AttractionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AttractionDefaultArgs<ExtArgs>>): Prisma.Prisma__AttractionClient<runtime.Types.Result.GetResult<Prisma.$AttractionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   galleries<T extends Prisma.Event$galleriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$galleriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GalleryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reviews<T extends Prisma.Event$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2246,6 +2396,30 @@ export type Event$cartsArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   distinct?: Prisma.CartScalarFieldEnum | Prisma.CartScalarFieldEnum[]
+}
+
+/**
+ * Event.favorites
+ */
+export type Event$favoritesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FavoriteEvent
+   */
+  select?: Prisma.FavoriteEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FavoriteEvent
+   */
+  omit?: Prisma.FavoriteEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FavoriteEventInclude<ExtArgs> | null
+  where?: Prisma.FavoriteEventWhereInput
+  orderBy?: Prisma.FavoriteEventOrderByWithRelationInput | Prisma.FavoriteEventOrderByWithRelationInput[]
+  cursor?: Prisma.FavoriteEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FavoriteEventScalarFieldEnum | Prisma.FavoriteEventScalarFieldEnum[]
 }
 
 /**

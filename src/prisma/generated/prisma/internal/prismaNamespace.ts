@@ -398,6 +398,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   Session: 'Session',
+  RateLimit: 'RateLimit',
   User: 'User',
   NotificationPreference: 'NotificationPreference',
   Notification: 'Notification',
@@ -415,6 +416,7 @@ export const ModelName = {
   Review: 'Review',
   Gallery: 'Gallery',
   GalleryLikes: 'GalleryLikes',
+  FavoriteEvent: 'FavoriteEvent',
   Newsletter: 'Newsletter'
 } as const
 
@@ -431,7 +433,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "session" | "user" | "notificationPreference" | "notification" | "profile" | "cart" | "product" | "voucher" | "voucherOrder" | "voucherPayment" | "ticket" | "ticketOrder" | "ticketPayment" | "event" | "attraction" | "review" | "gallery" | "galleryLikes" | "newsletter"
+    modelProps: "session" | "rateLimit" | "user" | "notificationPreference" | "notification" | "profile" | "cart" | "product" | "voucher" | "voucherOrder" | "voucherPayment" | "ticket" | "ticketOrder" | "ticketPayment" | "event" | "attraction" | "review" | "gallery" | "galleryLikes" | "favoriteEvent" | "newsletter"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -506,6 +508,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.SessionCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.SessionCountAggregateOutputType> | number
+        }
+      }
+    }
+    RateLimit: {
+      payload: Prisma.$RateLimitPayload<ExtArgs>
+      fields: Prisma.RateLimitFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RateLimitFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RateLimitFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitPayload>
+        }
+        findFirst: {
+          args: Prisma.RateLimitFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RateLimitFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitPayload>
+        }
+        findMany: {
+          args: Prisma.RateLimitFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitPayload>[]
+        }
+        create: {
+          args: Prisma.RateLimitCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitPayload>
+        }
+        createMany: {
+          args: Prisma.RateLimitCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RateLimitCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitPayload>[]
+        }
+        delete: {
+          args: Prisma.RateLimitDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitPayload>
+        }
+        update: {
+          args: Prisma.RateLimitUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitPayload>
+        }
+        deleteMany: {
+          args: Prisma.RateLimitDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RateLimitUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RateLimitUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitPayload>[]
+        }
+        upsert: {
+          args: Prisma.RateLimitUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitPayload>
+        }
+        aggregate: {
+          args: Prisma.RateLimitAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRateLimit>
+        }
+        groupBy: {
+          args: Prisma.RateLimitGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RateLimitGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RateLimitCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RateLimitCountAggregateOutputType> | number
         }
       }
     }
@@ -1767,6 +1843,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    FavoriteEvent: {
+      payload: Prisma.$FavoriteEventPayload<ExtArgs>
+      fields: Prisma.FavoriteEventFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FavoriteEventFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteEventPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FavoriteEventFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteEventPayload>
+        }
+        findFirst: {
+          args: Prisma.FavoriteEventFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteEventPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FavoriteEventFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteEventPayload>
+        }
+        findMany: {
+          args: Prisma.FavoriteEventFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteEventPayload>[]
+        }
+        create: {
+          args: Prisma.FavoriteEventCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteEventPayload>
+        }
+        createMany: {
+          args: Prisma.FavoriteEventCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FavoriteEventCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteEventPayload>[]
+        }
+        delete: {
+          args: Prisma.FavoriteEventDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteEventPayload>
+        }
+        update: {
+          args: Prisma.FavoriteEventUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteEventPayload>
+        }
+        deleteMany: {
+          args: Prisma.FavoriteEventDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FavoriteEventUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FavoriteEventUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteEventPayload>[]
+        }
+        upsert: {
+          args: Prisma.FavoriteEventUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteEventPayload>
+        }
+        aggregate: {
+          args: Prisma.FavoriteEventAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFavoriteEvent>
+        }
+        groupBy: {
+          args: Prisma.FavoriteEventGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FavoriteEventGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FavoriteEventCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FavoriteEventCountAggregateOutputType> | number
+        }
+      }
+    }
     Newsletter: {
       payload: Prisma.$NewsletterPayload<ExtArgs>
       fields: Prisma.NewsletterFieldRefs
@@ -1892,6 +2042,15 @@ export const SessionScalarFieldEnum = {
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
 
 
+export const RateLimitScalarFieldEnum = {
+  key: 'key',
+  count: 'count',
+  expiresAt: 'expiresAt'
+} as const
+
+export type RateLimitScalarFieldEnum = (typeof RateLimitScalarFieldEnum)[keyof typeof RateLimitScalarFieldEnum]
+
+
 export const UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -1996,6 +2155,8 @@ export const VoucherScalarFieldEnum = {
   userId: 'userId',
   productId: 'productId',
   quantity: 'quantity',
+  unitPrice: 'unitPrice',
+  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2021,9 +2182,10 @@ export const VoucherPaymentScalarFieldEnum = {
   method: 'method',
   status: 'status',
   totalValue: 'totalValue',
+  confirmedAt: 'confirmedAt',
+  pickedUpAt: 'pickedUpAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  pickedUpAt: 'pickedUpAt'
+  updatedAt: 'updatedAt'
 } as const
 
 export type VoucherPaymentScalarFieldEnum = (typeof VoucherPaymentScalarFieldEnum)[keyof typeof VoucherPaymentScalarFieldEnum]
@@ -2036,6 +2198,7 @@ export const TicketScalarFieldEnum = {
   eventId: 'eventId',
   quantity: 'quantity',
   unitPrice: 'unitPrice',
+  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2138,6 +2301,16 @@ export const GalleryLikesScalarFieldEnum = {
 export type GalleryLikesScalarFieldEnum = (typeof GalleryLikesScalarFieldEnum)[keyof typeof GalleryLikesScalarFieldEnum]
 
 
+export const FavoriteEventScalarFieldEnum = {
+  userId: 'userId',
+  eventId: 'eventId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FavoriteEventScalarFieldEnum = (typeof FavoriteEventScalarFieldEnum)[keyof typeof FavoriteEventScalarFieldEnum]
+
+
 export const NewsletterScalarFieldEnum = {
   userId: 'userId',
   email: 'email',
@@ -2206,6 +2379,20 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
+ * Reference to a field of type 'Int'
+ */
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+/**
+ * Reference to a field of type 'Int[]'
+ */
+export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
  * Reference to a field of type 'UserRole'
  */
 export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole'>
@@ -2269,20 +2456,6 @@ export type ListEnumItemTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
 
 
 /**
- * Reference to a field of type 'Int'
- */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-/**
- * Reference to a field of type 'Int[]'
- */
-export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-/**
  * Reference to a field of type 'Decimal'
  */
 export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
@@ -2325,6 +2498,20 @@ export type ListEnumProductStatusFieldRefInput<$PrismaModel> = FieldRefInputType
 
 
 /**
+ * Reference to a field of type 'VoucherStatus'
+ */
+export type EnumVoucherStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VoucherStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'VoucherStatus[]'
+ */
+export type ListEnumVoucherStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VoucherStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'OrderStatus'
  */
 export type EnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderStatus'>
@@ -2363,6 +2550,20 @@ export type EnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
  * Reference to a field of type 'PaymentStatus[]'
  */
 export type ListEnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'TicketStatus'
+ */
+export type EnumTicketStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TicketStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'TicketStatus[]'
+ */
+export type ListEnumTicketStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TicketStatus[]'>
     
 
 
@@ -2559,6 +2760,7 @@ export interface PrismaClientOptionsWithAdapter extends PrismaClientBaseOptions 
 export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaClientOptionsWithAdapter
 export type GlobalOmitConfig = {
   session?: Prisma.SessionOmit
+  rateLimit?: Prisma.RateLimitOmit
   user?: Prisma.UserOmit
   notificationPreference?: Prisma.NotificationPreferenceOmit
   notification?: Prisma.NotificationOmit
@@ -2576,6 +2778,7 @@ export type GlobalOmitConfig = {
   review?: Prisma.ReviewOmit
   gallery?: Prisma.GalleryOmit
   galleryLikes?: Prisma.GalleryLikesOmit
+  favoriteEvent?: Prisma.FavoriteEventOmit
   newsletter?: Prisma.NewsletterOmit
 }
 

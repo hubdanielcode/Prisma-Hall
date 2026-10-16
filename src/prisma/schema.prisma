@@ -20,6 +20,14 @@ model Session {
   @@map("session")
 }
 
+model RateLimit {
+  key       String   @id
+  count     Int      @default(0)
+  expiresAt DateTime @map("expires_at")
+
+  @@map("rate_limit")
+}
+
 model User {
   id             String         @id @default(uuid())
   name           String
@@ -38,6 +46,7 @@ model User {
   updatedAt   DateTime  @updatedAt @map("updated_at")
 
   carts                   Cart[]
+  favoriteEvents          FavoriteEvent[]
   galleries               Gallery[]
   galleryLikes            GalleryLikes[]
   profiles                Profile?
@@ -150,11 +159,13 @@ model Product {
 }
 
 model Voucher {
-  id        String @id @default(uuid())
-  orderId   String @default(uuid()) @map("order_id")
-  userId    String @map("user_id")
-  productId String @map("product_id")
+  id        String        @id @default(uuid())
+  orderId   String        @default(uuid()) @map("order_id")
+  userId    String        @map("user_id")
+  productId String        @map("product_id")
   quantity  Int
+  unitPrice Decimal       @map("unit_price")
+  status    VoucherStatus @default(active)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -174,38 +185,40 @@ model VoucherOrder {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  vouchers       Voucher[]
-  user           User             @relation(fields: [userId], references: [id])
-  voucherPayment VoucherPayment[]
+  vouchers        Voucher[]
+  user            User             @relation(fields: [userId], references: [id])
+  voucherPayments VoucherPayment[]
 
   @@map("voucher_orders")
 }
 
 model VoucherPayment {
-  id         String        @id @default(uuid())
-  userId     String        @map("user_id")
-  orderId    String        @map("order_id")
-  method     PaymentMethod @map("payment_method")
-  status     PaymentStatus @map("payment_status")
-  totalValue Decimal       @map("total_value")
+  id          String        @id @default(uuid())
+  userId      String        @map("user_id")
+  orderId     String        @map("order_id")
+  method      PaymentMethod @map("payment_method")
+  status      PaymentStatus @map("payment_status")
+  totalValue  Decimal       @map("total_value")
+  confirmedAt DateTime?     @map("confirmed_at")
+  pickedUpAt  DateTime?     @map("picked_up_at")
 
-  createdAt  DateTime  @default(now()) @map("created_at")
-  updatedAt  DateTime  @updatedAt @map("updated_at")
-  pickedUpAt DateTime? @map("picked_up_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
-  voucherOrder VoucherOrder? @relation(fields: [orderId], references: [id])
-  user         User          @relation(fields: [userId], references: [id])
+  order VoucherOrder @relation(fields: [orderId], references: [id])
+  user  User         @relation(fields: [userId], references: [id])
 
   @@map("voucher_payments")
 }
 
 model Ticket {
-  id        String  @id @default(uuid())
-  orderId   String  @default(uuid()) @map("order_id")
-  userId    String  @map("user_id")
-  eventId   String  @map("event_id")
+  id        String       @id @default(uuid())
+  orderId   String       @default(uuid()) @map("order_id")
+  userId    String       @map("user_id")
+  eventId   String       @map("event_id")
   quantity  Int
-  unitPrice Decimal @map("unit_price")
+  unitPrice Decimal      @map("unit_price")
+  status    TicketStatus @default(active)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -268,7 +281,8 @@ model Event {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   carts      Cart[]
-  attraction Attraction @relation(fields: [attractionName], references: [name])
+  favorites  FavoriteEvent[]
+  attraction Attraction      @relation(fields: [attractionName], references: [name])
   galleries  Gallery[]
   reviews    Review[]
   tickets    Ticket[]
@@ -336,6 +350,20 @@ model GalleryLikes {
   @@map("gallery_likes")
 }
 
+model FavoriteEvent {
+  userId  String @map("user_id")
+  eventId String @map("event_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user  User  @relation(fields: [userId], references: [id])
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@id([userId, eventId])
+  @@map("favorite_events")
+}
+
 model Newsletter {
   userId       String  @map("user_id")
   email        String
@@ -394,6 +422,7 @@ enum UserBadgeLevel {
 enum NotificationType {
   order_cancelled
   new_event
+  event_update
 }
 
 // 4. Produtos
@@ -426,4 +455,19 @@ enum EventTag {
 enum EventStatus {
   happened
   soon
+  cancelled
+}
+
+// 6. Ingressos
+
+enum TicketStatus {
+  active
+  cancelled
+}
+
+// 7. Vouchers
+
+enum VoucherStatus {
+  active
+  cancelled
 }

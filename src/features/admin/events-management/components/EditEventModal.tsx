@@ -38,7 +38,7 @@ const EditEventModal = ({ isOpen, onClose }: EditEventModalProps) => {
     description: eventBeingEdited?.description ?? "",
     tag: eventBeingEdited?.tag ?? "forro",
     attractionName: eventBeingEdited?.attractionName ?? "",
-    status: eventBeingEdited?.status ?? "soon",
+    status: eventBeingEdited?.status ?? "happened",
     price: eventBeingEdited?.price ?? 0,
     startsAt: eventBeingEdited?.startsAt ?? "",
   });

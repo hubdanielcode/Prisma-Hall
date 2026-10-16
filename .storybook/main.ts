@@ -20,18 +20,27 @@ const config: StorybookConfig = {
     viteConfig.resolve = {
       ...viteConfig.resolve,
       alias: [
-        /* - Bcrypt - */
+        /* - Services - */
+
+        // 1. Bcrypt
 
         {
-          find: "bcrypt",
-          replacement: path.resolve(dirname, "./mocks/bcrypt.ts"),
+          find: /\/services\/bcrypt$/,
+          replacement: path.resolve(dirname, "./mocks/services/bcrypt.ts"),
         },
 
-        /* - Prisma - */
+        // 2. Prisma
 
         {
-          find: "@/lib/prisma",
-          replacement: path.resolve(dirname, "./mocks/prisma.ts"),
+          find: /\/services\/prisma$/,
+          replacement: path.resolve(dirname, "./mocks/services/prisma.ts"),
+        },
+
+        // 3. Stripe
+
+        {
+          find: /\/services\/stripe$/,
+          replacement: path.resolve(dirname, "./mocks/services/stripe.ts"),
         },
 
         /* - Hooks - */
@@ -39,107 +48,107 @@ const config: StorybookConfig = {
         // 1. Analytics
 
         {
-          find: "@/features/admin/analytics-management/hooks/useNewVisitors",
+          find: /^.*\/useNewVisitors$/,
           replacement: path.resolve(dirname, "./mocks/hooks/analytics/useNewVisitors.ts"),
         },
 
         {
-          find: "@/features/admin/analytics-management/hooks/useTicketIncome",
+          find: /^.*\/useTicketIncome$/,
           replacement: path.resolve(dirname, "./mocks/hooks/analytics/useTicketIncome.ts"),
         },
 
         {
-          find: "@/features/admin/analytics-management/hooks/useVoucherIncome",
+          find: /^.*\/useVoucherIncome$/,
           replacement: path.resolve(dirname, "./mocks/hooks/analytics/useVoucherIncome.ts"),
         },
 
         // 2. Bar
 
         {
-          find: "@/features/bar/hooks/useProducts",
+          find: /^.*\/useProducts$/,
           replacement: path.resolve(dirname, "./mocks/hooks/bar/useProducts.ts"),
         },
 
         // 3. Cart
 
         {
-          find: "@/features/cart/hooks/useCartItems",
+          find: /^.*\/useCartItems$/,
           replacement: path.resolve(dirname, "./mocks/hooks/cart/useCartItems.ts"),
         },
 
         {
-          find: "@/features/cart/hooks/usePayNow",
+          find: /^.*\/usePayNow$/,
           replacement: path.resolve(dirname, "./mocks/hooks/cart/usePayNow.ts"),
         },
 
         // 4. Events
 
         {
-          find: "@/features/events/event/hooks/useAttractions",
+          find: /^.*\/useAttractions$/,
           replacement: path.resolve(dirname, "./mocks/hooks/events/useAttractions.ts"),
         },
 
         {
-          find: "@/features/events/event/hooks/useEvents",
+          find: /^.*\/useEvents$/,
           replacement: path.resolve(dirname, "./mocks/hooks/events/useEvents.ts"),
         },
 
         {
-          find: "@/features/events/gallery/hooks/useGallery",
+          find: /^.*\/useGallery$/,
           replacement: path.resolve(dirname, "./mocks/hooks/events/useGallery.ts"),
         },
 
         {
-          find: "@/features/events/reviews/hooks/useReviews",
+          find: /^.*\/useReviews$/,
           replacement: path.resolve(dirname, "./mocks/hooks/events/useReviews.ts"),
         },
 
         // 5. Newsletter
 
         {
-          find: "@/features/newsletter/hooks/useNewsletter",
+          find: /^.*\/useNewsletter$/,
           replacement: path.resolve(dirname, "./mocks/hooks/newsletter/useNewsletter.ts"),
         },
 
         // 6. Users
 
         {
-          find: "@/features/users/notifications/hooks/useNotificationPreferences",
+          find: /^.*\/useNotificationPreferences$/,
           replacement: path.resolve(dirname, "./mocks/hooks/users/useNotificationPreferences.ts"),
         },
 
         {
-          find: "@/features/users/notifications/hooks/useNotifications",
+          find: /^.*\/useNotifications$/,
           replacement: path.resolve(dirname, "./mocks/hooks/users/useNotifications.ts"),
         },
 
         {
-          find: "@/features/users/profile/hooks/useProfiles",
-          replacement: path.resolve(dirname, "find./mock/hooks/users/useProfiles.ts"),
+          find: /^.*\/useProfile$/,
+          replacement: path.resolve(dirname, "./mocks/hooks/users/useProfile.ts"),
         },
 
         {
-          find: "@/features/users/tickets/hooks/useTicketOrder",
+          find: /^.*\/useTicketOrder$/,
           replacement: path.resolve(dirname, "./mocks/hooks/users/useTicketOrder.ts"),
         },
 
         {
-          find: "@/features/users/tickets/hooks/useTickets",
+          find: /^.*\/useTickets$/,
           replacement: path.resolve(dirname, "./mocks/hooks/users/useTickets.ts"),
         },
 
         {
-          find: "@/features/users/user/hooks/useUsers",
+          find: /^.*\/useUsers$/,
           replacement: path.resolve(dirname, "./mocks/hooks/users/useUsers.ts"),
         },
 
         {
-          find: "@/features/users/vouchers/hooks/useVoucherOrder",
+          find: /^.*\/useVoucherOrder$/,
           replacement: path.resolve(dirname, "./mocks/hooks/users/useVoucherOrder.ts"),
         },
 
         {
-          find: "@/features/users/vouchers/hooks/useVouchers",
+          find: /^.*\/useVouchers$/,
           replacement: path.resolve(dirname, "./mocks/hooks/users/useVouchers.ts"),
         },
 

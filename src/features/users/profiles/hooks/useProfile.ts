@@ -37,7 +37,7 @@ const useProfile = () => {
   const { mutateAsync: deleteProfileMutation } = useMutation({
     mutationFn: deleteProfileAction,
     onSuccess: (deleteProfileMutationResult) => {
-      if (deleteProfileMutationResult) {
+      if (deleteProfileMutationResult === true) {
         queryClient.invalidateQueries({ queryKey: ["profile"] });
       }
     },

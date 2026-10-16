@@ -1,7 +1,7 @@
 "use server";
 
 import { checkIsAdmin } from "../checkIsAdmin";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/server/services/prisma";
 
 const deleteUser = async (userId: string) => {
   const isAdmin = await checkIsAdmin();
@@ -22,13 +22,15 @@ const deleteUser = async (userId: string) => {
 
       prisma.gallery.deleteMany({ where: { userId: userId } }),
       prisma.galleryLikes.deleteMany({ where: { userId: userId } }),
+      prisma.favoriteEvent.deleteMany({ where: { userId: userId } }),
       prisma.review.deleteMany({ where: { userId: userId } }),
       prisma.cart.deleteMany({ where: { userId: userId } }),
+
       prisma.notification.deleteMany({ where: { userId: userId } }),
       prisma.notificationPreference.deleteMany({ where: { userId: userId } }),
       prisma.newsletter.deleteMany({ where: { userId: userId } }),
-      prisma.session.deleteMany({ where: { userId: userId } }),
 
+      prisma.session.deleteMany({ where: { userId: userId } }),
       prisma.profile.deleteMany({ where: { userId: userId } }),
       prisma.user.delete({ where: { id: userId } }),
     ]);

@@ -1,9 +1,12 @@
 "use client";
 
 import { Calendar, Star, Users } from "lucide-react";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { formattedDate } from "@/shared/utils/functions/dates";
 import { masks } from "@/shared/utils/functions/masks";
 import { motion } from "motion/react";
+import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
+import { useFavoriteEvents } from "../hooks/useFavoriteEvents";
 import type { EventProps } from "../types/event";
 
 interface EventCardProps {
@@ -13,6 +16,23 @@ interface EventCardProps {
 }
 
 const EventCard = ({ event, index, footer }: EventCardProps) => {
+  /* - Puxando do context - */
+
+  const { favoriteEventIds, favoriteEventMutation } = useFavoriteEvents();
+  const { isAuthenticated } = useAuthenticationContext();
+
+  /* - Definições - */
+
+  const isFavorite = favoriteEventIds.has(event.id);
+
+  /* - Funções - */
+
+  // 1. Favorita (ou desfavorita) o evento
+
+  const handleToggleFavorite = async () => {
+    await favoriteEventMutation(event.id);
+  };
+
   return (
     <motion.div
       className="group/card relative w-full h-fit md:w-90 bg-[#0A0A0A] rounded-lg overflow-hidden border border-[#B8860B] shadow-2xs hover:shadow-md shadow-[#DDAE56] hover:-translate-y-2.5 transition-transform duration-200 cursor-pointer"
@@ -35,6 +55,18 @@ const EventCard = ({ event, index, footer }: EventCardProps) => {
       <div className="absolute top-4 left-4 px-4 py-2 min-h-fit bg-[#B8860B] border border-black/30 rounded-full">
         <span className="flex items-center justify-center text-xs font-bold text-black tracking-wider">{masks.eventTag(event.tag)}</span>
       </div>
+
+      {/* - Botão de favoritar (só para usuário logado e eventos que ainda vão acontecer) - */}
+
+      {isAuthenticated && event.status === "soon" && (
+        <button
+          className="absolute top-4 right-4 flex items-center justify-center w-10 h-10 bg-black/80 border border-black/30 rounded-full cursor-pointer"
+          aria-label={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+          onClick={handleToggleFavorite}
+        >
+          {isFavorite ? <FaHeart className="text-red-600" /> : <FaRegHeart className="text-red-600" />}
+        </button>
+      )}
 
       {/* - Rating - */}
 

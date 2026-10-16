@@ -40,8 +40,10 @@ const CalendarProvider = ({ children }: { children: ReactNode }) => {
 
         selectedYear,
         setSelectedYear,
+
         selectedMonth,
         setSelectedMonth,
+
         selectedDay,
         setSelectedDay,
 

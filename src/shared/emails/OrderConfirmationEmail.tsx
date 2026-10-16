@@ -23,12 +23,7 @@ const itemTypeLabels: Record<ItemType, string> = {
 const OrderConfirmationEmail = ({ name, link, totalValue, items }: OrderConfirmationEmailProps) => {
   /* - Definições - */
 
-  // 1. Sem a URL absoluta, a logo não carrega na caixa de entrada
-
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "";
-
-  // 2. A taxa de serviço é a diferença entre o total cobrado e a soma dos itens
-
   const subtotal = items.reduce((accumulator, item) => accumulator + item.quantity * item.unitPrice, 0);
   const serviceFee = Math.round((totalValue - subtotal) * 100) / 100;
 

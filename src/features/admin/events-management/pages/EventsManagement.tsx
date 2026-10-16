@@ -2,6 +2,7 @@
 
 import { AttractionProvider } from "@/features/events/event/context/AttractionContext";
 import { AttractionsManagementList } from "../components/AttractionsManagementList";
+import { CancelEventModal } from "../components/CancelEventModal";
 import { CreateAttractionModal } from "../components/CreateAttractionModal";
 import { DeleteAttractionModal } from "../components/DeleteAttractionModal";
 import { DeleteEventModal } from "../components/DeleteEventModal";
@@ -11,14 +12,22 @@ import { FaPlusCircle } from "react-icons/fa";
 import { motion } from "motion/react";
 import { useAttractionContext } from "@/features/events/event/hooks/useAttractionContext";
 import { useEffect, useState } from "react";
-import { useEventContext } from "@/features/events";
+import { useEventContext } from "@/features/events/event/hooks/useEventContext";
 import { useMobileContext } from "@/shared/hooks/useMobileContext";
 
 const EventsManagementContent = () => {
   /* - Puxando do context - */
 
   const { isPortraitMobile, isLandscapeMobile } = useMobileContext();
-  const { filteredEvents, eventBeingEdited, setEventBeingEdited, eventBeingDeleted, setEventBeingDeleted } = useEventContext();
+  const {
+    filteredEvents,
+    eventBeingEdited,
+    setEventBeingEdited,
+    eventBeingDeleted,
+    setEventBeingDeleted,
+    eventBeingCancelled,
+    setEventBeingCancelled,
+  } = useEventContext();
   const { attractionBeingEdited, setAttractionBeingEdited, attractionBeingDeleted, setAttractionBeingDeleted } = useAttractionContext();
 
   /* - Estado da aba ativa - */
@@ -146,6 +155,16 @@ const EventsManagementContent = () => {
                 <EditEventModal
                   isOpen={!!eventBeingEdited}
                   onClose={() => setEventBeingEdited(null)}
+                />
+              ) : null}
+
+              {/* - Modal de cancelamento de eventos - */}
+
+              {eventBeingCancelled ? (
+                <CancelEventModal
+                  isOpen={!!eventBeingCancelled}
+                  onClose={() => setEventBeingCancelled(null)}
+                  event={eventBeingCancelled}
                 />
               ) : null}
 

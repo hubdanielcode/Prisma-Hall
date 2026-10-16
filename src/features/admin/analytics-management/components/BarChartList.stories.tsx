@@ -14,9 +14,10 @@ const BarChart = () => {
     <div className="bg-black p-4">
       <BarChartList
         items={[
-          { id: "funk", title: "Funk", value: 1800 },
-          { id: "rock", title: "Rock", value: 1200 },
-          { id: "pop", title: "Pop", value: 650 },
+          { id: "beers", title: "Cervejas", value: 1800 },
+          { id: "cocktails", title: "Coquetéis", value: 1200 },
+          { id: "drinks", title: "Drinks", value: 650 },
+          { id: "no_alcohol", title: "Sem Álcool", value: 300 },
         ]}
         isLoading={false}
         formatValue={formatCurrency}

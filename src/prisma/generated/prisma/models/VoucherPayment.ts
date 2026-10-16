@@ -41,9 +41,10 @@ export type VoucherPaymentMinAggregateOutputType = {
   method: $Enums.PaymentMethod | null
   status: $Enums.PaymentStatus | null
   totalValue: runtime.Decimal | null
+  confirmedAt: Date | null
+  pickedUpAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
-  pickedUpAt: Date | null
 }
 
 export type VoucherPaymentMaxAggregateOutputType = {
@@ -53,9 +54,10 @@ export type VoucherPaymentMaxAggregateOutputType = {
   method: $Enums.PaymentMethod | null
   status: $Enums.PaymentStatus | null
   totalValue: runtime.Decimal | null
+  confirmedAt: Date | null
+  pickedUpAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
-  pickedUpAt: Date | null
 }
 
 export type VoucherPaymentCountAggregateOutputType = {
@@ -65,9 +67,10 @@ export type VoucherPaymentCountAggregateOutputType = {
   method: number
   status: number
   totalValue: number
+  confirmedAt: number
+  pickedUpAt: number
   createdAt: number
   updatedAt: number
-  pickedUpAt: number
   _all: number
 }
 
@@ -87,9 +90,10 @@ export type VoucherPaymentMinAggregateInputType = {
   method?: true
   status?: true
   totalValue?: true
+  confirmedAt?: true
+  pickedUpAt?: true
   createdAt?: true
   updatedAt?: true
-  pickedUpAt?: true
 }
 
 export type VoucherPaymentMaxAggregateInputType = {
@@ -99,9 +103,10 @@ export type VoucherPaymentMaxAggregateInputType = {
   method?: true
   status?: true
   totalValue?: true
+  confirmedAt?: true
+  pickedUpAt?: true
   createdAt?: true
   updatedAt?: true
-  pickedUpAt?: true
 }
 
 export type VoucherPaymentCountAggregateInputType = {
@@ -111,9 +116,10 @@ export type VoucherPaymentCountAggregateInputType = {
   method?: true
   status?: true
   totalValue?: true
+  confirmedAt?: true
+  pickedUpAt?: true
   createdAt?: true
   updatedAt?: true
-  pickedUpAt?: true
   _all?: true
 }
 
@@ -210,9 +216,10 @@ export type VoucherPaymentGroupByOutputType = {
   method: $Enums.PaymentMethod
   status: $Enums.PaymentStatus
   totalValue: runtime.Decimal
+  confirmedAt: Date | null
+  pickedUpAt: Date | null
   createdAt: Date
   updatedAt: Date
-  pickedUpAt: Date | null
   _count: VoucherPaymentCountAggregateOutputType | null
   _avg: VoucherPaymentAvgAggregateOutputType | null
   _sum: VoucherPaymentSumAggregateOutputType | null
@@ -245,10 +252,11 @@ export type VoucherPaymentWhereInput = {
   method?: Prisma.EnumPaymentMethodFilter<"VoucherPayment"> | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusFilter<"VoucherPayment"> | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalFilter<"VoucherPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.DateTimeNullableFilter<"VoucherPayment"> | Date | string | null
+  pickedUpAt?: Prisma.DateTimeNullableFilter<"VoucherPayment"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"VoucherPayment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"VoucherPayment"> | Date | string
-  pickedUpAt?: Prisma.DateTimeNullableFilter<"VoucherPayment"> | Date | string | null
-  voucherOrder?: Prisma.XOR<Prisma.VoucherOrderNullableScalarRelationFilter, Prisma.VoucherOrderWhereInput> | null
+  order?: Prisma.XOR<Prisma.VoucherOrderScalarRelationFilter, Prisma.VoucherOrderWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
@@ -259,10 +267,11 @@ export type VoucherPaymentOrderByWithRelationInput = {
   method?: Prisma.SortOrder
   status?: Prisma.SortOrder
   totalValue?: Prisma.SortOrder
+  confirmedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  pickedUpAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  pickedUpAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  voucherOrder?: Prisma.VoucherOrderOrderByWithRelationInput
+  order?: Prisma.VoucherOrderOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -276,10 +285,11 @@ export type VoucherPaymentWhereUniqueInput = Prisma.AtLeast<{
   method?: Prisma.EnumPaymentMethodFilter<"VoucherPayment"> | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusFilter<"VoucherPayment"> | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalFilter<"VoucherPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.DateTimeNullableFilter<"VoucherPayment"> | Date | string | null
+  pickedUpAt?: Prisma.DateTimeNullableFilter<"VoucherPayment"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"VoucherPayment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"VoucherPayment"> | Date | string
-  pickedUpAt?: Prisma.DateTimeNullableFilter<"VoucherPayment"> | Date | string | null
-  voucherOrder?: Prisma.XOR<Prisma.VoucherOrderNullableScalarRelationFilter, Prisma.VoucherOrderWhereInput> | null
+  order?: Prisma.XOR<Prisma.VoucherOrderScalarRelationFilter, Prisma.VoucherOrderWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
@@ -290,9 +300,10 @@ export type VoucherPaymentOrderByWithAggregationInput = {
   method?: Prisma.SortOrder
   status?: Prisma.SortOrder
   totalValue?: Prisma.SortOrder
+  confirmedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  pickedUpAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  pickedUpAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.VoucherPaymentCountOrderByAggregateInput
   _avg?: Prisma.VoucherPaymentAvgOrderByAggregateInput
   _max?: Prisma.VoucherPaymentMaxOrderByAggregateInput
@@ -310,9 +321,10 @@ export type VoucherPaymentScalarWhereWithAggregatesInput = {
   method?: Prisma.EnumPaymentMethodWithAggregatesFilter<"VoucherPayment"> | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusWithAggregatesFilter<"VoucherPayment"> | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalWithAggregatesFilter<"VoucherPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"VoucherPayment"> | Date | string | null
+  pickedUpAt?: Prisma.DateTimeNullableWithAggregatesFilter<"VoucherPayment"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"VoucherPayment"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"VoucherPayment"> | Date | string
-  pickedUpAt?: Prisma.DateTimeNullableWithAggregatesFilter<"VoucherPayment"> | Date | string | null
 }
 
 export type VoucherPaymentCreateInput = {
@@ -320,10 +332,11 @@ export type VoucherPaymentCreateInput = {
   method: $Enums.PaymentMethod
   status: $Enums.PaymentStatus
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Date | string | null
+  pickedUpAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  pickedUpAt?: Date | string | null
-  voucherOrder?: Prisma.VoucherOrderCreateNestedOneWithoutVoucherPaymentInput
+  order: Prisma.VoucherOrderCreateNestedOneWithoutVoucherPaymentsInput
   user: Prisma.UserCreateNestedOneWithoutVoucherPaymentsInput
 }
 
@@ -334,9 +347,10 @@ export type VoucherPaymentUncheckedCreateInput = {
   method: $Enums.PaymentMethod
   status: $Enums.PaymentStatus
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Date | string | null
+  pickedUpAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  pickedUpAt?: Date | string | null
 }
 
 export type VoucherPaymentUpdateInput = {
@@ -344,10 +358,11 @@ export type VoucherPaymentUpdateInput = {
   method?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  voucherOrder?: Prisma.VoucherOrderUpdateOneWithoutVoucherPaymentNestedInput
+  order?: Prisma.VoucherOrderUpdateOneRequiredWithoutVoucherPaymentsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutVoucherPaymentsNestedInput
 }
 
@@ -358,9 +373,10 @@ export type VoucherPaymentUncheckedUpdateInput = {
   method?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type VoucherPaymentCreateManyInput = {
@@ -370,9 +386,10 @@ export type VoucherPaymentCreateManyInput = {
   method: $Enums.PaymentMethod
   status: $Enums.PaymentStatus
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Date | string | null
+  pickedUpAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  pickedUpAt?: Date | string | null
 }
 
 export type VoucherPaymentUpdateManyMutationInput = {
@@ -380,9 +397,10 @@ export type VoucherPaymentUpdateManyMutationInput = {
   method?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type VoucherPaymentUncheckedUpdateManyInput = {
@@ -392,9 +410,10 @@ export type VoucherPaymentUncheckedUpdateManyInput = {
   method?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type VoucherPaymentListRelationFilter = {
@@ -414,9 +433,10 @@ export type VoucherPaymentCountOrderByAggregateInput = {
   method?: Prisma.SortOrder
   status?: Prisma.SortOrder
   totalValue?: Prisma.SortOrder
+  confirmedAt?: Prisma.SortOrder
+  pickedUpAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  pickedUpAt?: Prisma.SortOrder
 }
 
 export type VoucherPaymentAvgOrderByAggregateInput = {
@@ -430,9 +450,10 @@ export type VoucherPaymentMaxOrderByAggregateInput = {
   method?: Prisma.SortOrder
   status?: Prisma.SortOrder
   totalValue?: Prisma.SortOrder
+  confirmedAt?: Prisma.SortOrder
+  pickedUpAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  pickedUpAt?: Prisma.SortOrder
 }
 
 export type VoucherPaymentMinOrderByAggregateInput = {
@@ -442,9 +463,10 @@ export type VoucherPaymentMinOrderByAggregateInput = {
   method?: Prisma.SortOrder
   status?: Prisma.SortOrder
   totalValue?: Prisma.SortOrder
+  confirmedAt?: Prisma.SortOrder
+  pickedUpAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  pickedUpAt?: Prisma.SortOrder
 }
 
 export type VoucherPaymentSumOrderByAggregateInput = {
@@ -493,45 +515,45 @@ export type VoucherPaymentUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.VoucherPaymentScalarWhereInput | Prisma.VoucherPaymentScalarWhereInput[]
 }
 
-export type VoucherPaymentCreateNestedManyWithoutVoucherOrderInput = {
-  create?: Prisma.XOR<Prisma.VoucherPaymentCreateWithoutVoucherOrderInput, Prisma.VoucherPaymentUncheckedCreateWithoutVoucherOrderInput> | Prisma.VoucherPaymentCreateWithoutVoucherOrderInput[] | Prisma.VoucherPaymentUncheckedCreateWithoutVoucherOrderInput[]
-  connectOrCreate?: Prisma.VoucherPaymentCreateOrConnectWithoutVoucherOrderInput | Prisma.VoucherPaymentCreateOrConnectWithoutVoucherOrderInput[]
-  createMany?: Prisma.VoucherPaymentCreateManyVoucherOrderInputEnvelope
+export type VoucherPaymentCreateNestedManyWithoutOrderInput = {
+  create?: Prisma.XOR<Prisma.VoucherPaymentCreateWithoutOrderInput, Prisma.VoucherPaymentUncheckedCreateWithoutOrderInput> | Prisma.VoucherPaymentCreateWithoutOrderInput[] | Prisma.VoucherPaymentUncheckedCreateWithoutOrderInput[]
+  connectOrCreate?: Prisma.VoucherPaymentCreateOrConnectWithoutOrderInput | Prisma.VoucherPaymentCreateOrConnectWithoutOrderInput[]
+  createMany?: Prisma.VoucherPaymentCreateManyOrderInputEnvelope
   connect?: Prisma.VoucherPaymentWhereUniqueInput | Prisma.VoucherPaymentWhereUniqueInput[]
 }
 
-export type VoucherPaymentUncheckedCreateNestedManyWithoutVoucherOrderInput = {
-  create?: Prisma.XOR<Prisma.VoucherPaymentCreateWithoutVoucherOrderInput, Prisma.VoucherPaymentUncheckedCreateWithoutVoucherOrderInput> | Prisma.VoucherPaymentCreateWithoutVoucherOrderInput[] | Prisma.VoucherPaymentUncheckedCreateWithoutVoucherOrderInput[]
-  connectOrCreate?: Prisma.VoucherPaymentCreateOrConnectWithoutVoucherOrderInput | Prisma.VoucherPaymentCreateOrConnectWithoutVoucherOrderInput[]
-  createMany?: Prisma.VoucherPaymentCreateManyVoucherOrderInputEnvelope
+export type VoucherPaymentUncheckedCreateNestedManyWithoutOrderInput = {
+  create?: Prisma.XOR<Prisma.VoucherPaymentCreateWithoutOrderInput, Prisma.VoucherPaymentUncheckedCreateWithoutOrderInput> | Prisma.VoucherPaymentCreateWithoutOrderInput[] | Prisma.VoucherPaymentUncheckedCreateWithoutOrderInput[]
+  connectOrCreate?: Prisma.VoucherPaymentCreateOrConnectWithoutOrderInput | Prisma.VoucherPaymentCreateOrConnectWithoutOrderInput[]
+  createMany?: Prisma.VoucherPaymentCreateManyOrderInputEnvelope
   connect?: Prisma.VoucherPaymentWhereUniqueInput | Prisma.VoucherPaymentWhereUniqueInput[]
 }
 
-export type VoucherPaymentUpdateManyWithoutVoucherOrderNestedInput = {
-  create?: Prisma.XOR<Prisma.VoucherPaymentCreateWithoutVoucherOrderInput, Prisma.VoucherPaymentUncheckedCreateWithoutVoucherOrderInput> | Prisma.VoucherPaymentCreateWithoutVoucherOrderInput[] | Prisma.VoucherPaymentUncheckedCreateWithoutVoucherOrderInput[]
-  connectOrCreate?: Prisma.VoucherPaymentCreateOrConnectWithoutVoucherOrderInput | Prisma.VoucherPaymentCreateOrConnectWithoutVoucherOrderInput[]
-  upsert?: Prisma.VoucherPaymentUpsertWithWhereUniqueWithoutVoucherOrderInput | Prisma.VoucherPaymentUpsertWithWhereUniqueWithoutVoucherOrderInput[]
-  createMany?: Prisma.VoucherPaymentCreateManyVoucherOrderInputEnvelope
+export type VoucherPaymentUpdateManyWithoutOrderNestedInput = {
+  create?: Prisma.XOR<Prisma.VoucherPaymentCreateWithoutOrderInput, Prisma.VoucherPaymentUncheckedCreateWithoutOrderInput> | Prisma.VoucherPaymentCreateWithoutOrderInput[] | Prisma.VoucherPaymentUncheckedCreateWithoutOrderInput[]
+  connectOrCreate?: Prisma.VoucherPaymentCreateOrConnectWithoutOrderInput | Prisma.VoucherPaymentCreateOrConnectWithoutOrderInput[]
+  upsert?: Prisma.VoucherPaymentUpsertWithWhereUniqueWithoutOrderInput | Prisma.VoucherPaymentUpsertWithWhereUniqueWithoutOrderInput[]
+  createMany?: Prisma.VoucherPaymentCreateManyOrderInputEnvelope
   set?: Prisma.VoucherPaymentWhereUniqueInput | Prisma.VoucherPaymentWhereUniqueInput[]
   disconnect?: Prisma.VoucherPaymentWhereUniqueInput | Prisma.VoucherPaymentWhereUniqueInput[]
   delete?: Prisma.VoucherPaymentWhereUniqueInput | Prisma.VoucherPaymentWhereUniqueInput[]
   connect?: Prisma.VoucherPaymentWhereUniqueInput | Prisma.VoucherPaymentWhereUniqueInput[]
-  update?: Prisma.VoucherPaymentUpdateWithWhereUniqueWithoutVoucherOrderInput | Prisma.VoucherPaymentUpdateWithWhereUniqueWithoutVoucherOrderInput[]
-  updateMany?: Prisma.VoucherPaymentUpdateManyWithWhereWithoutVoucherOrderInput | Prisma.VoucherPaymentUpdateManyWithWhereWithoutVoucherOrderInput[]
+  update?: Prisma.VoucherPaymentUpdateWithWhereUniqueWithoutOrderInput | Prisma.VoucherPaymentUpdateWithWhereUniqueWithoutOrderInput[]
+  updateMany?: Prisma.VoucherPaymentUpdateManyWithWhereWithoutOrderInput | Prisma.VoucherPaymentUpdateManyWithWhereWithoutOrderInput[]
   deleteMany?: Prisma.VoucherPaymentScalarWhereInput | Prisma.VoucherPaymentScalarWhereInput[]
 }
 
-export type VoucherPaymentUncheckedUpdateManyWithoutVoucherOrderNestedInput = {
-  create?: Prisma.XOR<Prisma.VoucherPaymentCreateWithoutVoucherOrderInput, Prisma.VoucherPaymentUncheckedCreateWithoutVoucherOrderInput> | Prisma.VoucherPaymentCreateWithoutVoucherOrderInput[] | Prisma.VoucherPaymentUncheckedCreateWithoutVoucherOrderInput[]
-  connectOrCreate?: Prisma.VoucherPaymentCreateOrConnectWithoutVoucherOrderInput | Prisma.VoucherPaymentCreateOrConnectWithoutVoucherOrderInput[]
-  upsert?: Prisma.VoucherPaymentUpsertWithWhereUniqueWithoutVoucherOrderInput | Prisma.VoucherPaymentUpsertWithWhereUniqueWithoutVoucherOrderInput[]
-  createMany?: Prisma.VoucherPaymentCreateManyVoucherOrderInputEnvelope
+export type VoucherPaymentUncheckedUpdateManyWithoutOrderNestedInput = {
+  create?: Prisma.XOR<Prisma.VoucherPaymentCreateWithoutOrderInput, Prisma.VoucherPaymentUncheckedCreateWithoutOrderInput> | Prisma.VoucherPaymentCreateWithoutOrderInput[] | Prisma.VoucherPaymentUncheckedCreateWithoutOrderInput[]
+  connectOrCreate?: Prisma.VoucherPaymentCreateOrConnectWithoutOrderInput | Prisma.VoucherPaymentCreateOrConnectWithoutOrderInput[]
+  upsert?: Prisma.VoucherPaymentUpsertWithWhereUniqueWithoutOrderInput | Prisma.VoucherPaymentUpsertWithWhereUniqueWithoutOrderInput[]
+  createMany?: Prisma.VoucherPaymentCreateManyOrderInputEnvelope
   set?: Prisma.VoucherPaymentWhereUniqueInput | Prisma.VoucherPaymentWhereUniqueInput[]
   disconnect?: Prisma.VoucherPaymentWhereUniqueInput | Prisma.VoucherPaymentWhereUniqueInput[]
   delete?: Prisma.VoucherPaymentWhereUniqueInput | Prisma.VoucherPaymentWhereUniqueInput[]
   connect?: Prisma.VoucherPaymentWhereUniqueInput | Prisma.VoucherPaymentWhereUniqueInput[]
-  update?: Prisma.VoucherPaymentUpdateWithWhereUniqueWithoutVoucherOrderInput | Prisma.VoucherPaymentUpdateWithWhereUniqueWithoutVoucherOrderInput[]
-  updateMany?: Prisma.VoucherPaymentUpdateManyWithWhereWithoutVoucherOrderInput | Prisma.VoucherPaymentUpdateManyWithWhereWithoutVoucherOrderInput[]
+  update?: Prisma.VoucherPaymentUpdateWithWhereUniqueWithoutOrderInput | Prisma.VoucherPaymentUpdateWithWhereUniqueWithoutOrderInput[]
+  updateMany?: Prisma.VoucherPaymentUpdateManyWithWhereWithoutOrderInput | Prisma.VoucherPaymentUpdateManyWithWhereWithoutOrderInput[]
   deleteMany?: Prisma.VoucherPaymentScalarWhereInput | Prisma.VoucherPaymentScalarWhereInput[]
 }
 
@@ -548,10 +570,11 @@ export type VoucherPaymentCreateWithoutUserInput = {
   method: $Enums.PaymentMethod
   status: $Enums.PaymentStatus
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Date | string | null
+  pickedUpAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  pickedUpAt?: Date | string | null
-  voucherOrder?: Prisma.VoucherOrderCreateNestedOneWithoutVoucherPaymentInput
+  order: Prisma.VoucherOrderCreateNestedOneWithoutVoucherPaymentsInput
 }
 
 export type VoucherPaymentUncheckedCreateWithoutUserInput = {
@@ -560,9 +583,10 @@ export type VoucherPaymentUncheckedCreateWithoutUserInput = {
   method: $Enums.PaymentMethod
   status: $Enums.PaymentStatus
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Date | string | null
+  pickedUpAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  pickedUpAt?: Date | string | null
 }
 
 export type VoucherPaymentCreateOrConnectWithoutUserInput = {
@@ -601,57 +625,60 @@ export type VoucherPaymentScalarWhereInput = {
   method?: Prisma.EnumPaymentMethodFilter<"VoucherPayment"> | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusFilter<"VoucherPayment"> | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalFilter<"VoucherPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.DateTimeNullableFilter<"VoucherPayment"> | Date | string | null
+  pickedUpAt?: Prisma.DateTimeNullableFilter<"VoucherPayment"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"VoucherPayment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"VoucherPayment"> | Date | string
-  pickedUpAt?: Prisma.DateTimeNullableFilter<"VoucherPayment"> | Date | string | null
 }
 
-export type VoucherPaymentCreateWithoutVoucherOrderInput = {
+export type VoucherPaymentCreateWithoutOrderInput = {
   id?: string
   method: $Enums.PaymentMethod
   status: $Enums.PaymentStatus
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Date | string | null
+  pickedUpAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  pickedUpAt?: Date | string | null
   user: Prisma.UserCreateNestedOneWithoutVoucherPaymentsInput
 }
 
-export type VoucherPaymentUncheckedCreateWithoutVoucherOrderInput = {
+export type VoucherPaymentUncheckedCreateWithoutOrderInput = {
   id?: string
   userId: string
   method: $Enums.PaymentMethod
   status: $Enums.PaymentStatus
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Date | string | null
+  pickedUpAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  pickedUpAt?: Date | string | null
 }
 
-export type VoucherPaymentCreateOrConnectWithoutVoucherOrderInput = {
+export type VoucherPaymentCreateOrConnectWithoutOrderInput = {
   where: Prisma.VoucherPaymentWhereUniqueInput
-  create: Prisma.XOR<Prisma.VoucherPaymentCreateWithoutVoucherOrderInput, Prisma.VoucherPaymentUncheckedCreateWithoutVoucherOrderInput>
+  create: Prisma.XOR<Prisma.VoucherPaymentCreateWithoutOrderInput, Prisma.VoucherPaymentUncheckedCreateWithoutOrderInput>
 }
 
-export type VoucherPaymentCreateManyVoucherOrderInputEnvelope = {
-  data: Prisma.VoucherPaymentCreateManyVoucherOrderInput | Prisma.VoucherPaymentCreateManyVoucherOrderInput[]
+export type VoucherPaymentCreateManyOrderInputEnvelope = {
+  data: Prisma.VoucherPaymentCreateManyOrderInput | Prisma.VoucherPaymentCreateManyOrderInput[]
   skipDuplicates?: boolean
 }
 
-export type VoucherPaymentUpsertWithWhereUniqueWithoutVoucherOrderInput = {
+export type VoucherPaymentUpsertWithWhereUniqueWithoutOrderInput = {
   where: Prisma.VoucherPaymentWhereUniqueInput
-  update: Prisma.XOR<Prisma.VoucherPaymentUpdateWithoutVoucherOrderInput, Prisma.VoucherPaymentUncheckedUpdateWithoutVoucherOrderInput>
-  create: Prisma.XOR<Prisma.VoucherPaymentCreateWithoutVoucherOrderInput, Prisma.VoucherPaymentUncheckedCreateWithoutVoucherOrderInput>
+  update: Prisma.XOR<Prisma.VoucherPaymentUpdateWithoutOrderInput, Prisma.VoucherPaymentUncheckedUpdateWithoutOrderInput>
+  create: Prisma.XOR<Prisma.VoucherPaymentCreateWithoutOrderInput, Prisma.VoucherPaymentUncheckedCreateWithoutOrderInput>
 }
 
-export type VoucherPaymentUpdateWithWhereUniqueWithoutVoucherOrderInput = {
+export type VoucherPaymentUpdateWithWhereUniqueWithoutOrderInput = {
   where: Prisma.VoucherPaymentWhereUniqueInput
-  data: Prisma.XOR<Prisma.VoucherPaymentUpdateWithoutVoucherOrderInput, Prisma.VoucherPaymentUncheckedUpdateWithoutVoucherOrderInput>
+  data: Prisma.XOR<Prisma.VoucherPaymentUpdateWithoutOrderInput, Prisma.VoucherPaymentUncheckedUpdateWithoutOrderInput>
 }
 
-export type VoucherPaymentUpdateManyWithWhereWithoutVoucherOrderInput = {
+export type VoucherPaymentUpdateManyWithWhereWithoutOrderInput = {
   where: Prisma.VoucherPaymentScalarWhereInput
-  data: Prisma.XOR<Prisma.VoucherPaymentUpdateManyMutationInput, Prisma.VoucherPaymentUncheckedUpdateManyWithoutVoucherOrderInput>
+  data: Prisma.XOR<Prisma.VoucherPaymentUpdateManyMutationInput, Prisma.VoucherPaymentUncheckedUpdateManyWithoutOrderInput>
 }
 
 export type VoucherPaymentCreateManyUserInput = {
@@ -660,9 +687,10 @@ export type VoucherPaymentCreateManyUserInput = {
   method: $Enums.PaymentMethod
   status: $Enums.PaymentStatus
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Date | string | null
+  pickedUpAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  pickedUpAt?: Date | string | null
 }
 
 export type VoucherPaymentUpdateWithoutUserInput = {
@@ -670,10 +698,11 @@ export type VoucherPaymentUpdateWithoutUserInput = {
   method?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  voucherOrder?: Prisma.VoucherOrderUpdateOneWithoutVoucherPaymentNestedInput
+  order?: Prisma.VoucherOrderUpdateOneRequiredWithoutVoucherPaymentsNestedInput
 }
 
 export type VoucherPaymentUncheckedUpdateWithoutUserInput = {
@@ -682,9 +711,10 @@ export type VoucherPaymentUncheckedUpdateWithoutUserInput = {
   method?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type VoucherPaymentUncheckedUpdateManyWithoutUserInput = {
@@ -693,53 +723,58 @@ export type VoucherPaymentUncheckedUpdateManyWithoutUserInput = {
   method?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
-export type VoucherPaymentCreateManyVoucherOrderInput = {
+export type VoucherPaymentCreateManyOrderInput = {
   id?: string
   userId: string
   method: $Enums.PaymentMethod
   status: $Enums.PaymentStatus
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Date | string | null
+  pickedUpAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  pickedUpAt?: Date | string | null
 }
 
-export type VoucherPaymentUpdateWithoutVoucherOrderInput = {
+export type VoucherPaymentUpdateWithoutOrderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   method?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutVoucherPaymentsNestedInput
 }
 
-export type VoucherPaymentUncheckedUpdateWithoutVoucherOrderInput = {
+export type VoucherPaymentUncheckedUpdateWithoutOrderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   method?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
-export type VoucherPaymentUncheckedUpdateManyWithoutVoucherOrderInput = {
+export type VoucherPaymentUncheckedUpdateManyWithoutOrderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   method?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -751,10 +786,11 @@ export type VoucherPaymentSelect<ExtArgs extends runtime.Types.Extensions.Intern
   method?: boolean
   status?: boolean
   totalValue?: boolean
+  confirmedAt?: boolean
+  pickedUpAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  pickedUpAt?: boolean
-  voucherOrder?: boolean | Prisma.VoucherPayment$voucherOrderArgs<ExtArgs>
+  order?: boolean | Prisma.VoucherOrderDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["voucherPayment"]>
 
@@ -765,10 +801,11 @@ export type VoucherPaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   method?: boolean
   status?: boolean
   totalValue?: boolean
+  confirmedAt?: boolean
+  pickedUpAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  pickedUpAt?: boolean
-  voucherOrder?: boolean | Prisma.VoucherPayment$voucherOrderArgs<ExtArgs>
+  order?: boolean | Prisma.VoucherOrderDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["voucherPayment"]>
 
@@ -779,10 +816,11 @@ export type VoucherPaymentSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   method?: boolean
   status?: boolean
   totalValue?: boolean
+  confirmedAt?: boolean
+  pickedUpAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  pickedUpAt?: boolean
-  voucherOrder?: boolean | Prisma.VoucherPayment$voucherOrderArgs<ExtArgs>
+  order?: boolean | Prisma.VoucherOrderDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["voucherPayment"]>
 
@@ -793,29 +831,30 @@ export type VoucherPaymentSelectScalar = {
   method?: boolean
   status?: boolean
   totalValue?: boolean
+  confirmedAt?: boolean
+  pickedUpAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  pickedUpAt?: boolean
 }
 
-export type VoucherPaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "orderId" | "method" | "status" | "totalValue" | "createdAt" | "updatedAt" | "pickedUpAt", ExtArgs["result"]["voucherPayment"]>
+export type VoucherPaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "orderId" | "method" | "status" | "totalValue" | "confirmedAt" | "pickedUpAt" | "createdAt" | "updatedAt", ExtArgs["result"]["voucherPayment"]>
 export type VoucherPaymentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  voucherOrder?: boolean | Prisma.VoucherPayment$voucherOrderArgs<ExtArgs>
+  order?: boolean | Prisma.VoucherOrderDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type VoucherPaymentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  voucherOrder?: boolean | Prisma.VoucherPayment$voucherOrderArgs<ExtArgs>
+  order?: boolean | Prisma.VoucherOrderDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type VoucherPaymentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  voucherOrder?: boolean | Prisma.VoucherPayment$voucherOrderArgs<ExtArgs>
+  order?: boolean | Prisma.VoucherOrderDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $VoucherPaymentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "VoucherPayment"
   objects: {
-    voucherOrder: Prisma.$VoucherOrderPayload<ExtArgs> | null
+    order: Prisma.$VoucherOrderPayload<ExtArgs>
     user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -825,9 +864,10 @@ export type $VoucherPaymentPayload<ExtArgs extends runtime.Types.Extensions.Inte
     method: $Enums.PaymentMethod
     status: $Enums.PaymentStatus
     totalValue: runtime.Decimal
+    confirmedAt: Date | null
+    pickedUpAt: Date | null
     createdAt: Date
     updatedAt: Date
-    pickedUpAt: Date | null
   }, ExtArgs["result"]["voucherPayment"]>
   composites: {}
 }
@@ -1222,7 +1262,7 @@ readonly fields: VoucherPaymentFieldRefs;
  */
 export interface Prisma__VoucherPaymentClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  voucherOrder<T extends Prisma.VoucherPayment$voucherOrderArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VoucherPayment$voucherOrderArgs<ExtArgs>>): Prisma.Prisma__VoucherOrderClient<runtime.Types.Result.GetResult<Prisma.$VoucherOrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  order<T extends Prisma.VoucherOrderDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VoucherOrderDefaultArgs<ExtArgs>>): Prisma.Prisma__VoucherOrderClient<runtime.Types.Result.GetResult<Prisma.$VoucherOrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1259,9 +1299,10 @@ export interface VoucherPaymentFieldRefs {
   readonly method: Prisma.FieldRef<"VoucherPayment", 'PaymentMethod'>
   readonly status: Prisma.FieldRef<"VoucherPayment", 'PaymentStatus'>
   readonly totalValue: Prisma.FieldRef<"VoucherPayment", 'Decimal'>
+  readonly confirmedAt: Prisma.FieldRef<"VoucherPayment", 'DateTime'>
+  readonly pickedUpAt: Prisma.FieldRef<"VoucherPayment", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"VoucherPayment", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"VoucherPayment", 'DateTime'>
-  readonly pickedUpAt: Prisma.FieldRef<"VoucherPayment", 'DateTime'>
 }
     
 
@@ -1660,25 +1701,6 @@ export type VoucherPaymentDeleteManyArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many VoucherPayments to delete.
    */
   limit?: number
-}
-
-/**
- * VoucherPayment.voucherOrder
- */
-export type VoucherPayment$voucherOrderArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the VoucherOrder
-   */
-  select?: Prisma.VoucherOrderSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the VoucherOrder
-   */
-  omit?: Prisma.VoucherOrderOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.VoucherOrderInclude<ExtArgs> | null
-  where?: Prisma.VoucherOrderWhereInput
 }
 
 /**

@@ -140,6 +140,16 @@ const EditProductModal = ({ isOpen, onClose }: EditProductModalProps) => {
       return false;
     }
 
+    if (editedProduct === "name_is_not_unique") {
+      setProductSubmitError("Já existe um produto com esse nome.");
+      return false;
+    }
+
+    if (editedProduct === "description_is_not_unique") {
+      setProductSubmitError("Já existe um produto com essa descrição.");
+      return false;
+    }
+
     return true;
   };
 
@@ -164,6 +174,7 @@ const EditProductModal = ({ isOpen, onClose }: EditProductModalProps) => {
       price: Number(productBeingEdited.price),
       status: productBeingEdited.status,
     });
+
     setProductImagePreview(productBeingEdited.image);
     setProductImageFile(null);
     setProductQuantity(String(productBeingEdited.quantity));
@@ -455,7 +466,10 @@ const EditProductModal = ({ isOpen, onClose }: EditProductModalProps) => {
                 className="px-4 py-2 text-sm text-white/60 font-semibold rounded-lg cursor-pointer hover:text-white transition-colors"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={handleResetForm}
+                onClick={() => {
+                  handleResetForm();
+                  onClose();
+                }}
               >
                 Cancelar
               </motion.button>
