@@ -23,4 +23,5 @@ const periodOptions: { id: PeriodLabelProps; title: string }[] = [
 ];
 
 export { periodLabels, periodOptions };
+
 export type PeriodLabelProps = (typeof periodLabels)[number];

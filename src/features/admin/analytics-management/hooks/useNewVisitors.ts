@@ -2,10 +2,9 @@
 
 import { eventTags } from "@/features/events/event/utils/eventTags";
 import { getNewVisitors } from "@/actions";
-import { tagFilterSchema } from "@/lib/validations";
+import { tagFilterSchema } from "@/lib/validations/shared/tagSchema";
 import { useQuery } from "@tanstack/react-query";
-import type { BarChartItemProps } from "@/features/admin/analytics-management/types/barChartItem";
-import type { PeriodLabelProps } from "@/features/admin/analytics-management/types/period";
+import type { BarChartItemProps, PeriodLabelProps } from "@/features/admin/analytics-management";
 import type { z } from "zod";
 
 const useNewVisitors = (selectedPeriod: PeriodLabelProps, selectedTag: z.infer<typeof tagFilterSchema>) => {

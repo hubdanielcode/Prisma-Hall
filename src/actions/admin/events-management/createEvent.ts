@@ -2,10 +2,10 @@
 
 import { checkIsAdmin } from "../checkIsAdmin";
 import { createEventSchema } from "@/lib/validations/admin/events-management/createEventSchema";
+import { del, put } from "@vercel/blob";
 import { getEventStatus } from "@/lib/server/events/getEventStatus";
 import { notifyPromotionsByEmail } from "@/lib/server/notifications/notifyUsers";
 import { prisma } from "@/lib/server/services/prisma";
-import { put } from "@vercel/blob";
 import z from "zod";
 
 const createEvent = async (event: z.infer<typeof createEventSchema>) => {
@@ -21,10 +21,22 @@ const createEvent = async (event: z.infer<typeof createEventSchema>) => {
     return false;
   }
 
+  /* - O evento precisa começar no futuro. Fica antes do upload da imagem para não deixar imagem órfã no Blob - */
+
+  if (new Date(parsedEvent.data.startsAt).getTime() <= Date.now()) {
+    return false;
+  }
+
   const imageFile = parsedEvent.data.image;
+
+  /* - Guarda a imagem enviada enquanto o evento ainda não existe no banco - */
+
+  let newImageUrl: string | null = null;
 
   try {
     const blob = await put(`${Date.now()}-${imageFile.name}`, imageFile, { access: "public" });
+
+    newImageUrl = blob.url;
 
     const newEvent = await prisma.event.create({
       data: {
@@ -34,17 +46,26 @@ const createEvent = async (event: z.infer<typeof createEventSchema>) => {
         attractionName: parsedEvent.data.attractionName,
         image: blob.url,
         price: parsedEvent.data.price,
-        status: parsedEvent.data.status,
         startsAt: parsedEvent.data.startsAt,
       },
     });
 
-    if (getEventStatus(newEvent) === "soon") {
-      await notifyPromotionsByEmail({
-        type: "new_event",
-        title: "Novo evento na agenda",
-        message: `${newEvent.title} com ${newEvent.attractionName} já está na agenda.`,
-      });
+    /* - A partir daqui o evento já existe e é dono da imagem: o catch não pode mais apagá-la - */
+
+    newImageUrl = null;
+
+    /* - Uma falha na notificação não pode fazer a ação devolver false (retry = evento duplicado) - */
+
+    try {
+      if (getEventStatus(newEvent) === "soon") {
+        await notifyPromotionsByEmail({
+          type: "new_event",
+          title: "Novo evento na agenda",
+          message: `${newEvent.title} com ${newEvent.attractionName} já está na agenda.`,
+        });
+      }
+    } catch (error) {
+      console.error("[createEvent] Falha ao notificar:", error);
     }
 
     return {
@@ -54,7 +75,6 @@ const createEvent = async (event: z.infer<typeof createEventSchema>) => {
       tag: newEvent.tag,
       attractionName: newEvent.attractionName,
       image: newEvent.image,
-      status: getEventStatus(newEvent),
       price: newEvent.price.toNumber(),
       startsAt: newEvent.startsAt.toISOString(),
       attendees: newEvent.attendees,
@@ -64,6 +84,16 @@ const createEvent = async (event: z.infer<typeof createEventSchema>) => {
       updatedAt: newEvent.updatedAt.toISOString(),
     };
   } catch {
+    /* - Se o banco falhou depois do upload, remove a imagem nova para não ficar órfã no Blob - */
+
+    if (newImageUrl) {
+      try {
+        await del(newImageUrl);
+      } catch {
+        // A imagem nova fica no Blob, mas nada foi salvo no banco
+      }
+    }
+
     return false;
   }
 };

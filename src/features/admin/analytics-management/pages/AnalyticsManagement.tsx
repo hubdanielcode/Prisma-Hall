@@ -1,13 +1,15 @@
 "use client";
 
+import { AnalyticsCard } from "../components/AnalyticsCard";
 import { ChevronDown } from "lucide-react";
 import { eventTags } from "@/features/events/event/utils/eventTags";
-import { NewBuyersChart, TicketIncomeChart, VoucherIncomeChart } from "@/features/admin";
-import { AnalyticsCard } from "../components/AnalyticsCard";
-import { periodOptions, type PeriodLabelProps } from "@/features/admin/analytics-management/types/period";
-import { tagFilterSchema } from "@/lib/validations";
+import { NewBuyersChart } from "../components/NewBuyersChart";
+import { PeriodLabelProps, periodOptions } from "../types/period";
+import { tagFilterSchema } from "@/lib/validations/shared/tagSchema";
+import { TicketIncomeChart } from "../components/TicketIncomeChart";
 import { useEffect, useRef, useState } from "react";
 import { useMobileContext } from "@/shared/hooks/useMobileContext";
+import { VoucherIncomeChart } from "../components/VoucherIncomeChart";
 import type { z } from "zod";
 
 const AnalyticsManagement = () => {

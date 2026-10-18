@@ -1,7 +1,4 @@
-import { cancelUnpaidOrders } from "@/lib/server/payments/cancelUnpaidOrders";
-import { getRealCardMethod } from "@/lib/server/payments/getRealCardMethod";
-import { markOrderAsPaid } from "@/lib/server/payments/markOrderAsPaid";
-import { stripe } from "@/lib/server/services/stripe";
+import { cancelUnpaidOrders, getRealCardMethod, markOrderAsPaid, stripe } from "@/lib/server";
 import { NextResponse } from "next/server";
 import type Stripe from "stripe";
 

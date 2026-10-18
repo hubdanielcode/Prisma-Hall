@@ -3,7 +3,7 @@
 import { FaUser, FaStar, FaTicketAlt, FaCalendarAlt } from "react-icons/fa";
 import { useEvents } from "@/features/events";
 import { useMemo } from "react";
-import { useMobileContext } from "@/shared/hooks";
+import { useMobileContext } from "@/shared/hooks/useMobileContext";
 
 const EventsManagementCard = () => {
   /* - Puxando do context - */
@@ -13,35 +13,40 @@ const EventsManagementCard = () => {
 
   /* - Definições - */
 
-  const eventList = events ?? [];
+  const eventsList = useMemo(() => {
+    return events ?? [];
+  }, [events]);
+
+  const now = useMemo(() => {
+    return new Date();
+  }, []);
 
   // Público total
 
   const totalAudience = useMemo(() => {
-    const pastEvents = eventList.filter((event) => new Date(event.startsAt) <= new Date());
+    const pastEvents = eventsList.filter((event) => new Date(event.startsAt) <= now);
 
     if (pastEvents.length === 0) {
       return null;
     }
 
     return pastEvents.reduce((accumulator, event) => accumulator + event.attendees, 0);
-  }, [eventList]);
+  }, [eventsList, now]);
 
   // Avaliação média
 
   const averageRating = useMemo(() => {
-    const ratedEvents = eventList.filter((event) => event.rating > 0.0 && new Date(event.startsAt) <= new Date());
+    const ratedEvents = eventsList.filter((event) => event.rating > 0.0 && new Date(event.startsAt) <= now);
 
     if (ratedEvents.length === 0) {
       return null;
     }
 
     return ratedEvents.reduce((accumulator, event) => accumulator + event.rating, 0.0) / ratedEvents.length;
-  }, [eventList]);
+  }, [eventsList, now]);
 
   // Datas de referência
 
-  const now = new Date();
   const previousMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
 
   const isInMonth = (date: string, year: number, month: number) => {
@@ -52,25 +57,25 @@ const EventsManagementCard = () => {
 
   // Eventos criados neste mês
 
-  const totalCreatedThisMonth = eventList.filter((event) => isInMonth(event.createdAt, now.getFullYear(), now.getMonth())).length;
+  const totalCreatedThisMonth = eventsList.filter((event) => isInMonth(event.createdAt, now.getFullYear(), now.getMonth())).length;
 
   // Eventos dos próximos 7 dias
 
-  const totalUpcoming = eventList.filter((event) => {
+  const totalUpcoming = eventsList.filter((event) => {
     const eventStartDate = new Date(event.startsAt);
 
-    return eventStartDate >= now && eventStartDate <= new Date(Date.now() + 60 * 60 * 24 * 7 * 1000);
+    return eventStartDate >= now && eventStartDate <= new Date(now.getTime() + 60 * 60 * 24 * 7 * 1000);
   }).length;
 
-  const upcomingMessage = eventList.length === 0 ? "0% do total" : `${Math.round((totalUpcoming / eventList.length) * 100)}% do total`;
+  const upcomingMessage = eventsList.length === 0 ? "0% do total" : `${Math.round((totalUpcoming / eventsList.length) * 100)}% do total`;
 
   // Variação do público em relação ao mês anterior
 
-  const audienceThisMonth = eventList
+  const audienceThisMonth = eventsList
     .filter((event) => isInMonth(event.startsAt, now.getFullYear(), now.getMonth()) && new Date(event.startsAt) <= now)
     .reduce((accumulator, event) => accumulator + event.attendees, 0);
 
-  const audienceLastMonth = eventList
+  const audienceLastMonth = eventsList
     .filter((event) => isInMonth(event.startsAt, previousMonth.getFullYear(), previousMonth.getMonth()))
     .reduce((accumulator, event) => accumulator + event.attendees, 0);
 
@@ -79,7 +84,7 @@ const EventsManagementCard = () => {
 
   // Eventos que entraram na avaliação média
 
-  const totalRated = eventList.filter((event) => event.rating > 0.0 && new Date(event.startsAt) <= now).length;
+  const totalRated = eventsList.filter((event) => event.rating > 0.0 && new Date(event.startsAt) <= now).length;
   const ratingMessage = totalRated === 0 ? "Sem avaliações" : `${totalRated} ${totalRated === 1 ? "evento avaliado" : "eventos avaliados"}`;
 
   const cardData = [
@@ -88,7 +93,7 @@ const EventsManagementCard = () => {
       icon: <FaTicketAlt size={24} />,
       message: `+${totalCreatedThisMonth} este mês`,
       title: "Todos os eventos",
-      quantity: eventList.length,
+      quantity: eventsList.length,
     },
 
     {

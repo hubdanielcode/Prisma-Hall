@@ -1,5 +1,5 @@
 import { atLeastOneFieldUpdated } from "@/shared/utils";
-import { notificationPreferencesSchema } from "./notificationSchemas";
+import { notificationPreferencesSchema } from "./notificationPreferencesSchema";
 
 const updateNotificationPreferencesSchema = notificationPreferencesSchema.partial().refine(
   (notification) => {

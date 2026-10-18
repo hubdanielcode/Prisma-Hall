@@ -7,7 +7,7 @@ import { Menu } from "lucide-react";
 import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
 import { useEffect, useRef, useState } from "react";
 import { useMobileContext } from "@/shared/hooks/useMobileContext";
-import { useProfileContext } from "@/features/users";
+import { useProfileContext } from "@/features/users/profiles/hooks/useProfileContext";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
@@ -95,7 +95,7 @@ const ProfileHeader = ({ activeTab, setActiveTab }: ProfileHeaderProps) => {
     try {
       const updatedProfilePicture = await updateProfileMutation({ profilePicture: selectedFile });
 
-      if (!updatedProfilePicture) {
+      if (!updatedProfilePicture || updatedProfilePicture === "picture_upload_failed") {
         throw new Error("Não foi possível salvar a foto.");
       }
     } catch {

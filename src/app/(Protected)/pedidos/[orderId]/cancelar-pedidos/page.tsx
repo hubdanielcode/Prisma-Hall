@@ -1,5 +1,5 @@
-import { CancelTicketOrder } from "@/features/users/tickets";
-import { CancelVoucherOrder } from "@/features/users/vouchers";
+import { CancelTicketOrder } from "@/features/users/tickets/components/CancelTicketOrder";
+import { CancelVoucherOrder } from "@/features/users/vouchers/components/CancelVoucherOrder";
 import { getTicketOrder, getVoucherOrder } from "@/actions";
 import { redirect } from "next/navigation";
 

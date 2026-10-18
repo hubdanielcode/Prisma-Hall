@@ -1,12 +1,12 @@
 "use client";
 
-import { useBarContext } from "@/features/bar";
-import { motion } from "motion/react";
 import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
-import { productCategoryBadgeStyles } from "..";
 import { masks } from "@/shared/utils/functions/masks";
-import { useMobileContext } from "@/shared/hooks/useMobileContext";
+import { motion } from "motion/react";
+import { productCategoryBadgeStyles } from "../types/productCategoryBadgeStyles";
 import { ProductsTablePagination } from "./ProductsTablePagination";
+import { useBarContext } from "@/features/bar/hooks/useBarContext";
+import { useMobileContext } from "@/shared/hooks/useMobileContext";
 
 interface ProductsManagementTableProps {
   currentPage: number;

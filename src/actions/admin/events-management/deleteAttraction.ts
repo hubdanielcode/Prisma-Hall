@@ -1,8 +1,8 @@
 "use server";
 
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import { checkIsAdmin } from "../checkIsAdmin";
 import { prisma } from "@/lib/server/services/prisma";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 
 const deleteAttraction = async (attractionId: string) => {
   const isAdmin = await checkIsAdmin();

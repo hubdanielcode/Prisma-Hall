@@ -1,6 +1,6 @@
 "use client";
 
-import { cartItemSchema, checkoutCartSchema } from "@/lib/validations/cart/cartItemSchemas";
+import { cartItemSchema, checkoutCartSchema } from "@/lib/validations/cart/cartItemSchema";
 import { createContext, useMemo, useState } from "react";
 import { serviceFee } from "../utils/serviceFee";
 import { useCartItems } from "@/features/cart/hooks/useCartItems";

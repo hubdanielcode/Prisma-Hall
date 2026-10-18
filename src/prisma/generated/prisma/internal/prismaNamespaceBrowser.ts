@@ -300,7 +300,7 @@ export const EventScalarFieldEnum = {
   tag: 'tag',
   attractionName: 'attractionName',
   image: 'image',
-  status: 'status',
+  isCancelled: 'isCancelled',
   price: 'price',
   startsAt: 'startsAt',
   attendees: 'attendees',

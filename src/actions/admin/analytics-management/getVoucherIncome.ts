@@ -3,7 +3,7 @@
 import { checkIsAdmin } from "../checkIsAdmin";
 import { formattedStringToDate } from "@/shared/utils/functions/dates";
 import { prisma } from "@/lib/server/services/prisma";
-import { voucherIncomeSchema } from "@/lib/validations";
+import { voucherIncomeSchema } from "@/lib/validations/admin/analytics-management/voucherIncomeSchema";
 import z from "zod";
 
 const getVoucherIncome = async (voucherIncome: z.infer<typeof voucherIncomeSchema>) => {

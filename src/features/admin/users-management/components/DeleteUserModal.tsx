@@ -7,7 +7,7 @@ import { UserAvatar } from "./UserAvatar";
 import { useState } from "react";
 import { useUserContext } from "@/features/users/user/hooks/useUserContext";
 import { X } from "lucide-react";
-import type { UserProps } from "@/features/users";
+import type { UserProps } from "@/features/users/user/types/user";
 
 interface DeleteUserModalProps {
   isOpen: boolean;

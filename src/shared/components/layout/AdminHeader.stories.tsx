@@ -1,5 +1,5 @@
 import { AdminHeader } from "./AdminHeader";
-import { AuthenticationProvider } from "@/features/authentication";
+import { AuthenticationProvider } from "@/features/authentication/context/AuthenticationContext";
 import { MobileProvider } from "../../context/MobileContext";
 import { QueryProvider } from "../../providers/QueryProvider";
 

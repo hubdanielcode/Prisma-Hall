@@ -1,25 +1,21 @@
 "use server";
 
 import { checkIsAdmin } from "../checkIsAdmin";
-import { editEventSchema } from "@/lib/validations";
+import { del, put } from "@vercel/blob";
+import { editEventSchema } from "@/lib/validations/admin/events-management/editEventSchema";
 import { getEventStatus } from "@/lib/server/events/getEventStatus";
 import { getUserIdsThatFavoritedEvent, notifyFavoriteEventByEmail, notifyPromotionsByEmail } from "@/lib/server/notifications/notifyUsers";
 import { prisma } from "@/lib/server/services/prisma";
-import { put } from "@vercel/blob";
 import z from "zod";
 
 interface FavoriteEventChangesProps {
-  previousEvent: { startsAt: Date; price: number };
-  editedEvent: { id: string; title: string; status: string; startsAt: Date; price: number };
+  originalEvent: { startsAt: Date; price: number };
+  editedEvent: { id: string; title: string; startsAt: Date; price: number };
 }
 
-const notifyFavoriteEventChanges = async ({ previousEvent, editedEvent }: FavoriteEventChangesProps) => {
-  if (getEventStatus(editedEvent) !== "soon") {
-    return;
-  }
-
-  const dateChanged = previousEvent.startsAt.getTime() !== editedEvent.startsAt.getTime();
-  const priceDropped = editedEvent.price < previousEvent.price;
+const notifyFavoriteEventChanges = async ({ originalEvent, editedEvent }: FavoriteEventChangesProps) => {
+  const dateChanged = originalEvent.startsAt.getTime() !== editedEvent.startsAt.getTime();
+  const priceDropped = editedEvent.price < originalEvent.price;
 
   if (!dateChanged && !priceDropped) {
     return;
@@ -74,77 +70,81 @@ const editEvent = async (event: z.infer<typeof editEventSchema>) => {
     description: parsedEvent.data.description,
     tag: parsedEvent.data.tag,
     attractionName: parsedEvent.data.attractionName,
-    status: parsedEvent.data.status,
     price: parsedEvent.data.price,
     startsAt: parsedEvent.data.startsAt,
   };
 
   const imageFile = parsedEvent.data.image;
 
-  try {
-    const previousEvent = await prisma.event.findUnique({ where: { id: parsedEvent.data.eventId } });
+  /* - Guarda a imagem nova enquanto a edição ainda não foi salva no banco - */
 
-    if (!previousEvent) {
+  let newImageUrl: string | null = null;
+
+  try {
+    const originalEvent = await prisma.event.findUnique({ where: { id: parsedEvent.data.eventId } });
+
+    if (!originalEvent) {
       return false;
     }
 
-    const previousEventValues = { startsAt: previousEvent.startsAt, price: previousEvent.price.toNumber() };
+    const editedEventStartsAt = parsedEvent.data.startsAt;
+
+    if (
+      editedEventStartsAt &&
+      new Date(editedEventStartsAt).getTime() !== originalEvent.startsAt.getTime() &&
+      new Date(editedEventStartsAt).getTime() <= Date.now()
+    ) {
+      return false;
+    }
+
+    const originalEventValues = { startsAt: originalEvent.startsAt, price: originalEvent.price.toNumber() };
+
+    /* - Só faz upload se houver troca de imagem - */
 
     if (imageFile) {
-      /* - Se houver troca de imagem - */
-
       const blob = await put(`${Date.now()}-${imageFile.name}`, imageFile, { access: "public" });
 
-      const editedEvent = await prisma.event.update({
-        where: { id: parsedEvent.data.eventId },
-        data: { ...baseEventData, image: blob.url },
-      });
-
-      await notifyFavoriteEventChanges({
-        previousEvent: previousEventValues,
-        editedEvent: { ...editedEvent, price: editedEvent.price.toNumber() },
-      });
-
-      return {
-        id: editedEvent.id,
-        title: editedEvent.title,
-        description: editedEvent.description,
-        tag: editedEvent.tag,
-        attractionName: editedEvent.attractionName,
-        image: editedEvent.image,
-        status: getEventStatus(editedEvent),
-        price: editedEvent.price.toNumber(),
-        startsAt: editedEvent.startsAt,
-        attendees: editedEvent.attendees,
-        rating: editedEvent.rating.toNumber(),
-
-        createdAt: editedEvent.createdAt.toISOString(),
-        updatedAt: editedEvent.updatedAt.toISOString(),
-      };
+      newImageUrl = blob.url;
     }
-    /* - Se não houver troca de imagem - */
 
     const editedEvent = await prisma.event.update({
       where: { id: parsedEvent.data.eventId },
-      data: { ...baseEventData },
+      data: { ...baseEventData, ...(newImageUrl && { image: newImageUrl }) },
     });
 
-    await notifyFavoriteEventChanges({
-      previousEvent: previousEventValues,
-      editedEvent: { ...editedEvent, price: editedEvent.price.toNumber() },
-    });
+    /* - A edição foi salva e a imagem nova é do evento. A antiga só sai do Blob agora; uma falha na remoção não desfaz a edição - */
+
+    if (newImageUrl) {
+      newImageUrl = null;
+
+      try {
+        await del(originalEvent.image);
+      } catch {
+        // A edição continua salva mesmo sem a remoção da imagem antiga
+      }
+    }
+
+    /* - Falha na notificação não pode virar false - */
+
+    try {
+      await notifyFavoriteEventChanges({
+        originalEvent: originalEventValues,
+        editedEvent: { ...editedEvent, price: editedEvent.price.toNumber() },
+      });
+    } catch (error) {
+      console.error("[editEvent] Falha ao notificar:", error);
+    }
 
     return {
       id: editedEvent.id,
       title: editedEvent.title,
-
       description: editedEvent.description,
       tag: editedEvent.tag,
       attractionName: editedEvent.attractionName,
       image: editedEvent.image,
       status: getEventStatus(editedEvent),
       price: editedEvent.price.toNumber(),
-      startsAt: editedEvent.startsAt,
+      startsAt: editedEvent.startsAt.toISOString(),
       attendees: editedEvent.attendees,
       rating: editedEvent.rating.toNumber(),
 
@@ -152,6 +152,16 @@ const editEvent = async (event: z.infer<typeof editEventSchema>) => {
       updatedAt: editedEvent.updatedAt.toISOString(),
     };
   } catch {
+    /* - Se o banco falhou depois do upload, remove a imagem nova para não ficar órfã no Blob - */
+
+    if (newImageUrl) {
+      try {
+        await del(newImageUrl);
+      } catch {
+        // A imagem nova fica no Blob, mas a edição não foi salva
+      }
+    }
+
     return false;
   }
 };

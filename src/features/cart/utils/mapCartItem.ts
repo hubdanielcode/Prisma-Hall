@@ -1,4 +1,5 @@
 import type { Cart, Event, Product } from "@/prisma/generated/prisma/client";
+import { getEventStatus } from "@/lib/server/events/getEventStatus";
 
 type CartItemWithRelations = Cart & {
   product: Product | null;
@@ -33,7 +34,7 @@ const mapCartItem = (cartItem: CartItemWithRelations) => ({
         attractionName: cartItem.event.attractionName,
         image: cartItem.event.image,
         startsAt: cartItem.event.startsAt.toISOString(),
-        status: cartItem.event.status,
+        status: getEventStatus(cartItem.event),
       }
     : null,
 

@@ -1,12 +1,22 @@
 "use server";
 
 import { checkRateLimit, resetRateLimit } from "@/lib/server/rate-limit/rateLimiter";
-import { compare } from "../../lib/server/services/bcrypt";
+import { compare, hash } from "../../lib/server/services/bcrypt";
 import { cookies } from "next/headers";
 import { createSession } from "../../lib/server/session/createSession";
 import { prisma } from "../../lib/server/services/prisma";
 import { signInSchema } from "../../lib/validations/authentication/signInSchema";
 import z from "zod";
+
+/* - Hash falso que é calculado uma vez só e é usado quando o e-mail não existe. Isso serve para o tempo de resposta ser igual ao de um e-mail existente com senha errada, evitando vazar a informação de que o email existe, ou não, no banco de dados - */
+
+let dummyHashPromise: Promise<string> | undefined;
+
+const getDummyHash = () => {
+  dummyHashPromise ??= hash("senha-falsa-para-igualar-o-tempo-de-resposta", 10);
+
+  return dummyHashPromise;
+};
 
 const signIn = async ({ typedEmail, typedPassword, rememberMe }: z.infer<typeof signInSchema> & { rememberMe: boolean }) => {
   const parsedSignInUser = signInSchema.safeParse({ typedEmail, typedPassword, rememberMe });
@@ -15,18 +25,23 @@ const signIn = async ({ typedEmail, typedPassword, rememberMe }: z.infer<typeof 
     return false;
   }
 
-  /* - Limite por conta (força bruta numa conta) e por IP (varredura de várias contas) - */
+  const validEmail = parsedSignInUser.data.typedEmail;
+  const validPassword = parsedSignInUser.data.typedPassword;
 
-  const accountRateLimit = await checkRateLimit({ action: "signIn", identifier: typedEmail, limit: 5, windowSeconds: 15 * 60 });
+  /* - Limite por conta em qualquer IP (força bruta numa conta, mesmo trocando de IP) e por IP (varredura de várias contas) - */
+
+  const accountRateLimit = await checkRateLimit({ action: "signIn", identifier: validEmail, limit: 10, windowSeconds: 15 * 60, includeIp: false });
   const ipRateLimit = await checkRateLimit({ action: "signIn-ip", limit: 30, windowSeconds: 15 * 60 });
 
   if (!accountRateLimit.allowed || !ipRateLimit.allowed) {
     return "too_many_attempts";
   }
 
-  const validUser = await prisma.user.findUnique({ where: { email: typedEmail } });
+  const validUser = await prisma.user.findUnique({ where: { email: validEmail } });
 
   if (!validUser) {
+    await compare(validPassword, await getDummyHash());
+
     return false;
   }
 
@@ -37,7 +52,7 @@ const signIn = async ({ typedEmail, typedPassword, rememberMe }: z.infer<typeof 
     role: validUser.role,
   };
 
-  const isValidPassword = await compare(typedPassword, validUser.password);
+  const isValidPassword = await compare(validPassword, validUser.password);
 
   if (!isValidPassword) {
     return false;
@@ -76,7 +91,7 @@ const signIn = async ({ typedEmail, typedPassword, rememberMe }: z.infer<typeof 
       sameSite: "lax",
     });
 
-    await resetRateLimit("signIn", typedEmail);
+    await resetRateLimit("signIn", validEmail, false);
 
     return newUser;
   } catch {

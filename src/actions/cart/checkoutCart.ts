@@ -1,6 +1,6 @@
 "use server";
 
-import { checkoutCartSchema } from "@/lib/validations/cart/cartItemSchemas";
+import { checkoutCartSchema } from "@/lib/validations/cart/cartItemSchema";
 import { getEventStatus } from "@/lib/server/events/getEventStatus";
 import { getResend } from "@/lib/server/services/resend";
 import { OrderConfirmationEmail } from "@/shared/emails/OrderConfirmationEmail";

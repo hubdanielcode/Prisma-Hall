@@ -2240,7 +2240,7 @@ export const EventScalarFieldEnum = {
   tag: 'tag',
   attractionName: 'attractionName',
   image: 'image',
-  status: 'status',
+  isCancelled: 'isCancelled',
   price: 'price',
   startsAt: 'startsAt',
   attendees: 'attendees',
@@ -2578,20 +2578,6 @@ export type EnumEventTagFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
  * Reference to a field of type 'EventTag[]'
  */
 export type ListEnumEventTagFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EventTag[]'>
-    
-
-
-/**
- * Reference to a field of type 'EventStatus'
- */
-export type EnumEventStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EventStatus'>
-    
-
-
-/**
- * Reference to a field of type 'EventStatus[]'
- */
-export type ListEnumEventStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EventStatus[]'>
     
 
 

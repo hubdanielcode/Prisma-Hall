@@ -1,6 +1,6 @@
 "use server";
 
-import { createReviewSchema } from "@/lib/validations";
+import { createReviewSchema } from "@/lib/validations/events/createReviewSchema";
 import { prisma } from "@/lib/server/services/prisma";
 import { recalculateUserBadges } from "@/lib/server/badges/achievementBadges";
 import { validateSession } from "@/actions/session/validateSession";

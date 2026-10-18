@@ -54,7 +54,7 @@ const useEvents = () => {
   const { mutateAsync: deleteEventMutation } = useMutation({
     mutationFn: deleteEventAction,
     onSuccess: async (deleteEventMutationResult) => {
-      if (deleteEventMutationResult) {
+      if (deleteEventMutationResult.success) {
         queryClient.invalidateQueries({ queryKey: ["events"] });
       }
     },

@@ -1,7 +1,6 @@
 import { getTicketOrder, getVoucherOrder } from "@/actions";
 import { redirect } from "next/navigation";
-import { TicketOrderDetails } from "@/features/users/tickets";
-import { VoucherOrderDetails } from "@/features/users";
+import { TicketOrderDetails, VoucherOrderDetails } from "@/features/users";
 
 interface OrderDetailsPageProps {
   params: Promise<{

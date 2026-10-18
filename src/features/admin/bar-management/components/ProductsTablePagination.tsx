@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "motion/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { motion } from "motion/react";
 
 type ProductsTablePaginationProps = {
   currentPage: number;

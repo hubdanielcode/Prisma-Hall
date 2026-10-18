@@ -1,7 +1,7 @@
 "use server";
 
 import { notifyUsersByEmail } from "@/lib/server/notifications/notifyUsers";
-import { orderIdSchema } from "@/lib/validations/users/orderSchemas";
+import { orderIdSchema } from "@/lib/validations/users/orderIdSchema";
 import { prisma } from "@/lib/server/services/prisma";
 import { refundStripePayment } from "@/lib/server/payments/refundStripePayment";
 import { validateSession } from "@/actions/session/validateSession";

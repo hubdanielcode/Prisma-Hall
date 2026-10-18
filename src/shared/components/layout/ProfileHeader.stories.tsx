@@ -1,4 +1,4 @@
-import { AuthenticationProvider } from "@/features/authentication";
+import { AuthenticationProvider } from "@/features/authentication/context/AuthenticationContext";
 import { MobileProvider } from "@/shared/context/MobileContext";
 import { ProfileHeader } from "@/shared/components/layout/ProfileHeader";
 import { ProfileProvider } from "@/features/users/profiles/context/ProfileContext";

@@ -1,7 +1,5 @@
 import { z } from "zod";
 
-const requestPasswordResetSchema = z.email().max(50, "Seu e-mail não deve ultrapassar um máximo de 50 caracteres.");
-
 const passwordResetSchema = z
   .object({
     // 1. Token
@@ -33,4 +31,4 @@ const passwordResetSchema = z
     { message: "As senhas não coincidem." },
   );
 
-export { requestPasswordResetSchema, passwordResetSchema };
+export { passwordResetSchema };

@@ -208,6 +208,7 @@ export type GalleryWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Gallery"> | Date | string
   event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  galleryLikes?: Prisma.GalleryLikesListRelationFilter
 }
 
 export type GalleryOrderByWithRelationInput = {
@@ -221,6 +222,7 @@ export type GalleryOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   event?: Prisma.EventOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
+  galleryLikes?: Prisma.GalleryLikesOrderByRelationAggregateInput
 }
 
 export type GalleryWhereUniqueInput = Prisma.AtLeast<{
@@ -237,6 +239,7 @@ export type GalleryWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Gallery"> | Date | string
   event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  galleryLikes?: Prisma.GalleryLikesListRelationFilter
 }, "id">
 
 export type GalleryOrderByWithAggregationInput = {
@@ -276,6 +279,7 @@ export type GalleryCreateInput = {
   updatedAt?: Date | string
   event: Prisma.EventCreateNestedOneWithoutGalleriesInput
   user: Prisma.UserCreateNestedOneWithoutGalleriesInput
+  galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutGalleryInput
 }
 
 export type GalleryUncheckedCreateInput = {
@@ -287,6 +291,7 @@ export type GalleryUncheckedCreateInput = {
   happenedAt: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutGalleryInput
 }
 
 export type GalleryUpdateInput = {
@@ -298,6 +303,7 @@ export type GalleryUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   event?: Prisma.EventUpdateOneRequiredWithoutGalleriesNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutGalleriesNestedInput
+  galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutGalleryNestedInput
 }
 
 export type GalleryUncheckedUpdateInput = {
@@ -309,6 +315,7 @@ export type GalleryUncheckedUpdateInput = {
   happenedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutGalleryNestedInput
 }
 
 export type GalleryCreateManyInput = {
@@ -383,6 +390,11 @@ export type GalleryMinOrderByAggregateInput = {
   happenedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type GalleryScalarRelationFilter = {
+  is?: Prisma.GalleryWhereInput
+  isNot?: Prisma.GalleryWhereInput
 }
 
 export type GalleryCreateNestedManyWithoutUserInput = {
@@ -469,6 +481,20 @@ export type GalleryUncheckedUpdateManyWithoutEventNestedInput = {
   deleteMany?: Prisma.GalleryScalarWhereInput | Prisma.GalleryScalarWhereInput[]
 }
 
+export type GalleryCreateNestedOneWithoutGalleryLikesInput = {
+  create?: Prisma.XOR<Prisma.GalleryCreateWithoutGalleryLikesInput, Prisma.GalleryUncheckedCreateWithoutGalleryLikesInput>
+  connectOrCreate?: Prisma.GalleryCreateOrConnectWithoutGalleryLikesInput
+  connect?: Prisma.GalleryWhereUniqueInput
+}
+
+export type GalleryUpdateOneRequiredWithoutGalleryLikesNestedInput = {
+  create?: Prisma.XOR<Prisma.GalleryCreateWithoutGalleryLikesInput, Prisma.GalleryUncheckedCreateWithoutGalleryLikesInput>
+  connectOrCreate?: Prisma.GalleryCreateOrConnectWithoutGalleryLikesInput
+  upsert?: Prisma.GalleryUpsertWithoutGalleryLikesInput
+  connect?: Prisma.GalleryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.GalleryUpdateToOneWithWhereWithoutGalleryLikesInput, Prisma.GalleryUpdateWithoutGalleryLikesInput>, Prisma.GalleryUncheckedUpdateWithoutGalleryLikesInput>
+}
+
 export type GalleryCreateWithoutUserInput = {
   id?: string
   image: string
@@ -477,6 +503,7 @@ export type GalleryCreateWithoutUserInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   event: Prisma.EventCreateNestedOneWithoutGalleriesInput
+  galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutGalleryInput
 }
 
 export type GalleryUncheckedCreateWithoutUserInput = {
@@ -487,6 +514,7 @@ export type GalleryUncheckedCreateWithoutUserInput = {
   happenedAt: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutGalleryInput
 }
 
 export type GalleryCreateOrConnectWithoutUserInput = {
@@ -537,6 +565,7 @@ export type GalleryCreateWithoutEventInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutGalleriesInput
+  galleryLikes?: Prisma.GalleryLikesCreateNestedManyWithoutGalleryInput
 }
 
 export type GalleryUncheckedCreateWithoutEventInput = {
@@ -547,6 +576,7 @@ export type GalleryUncheckedCreateWithoutEventInput = {
   happenedAt: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  galleryLikes?: Prisma.GalleryLikesUncheckedCreateNestedManyWithoutGalleryInput
 }
 
 export type GalleryCreateOrConnectWithoutEventInput = {
@@ -575,6 +605,66 @@ export type GalleryUpdateManyWithWhereWithoutEventInput = {
   data: Prisma.XOR<Prisma.GalleryUpdateManyMutationInput, Prisma.GalleryUncheckedUpdateManyWithoutEventInput>
 }
 
+export type GalleryCreateWithoutGalleryLikesInput = {
+  id?: string
+  image: string
+  title: string
+  happenedAt: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  event: Prisma.EventCreateNestedOneWithoutGalleriesInput
+  user: Prisma.UserCreateNestedOneWithoutGalleriesInput
+}
+
+export type GalleryUncheckedCreateWithoutGalleryLikesInput = {
+  id?: string
+  userId: string
+  eventId: string
+  image: string
+  title: string
+  happenedAt: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type GalleryCreateOrConnectWithoutGalleryLikesInput = {
+  where: Prisma.GalleryWhereUniqueInput
+  create: Prisma.XOR<Prisma.GalleryCreateWithoutGalleryLikesInput, Prisma.GalleryUncheckedCreateWithoutGalleryLikesInput>
+}
+
+export type GalleryUpsertWithoutGalleryLikesInput = {
+  update: Prisma.XOR<Prisma.GalleryUpdateWithoutGalleryLikesInput, Prisma.GalleryUncheckedUpdateWithoutGalleryLikesInput>
+  create: Prisma.XOR<Prisma.GalleryCreateWithoutGalleryLikesInput, Prisma.GalleryUncheckedCreateWithoutGalleryLikesInput>
+  where?: Prisma.GalleryWhereInput
+}
+
+export type GalleryUpdateToOneWithWhereWithoutGalleryLikesInput = {
+  where?: Prisma.GalleryWhereInput
+  data: Prisma.XOR<Prisma.GalleryUpdateWithoutGalleryLikesInput, Prisma.GalleryUncheckedUpdateWithoutGalleryLikesInput>
+}
+
+export type GalleryUpdateWithoutGalleryLikesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  happenedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  event?: Prisma.EventUpdateOneRequiredWithoutGalleriesNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutGalleriesNestedInput
+}
+
+export type GalleryUncheckedUpdateWithoutGalleryLikesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  eventId?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  happenedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type GalleryCreateManyUserInput = {
   id?: string
   eventId: string
@@ -593,6 +683,7 @@ export type GalleryUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   event?: Prisma.EventUpdateOneRequiredWithoutGalleriesNestedInput
+  galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutGalleryNestedInput
 }
 
 export type GalleryUncheckedUpdateWithoutUserInput = {
@@ -603,6 +694,7 @@ export type GalleryUncheckedUpdateWithoutUserInput = {
   happenedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutGalleryNestedInput
 }
 
 export type GalleryUncheckedUpdateManyWithoutUserInput = {
@@ -633,6 +725,7 @@ export type GalleryUpdateWithoutEventInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutGalleriesNestedInput
+  galleryLikes?: Prisma.GalleryLikesUpdateManyWithoutGalleryNestedInput
 }
 
 export type GalleryUncheckedUpdateWithoutEventInput = {
@@ -643,6 +736,7 @@ export type GalleryUncheckedUpdateWithoutEventInput = {
   happenedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  galleryLikes?: Prisma.GalleryLikesUncheckedUpdateManyWithoutGalleryNestedInput
 }
 
 export type GalleryUncheckedUpdateManyWithoutEventInput = {
@@ -656,6 +750,35 @@ export type GalleryUncheckedUpdateManyWithoutEventInput = {
 }
 
 
+/**
+ * Count Type GalleryCountOutputType
+ */
+
+export type GalleryCountOutputType = {
+  galleryLikes: number
+}
+
+export type GalleryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  galleryLikes?: boolean | GalleryCountOutputTypeCountGalleryLikesArgs
+}
+
+/**
+ * GalleryCountOutputType without action
+ */
+export type GalleryCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the GalleryCountOutputType
+   */
+  select?: Prisma.GalleryCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * GalleryCountOutputType without action
+ */
+export type GalleryCountOutputTypeCountGalleryLikesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.GalleryLikesWhereInput
+}
+
 
 export type GallerySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -668,6 +791,8 @@ export type GallerySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   updatedAt?: boolean
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  galleryLikes?: boolean | Prisma.Gallery$galleryLikesArgs<ExtArgs>
+  _count?: boolean | Prisma.GalleryCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["gallery"]>
 
 export type GallerySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -711,6 +836,8 @@ export type GalleryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 export type GalleryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  galleryLikes?: boolean | Prisma.Gallery$galleryLikesArgs<ExtArgs>
+  _count?: boolean | Prisma.GalleryCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type GalleryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
@@ -726,6 +853,7 @@ export type $GalleryPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   objects: {
     event: Prisma.$EventPayload<ExtArgs>
     user: Prisma.$UserPayload<ExtArgs>
+    galleryLikes: Prisma.$GalleryLikesPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1132,6 +1260,7 @@ export interface Prisma__GalleryClient<T, Null = never, ExtArgs extends runtime.
   readonly [Symbol.toStringTag]: "PrismaPromise"
   event<T extends Prisma.EventDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EventDefaultArgs<ExtArgs>>): Prisma.Prisma__EventClient<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  galleryLikes<T extends Prisma.Gallery$galleryLikesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Gallery$galleryLikesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GalleryLikesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1567,6 +1696,30 @@ export type GalleryDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Galleries to delete.
    */
   limit?: number
+}
+
+/**
+ * Gallery.galleryLikes
+ */
+export type Gallery$galleryLikesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the GalleryLikes
+   */
+  select?: Prisma.GalleryLikesSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the GalleryLikes
+   */
+  omit?: Prisma.GalleryLikesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.GalleryLikesInclude<ExtArgs> | null
+  where?: Prisma.GalleryLikesWhereInput
+  orderBy?: Prisma.GalleryLikesOrderByWithRelationInput | Prisma.GalleryLikesOrderByWithRelationInput[]
+  cursor?: Prisma.GalleryLikesWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.GalleryLikesScalarFieldEnum | Prisma.GalleryLikesScalarFieldEnum[]
 }
 
 /**

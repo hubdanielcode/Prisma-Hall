@@ -1,11 +1,11 @@
 "use client";
 
 import { FaMedal, FaPencilAlt, FaTrashAlt, FaTrophy } from "react-icons/fa";
-import { masks } from "@/shared/utils";
+import { masks } from "@/shared/utils/functions/masks";
 import { MdVerified } from "react-icons/md";
 import { motion } from "motion/react";
 import { roleBadgeLabels, roleBadgeStyles, tierBadgeLabels, tierBadgeStyles } from "@/shared/utils";
-import { useMobileContext } from "@/shared/hooks";
+import { useMobileContext } from "@/shared/hooks/useMobileContext";
 import { UserAvatar } from "./UserAvatar";
 import { UsersTablePagination } from "./UsersTablePagination";
 import { useUserContext } from "@/features/users/user/hooks/useUserContext";

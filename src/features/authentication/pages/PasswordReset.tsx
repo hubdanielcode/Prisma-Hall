@@ -3,8 +3,8 @@
 import { AnimatePresence, motion } from "motion/react";
 import { AuthenticationScreenShell } from "../components/AuthenticationScreenShell";
 import { CircleCheck } from "lucide-react";
-import { MdAlternateEmail } from "react-icons/md";
 import { CustomTextInput, CustomPasswordInput } from "@/shared/components";
+import { MdAlternateEmail } from "react-icons/md";
 import { regex, masks } from "@/shared/utils";
 import { usePasswordReset } from "../hooks/usePasswordReset";
 import { useRouter, useSearchParams } from "next/navigation";

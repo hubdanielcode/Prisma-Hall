@@ -13,9 +13,9 @@ const regex = {
   city: /^[A-Za-zÀ-ÿ\s'-]{2,50}$/,
   state: /^[A-Z]{2}$/,
   neighborhood: /^[A-Za-zÀ-ÿ0-9\s'-]{2,60}$/,
-  street: /^[A-Za-zÀ-ÿ0-9\s'.,\-]{2,50}$/,
+  street: /^[A-Za-zÀ-ÿ0-9\s'.,-]{2,50}$/,
   number: /^\d{1,7}$/,
-  complement: /^[A-Za-zÀ-ÿ0-9\s'.,\-]{1,25}$/,
+  complement: /^[A-Za-zÀ-ÿ0-9\s'.,-]{1,25}$/,
 
   /* - Produto - */
 

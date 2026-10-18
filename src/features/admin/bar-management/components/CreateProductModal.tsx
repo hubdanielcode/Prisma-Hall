@@ -4,7 +4,7 @@ import { createProductSchema } from "@/lib/validations/admin/bar-management/crea
 import { ImagePlus, X } from "lucide-react";
 import { masks } from "@/shared/utils/functions/masks";
 import { motion, AnimatePresence } from "motion/react";
-import { productCategories } from "@/features/bar";
+import { productCategories } from "@/features/bar/utils/productCategories";
 import { productCategoryBadgeStyles } from "../types/productCategoryBadgeStyles";
 import { useBarContext } from "@/features/bar/hooks/useBarContext";
 import { useBlockScroll, useMobileContext } from "@/shared/hooks";
@@ -81,7 +81,7 @@ const CreateProductModal = ({ isOpen, onClose }: CreateProductModalProps) => {
 
     if (!allowedFileTypes.includes(selectedFile.type)) {
       setProductImageError("Formato inválido. Escolha um arquivo com formato PNG, JPG ou WebP.");
-      e.target.value ?? "";
+      e.target.value = "";
       return;
     }
 
@@ -102,7 +102,7 @@ const CreateProductModal = ({ isOpen, onClose }: CreateProductModalProps) => {
     };
 
     reader.readAsDataURL(selectedFile);
-    e.target.value ?? "";
+    e.target.value = "";
   };
 
   // 3. Finaliza o produto e coloca na tabela

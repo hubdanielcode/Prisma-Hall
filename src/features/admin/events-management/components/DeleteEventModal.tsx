@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { EventProps, useEventContext } from "@/features/events";
 import { masks } from "@/shared/utils";
 import { useMobileContext } from "@/shared/hooks";
+import { useState } from "react";
 import { X } from "lucide-react";
 
 interface DeleteEventModalProps {
@@ -12,6 +13,14 @@ interface DeleteEventModalProps {
   event: EventProps;
 }
 
+const errorMessages = {
+  "has-dependencies":
+    "Este evento tem ingressos, avaliações ou fotos e não pode ser excluído. Se ele ainda não aconteceu, cancele-o para reembolsar os compradores.",
+  "not-found": "Este evento não existe mais.",
+  unauthorized: "Você não tem permissão para excluir eventos.",
+  unknown: "Não foi possível excluir o evento. Tente novamente.",
+} as const;
+
 const DeleteEventModal = ({ isOpen, onClose, event }: DeleteEventModalProps) => {
   /* - Puxando do context - */
 
@@ -19,6 +28,14 @@ const DeleteEventModal = ({ isOpen, onClose, event }: DeleteEventModalProps) => 
   const { deleteEventMutation, setEventBeingDeleted } = useEventContext();
 
   /* - Definições - */
+
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleClose = () => {
+    setErrorMessage(null);
+    onClose();
+  };
 
   return (
     <AnimatePresence>
@@ -31,7 +48,7 @@ const DeleteEventModal = ({ isOpen, onClose, event }: DeleteEventModalProps) => 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={onClose}
+            onClick={handleClose}
           />
 
           {/* - Card do modal - */}
@@ -55,7 +72,7 @@ const DeleteEventModal = ({ isOpen, onClose, event }: DeleteEventModalProps) => 
                 className="flex items-center justify-center cursor-pointer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={onClose}
+                onClick={handleClose}
               >
                 <X className="text-white/60 hover:text-white h-5 w-5 transition-colors" />
               </motion.button>
@@ -109,6 +126,8 @@ const DeleteEventModal = ({ isOpen, onClose, event }: DeleteEventModalProps) => 
               <span className="text-red-600/80 font-semibold text-sm sm:text-base md:text-base pt-6 pb-3">
                 Essa ação é permanente e não pode ser desfeita.
               </span>
+
+              {errorMessage && <span className="text-red-400 font-semibold text-sm text-center px-3 pb-3">{errorMessage}</span>}
             </div>
 
             {/* - Ações - */}
@@ -118,22 +137,38 @@ const DeleteEventModal = ({ isOpen, onClose, event }: DeleteEventModalProps) => 
                 className="px-4 py-2 text-sm text-white/60 font-semibold rounded-lg cursor-pointer hover:text-white transition-colors"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={onClose}
+                onClick={handleClose}
               >
                 Cancelar
               </motion.button>
 
               <motion.button
-                className="px-5 py-2 text-sm text-white hover:text-[#FF9595] font-semibold bg-[#440606] border border-[#DF1212] rounded-lg cursor-pointer hover:shadow-sm shadow-[#FF9595] transition-shadow"
+                className="px-5 py-2 text-sm text-white hover:text-[#FF9595] font-semibold bg-[#440606] border border-[#DF1212] rounded-lg cursor-pointer hover:shadow-sm shadow-[#FF9595] transition-shadow disabled:opacity-50 disabled:cursor-not-allowed"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                disabled={isDeleting}
                 onClick={async () => {
-                  await deleteEventMutation(event.id);
-                  setEventBeingDeleted(null);
-                  onClose();
+                  setIsDeleting(true);
+                  setErrorMessage(null);
+
+                  try {
+                    const result = await deleteEventMutation(event.id);
+
+                    if (!result.success) {
+                      setErrorMessage(errorMessages[result.reason]);
+                      return;
+                    }
+
+                    setEventBeingDeleted(null);
+                    onClose();
+                  } catch {
+                    setErrorMessage(errorMessages.unknown);
+                  } finally {
+                    setIsDeleting(false);
+                  }
                 }}
               >
-                Excluir Evento
+                {isDeleting ? "Excluindo..." : "Excluir Evento"}
               </motion.button>
             </div>
           </motion.div>

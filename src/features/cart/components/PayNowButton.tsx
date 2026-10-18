@@ -1,8 +1,8 @@
 "use client";
 
+import { motion } from "motion/react";
 import { usePayNow } from "@/features/cart/hooks/usePayNow";
 import { useState } from "react";
-import { motion } from "motion/react";
 
 interface PayNowButtonProps {
   type: "tickets" | "drinks";

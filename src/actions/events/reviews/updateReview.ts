@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/server/services/prisma";
 import { recalculateUserBadges } from "@/lib/server/badges/achievementBadges";
-import { updateReviewSchema } from "@/lib/validations";
+import { updateReviewSchema } from "@/lib/validations/events/updateReviewSchema";
 import { validateSession } from "@/actions/session/validateSession";
 import z from "zod";
 

@@ -1,8 +1,8 @@
 "use client";
 
+import { FaGlassMartini, FaCheckCircle, FaShoppingBag, FaArrowCircleDown } from "react-icons/fa";
 import { useMobileContext } from "@/shared/hooks/useMobileContext";
 import { useProducts } from "@/features/bar/hooks/useProducts";
-import { FaGlassMartini, FaCheckCircle, FaShoppingBag, FaArrowCircleDown } from "react-icons/fa";
 
 const ProductsManagementCard = () => {
   /* - Puxando do context - */

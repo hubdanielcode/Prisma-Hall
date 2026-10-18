@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/server/services/prisma";
 import { validateSession } from "@/actions/session/validateSession";
-import { cartItemIdSchema } from "@/lib/validations/cart/cartItemSchemas";
+import { cartItemIdSchema } from "@/lib/validations/cart/cartItemSchema";
 
 const removeItemFromCart = async (cartItemId: string) => {
   const validSession = await validateSession();

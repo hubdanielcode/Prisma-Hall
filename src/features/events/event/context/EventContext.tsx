@@ -1,12 +1,12 @@
 "use client";
 
-import z from "zod";
-import { EventProps } from "../types/event";
-import { TagProps } from "../types/tag";
-import { createEventSchema, editEventSchema } from "@/lib/validations";
+import { CancelEventResult, DeleteEventResult, EventProps } from "../types/event";
 import { createContext, useState } from "react";
-import { useEvents } from "@/features/events/event/hooks/useEvents";
+import { createEventSchema, editEventSchema } from "@/lib/validations";
 import { eventTags } from "../utils/eventTags";
+import { TagProps } from "../types/tag";
+import { useEvents } from "@/features/events/event/hooks/useEvents";
+import z from "zod";
 
 interface EventContextType {
   filteredEvents: EventProps[];
@@ -38,10 +38,10 @@ interface EventContextType {
 
   /* - Mutations - */
 
-  cancelEventMutation: (eventId: string) => Promise<unknown>;
+  cancelEventMutation: (eventId: string) => Promise<CancelEventResult>;
   createEventMutation: (event: z.infer<typeof createEventSchema>) => Promise<unknown>;
   editEventMutation: (event: z.infer<typeof editEventSchema>) => Promise<unknown>;
-  deleteEventMutation: (eventId: string) => Promise<unknown>;
+  deleteEventMutation: (eventId: string) => Promise<DeleteEventResult>;
 }
 
 const EventContext = createContext<EventContextType | null>(null);

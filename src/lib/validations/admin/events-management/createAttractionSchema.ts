@@ -1,6 +1,6 @@
+import { imageFileSchema } from "../../shared/imageFileSchema";
 import { regex } from "@/shared/utils/constants/regex";
 import { z } from "zod";
-import { imageFileSchema } from "../../shared/imageFileSchema";
 
 const createAttractionSchema = z.object({
   // 1. Nome

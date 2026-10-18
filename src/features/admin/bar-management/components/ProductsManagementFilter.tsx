@@ -1,10 +1,10 @@
 "use client";
 
-import { FaSearch } from "react-icons/fa";
 import { Check, ChevronDown } from "lucide-react";
+import { FaSearch } from "react-icons/fa";
 import { useBarContext } from "@/features/bar/hooks/useBarContext";
-import { useMobileContext } from "@/shared/hooks/useMobileContext";
 import { useEffect, useRef, useState } from "react";
+import { useMobileContext } from "@/shared/hooks/useMobileContext";
 
 interface ProductsManagementFilterProps {
   currentPage: number;

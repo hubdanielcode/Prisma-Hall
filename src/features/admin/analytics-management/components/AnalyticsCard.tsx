@@ -2,12 +2,10 @@
 
 import { FaCocktail, FaTicketAlt, FaUserPlus, FaUsers } from "react-icons/fa";
 import { formatCurrency } from "@/shared/utils/functions/formatters";
-import { useMobileContext } from "@/shared/hooks/useMobileContext";
-import { useNewVisitors } from "@/features/admin/analytics-management/hooks/useNewVisitors";
-import { useTicketIncome } from "@/features/admin/analytics-management/hooks/useTicketIncome";
-import { useVoucherIncome } from "@/features/admin/analytics-management/hooks/useVoucherIncome";
 import { periodOptions, type PeriodLabelProps } from "@/features/admin/analytics-management/types/period";
-import { tagFilterSchema } from "@/lib/validations";
+import { tagFilterSchema } from "@/lib/validations/shared/tagSchema";
+import { useMobileContext } from "@/shared/hooks/useMobileContext";
+import { useNewVisitors, useVoucherIncome, useTicketIncome } from "@/features/admin/analytics-management";
 import type { z } from "zod";
 
 interface AnalyticsCardProps {

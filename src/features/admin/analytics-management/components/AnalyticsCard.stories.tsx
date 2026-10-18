@@ -1,6 +1,6 @@
+import { AnalyticsCard } from "./AnalyticsCard";
 import { MobileProvider } from "@/shared/context/MobileContext";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
-import { AnalyticsCard } from "./AnalyticsCard";
 
 export default {
   title: "Layouts/Admin/Analytics Management",

@@ -62,7 +62,7 @@ const EventsManagementContent = () => {
     if (currentPage > totalPages) {
       setCurrentPage(totalPages);
     }
-  }, [filteredEvents.length]);
+  }, [filteredEvents.length, currentPage]);
 
   return (
     <>

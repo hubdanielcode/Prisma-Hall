@@ -11,3 +11,8 @@ export { useCartItems } from "@/features/cart/hooks/useCartItems";
 /* - Types - */
 
 export type { CartItemProps } from "@/features/cart/types/cartItem";
+
+/* - Utils - */
+
+export { mapCartItem } from "@/features/cart/utils/mapCartItem";
+export { serviceFee } from "@/features/cart/utils/serviceFee";

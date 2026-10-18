@@ -2,9 +2,9 @@
 
 import { checkIsAdmin } from "../checkIsAdmin";
 import { createProductSchema } from "@/lib/validations/admin/bar-management/createProductSchema";
+import { del, put } from "@vercel/blob";
 import { prisma } from "@/lib/server/services/prisma";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
-import { put } from "@vercel/blob";
 import z from "zod";
 
 const createProduct = async (product: z.infer<typeof createProductSchema>) => {
@@ -22,8 +22,12 @@ const createProduct = async (product: z.infer<typeof createProductSchema>) => {
 
   const imageFile = parsedProduct.data.image;
 
+  let newImageUrl: string | undefined;
+
   try {
     const blob = await put(`${Date.now()}-${imageFile.name}`, imageFile, { access: "public" });
+
+    newImageUrl = blob.url;
 
     const newProduct = await prisma.product.create({
       data: {
@@ -51,6 +55,16 @@ const createProduct = async (product: z.infer<typeof createProductSchema>) => {
       updatedAt: newProduct.updatedAt.toISOString(),
     };
   } catch (error) {
+    /* - Se o banco falhou depois do upload, remove a imagem nova para não ficar órfã no Blob - */
+
+    if (newImageUrl) {
+      try {
+        await del(newImageUrl);
+      } catch {
+        // A imagem nova fica no Blob, mas nada foi salvo no banco
+      }
+    }
+
     if (error instanceof PrismaClientKnownRequestError && error.code === "P2002") {
       const errorMeta = JSON.stringify(error.meta);
 

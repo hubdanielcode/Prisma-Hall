@@ -4,9 +4,9 @@ import { checkRateLimit } from "@/lib/server/rate-limit/rateLimiter";
 import { cookies } from "next/headers";
 import { hash } from "@/lib/server/services/bcrypt";
 import { prisma } from "@/lib/server/services/prisma";
-import { signUpSchema } from "@/lib/validations";
-import z from "zod";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
+import { signUpSchema } from "@/lib/validations/authentication/signUpSchema";
+import z from "zod";
 
 const signUp = async (user: z.infer<typeof signUpSchema>) => {
   const parsedSignUpUser = signUpSchema.safeParse(user);

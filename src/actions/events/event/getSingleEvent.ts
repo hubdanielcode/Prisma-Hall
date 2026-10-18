@@ -20,7 +20,7 @@ const getSingleEvent = async (eventId: string) => {
       image: event.image,
       status: getEventStatus(event),
       price: event.price.toNumber(),
-      startsAt: event.startsAt,
+      startsAt: event.startsAt.toISOString(),
       attendees: event.attendees,
       rating: event.rating.toNumber(),
 

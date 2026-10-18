@@ -1,5 +1,5 @@
 import { periodSchema } from "../../shared/periodSchema";
-import { tagSchema } from "../../shared/tagSchemas";
+import { tagSchema } from "../../shared/tagSchema";
 import { z } from "zod";
 
 const ticketIncomeSchema = z.object({

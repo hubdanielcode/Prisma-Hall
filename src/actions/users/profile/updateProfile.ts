@@ -1,8 +1,8 @@
 "use server";
 
 import { del, put } from "@vercel/blob";
+import { newProfileSchema } from "@/lib/validations/users/profileSchema";
 import { prisma } from "@/lib/server/services/prisma";
-import { newProfileSchema } from "@/lib/validations/users/profileSchemas";
 import { updateProfileSchema } from "@/lib/validations/users/updateProfileSchema";
 import { validateSession } from "@/actions/session/validateSession";
 import z from "zod";
@@ -16,44 +16,33 @@ const updateProfile = async (profile: z.input<typeof updateProfileSchema>) => {
     return false;
   }
 
-  const parsedUpdatedProfile = updateProfileSchema.safeParse(profile);
+  const parsedProfile = updateProfileSchema.safeParse(profile);
 
-  if (!parsedUpdatedProfile.success) {
+  if (!parsedProfile.success) {
     return false;
   }
 
   const baseUserData = {
-    name: parsedUpdatedProfile.data.name,
+    name: parsedProfile.data.name,
   };
 
   const baseProfileData = {
-    phoneNumber: parsedUpdatedProfile.data.phoneNumber,
-    socialSecurityNumber: parsedUpdatedProfile.data.socialSecurityNumber,
-    birthDate: parsedUpdatedProfile.data.birthDate,
-    zipCode: parsedUpdatedProfile.data.zipCode,
-    city: parsedUpdatedProfile.data.city,
-    state: parsedUpdatedProfile.data.state,
-    neighborhood: parsedUpdatedProfile.data.neighborhood,
-    street: parsedUpdatedProfile.data.street,
-    number: parsedUpdatedProfile.data.number,
-    complement: parsedUpdatedProfile.data.complement,
+    phoneNumber: parsedProfile.data.phoneNumber,
+    socialSecurityNumber: parsedProfile.data.socialSecurityNumber,
+    birthDate: parsedProfile.data.birthDate,
+    zipCode: parsedProfile.data.zipCode,
+    city: parsedProfile.data.city,
+    state: parsedProfile.data.state,
+    neighborhood: parsedProfile.data.neighborhood,
+    street: parsedProfile.data.street,
+    number: parsedProfile.data.number,
+    complement: parsedProfile.data.complement,
   };
 
-  const profilePicture = parsedUpdatedProfile.data.profilePicture;
+  const profilePicture = parsedProfile.data.profilePicture;
   const hasProfileData = Object.values(baseProfileData).some((value) => value !== undefined);
 
-  let newProfilePictureUrl: string | undefined;
-
   try {
-    const existingUser = await prisma.user.findUnique({
-      where: { id: validSession.user.id },
-      select: { profilePicture: true },
-    });
-
-    if (!existingUser) {
-      return false;
-    }
-
     const existingProfile = await prisma.profile.findUnique({
       where: { userId: validSession.user.id },
     });
@@ -66,18 +55,12 @@ const updateProfile = async (profile: z.input<typeof updateProfileSchema>) => {
       return false;
     }
 
-    /* - Só sobe a imagem depois de tudo validado - */
-
-    if (profilePicture) {
-      const blob = await put(`${Date.now()}-${profilePicture.name}`, profilePicture, { access: "public" });
-
-      newProfilePictureUrl = blob.url;
-    }
+    /* - Primeiro salva os dados no banco. A foto só sobe depois, quando o banco já aceitou tudo - */
 
     const { editedUser, editedProfile } = await prisma.$transaction(async (transaction) => {
       const editedUser = await transaction.user.update({
         where: { id: validSession.user.id },
-        data: { ...baseUserData, profilePicture: newProfilePictureUrl },
+        data: { ...baseUserData },
       });
 
       let editedProfile = existingProfile;
@@ -98,19 +81,52 @@ const updateProfile = async (profile: z.input<typeof updateProfileSchema>) => {
       return { editedUser, editedProfile };
     });
 
-    /* - Remove a foto antiga do Blob. O perfil continua atualizado mesmo sem a remoção - */
+    let profilePictureUrl = editedUser.profilePicture;
 
-    if (newProfilePictureUrl && existingUser.profilePicture) {
+    /* - Troca de foto: sobe a nova, grava o endereço no usuário e só então remove a antiga - */
+
+    if (profilePicture) {
+      let newProfilePictureUrl: string | undefined;
+
       try {
-        await del(existingUser.profilePicture);
+        const blob = await put(`${Date.now()}-${profilePicture.name}`, profilePicture, { access: "public" });
+
+        newProfilePictureUrl = blob.url;
+
+        await prisma.user.update({
+          where: { id: validSession.user.id },
+          data: { profilePicture: blob.url },
+        });
+
+        profilePictureUrl = blob.url;
       } catch {
-        // A foto antiga fica no Blob, mas a troca já foi feita
+        // Os dados já foram salvos. Só a foto falhou, então remove a imagem nova (se chegou a subir) para não ficar órfã no Blob
+
+        if (newProfilePictureUrl) {
+          try {
+            await del(newProfilePictureUrl);
+          } catch {
+            // A imagem nova fica no Blob, mas a foto do perfil não foi trocada
+          }
+        }
+
+        return "picture_upload_failed";
+      }
+
+      /* - Remove a foto antiga do Blob. O perfil continua atualizado mesmo sem a remoção - */
+
+      if (editedUser.profilePicture) {
+        try {
+          await del(editedUser.profilePicture);
+        } catch {
+          // A foto antiga fica no Blob, mas a troca já foi feita
+        }
       }
     }
 
     return {
       name: editedUser.name,
-      profilePicture: editedUser.profilePicture,
+      profilePicture: profilePictureUrl,
 
       phoneNumber: editedProfile?.phoneNumber,
       socialSecurityNumber: editedProfile?.socialSecurityNumber,
@@ -124,16 +140,6 @@ const updateProfile = async (profile: z.input<typeof updateProfileSchema>) => {
       complement: editedProfile?.complement,
     };
   } catch {
-    /* - Se o banco falhou depois do upload, remove a imagem nova para não ficar órfã no Blob - */
-
-    if (newProfilePictureUrl) {
-      try {
-        await del(newProfilePictureUrl);
-      } catch {
-        // A imagem nova fica no Blob, mas nada foi salvo no banco
-      }
-    }
-
     return false;
   }
 };

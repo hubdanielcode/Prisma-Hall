@@ -1,7 +1,7 @@
 "use server";
 
 import { checkIsAdmin } from "../checkIsAdmin";
-import { editUserSchema } from "@/lib/validations";
+import { editUserSchema } from "@/lib/validations/admin/user-management/editUserSchema";
 import { prisma } from "@/lib/server/services/prisma";
 import z from "zod";
 

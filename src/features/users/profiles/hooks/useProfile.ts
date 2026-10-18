@@ -6,6 +6,24 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 const useProfile = () => {
   const queryClient = useQueryClient();
 
+  /* - Definições - */
+
+  const profileQueryKey = {
+    admin: "adminProfile",
+    protected: "protectedProfile",
+  };
+
+  const invalidateAllProfileQueries = async () => {
+    await Promise.all([
+      queryClient.invalidateQueries({ queryKey: [profileQueryKey.admin] }),
+      queryClient.invalidateQueries({ queryKey: [profileQueryKey.protected] }),
+      queryClient.invalidateQueries({ queryKey: ["profile"] }),
+    ]);
+
+    queryClient.removeQueries({ queryKey: ["notifications"] });
+    queryClient.removeQueries({ queryKey: ["notificationPreferences"] });
+  };
+
   /* - Query de leitura - */
 
   const {
@@ -36,9 +54,9 @@ const useProfile = () => {
 
   const { mutateAsync: deleteProfileMutation } = useMutation({
     mutationFn: deleteProfileAction,
-    onSuccess: (deleteProfileMutationResult) => {
+    onSuccess: async (deleteProfileMutationResult) => {
       if (deleteProfileMutationResult === true) {
-        queryClient.invalidateQueries({ queryKey: ["profile"] });
+        await invalidateAllProfileQueries();
       }
     },
   });

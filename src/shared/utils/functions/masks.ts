@@ -55,7 +55,7 @@ const masks = {
       .slice(0, 8)
       .replace(/(\d{5})(\d)/, "$1-$2"),
 
-  city: (value: string) => value.replace(/[^\p{L} '\-]/gu, "").slice(0, 50),
+  city: (value: string) => value.replace(/[^\p{L} '-]/gu, "").slice(0, 50),
 
   state: (value: string) =>
     value
@@ -63,7 +63,7 @@ const masks = {
       .toUpperCase()
       .slice(0, 2),
 
-  neighborhood: (value: string) => value.replace(/[^\p{L}0-9 '\-]/gu, "").slice(0, 60),
+  neighborhood: (value: string) => value.replace(/[^\p{L}0-9 '-]/gu, "").slice(0, 60),
 
   street: (value: string) => value.replace(/[^\p{L}0-9 '\-,.]/gu, "").slice(0, 50),
 

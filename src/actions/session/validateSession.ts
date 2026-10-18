@@ -19,12 +19,28 @@ const validateSession = async () => {
       return false;
     }
 
-    await prisma.session.update({
-      where: { id: session.id },
-      data: {
-        lastActivityAt: new Date(),
-      },
-    });
+    /* - Só grava a atividade quando a última gravação tem mais de 5 minutos, para não escrever no banco a cada chamada - */
+
+    const activityUpdateInterval = 5 * 60 * 1000;
+
+    if (Date.now() - session.lastActivityAt.getTime() > activityUpdateInterval) {
+      await prisma.session.update({
+        where: { id: session.id },
+        data: {
+          lastActivityAt: new Date(),
+        },
+      });
+    }
+
+    /* - Em 1% das vezes, apaga as sessões expiradas ou revogadas. O sorteio evita rodar essa limpeza a cada requisição - */
+
+    if (Math.random() < 0.01) {
+      await prisma.session.deleteMany({
+        where: {
+          OR: [{ expiresAt: { lt: new Date() } }, { revokedAt: { not: null } }],
+        },
+      });
+    }
 
     const user = await prisma.user.findUnique({
       where: { id: session.userId },

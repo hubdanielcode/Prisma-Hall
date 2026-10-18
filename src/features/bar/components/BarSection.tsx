@@ -3,8 +3,8 @@
 import { motion } from "motion/react";
 import { Plus } from "lucide-react";
 import { ProductCard } from "./ProductCard";
-import { useBarContext } from "../hooks/useBarContext";
 import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
+import { useBarContext } from "../hooks/useBarContext";
 import { useCartContext } from "@/features/cart/hooks/useCartContext";
 import { useRouter } from "next/navigation";
 

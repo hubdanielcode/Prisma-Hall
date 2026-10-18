@@ -1,6 +1,6 @@
 "use server";
 
-import { cartItemSchema } from "@/lib/validations";
+import { cartItemSchema } from "@/lib/validations/cart/cartItemSchema";
 import { getEventStatus } from "@/lib/server/events/getEventStatus";
 import { prisma } from "@/lib/server/services/prisma";
 import { validateSession } from "@/actions/session/validateSession";

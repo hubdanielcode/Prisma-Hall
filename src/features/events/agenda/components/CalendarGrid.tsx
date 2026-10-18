@@ -1,8 +1,8 @@
 "use client";
 
+import { dayNames } from "../../event/utils/dayNames";
 import { formattedDate } from "@/shared/utils/functions/dates";
 import { monthNames } from "../../event/utils/monthNames";
-import { dayNames } from "../../event/utils/dayNames";
 import { motion } from "motion/react";
 import { useCalendarContext } from "../../event/hooks/useCalendarContext";
 import { useEvents } from "@/features/events/event/hooks/useEvents";

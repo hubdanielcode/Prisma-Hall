@@ -1,12 +1,15 @@
 "use server";
 
 import { checkRateLimit, resetRateLimit } from "@/lib/server/rate-limit/rateLimiter";
-import { compare } from "@/lib/server/services/bcrypt";
+import { compare, hash } from "@/lib/server/services/bcrypt";
 import { del } from "@vercel/blob";
 import { prisma } from "@/lib/server/services/prisma";
+import { randomUUID } from "crypto";
 import { validateSession } from "@/actions/session/validateSession";
 
 const deleteProfile = async (password: string) => {
+  /* - Validando a sessão e a senha digitada - */
+
   const validSession = await validateSession();
 
   if (!validSession) {
@@ -17,9 +20,15 @@ const deleteProfile = async (password: string) => {
     return false;
   }
 
-  /* - Limita as tentativas de senha, para a exclusão não servir de brecha para adivinhar a senha - */
+  /* - Limitando as tentativas de senha, para a exclusão não servir de brecha para adivinhar a senha - */
 
-  const rateLimit = await checkRateLimit({ action: "deleteProfile", identifier: validSession.user.id, limit: 5, windowSeconds: 15 * 60 });
+  const rateLimit = await checkRateLimit({
+    action: "deleteProfile",
+    identifier: validSession.user.id,
+    limit: 5,
+    windowSeconds: 15 * 60,
+    includeIp: false,
+  });
 
   if (!rateLimit.allowed) {
     return "too_many_attempts";
@@ -41,9 +50,9 @@ const deleteProfile = async (password: string) => {
       return "invalid_password";
     }
 
-    await resetRateLimit("deleteProfile", validSession.user.id);
+    await resetRateLimit("deleteProfile", validSession.user.id, false);
 
-    /* - Não exclui enquanto houver ingresso(s) de evento(s) futuro(s) e/ou voucher(s) pago(s) que ainda não foram retirado(s), para ninguém perder dinheiro sem reembolso - */
+    /* - Bloqueando a exclusão enquanto houver ingresso(s) de evento(s) futuro(s) e/ou voucher(s) pago(s) que ainda não foram retirado(s), para ninguém perder dinheiro sem reembolso - */
 
     const activeTicket = await prisma.ticket.findFirst({
       where: {
@@ -64,43 +73,79 @@ const deleteProfile = async (password: string) => {
       select: { id: true },
     });
 
-    if (activeTicket || activeVoucher) {
+    /* - Bloqueando também enquanto houver pedido pendente, porque o pagamento ainda pode ser confirmado depois que a conta for removida - */
+
+    const pendingTicketOrder = await prisma.ticketOrder.findFirst({
+      where: { userId: validSession.user.id, status: "pending" },
+      select: { id: true },
+    });
+
+    const pendingVoucherOrder = await prisma.voucherOrder.findFirst({
+      where: { userId: validSession.user.id, status: "pending" },
+      select: { id: true },
+    });
+
+    if (activeTicket || activeVoucher || pendingTicketOrder || pendingVoucherOrder) {
       return "active_orders";
     }
+
+    /* - Ao deletar o perfil, os dados pessoais e de uso do usuário são apagados e a conta é anonimizada. Pedidos, pagamentos, ingressos e vouchers continuam no banco, sem nenhum dado pessoal - */
+
+    // 1. Buscando a galeria do usuário, para apagar as curtidas e as imagens dela
 
     const userGalleries = await prisma.gallery.findMany({
       where: { userId: validSession.user.id },
       select: { id: true, image: true },
     });
 
-    const userGalleryIds = userGalleries.map((gallery) => gallery.id);
+    // 2. Gerando uma senha aleatória que ninguém conhece, para ninguém conseguir entrar na conta anonimizada
+
+    const anonymizedPassword = await hash(randomUUID(), 10);
 
     await prisma.$transaction([
-      prisma.ticket.deleteMany({ where: { userId: validSession.user.id } }),
-      prisma.ticketPayment.deleteMany({ where: { userId: validSession.user.id } }),
-      prisma.ticketOrder.deleteMany({ where: { userId: validSession.user.id } }),
+      // 3. Apagando a galeria e as curtidas
 
-      prisma.voucher.deleteMany({ where: { userId: validSession.user.id } }),
-      prisma.voucherPayment.deleteMany({ where: { userId: validSession.user.id } }),
-      prisma.voucherOrder.deleteMany({ where: { userId: validSession.user.id } }),
-
-      prisma.galleryLikes.deleteMany({ where: { imageId: { in: userGalleryIds } } }),
       prisma.gallery.deleteMany({ where: { userId: validSession.user.id } }),
       prisma.galleryLikes.deleteMany({ where: { userId: validSession.user.id } }),
+
+      // 4. Apagando favoritos, avaliações e carrinho
+
       prisma.favoriteEvent.deleteMany({ where: { userId: validSession.user.id } }),
       prisma.review.deleteMany({ where: { userId: validSession.user.id } }),
       prisma.cart.deleteMany({ where: { userId: validSession.user.id } }),
+
+      // 5. Apagando notificações, preferências e newsletter
 
       prisma.notification.deleteMany({ where: { userId: validSession.user.id } }),
       prisma.notificationPreference.deleteMany({ where: { userId: validSession.user.id } }),
       prisma.newsletter.deleteMany({ where: { userId: validSession.user.id } }),
 
+      // 6. Apagando as sessões e o perfil (CPF, endereço, telefone)
+
       prisma.session.deleteMany({ where: { userId: validSession.user.id } }),
       prisma.profile.deleteMany({ where: { userId: validSession.user.id } }),
-      prisma.user.delete({ where: { id: validSession.user.id } }),
+
+      // 7. Anonimizando o usuário em vez de apagá-lo, para manter o histórico financeiro e os analytics
+
+      prisma.user.update({
+        where: { id: validSession.user.id },
+        data: {
+          name: "Usuário removido",
+          email: `removido-${validSession.user.id}@prismahall.invalid`,
+          password: anonymizedPassword,
+          token: null,
+          tokenExpiresAt: null,
+          profilePicture: null,
+          role: "user",
+          verifiedBadge: false,
+          frequentUser: "none",
+          oldUser: "none",
+          validatedAt: null,
+        },
+      }),
     ]);
 
-    /* - Remove a foto de perfil e as imagens da galeria do Blob. A conta continua excluída mesmo sem a remoção - */
+    // 8. Removendo a foto de perfil e as imagens da galeria do Blob. A conta continua anonimizada mesmo sem a remoção
 
     const blobUrls = [...userGalleries.map((gallery) => gallery.image), userToDelete.profilePicture].filter((url): url is string => Boolean(url));
 
@@ -108,7 +153,7 @@ const deleteProfile = async (password: string) => {
       try {
         await del(blobUrls);
       } catch {
-        // As imagens ficam no Blob, mas a conta já foi excluída
+        // As imagens ficam no Blob, mas a conta já foi anonimizada
       }
     }
 

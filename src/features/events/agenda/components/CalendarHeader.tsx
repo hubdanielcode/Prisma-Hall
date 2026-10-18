@@ -3,9 +3,9 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { formattedDate } from "@/shared/utils/functions/dates";
 import { monthNames } from "../../event/utils/monthNames";
-import { useEvents } from "../../event/hooks/useEvents";
 import { motion } from "motion/react";
 import { useCalendarContext } from "../../event/hooks/useCalendarContext";
+import { useEvents } from "../../event/hooks/useEvents";
 
 const CalendarHeader = () => {
   /* - Puxando do context - */

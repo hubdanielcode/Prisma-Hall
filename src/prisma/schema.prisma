@@ -17,6 +17,9 @@ model Session {
 
   user User @relation(fields: [userId], references: [id])
 
+  @@index([userId])
+  @@index([expiresAt])
+  @@index([revokedAt])
   @@map("session")
 }
 
@@ -25,6 +28,7 @@ model RateLimit {
   count     Int      @default(0)
   expiresAt DateTime @map("expires_at")
 
+  @@index([expiresAt])
   @@map("rate_limit")
 }
 
@@ -93,6 +97,7 @@ model Notification {
 
   user User @relation(fields: [userId], references: [id])
 
+  @@index([userId, createdAt])
   @@map("notifications")
 }
 
@@ -174,6 +179,9 @@ model Voucher {
   product Product      @relation(fields: [productId], references: [id])
   user    User         @relation(fields: [userId], references: [id])
 
+  @@index([userId])
+  @@index([orderId])
+  @@index([productId])
   @@map("voucher")
 }
 
@@ -189,6 +197,7 @@ model VoucherOrder {
   user            User             @relation(fields: [userId], references: [id])
   voucherPayments VoucherPayment[]
 
+  @@index([userId])
   @@map("voucher_orders")
 }
 
@@ -208,6 +217,8 @@ model VoucherPayment {
   order VoucherOrder @relation(fields: [orderId], references: [id])
   user  User         @relation(fields: [userId], references: [id])
 
+  @@index([orderId, createdAt])
+  @@index([userId])
   @@map("voucher_payments")
 }
 
@@ -227,6 +238,9 @@ model Ticket {
   order TicketOrder @relation(fields: [orderId], references: [id])
   user  User        @relation(fields: [userId], references: [id])
 
+  @@index([userId])
+  @@index([orderId])
+  @@index([eventId])
   @@map("tickets")
 }
 
@@ -242,6 +256,7 @@ model TicketOrder {
   ticketPayments TicketPayment[]
   tickets        Ticket[]
 
+  @@index([userId])
   @@map("ticket_orders")
 }
 
@@ -261,21 +276,23 @@ model TicketPayment {
   order TicketOrder @relation(fields: [orderId], references: [id])
   user  User        @relation(fields: [userId], references: [id])
 
+  @@index([orderId, createdAt])
+  @@index([userId])
   @@map("ticket_payments")
 }
 
 model Event {
-  id             String      @id @default(uuid())
+  id             String   @id @default(uuid())
   title          String
   description    String
   tag            EventTag
-  attractionName String      @map("attraction_name")
+  attractionName String   @map("attraction_name")
   image          String
-  status         EventStatus
+  isCancelled    Boolean  @default(false) @map("is_cancelled")
   price          Decimal
-  startsAt       DateTime    @map("starts_at")
-  attendees      Int         @default(0)
-  rating         Decimal     @default(0.0)
+  startsAt       DateTime @map("starts_at")
+  attendees      Int      @default(0)
+  rating         Decimal  @default(0.0)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -317,6 +334,7 @@ model Review {
   event Event @relation(fields: [eventId], references: [id])
   user  User  @relation(fields: [userId], references: [id])
 
+  @@index([userId])
   @@map("reviews")
 }
 
@@ -331,8 +349,9 @@ model Gallery {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  event Event @relation(fields: [eventId], references: [id])
-  user  User  @relation(fields: [userId], references: [id])
+  event        Event          @relation(fields: [eventId], references: [id])
+  user         User           @relation(fields: [userId], references: [id])
+  galleryLikes GalleryLikes[]
 
   @@map("gallery")
 }
@@ -344,9 +363,11 @@ model GalleryLikes {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  user User @relation(fields: [userId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
+  gallery Gallery @relation(fields: [imageId], references: [id], onDelete: Cascade)
 
   @@id([userId, imageId])
+  @@index([imageId])
   @@map("gallery_likes")
 }
 
@@ -361,6 +382,7 @@ model FavoriteEvent {
   event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
 
   @@id([userId, eventId])
+  @@index([eventId])
   @@map("favorite_events")
 }
 

@@ -1,6 +1,6 @@
 import { imageFileSchema } from "../../shared/imageFileSchema";
 import { regex } from "@/shared/utils/constants/regex";
-import { tagSchema } from "../../shared/tagSchemas";
+import { tagSchema } from "../../shared/tagSchema";
 import { z } from "zod";
 
 const createEventSchema = z.object({
@@ -32,17 +32,22 @@ const createEventSchema = z.object({
 
   image: imageFileSchema,
 
-  // 6. Estado
-
-  status: z.enum(["happened", "soon", "cancelled"]),
-
-  // 7. Preço
+  // 6. Preço
 
   price: z.number().positive(),
 
-  // 8. Horário
+  // 7. Horário (aceita a data ISO enviada pelo picker ou um objeto Date, mantendo o horário escolhido)
 
-  startsAt: z.string(),
+  startsAt: z.union([z.iso.datetime(), z.date()], "Digite uma data válida.").transform((startsAt: string | Date, zodValidationContext) => {
+    const parsedStartsAt = new Date(startsAt);
+
+    if (isNaN(parsedStartsAt.getTime())) {
+      zodValidationContext.addIssue({ code: "custom", message: "Digite uma data válida." });
+      return z.NEVER;
+    } else {
+      return parsedStartsAt;
+    }
+  }),
 });
 
 export { createEventSchema };

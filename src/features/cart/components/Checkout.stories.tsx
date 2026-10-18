@@ -1,4 +1,4 @@
-import { AuthenticationProvider } from "@/features/authentication";
+import { AuthenticationProvider } from "@/features/authentication/context/AuthenticationContext";
 import { CartProvider } from "@/features/cart/context/CartContext";
 import { Checkout } from "./Checkout";
 import { QueryProvider } from "@/shared/providers/QueryProvider";

@@ -1,14 +1,14 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { editUserSchema } from "@/lib/validations";
+import { editUserSchema } from "@/lib/validations/admin/user-management/editUserSchema";
 import { roleBadgeOptions, roleBadgeStyles, tierBadgeOptions, tierBadgeStyles } from "@/shared/utils";
 import { useBlockScroll, useMobileContext } from "@/shared/hooks";
 import { UserAvatar } from "./UserAvatar";
 import { useState } from "react";
 import { useUserContext } from "@/features/users/user/hooks/useUserContext";
 import { X } from "lucide-react";
-import type { UserProps } from "@/features/users";
+import type { UserProps } from "@/features/users/user/types/user";
 import type z from "zod";
 
 interface EditUserModalProps {

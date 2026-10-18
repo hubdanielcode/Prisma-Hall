@@ -13,7 +13,7 @@ interface RefundStripePaymentProps {
 
 /* - Quantas sessões recentes do Stripe são varridas antes de desistir da listagem e cair na busca - */
 
-const MAX_SESSIONS_TO_CHECK = 500;
+const maxSessionToCheck = 500;
 
 /* - Localiza o payment intent da cobrança. A listagem de sessões é consistente (acha pagamentos recém-feitos); a busca do Stripe tem atraso de indexação e fica só como alternativa - */
 
@@ -33,7 +33,7 @@ const findPaymentIntentId = async (paymentId: string, type: PaymentType, payment
       return typeof session.payment_intent === "string" ? session.payment_intent : session.payment_intent.id;
     }
 
-    if (checkedSessions >= MAX_SESSIONS_TO_CHECK) {
+    if (checkedSessions >= maxSessionToCheck) {
       break;
     }
   }
@@ -43,11 +43,24 @@ const findPaymentIntentId = async (paymentId: string, type: PaymentType, payment
   return foundPaymentIntents.data[0] ? foundPaymentIntents.data[0].id : null;
 };
 
+/* - Quanto ainda pode ser reembolsado da cobrança, em centavos (desconta reembolsos parciais já feitos). Devolve null se não der para saber - */
+
+const getRemainingRefundableCents = async (paymentIntentId: string) => {
+  const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId, { expand: ["latest_charge"] });
+  const charge = paymentIntent.latest_charge;
+
+  if (!charge || typeof charge === "string") {
+    return null;
+  }
+
+  return charge.amount - charge.amount_refunded;
+};
+
 const isAlreadyRefundedError = (error: unknown) => {
   return typeof error === "object" && error !== null && "code" in error && (error as { code?: string }).code === "charge_already_refunded";
 };
 
-/* - Reembolsa no Stripe um pagamento que ainda está "confirmed" no banco. Quem chama só deve marcar o pagamento como "refunded" DEPOIS QUE ESTA FUNÇÃO DEVOLVER TRUE: se o Stripe falhar, devolve false e nada deve ser alterado. Sem "amount" o reembolso é total; com "amount" é parcial e o pagamento continua "confirmed". Pagamentos sem cobrança no Stripe (ex: dinheiro) contam como reembolsados. A chave de idempotência evita reembolso duplicado se a chamada for repetida - */
+/* - Reembolsa no Stripe um pagamento que ainda está "confirmed" no banco. Quem chama só deve marcar o pagamento como "refunded" DEPOIS QUE ESTA FUNÇÃO DEVOLVER TRUE: se o Stripe falhar, devolve false e nada deve ser alterado. Sem "amount" o reembolso é do que ainda resta na cobrança (total, ou o que sobrou depois de reembolsos parciais); com "amount" é parcial e o pagamento continua "confirmed". Pagamentos sem cobrança no Stripe (ex: dinheiro) contam como reembolsados. A chave de idempotência evita reembolso duplicado se a chamada for repetida - */
 
 const refundStripePayment = async ({ paymentId, type, amount, idempotencyKey }: RefundStripePaymentProps) => {
   try {
@@ -82,12 +95,30 @@ const refundStripePayment = async ({ paymentId, type, amount, idempotencyKey }: 
       return false;
     }
 
-    const finalIdempotencyKey = idempotencyKey ?? (amount === undefined ? `refund-${type}-${paymentId}` : undefined);
+    let centsToRefund = Math.round(valueToRefund * 100);
+
+    /* - Reembolso total: devolve só o que ainda resta (um reembolso parcial anterior, como o de evento cancelado, já saiu da cobrança) - */
+
+    if (amount === undefined) {
+      const remainingCents = await getRemainingRefundableCents(paymentIntentId);
+
+      if (remainingCents !== null) {
+        if (remainingCents <= 0) {
+          return true;
+        }
+
+        centsToRefund = Math.min(centsToRefund, remainingCents);
+      }
+    }
+
+    /* - O valor entra na chave para que uma repetição com outro valor restante não conflite com a tentativa anterior - */
+
+    const finalIdempotencyKey = idempotencyKey ?? (amount === undefined ? `refund-${type}-${paymentId}-${centsToRefund}` : undefined);
 
     await stripe.refunds.create(
       {
         payment_intent: paymentIntentId,
-        amount: Math.round(valueToRefund * 100),
+        amount: centsToRefund,
       },
       finalIdempotencyKey ? { idempotencyKey: finalIdempotencyKey } : undefined,
     );

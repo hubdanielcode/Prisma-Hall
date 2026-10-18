@@ -1,6 +1,7 @@
 "use client";
 
 import { CartItemCard } from "./CartItemCard";
+import { createStripeCheckoutSession } from "@/actions/payments/createStripeCheckoutSession";
 import { GiShoppingCart } from "react-icons/gi";
 import { motion } from "motion/react";
 import { useCartContext } from "../hooks/useCartContext";
@@ -8,7 +9,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import type { PaymentMethod } from "@/prisma/generated/prisma/enums";
-import { createStripeCheckoutSession } from "@/actions";
 
 const paymentMethods: { id: PaymentMethod; title: string }[] = [
   { id: "pix", title: "Pix" },

@@ -1,5 +1,6 @@
 import { atLeastOneFieldUpdated } from "@/shared/utils/functions/atLeastOneFieldUpdated";
-import { cartItemIdSchema, cartItemSchema } from "./cartItemSchemas";
+import { cartItemIdSchema } from "./cartItemIdSchema";
+import { cartItemSchema } from "./cartItemSchema";
 
 const updateCartItemSchema = cartItemSchema
   .partial()

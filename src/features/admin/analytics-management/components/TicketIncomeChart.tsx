@@ -5,7 +5,7 @@ import { BarChartList } from "@/features/admin/analytics-management/components/B
 import { eventTags } from "@/features/events/event/utils/eventTags";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { formatCurrency } from "@/shared/utils/functions/formatters";
-import { tagFilterSchema } from "@/lib/validations";
+import { tagFilterSchema } from "@/lib/validations/shared/tagSchema";
 import { useState } from "react";
 import { useTicketIncome } from "@/features/admin/analytics-management/hooks/useTicketIncome";
 import type { PeriodLabelProps } from "@/features/admin/analytics-management/types/period";

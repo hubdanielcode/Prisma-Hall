@@ -1,11 +1,11 @@
 "use client";
 
-import { useEventContext } from "@/features/events";
-import { useMobileContext } from "@/shared/hooks";
-import { masks } from "@/shared/utils";
-import { motion } from "motion/react";
-import { FaBan, FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import { EventsTablePagination } from "./EventsTablePagination";
+import { FaBan, FaPencilAlt, FaTrashAlt, FaUndoAlt } from "react-icons/fa";
+import { masks } from "@/shared/utils/functions/masks";
+import { motion } from "motion/react";
+import { useEventContext } from "@/features/events/event/hooks/useEventContext";
+import { useMobileContext } from "@/shared/hooks/useMobileContext";
 
 interface EventsManagementTableProps {
   currentPage: number;
@@ -119,6 +119,19 @@ const EventsManagementTable = ({ currentPage, onPageChange }: EventsManagementTa
                         onClick={() => setEventBeingCancelled(event)}
                       >
                         <FaBan className="group-hover:text-yellow-400 text-xs" />
+                      </motion.button>
+                    )}
+
+                    {event.status === "cancelled" && (
+                      <motion.button
+                        className="group flex justify-center items-center h-9 w-9 bg-[#1A1A1A] hover:bg-[#333] border border-[#B8860B60] rounded-lg cursor-pointer"
+                        title="Reprocessar reembolsos"
+                        aria-label="Reprocessar reembolsos"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => setEventBeingCancelled(event)}
+                      >
+                        <FaUndoAlt className="group-hover:text-green-400 text-xs" />
                       </motion.button>
                     )}
 
@@ -294,6 +307,25 @@ const EventsManagementTable = ({ currentPage, onPageChange }: EventsManagementTa
                         >
                           <span>
                             <FaBan className="group-hover:text-yellow-400" />
+                          </span>
+                        </motion.button>
+                      )}
+
+                      {/* - Botão de reprocessar reembolsos (evento já cancelado) - */}
+
+                      {event.status === "cancelled" && (
+                        <motion.button
+                          className={`group flex justify-center items-center bg-[#1A1A1A] hover:bg-[#333] border border-[#B8860B60] rounded-lg cursor-pointer ${
+                            isLandscapeMobile ? "h-8 w-8" : "h-10 w-10"
+                          }`}
+                          title="Reprocessar reembolsos"
+                          aria-label="Reprocessar reembolsos"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => setEventBeingCancelled(event)}
+                        >
+                          <span>
+                            <FaUndoAlt className="group-hover:text-green-400" />
                           </span>
                         </motion.button>
                       )}

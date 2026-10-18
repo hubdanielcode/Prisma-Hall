@@ -45,7 +45,7 @@ export type EventMinAggregateOutputType = {
   tag: $Enums.EventTag | null
   attractionName: string | null
   image: string | null
-  status: $Enums.EventStatus | null
+  isCancelled: boolean | null
   price: runtime.Decimal | null
   startsAt: Date | null
   attendees: number | null
@@ -61,7 +61,7 @@ export type EventMaxAggregateOutputType = {
   tag: $Enums.EventTag | null
   attractionName: string | null
   image: string | null
-  status: $Enums.EventStatus | null
+  isCancelled: boolean | null
   price: runtime.Decimal | null
   startsAt: Date | null
   attendees: number | null
@@ -77,7 +77,7 @@ export type EventCountAggregateOutputType = {
   tag: number
   attractionName: number
   image: number
-  status: number
+  isCancelled: number
   price: number
   startsAt: number
   attendees: number
@@ -107,7 +107,7 @@ export type EventMinAggregateInputType = {
   tag?: true
   attractionName?: true
   image?: true
-  status?: true
+  isCancelled?: true
   price?: true
   startsAt?: true
   attendees?: true
@@ -123,7 +123,7 @@ export type EventMaxAggregateInputType = {
   tag?: true
   attractionName?: true
   image?: true
-  status?: true
+  isCancelled?: true
   price?: true
   startsAt?: true
   attendees?: true
@@ -139,7 +139,7 @@ export type EventCountAggregateInputType = {
   tag?: true
   attractionName?: true
   image?: true
-  status?: true
+  isCancelled?: true
   price?: true
   startsAt?: true
   attendees?: true
@@ -242,7 +242,7 @@ export type EventGroupByOutputType = {
   tag: $Enums.EventTag
   attractionName: string
   image: string
-  status: $Enums.EventStatus
+  isCancelled: boolean
   price: runtime.Decimal
   startsAt: Date
   attendees: number
@@ -281,7 +281,7 @@ export type EventWhereInput = {
   tag?: Prisma.EnumEventTagFilter<"Event"> | $Enums.EventTag
   attractionName?: Prisma.StringFilter<"Event"> | string
   image?: Prisma.StringFilter<"Event"> | string
-  status?: Prisma.EnumEventStatusFilter<"Event"> | $Enums.EventStatus
+  isCancelled?: Prisma.BoolFilter<"Event"> | boolean
   price?: Prisma.DecimalFilter<"Event"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   attendees?: Prisma.IntFilter<"Event"> | number
@@ -303,7 +303,7 @@ export type EventOrderByWithRelationInput = {
   tag?: Prisma.SortOrder
   attractionName?: Prisma.SortOrder
   image?: Prisma.SortOrder
-  status?: Prisma.SortOrder
+  isCancelled?: Prisma.SortOrder
   price?: Prisma.SortOrder
   startsAt?: Prisma.SortOrder
   attendees?: Prisma.SortOrder
@@ -328,7 +328,7 @@ export type EventWhereUniqueInput = Prisma.AtLeast<{
   tag?: Prisma.EnumEventTagFilter<"Event"> | $Enums.EventTag
   attractionName?: Prisma.StringFilter<"Event"> | string
   image?: Prisma.StringFilter<"Event"> | string
-  status?: Prisma.EnumEventStatusFilter<"Event"> | $Enums.EventStatus
+  isCancelled?: Prisma.BoolFilter<"Event"> | boolean
   price?: Prisma.DecimalFilter<"Event"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   attendees?: Prisma.IntFilter<"Event"> | number
@@ -350,7 +350,7 @@ export type EventOrderByWithAggregationInput = {
   tag?: Prisma.SortOrder
   attractionName?: Prisma.SortOrder
   image?: Prisma.SortOrder
-  status?: Prisma.SortOrder
+  isCancelled?: Prisma.SortOrder
   price?: Prisma.SortOrder
   startsAt?: Prisma.SortOrder
   attendees?: Prisma.SortOrder
@@ -374,7 +374,7 @@ export type EventScalarWhereWithAggregatesInput = {
   tag?: Prisma.EnumEventTagWithAggregatesFilter<"Event"> | $Enums.EventTag
   attractionName?: Prisma.StringWithAggregatesFilter<"Event"> | string
   image?: Prisma.StringWithAggregatesFilter<"Event"> | string
-  status?: Prisma.EnumEventStatusWithAggregatesFilter<"Event"> | $Enums.EventStatus
+  isCancelled?: Prisma.BoolWithAggregatesFilter<"Event"> | boolean
   price?: Prisma.DecimalWithAggregatesFilter<"Event"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeWithAggregatesFilter<"Event"> | Date | string
   attendees?: Prisma.IntWithAggregatesFilter<"Event"> | number
@@ -389,7 +389,7 @@ export type EventCreateInput = {
   description: string
   tag: $Enums.EventTag
   image: string
-  status: $Enums.EventStatus
+  isCancelled?: boolean
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt: Date | string
   attendees?: number
@@ -411,7 +411,7 @@ export type EventUncheckedCreateInput = {
   tag: $Enums.EventTag
   attractionName: string
   image: string
-  status: $Enums.EventStatus
+  isCancelled?: boolean
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt: Date | string
   attendees?: number
@@ -431,7 +431,7 @@ export type EventUpdateInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
   image?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendees?: Prisma.IntFieldUpdateOperationsInput | number
@@ -453,7 +453,7 @@ export type EventUncheckedUpdateInput = {
   tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
   attractionName?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendees?: Prisma.IntFieldUpdateOperationsInput | number
@@ -474,7 +474,7 @@ export type EventCreateManyInput = {
   tag: $Enums.EventTag
   attractionName: string
   image: string
-  status: $Enums.EventStatus
+  isCancelled?: boolean
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt: Date | string
   attendees?: number
@@ -489,7 +489,7 @@ export type EventUpdateManyMutationInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
   image?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendees?: Prisma.IntFieldUpdateOperationsInput | number
@@ -505,7 +505,7 @@ export type EventUncheckedUpdateManyInput = {
   tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
   attractionName?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendees?: Prisma.IntFieldUpdateOperationsInput | number
@@ -531,7 +531,7 @@ export type EventCountOrderByAggregateInput = {
   tag?: Prisma.SortOrder
   attractionName?: Prisma.SortOrder
   image?: Prisma.SortOrder
-  status?: Prisma.SortOrder
+  isCancelled?: Prisma.SortOrder
   price?: Prisma.SortOrder
   startsAt?: Prisma.SortOrder
   attendees?: Prisma.SortOrder
@@ -553,7 +553,7 @@ export type EventMaxOrderByAggregateInput = {
   tag?: Prisma.SortOrder
   attractionName?: Prisma.SortOrder
   image?: Prisma.SortOrder
-  status?: Prisma.SortOrder
+  isCancelled?: Prisma.SortOrder
   price?: Prisma.SortOrder
   startsAt?: Prisma.SortOrder
   attendees?: Prisma.SortOrder
@@ -569,7 +569,7 @@ export type EventMinOrderByAggregateInput = {
   tag?: Prisma.SortOrder
   attractionName?: Prisma.SortOrder
   image?: Prisma.SortOrder
-  status?: Prisma.SortOrder
+  isCancelled?: Prisma.SortOrder
   price?: Prisma.SortOrder
   startsAt?: Prisma.SortOrder
   attendees?: Prisma.SortOrder
@@ -626,10 +626,6 @@ export type EventUpdateOneRequiredWithoutTicketsNestedInput = {
 
 export type EnumEventTagFieldUpdateOperationsInput = {
   set?: $Enums.EventTag
-}
-
-export type EnumEventStatusFieldUpdateOperationsInput = {
-  set?: $Enums.EventStatus
 }
 
 export type EventCreateNestedManyWithoutAttractionInput = {
@@ -722,7 +718,7 @@ export type EventCreateWithoutCartsInput = {
   description: string
   tag: $Enums.EventTag
   image: string
-  status: $Enums.EventStatus
+  isCancelled?: boolean
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt: Date | string
   attendees?: number
@@ -743,7 +739,7 @@ export type EventUncheckedCreateWithoutCartsInput = {
   tag: $Enums.EventTag
   attractionName: string
   image: string
-  status: $Enums.EventStatus
+  isCancelled?: boolean
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt: Date | string
   attendees?: number
@@ -778,7 +774,7 @@ export type EventUpdateWithoutCartsInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
   image?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendees?: Prisma.IntFieldUpdateOperationsInput | number
@@ -799,7 +795,7 @@ export type EventUncheckedUpdateWithoutCartsInput = {
   tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
   attractionName?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendees?: Prisma.IntFieldUpdateOperationsInput | number
@@ -818,7 +814,7 @@ export type EventCreateWithoutTicketsInput = {
   description: string
   tag: $Enums.EventTag
   image: string
-  status: $Enums.EventStatus
+  isCancelled?: boolean
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt: Date | string
   attendees?: number
@@ -839,7 +835,7 @@ export type EventUncheckedCreateWithoutTicketsInput = {
   tag: $Enums.EventTag
   attractionName: string
   image: string
-  status: $Enums.EventStatus
+  isCancelled?: boolean
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt: Date | string
   attendees?: number
@@ -874,7 +870,7 @@ export type EventUpdateWithoutTicketsInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
   image?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendees?: Prisma.IntFieldUpdateOperationsInput | number
@@ -895,7 +891,7 @@ export type EventUncheckedUpdateWithoutTicketsInput = {
   tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
   attractionName?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendees?: Prisma.IntFieldUpdateOperationsInput | number
@@ -914,7 +910,7 @@ export type EventCreateWithoutAttractionInput = {
   description: string
   tag: $Enums.EventTag
   image: string
-  status: $Enums.EventStatus
+  isCancelled?: boolean
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt: Date | string
   attendees?: number
@@ -934,7 +930,7 @@ export type EventUncheckedCreateWithoutAttractionInput = {
   description: string
   tag: $Enums.EventTag
   image: string
-  status: $Enums.EventStatus
+  isCancelled?: boolean
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt: Date | string
   attendees?: number
@@ -984,7 +980,7 @@ export type EventScalarWhereInput = {
   tag?: Prisma.EnumEventTagFilter<"Event"> | $Enums.EventTag
   attractionName?: Prisma.StringFilter<"Event"> | string
   image?: Prisma.StringFilter<"Event"> | string
-  status?: Prisma.EnumEventStatusFilter<"Event"> | $Enums.EventStatus
+  isCancelled?: Prisma.BoolFilter<"Event"> | boolean
   price?: Prisma.DecimalFilter<"Event"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   attendees?: Prisma.IntFilter<"Event"> | number
@@ -999,7 +995,7 @@ export type EventCreateWithoutReviewsInput = {
   description: string
   tag: $Enums.EventTag
   image: string
-  status: $Enums.EventStatus
+  isCancelled?: boolean
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt: Date | string
   attendees?: number
@@ -1020,7 +1016,7 @@ export type EventUncheckedCreateWithoutReviewsInput = {
   tag: $Enums.EventTag
   attractionName: string
   image: string
-  status: $Enums.EventStatus
+  isCancelled?: boolean
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt: Date | string
   attendees?: number
@@ -1055,7 +1051,7 @@ export type EventUpdateWithoutReviewsInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
   image?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendees?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1076,7 +1072,7 @@ export type EventUncheckedUpdateWithoutReviewsInput = {
   tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
   attractionName?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendees?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1095,7 +1091,7 @@ export type EventCreateWithoutGalleriesInput = {
   description: string
   tag: $Enums.EventTag
   image: string
-  status: $Enums.EventStatus
+  isCancelled?: boolean
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt: Date | string
   attendees?: number
@@ -1116,7 +1112,7 @@ export type EventUncheckedCreateWithoutGalleriesInput = {
   tag: $Enums.EventTag
   attractionName: string
   image: string
-  status: $Enums.EventStatus
+  isCancelled?: boolean
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt: Date | string
   attendees?: number
@@ -1151,7 +1147,7 @@ export type EventUpdateWithoutGalleriesInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
   image?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendees?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1172,7 +1168,7 @@ export type EventUncheckedUpdateWithoutGalleriesInput = {
   tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
   attractionName?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendees?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1191,7 +1187,7 @@ export type EventCreateWithoutFavoritesInput = {
   description: string
   tag: $Enums.EventTag
   image: string
-  status: $Enums.EventStatus
+  isCancelled?: boolean
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt: Date | string
   attendees?: number
@@ -1212,7 +1208,7 @@ export type EventUncheckedCreateWithoutFavoritesInput = {
   tag: $Enums.EventTag
   attractionName: string
   image: string
-  status: $Enums.EventStatus
+  isCancelled?: boolean
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt: Date | string
   attendees?: number
@@ -1247,7 +1243,7 @@ export type EventUpdateWithoutFavoritesInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
   image?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendees?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1268,7 +1264,7 @@ export type EventUncheckedUpdateWithoutFavoritesInput = {
   tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
   attractionName?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendees?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1287,7 +1283,7 @@ export type EventCreateManyAttractionInput = {
   description: string
   tag: $Enums.EventTag
   image: string
-  status: $Enums.EventStatus
+  isCancelled?: boolean
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt: Date | string
   attendees?: number
@@ -1302,7 +1298,7 @@ export type EventUpdateWithoutAttractionInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
   image?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendees?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1322,7 +1318,7 @@ export type EventUncheckedUpdateWithoutAttractionInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
   image?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendees?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1342,7 +1338,7 @@ export type EventUncheckedUpdateManyWithoutAttractionInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   tag?: Prisma.EnumEventTagFieldUpdateOperationsInput | $Enums.EventTag
   image?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendees?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1425,7 +1421,7 @@ export type EventSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   tag?: boolean
   attractionName?: boolean
   image?: boolean
-  status?: boolean
+  isCancelled?: boolean
   price?: boolean
   startsAt?: boolean
   attendees?: boolean
@@ -1448,7 +1444,7 @@ export type EventSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   tag?: boolean
   attractionName?: boolean
   image?: boolean
-  status?: boolean
+  isCancelled?: boolean
   price?: boolean
   startsAt?: boolean
   attendees?: boolean
@@ -1465,7 +1461,7 @@ export type EventSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   tag?: boolean
   attractionName?: boolean
   image?: boolean
-  status?: boolean
+  isCancelled?: boolean
   price?: boolean
   startsAt?: boolean
   attendees?: boolean
@@ -1482,7 +1478,7 @@ export type EventSelectScalar = {
   tag?: boolean
   attractionName?: boolean
   image?: boolean
-  status?: boolean
+  isCancelled?: boolean
   price?: boolean
   startsAt?: boolean
   attendees?: boolean
@@ -1491,7 +1487,7 @@ export type EventSelectScalar = {
   updatedAt?: boolean
 }
 
-export type EventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "tag" | "attractionName" | "image" | "status" | "price" | "startsAt" | "attendees" | "rating" | "createdAt" | "updatedAt", ExtArgs["result"]["event"]>
+export type EventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "tag" | "attractionName" | "image" | "isCancelled" | "price" | "startsAt" | "attendees" | "rating" | "createdAt" | "updatedAt", ExtArgs["result"]["event"]>
 export type EventInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   carts?: boolean | Prisma.Event$cartsArgs<ExtArgs>
   favorites?: boolean | Prisma.Event$favoritesArgs<ExtArgs>
@@ -1525,7 +1521,7 @@ export type $EventPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     tag: $Enums.EventTag
     attractionName: string
     image: string
-    status: $Enums.EventStatus
+    isCancelled: boolean
     price: runtime.Decimal
     startsAt: Date
     attendees: number
@@ -1967,7 +1963,7 @@ export interface EventFieldRefs {
   readonly tag: Prisma.FieldRef<"Event", 'EventTag'>
   readonly attractionName: Prisma.FieldRef<"Event", 'String'>
   readonly image: Prisma.FieldRef<"Event", 'String'>
-  readonly status: Prisma.FieldRef<"Event", 'EventStatus'>
+  readonly isCancelled: Prisma.FieldRef<"Event", 'Boolean'>
   readonly price: Prisma.FieldRef<"Event", 'Decimal'>
   readonly startsAt: Prisma.FieldRef<"Event", 'DateTime'>
   readonly attendees: Prisma.FieldRef<"Event", 'Int'>

@@ -21,18 +21,22 @@ export { editEventSchema } from "@/lib/validations/admin/events-management/editE
 
 // 4. Users Management
 
+export { badgeLevelSchema } from "@/lib/validations/admin/user-management/badgeLevelSchema";
 export { editUserSchema } from "@/lib/validations/admin/user-management/editUserSchema";
-export { userSchema, badgeLevelSchema } from "@/lib/validations/admin/user-management/userSchemas";
+export { userSchema } from "@/lib/validations/admin/user-management/userSchema";
 
 /* - Authentication - */
 
-export { passwordResetSchema, requestPasswordResetSchema } from "@/lib/validations/authentication/passwordResetSchemas";
+export { passwordResetSchema } from "@/lib/validations/authentication/passwordResetSchema";
+export { requestPasswordResetSchema } from "@/lib/validations/authentication/requestPasswordResetSchema";
 export { signInSchema } from "@/lib/validations/authentication/signInSchema";
 export { signUpSchema } from "@/lib/validations/authentication/signUpSchema";
 
 /* - Cart - */
 
-export { cartItemIdSchema, cartItemSchema, checkoutCartSchema } from "@/lib/validations/cart/cartItemSchemas";
+export { cartItemIdSchema } from "@/lib/validations/cart/cartItemIdSchema";
+export { cartItemSchema } from "@/lib/validations/cart/cartItemSchema";
+export { paymentMethodSchema } from "@/lib/validations/cart/paymentMethodSchema";
 export { updateCartItemSchema } from "@/lib/validations/cart/updateCartItemSchema";
 
 /* - Events - */
@@ -49,16 +53,22 @@ export { newsletterSchema } from "@/lib/validations/newsletter/newsletterSchema"
 
 export { stripeCheckoutSchema } from "@/lib/validations/payments/stripeCheckoutSchema";
 
-/* - Users - */
-
-export { notificationIdSchema } from "@/lib/validations/users/notificationSchemas";
-export { updateNotificationPreferencesSchema } from "@/lib/validations/users/updateNotificationPreferencesSchema";
-export { orderIdSchema, buyTicketsSchema, buyVouchersSchema } from "@/lib/validations/users/orderSchemas";
-export { profileSchema } from "@/lib/validations/users/profileSchemas";
-export { updateProfileSchema } from "@/lib/validations/users/updateProfileSchema";
-
 /* - Shared - */
 
+export { categorySchema } from "@/lib/validations/shared/categorySchema";
 export { imageFileSchema } from "@/lib/validations/shared/imageFileSchema";
 export { periodSchema } from "@/lib/validations/shared/periodSchema";
-export { tagSchema, tagFilterSchema } from "@/lib/validations/shared/tagSchemas";
+export { tagFilterSchema } from "@/lib/validations/shared/tagFilterSchema";
+export { tagSchema } from "@/lib/validations/shared/tagSchema";
+
+/* - Users - */
+
+export { buyTicketsSchema } from "@/lib/validations/users/buyTicketsSchema";
+export { buyVouchersSchema } from "@/lib/validations/users/buyVouchersSchema";
+export { newProfileSchema } from "@/lib/validations/users/newProfileSchema";
+export { notificationIdSchema } from "@/lib/validations/users/notificationIdSchema";
+export { notificationPreferencesSchema } from "@/lib/validations/users/notificationPreferencesSchema";
+export { orderIdSchema } from "@/lib/validations/users/orderIdSchema";
+export { profileSchema } from "@/lib/validations/users/profileSchema";
+export { updateNotificationPreferencesSchema } from "@/lib/validations/users/updateNotificationPreferencesSchema";
+export { updateProfileSchema } from "@/lib/validations/users/updateProfileSchema";

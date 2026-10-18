@@ -31,6 +31,8 @@ const editProduct = async (product: z.infer<typeof editProductSchema>) => {
 
   const imageFile = parsedProduct.data.image;
 
+  let newImageUrl: string | undefined;
+
   try {
     if (imageFile) {
       /* - Se houver troca de imagem - */
@@ -38,6 +40,8 @@ const editProduct = async (product: z.infer<typeof editProductSchema>) => {
       const productBeforeEdit = await prisma.product.findUnique({ where: { id: parsedProduct.data.productId }, select: { image: true } });
 
       const blob = await put(`${Date.now()}-${imageFile.name}`, imageFile, { access: "public" });
+
+      newImageUrl = blob.url;
 
       const editedProduct = await prisma.product.update({
         where: { id: parsedProduct.data.productId },
@@ -90,6 +94,16 @@ const editProduct = async (product: z.infer<typeof editProductSchema>) => {
       updatedAt: editedProduct.updatedAt.toISOString(),
     };
   } catch (error) {
+    /* - Se o banco falhou depois do upload, remove a imagem nova para não ficar órfã no Blob - */
+
+    if (newImageUrl) {
+      try {
+        await del(newImageUrl);
+      } catch {
+        // A imagem nova fica no Blob, mas a edição não foi salva
+      }
+    }
+
     if (error instanceof PrismaClientKnownRequestError && error.code === "P2002") {
       const errorMeta = JSON.stringify(error.meta);
 

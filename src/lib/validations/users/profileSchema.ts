@@ -68,6 +68,4 @@ const profileSchema = z.object({
   complement: z.string().regex(regex.complement).min(2, "Digite um complemento válido.").max(40, "Digite um complemento válido."),
 });
 
-const newProfileSchema = profileSchema.omit({ name: true, profilePicture: true });
-
-export { profileSchema, newProfileSchema };
+export { profileSchema };

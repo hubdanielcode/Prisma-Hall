@@ -5,7 +5,7 @@ import { checkRateLimit } from "@/lib/server/rate-limit/rateLimiter";
 import { getResend } from "@/lib/server/services/resend";
 import { PasswordResetEmail } from "@/shared/emails/PasswordResetEmail";
 import { prisma } from "@/lib/server/services/prisma";
-import { requestPasswordResetSchema } from "@/lib/validations/authentication/passwordResetSchemas";
+import { requestPasswordResetSchema } from "@/lib/validations/authentication/passwordResetSchema";
 import React from "react";
 
 const requestPasswordReset = async (email: string) => {
@@ -19,7 +19,13 @@ const requestPasswordReset = async (email: string) => {
 
   /* - O limite vale para qualquer e-mail, exista ou não, então não revela nada sobre o banco - */
 
-  const emailRateLimit = await checkRateLimit({ action: "pwd-request", identifier: validEmail.data, limit: 3, windowSeconds: 60 * 60 });
+  const emailRateLimit = await checkRateLimit({
+    action: "pwd-request",
+    identifier: validEmail.data,
+    limit: 3,
+    windowSeconds: 60 * 60,
+    includeIp: false,
+  });
   const ipRateLimit = await checkRateLimit({ action: "pwd-request-ip", limit: 10, windowSeconds: 60 * 60 });
 
   if (!emailRateLimit.allowed || !ipRateLimit.allowed) {
@@ -51,7 +57,7 @@ const requestPasswordReset = async (email: string) => {
           react: React.createElement(PasswordResetEmail, { resetLink }),
         });
       } catch {
-        /* - Falha silenciosa de propósito: o usuário não pode saber se o e-mail existe - */
+        // Falha silenciosa de propósito: o usuário não pode saber se o e-mail existe
       }
     });
   }

@@ -1,6 +1,6 @@
 "use server";
 
-import { notificationIdSchema } from "@/lib/validations/users/notificationSchemas";
+import { notificationIdSchema } from "@/lib/validations/users/notificationPreferencesSchema";
 import { prisma } from "@/lib/server/services/prisma";
 import { validateSession } from "@/actions/session/validateSession";
 

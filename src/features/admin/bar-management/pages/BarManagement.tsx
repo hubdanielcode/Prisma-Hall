@@ -4,7 +4,7 @@ import { DeleteProductModal } from "../components/DeleteProductModal";
 import { FaPlusCircle } from "react-icons/fa";
 import { motion } from "motion/react";
 import { ProductsManagementTable, ProductsManagementCard, ProductsManagementFilter, CreateProductModal, EditProductModal } from "@/features/admin";
-import { useBarContext } from "@/features/bar";
+import { useBarContext } from "@/features/bar/hooks/useBarContext";
 import { useEffect, useState } from "react";
 import { useMobileContext } from "@/shared/hooks/useMobileContext";
 
@@ -36,7 +36,7 @@ const BarManagement = () => {
     if (currentPage > totalPages) {
       setCurrentPage(totalPages);
     }
-  }, [filteredProducts.length]);
+  }, [filteredProducts.length, currentPage]);
 
   return (
     <>

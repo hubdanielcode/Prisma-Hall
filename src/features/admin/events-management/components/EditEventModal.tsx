@@ -38,9 +38,8 @@ const EditEventModal = ({ isOpen, onClose }: EditEventModalProps) => {
     description: eventBeingEdited?.description ?? "",
     tag: eventBeingEdited?.tag ?? "forro",
     attractionName: eventBeingEdited?.attractionName ?? "",
-    status: eventBeingEdited?.status ?? "happened",
     price: eventBeingEdited?.price ?? 0,
-    startsAt: eventBeingEdited?.startsAt ?? "",
+    startsAt: new Date(eventBeingEdited?.startsAt ?? Date.now()),
   });
 
   /* - Estados de erro - */
@@ -61,7 +60,6 @@ const EditEventModal = ({ isOpen, onClose }: EditEventModalProps) => {
   /* - Definições - */
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const isUpcoming = newEvent.status === "soon";
 
   /* - Funções - */
 
@@ -187,9 +185,8 @@ const EditEventModal = ({ isOpen, onClose }: EditEventModalProps) => {
       description: eventBeingEdited.description,
       tag: eventBeingEdited.tag ?? "forro",
       attractionName: eventBeingEdited.attractionName,
-      status: eventBeingEdited.status,
       price: Number(eventBeingEdited.price),
-      startsAt: eventBeingEdited.startsAt,
+      startsAt: new Date(eventBeingEdited.startsAt),
     });
 
     setEventImagePreview(eventBeingEdited.image);
@@ -203,7 +200,7 @@ const EditEventModal = ({ isOpen, onClose }: EditEventModalProps) => {
   // 5. Recebe data e horário completos do picker (texto ISO) ao clicar em Salvar, guarda no evento, mostra cada parte no seu campo e fecha o picker
 
   const handleSelectDay = (startsAt: string) => {
-    setNewEvent((prev) => ({ ...prev, startsAt }));
+    setNewEvent((prev) => ({ ...prev, startsAt: new Date(startsAt) }));
     setEventDate(formattedDateToString(new Date(startsAt)));
     setEventTime(formattedDate(startsAt).time);
     setEventDateError("");
@@ -435,7 +432,7 @@ const EditEventModal = ({ isOpen, onClose }: EditEventModalProps) => {
 
               {isDatePickerOpen && (
                 <CustomDateTimePicker
-                  value={newEvent.startsAt}
+                  value={newEvent.startsAt.toISOString()}
                   onChange={handleSelectDay}
                 />
               )}
@@ -471,46 +468,6 @@ const EditEventModal = ({ isOpen, onClose }: EditEventModalProps) => {
                       </motion.button>
                     );
                   })}
-                </div>
-              </div>
-
-              {/* - Status - */}
-
-              <div className="flex flex-col gap-1.5">
-                <label className="text-xs text-[#B8860B] uppercase tracking-wide font-semibold mb-1.5">Status</label>
-
-                <div className="flex items-center justify-between rounded-lg px-3 py-2.5">
-                  <div className="flex items-center gap-2">
-                    <div
-                      className={`h-2.5 w-2.5 rounded-full ${
-                        isUpcoming
-                          ? "bg-green-400 shadow-[0_0_6px_2px_rgba(74,222,128,0.6)]"
-                          : "bg-red-400 shadow-[0_0_6px_2px_rgba(248,113,113,0.6)]"
-                      }`}
-                    />
-                    <span className="text-white text-sm font-semibold">{isUpcoming ? "Em breve" : "Encerrado"}</span>
-                  </div>
-
-                  <button
-                    className={`relative w-14 h-8 rounded-full cursor-pointer transition-colors ${isUpcoming ? "bg-[#B8860B]" : "bg-[#3A3A3A]"}`}
-                    type="button"
-                    onClick={() => {
-                      setNewEvent((prev) => ({
-                        ...prev,
-                        status: prev.status === "happened" ? "soon" : "happened",
-                      }));
-                    }}
-                  >
-                    <motion.div
-                      className="absolute top-1 h-6 w-6 bg-white rounded-full shadow-md"
-                      animate={{ left: isUpcoming ? "26px" : "4px" }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 500,
-                        damping: 30,
-                      }}
-                    />
-                  </button>
                 </div>
               </div>
             </div>

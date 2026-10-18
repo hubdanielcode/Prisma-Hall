@@ -1,7 +1,5 @@
 import { z } from "zod";
 
-const notificationIdSchema = z.uuid();
-
 const notificationPreferencesSchema = z.object({
   // 1. Notificações de eventos favoritos
 
@@ -16,4 +14,4 @@ const notificationPreferencesSchema = z.object({
   notifyByEmail: z.boolean(),
 });
 
-export { notificationIdSchema, notificationPreferencesSchema };
+export { notificationPreferencesSchema };

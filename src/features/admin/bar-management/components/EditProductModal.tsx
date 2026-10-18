@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { createProductSchema } from "@/lib/validations/admin/bar-management/createProductSchema";
 import { ImagePlus, X } from "lucide-react";
 import { masks } from "@/shared/utils/functions/masks";
-import { productCategories } from "@/features/bar";
+import { productCategories } from "@/features/bar/utils/productCategories";
 import { productCategoryBadgeStyles } from "@/features/admin/bar-management/types/productCategoryBadgeStyles";
 import { useBarContext } from "@/features/bar/hooks/useBarContext";
 import { useBlockScroll, useMobileContext } from "@/shared/hooks";

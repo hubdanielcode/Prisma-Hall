@@ -55,7 +55,7 @@ const useProducts = () => {
   const { mutateAsync: createProductMutation } = useMutation({
     mutationFn: createProductAction,
     onSuccess: async (createProductMutationResult) => {
-      if (createProductMutationResult) {
+      if (typeof createProductMutationResult === "object") {
         await invalidateAllProductQueries();
       }
     },
@@ -66,7 +66,7 @@ const useProducts = () => {
   const { mutateAsync: editProductMutation } = useMutation({
     mutationFn: editProductAction,
     onSuccess: async (editProductMutationResult) => {
-      if (editProductMutationResult) {
+      if (typeof editProductMutationResult === "object") {
         await invalidateAllProductQueries();
       }
     },
@@ -77,7 +77,7 @@ const useProducts = () => {
   const { mutateAsync: deleteProductMutation } = useMutation({
     mutationFn: deleteProductAction,
     onSuccess: async (deleteProductMutationResult) => {
-      if (deleteProductMutationResult) {
+      if (deleteProductMutationResult === true) {
         await invalidateAllProductQueries();
       }
     },

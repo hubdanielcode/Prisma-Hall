@@ -1,8 +1,8 @@
+import { AuthenticationProvider } from "@/features/authentication/context/AuthenticationContext";
 import { BarProvider } from "@/features/bar/context/BarContext";
 import { BarSection } from "./BarSection";
 import { CartProvider } from "@/features/cart/context/CartContext";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
-import { AuthenticationProvider } from "@/features/authentication";
 
 export default {
   title: "Layouts/Public/Home Page/Bar",

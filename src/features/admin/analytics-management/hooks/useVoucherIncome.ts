@@ -1,11 +1,11 @@
 "use client";
 
+import { BarChartItemProps } from "../types/barChartItem";
 import { categorySchema } from "@/lib/validations/shared/categorySchema";
 import { getVoucherIncome } from "@/actions";
+import { PeriodLabelProps } from "../types/period";
 import { productCategories } from "@/features/bar/utils/productCategories";
 import { useQueries } from "@tanstack/react-query";
-import type { BarChartItemProps } from "@/features/admin/analytics-management/types/barChartItem";
-import type { PeriodLabelProps } from "@/features/admin/analytics-management/types/period";
 import type { z } from "zod";
 
 const useVoucherIncome = (selectedPeriod: PeriodLabelProps, selectedCategory: z.infer<typeof categorySchema> | "all_categories") => {

@@ -3,7 +3,7 @@
 import { checkIsAdmin } from "../checkIsAdmin";
 import { formattedStringToDate } from "@/shared/utils/functions/dates";
 import { prisma } from "@/lib/server/services/prisma";
-import { ticketIncomeSchema } from "@/lib/validations";
+import { ticketIncomeSchema } from "@/lib/validations/admin/analytics-management/ticketIncomeSchema";
 import z from "zod";
 
 const getTicketIncome = async (ticketIncome: z.infer<typeof ticketIncomeSchema>) => {

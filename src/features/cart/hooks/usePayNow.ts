@@ -1,6 +1,6 @@
 "use client";
 
-import { createStripeCheckoutSession } from "@/actions";
+import { createStripeCheckoutSession } from "@/actions/payments/createStripeCheckoutSession";
 import { useMutation } from "@tanstack/react-query";
 
 const usePayNow = () => {

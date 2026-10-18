@@ -1,5 +1,5 @@
-import { useContext } from "react";
 import { EventContext } from "../context/EventContext";
+import { useContext } from "react";
 
 const useEventContext = () => {
   const context = useContext(EventContext);

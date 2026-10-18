@@ -2,7 +2,7 @@
 
 import { getEventStatus } from "@/lib/server/events/getEventStatus";
 import { notifyUsersByEmail } from "@/lib/server/notifications/notifyUsers";
-import { orderIdSchema } from "@/lib/validations/users/orderSchemas";
+import { orderIdSchema } from "@/lib/validations/users/orderIdSchema";
 import { prisma } from "@/lib/server/services/prisma";
 import { recalculateUserBadges } from "@/lib/server/badges/achievementBadges";
 import { refundStripePayment } from "@/lib/server/payments/refundStripePayment";
@@ -69,6 +69,10 @@ const cancelTicketOrder = async (orderId: string) => {
 
       await transaction.ticketPayment.updateMany({ where: { orderId: order.id, status: "confirmed" }, data: { status: "refunded" } });
       await transaction.ticketPayment.updateMany({ where: { orderId: order.id, status: "pending" }, data: { status: "failed" } });
+
+      /* - Os ingressos do pedido cancelado também precisam sair de "active", senão ele seria reprocessado (ex: no cancelEvent) - */
+
+      await transaction.ticket.updateMany({ where: { orderId: order.id, status: "active" }, data: { status: "cancelled" } });
     });
 
     /* - Um evento a menos participado pode baixar o badge de frequência - */

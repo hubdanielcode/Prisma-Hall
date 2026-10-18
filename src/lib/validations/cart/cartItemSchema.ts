@@ -1,13 +1,5 @@
 import { z } from "zod";
 
-const cartItemIdSchema = z.uuid();
-
-const checkoutCartSchema = z.object({
-  // 1. Forma de pagamento
-
-  method: z.enum(["cash", "pix", "debitCard", "creditCard"]),
-});
-
 const cartItemSchema = z.object({
   // 1. ID do produto comprado
 
@@ -26,4 +18,4 @@ const cartItemSchema = z.object({
   quantity: z.int().positive(),
 });
 
-export { cartItemIdSchema, checkoutCartSchema, cartItemSchema };
+export { cartItemSchema };

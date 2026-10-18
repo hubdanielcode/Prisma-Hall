@@ -1,5 +1,5 @@
-import { useContext } from "react";
 import { CalendarContext } from "../../agenda/context/CalendarContext";
+import { useContext } from "react";
 
 const useCalendarContext = () => {
   const context = useContext(CalendarContext);

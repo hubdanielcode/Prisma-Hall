@@ -34,7 +34,7 @@ const Admin = () => {
     if (currentPage > totalPages) {
       setCurrentPage(totalPages);
     }
-  }, [filteredProducts.length]);
+  }, [filteredProducts.length, currentPage]);
 
   return (
     <>

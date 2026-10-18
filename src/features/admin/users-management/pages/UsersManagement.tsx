@@ -4,7 +4,7 @@ import { DeleteUserModal, EditUserModal, UsersManagementCard, UsersManagementFil
 import { useEffect, useState } from "react";
 import { UserProvider } from "@/features/users/user/context/UserContext";
 import { useMobileContext } from "@/shared/hooks/useMobileContext";
-import { useUserContext } from "@/features/users";
+import { useUserContext } from "@/features/users/user/hooks/useUserContext";
 
 const UsersManagementContent = () => {
   /* - Puxando do context - */
@@ -30,7 +30,7 @@ const UsersManagementContent = () => {
     if (currentPage > totalPages) {
       setCurrentPage(totalPages);
     }
-  }, [filteredUsers.length]);
+  }, [filteredUsers.length, currentPage]);
 
   return (
     <>

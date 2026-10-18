@@ -10,7 +10,7 @@ import { motion } from "motion/react";
 import { newsletterSchema } from "@/lib/validations/newsletter/newsletterSchema";
 import { socialLinks } from "@/shared/utils/constants/socialLinks";
 import { useNewsletter } from "@/features/newsletter/hooks/useNewsletter";
-import { useState, type FormEvent } from "react";
+import { useState, SubmitEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -41,7 +41,7 @@ const Footer = () => {
 
   // 1. Inscreve o email na newsletter
 
-  const handleSubscription = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubscription = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFeedback(null);
 

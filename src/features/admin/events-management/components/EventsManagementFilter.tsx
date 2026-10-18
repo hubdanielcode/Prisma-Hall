@@ -3,8 +3,8 @@
 import { Check, ChevronDown } from "lucide-react";
 import { FaSearch } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
-import { useEventContext } from "@/features/events";
-import { useMobileContext } from "@/shared/hooks";
+import { useEventContext } from "@/features/events/event/hooks/useEventContext";
+import { useMobileContext } from "@/shared/hooks/useMobileContext";
 
 interface EventsManagementFilterProps {
   currentPage: number;

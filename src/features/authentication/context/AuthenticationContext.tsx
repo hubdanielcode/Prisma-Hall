@@ -1,8 +1,8 @@
 "use client";
 
 import { createContext } from "react";
-import type { SessionUserProps } from "../types/sessionUser";
 import { useSession } from "../hooks/useSession";
+import type { SessionUserProps } from "../types/sessionUser";
 
 interface AuthenticationContextType {
   /* - Dados da sessão - */

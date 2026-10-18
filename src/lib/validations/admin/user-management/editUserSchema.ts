@@ -1,5 +1,5 @@
 import { atLeastOneFieldUpdated } from "@/shared/utils/functions/atLeastOneFieldUpdated";
-import { userSchema } from "./userSchemas";
+import { userSchema } from "./userSchema";
 import { z } from "zod";
 
 const editUserSchema = userSchema

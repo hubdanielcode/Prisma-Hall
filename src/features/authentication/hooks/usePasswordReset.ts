@@ -1,7 +1,7 @@
 "use client";
 
-import { useMutation } from "@tanstack/react-query";
 import { requestPasswordReset as requestPasswordResetAction, passwordReset as passwordResetAction } from "@/actions";
+import { useMutation } from "@tanstack/react-query";
 
 const usePasswordReset = () => {
   // 1. requestPasswordResetMutation

@@ -1,5 +1,5 @@
 import { periodSchema } from "../../shared/periodSchema";
-import { tagFilterSchema } from "../../shared/tagSchemas";
+import { tagFilterSchema } from "../../shared/tagFilterSchema";
 import { z } from "zod";
 
 const newVisitorsSchema = z.object({

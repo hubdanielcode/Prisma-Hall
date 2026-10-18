@@ -18,5 +18,5 @@ export { AnalyticsManagement } from "@/features/admin/analytics-management/pages
 
 /* - Types - */
 
-export type { PeriodLabelProps } from "@/features/admin/analytics-management/types/period";
 export type { BarChartItemProps } from "@/features/admin/analytics-management/types/barChartItem";
+export type { PeriodLabelProps } from "@/features/admin/analytics-management/types/period";

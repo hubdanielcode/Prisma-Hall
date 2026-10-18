@@ -1,6 +1,5 @@
+import { badgeLevelSchema } from "./badgeLevelSchema";
 import { z } from "zod";
-
-const badgeLevelSchema = z.enum(["none", "bronze", "silver", "gold"]);
 
 const userSchema = z.object({
   // 1. Role
@@ -24,4 +23,4 @@ const userSchema = z.object({
   forceRevalidation: z.boolean(),
 });
 
-export { userSchema, badgeLevelSchema };
+export { userSchema };

@@ -20,5 +20,5 @@ export { PasswordReset } from "@/features/authentication/pages/PasswordReset";
 
 /* - Types - */
 
-export type { SessionUserProps } from "@/features/authentication/types/sessionUser";
 export type { ProfileProps } from "@/features/authentication/types/profile";
+export type { SessionUserProps } from "@/features/authentication/types/sessionUser";

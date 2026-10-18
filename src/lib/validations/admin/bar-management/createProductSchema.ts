@@ -1,7 +1,7 @@
+import { categorySchema } from "../../shared/categorySchema";
 import { imageFileSchema } from "../../shared/imageFileSchema";
 import { regex } from "@/shared/utils/constants/regex";
 import { z } from "zod";
-import { categorySchema } from "../../shared/categorySchema";
 
 const createProductSchema = z.object({
   // 1. Nome
