@@ -43,6 +43,7 @@ export type TicketPaymentMinAggregateOutputType = {
   totalValue: runtime.Decimal | null
   confirmedAt: Date | null
   pickedUpAt: Date | null
+  paymentIntentId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -56,6 +57,7 @@ export type TicketPaymentMaxAggregateOutputType = {
   totalValue: runtime.Decimal | null
   confirmedAt: Date | null
   pickedUpAt: Date | null
+  paymentIntentId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -69,6 +71,7 @@ export type TicketPaymentCountAggregateOutputType = {
   totalValue: number
   confirmedAt: number
   pickedUpAt: number
+  paymentIntentId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -92,6 +95,7 @@ export type TicketPaymentMinAggregateInputType = {
   totalValue?: true
   confirmedAt?: true
   pickedUpAt?: true
+  paymentIntentId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -105,6 +109,7 @@ export type TicketPaymentMaxAggregateInputType = {
   totalValue?: true
   confirmedAt?: true
   pickedUpAt?: true
+  paymentIntentId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -118,6 +123,7 @@ export type TicketPaymentCountAggregateInputType = {
   totalValue?: true
   confirmedAt?: true
   pickedUpAt?: true
+  paymentIntentId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -218,6 +224,7 @@ export type TicketPaymentGroupByOutputType = {
   totalValue: runtime.Decimal
   confirmedAt: Date | null
   pickedUpAt: Date | null
+  paymentIntentId: string | null
   createdAt: Date
   updatedAt: Date
   _count: TicketPaymentCountAggregateOutputType | null
@@ -254,6 +261,7 @@ export type TicketPaymentWhereInput = {
   totalValue?: Prisma.DecimalFilter<"TicketPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.DateTimeNullableFilter<"TicketPayment"> | Date | string | null
   pickedUpAt?: Prisma.DateTimeNullableFilter<"TicketPayment"> | Date | string | null
+  paymentIntentId?: Prisma.StringNullableFilter<"TicketPayment"> | string | null
   createdAt?: Prisma.DateTimeFilter<"TicketPayment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TicketPayment"> | Date | string
   order?: Prisma.XOR<Prisma.TicketOrderScalarRelationFilter, Prisma.TicketOrderWhereInput>
@@ -269,6 +277,7 @@ export type TicketPaymentOrderByWithRelationInput = {
   totalValue?: Prisma.SortOrder
   confirmedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   pickedUpAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  paymentIntentId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   order?: Prisma.TicketOrderOrderByWithRelationInput
@@ -287,6 +296,7 @@ export type TicketPaymentWhereUniqueInput = Prisma.AtLeast<{
   totalValue?: Prisma.DecimalFilter<"TicketPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.DateTimeNullableFilter<"TicketPayment"> | Date | string | null
   pickedUpAt?: Prisma.DateTimeNullableFilter<"TicketPayment"> | Date | string | null
+  paymentIntentId?: Prisma.StringNullableFilter<"TicketPayment"> | string | null
   createdAt?: Prisma.DateTimeFilter<"TicketPayment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TicketPayment"> | Date | string
   order?: Prisma.XOR<Prisma.TicketOrderScalarRelationFilter, Prisma.TicketOrderWhereInput>
@@ -302,6 +312,7 @@ export type TicketPaymentOrderByWithAggregationInput = {
   totalValue?: Prisma.SortOrder
   confirmedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   pickedUpAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  paymentIntentId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.TicketPaymentCountOrderByAggregateInput
@@ -323,6 +334,7 @@ export type TicketPaymentScalarWhereWithAggregatesInput = {
   totalValue?: Prisma.DecimalWithAggregatesFilter<"TicketPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"TicketPayment"> | Date | string | null
   pickedUpAt?: Prisma.DateTimeNullableWithAggregatesFilter<"TicketPayment"> | Date | string | null
+  paymentIntentId?: Prisma.StringNullableWithAggregatesFilter<"TicketPayment"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"TicketPayment"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"TicketPayment"> | Date | string
 }
@@ -334,6 +346,7 @@ export type TicketPaymentCreateInput = {
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Date | string | null
   pickedUpAt?: Date | string | null
+  paymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   order: Prisma.TicketOrderCreateNestedOneWithoutTicketPaymentsInput
@@ -349,6 +362,7 @@ export type TicketPaymentUncheckedCreateInput = {
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Date | string | null
   pickedUpAt?: Date | string | null
+  paymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -360,6 +374,7 @@ export type TicketPaymentUpdateInput = {
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   order?: Prisma.TicketOrderUpdateOneRequiredWithoutTicketPaymentsNestedInput
@@ -375,6 +390,7 @@ export type TicketPaymentUncheckedUpdateInput = {
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -388,6 +404,7 @@ export type TicketPaymentCreateManyInput = {
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Date | string | null
   pickedUpAt?: Date | string | null
+  paymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -399,6 +416,7 @@ export type TicketPaymentUpdateManyMutationInput = {
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -412,6 +430,7 @@ export type TicketPaymentUncheckedUpdateManyInput = {
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -435,6 +454,7 @@ export type TicketPaymentCountOrderByAggregateInput = {
   totalValue?: Prisma.SortOrder
   confirmedAt?: Prisma.SortOrder
   pickedUpAt?: Prisma.SortOrder
+  paymentIntentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -452,6 +472,7 @@ export type TicketPaymentMaxOrderByAggregateInput = {
   totalValue?: Prisma.SortOrder
   confirmedAt?: Prisma.SortOrder
   pickedUpAt?: Prisma.SortOrder
+  paymentIntentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -465,6 +486,7 @@ export type TicketPaymentMinOrderByAggregateInput = {
   totalValue?: Prisma.SortOrder
   confirmedAt?: Prisma.SortOrder
   pickedUpAt?: Prisma.SortOrder
+  paymentIntentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -564,6 +586,7 @@ export type TicketPaymentCreateWithoutUserInput = {
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Date | string | null
   pickedUpAt?: Date | string | null
+  paymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   order: Prisma.TicketOrderCreateNestedOneWithoutTicketPaymentsInput
@@ -577,6 +600,7 @@ export type TicketPaymentUncheckedCreateWithoutUserInput = {
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Date | string | null
   pickedUpAt?: Date | string | null
+  paymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -619,6 +643,7 @@ export type TicketPaymentScalarWhereInput = {
   totalValue?: Prisma.DecimalFilter<"TicketPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.DateTimeNullableFilter<"TicketPayment"> | Date | string | null
   pickedUpAt?: Prisma.DateTimeNullableFilter<"TicketPayment"> | Date | string | null
+  paymentIntentId?: Prisma.StringNullableFilter<"TicketPayment"> | string | null
   createdAt?: Prisma.DateTimeFilter<"TicketPayment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TicketPayment"> | Date | string
 }
@@ -630,6 +655,7 @@ export type TicketPaymentCreateWithoutOrderInput = {
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Date | string | null
   pickedUpAt?: Date | string | null
+  paymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutTicketPaymentsInput
@@ -643,6 +669,7 @@ export type TicketPaymentUncheckedCreateWithoutOrderInput = {
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Date | string | null
   pickedUpAt?: Date | string | null
+  paymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -681,6 +708,7 @@ export type TicketPaymentCreateManyUserInput = {
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Date | string | null
   pickedUpAt?: Date | string | null
+  paymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -692,6 +720,7 @@ export type TicketPaymentUpdateWithoutUserInput = {
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   order?: Prisma.TicketOrderUpdateOneRequiredWithoutTicketPaymentsNestedInput
@@ -705,6 +734,7 @@ export type TicketPaymentUncheckedUpdateWithoutUserInput = {
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -717,6 +747,7 @@ export type TicketPaymentUncheckedUpdateManyWithoutUserInput = {
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -729,6 +760,7 @@ export type TicketPaymentCreateManyOrderInput = {
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Date | string | null
   pickedUpAt?: Date | string | null
+  paymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -740,6 +772,7 @@ export type TicketPaymentUpdateWithoutOrderInput = {
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutTicketPaymentsNestedInput
@@ -753,6 +786,7 @@ export type TicketPaymentUncheckedUpdateWithoutOrderInput = {
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -765,6 +799,7 @@ export type TicketPaymentUncheckedUpdateManyWithoutOrderInput = {
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -780,6 +815,7 @@ export type TicketPaymentSelect<ExtArgs extends runtime.Types.Extensions.Interna
   totalValue?: boolean
   confirmedAt?: boolean
   pickedUpAt?: boolean
+  paymentIntentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   order?: boolean | Prisma.TicketOrderDefaultArgs<ExtArgs>
@@ -795,6 +831,7 @@ export type TicketPaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   totalValue?: boolean
   confirmedAt?: boolean
   pickedUpAt?: boolean
+  paymentIntentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   order?: boolean | Prisma.TicketOrderDefaultArgs<ExtArgs>
@@ -810,6 +847,7 @@ export type TicketPaymentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   totalValue?: boolean
   confirmedAt?: boolean
   pickedUpAt?: boolean
+  paymentIntentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   order?: boolean | Prisma.TicketOrderDefaultArgs<ExtArgs>
@@ -825,11 +863,12 @@ export type TicketPaymentSelectScalar = {
   totalValue?: boolean
   confirmedAt?: boolean
   pickedUpAt?: boolean
+  paymentIntentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type TicketPaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "orderId" | "method" | "status" | "totalValue" | "confirmedAt" | "pickedUpAt" | "createdAt" | "updatedAt", ExtArgs["result"]["ticketPayment"]>
+export type TicketPaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "orderId" | "method" | "status" | "totalValue" | "confirmedAt" | "pickedUpAt" | "paymentIntentId" | "createdAt" | "updatedAt", ExtArgs["result"]["ticketPayment"]>
 export type TicketPaymentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   order?: boolean | Prisma.TicketOrderDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -858,6 +897,7 @@ export type $TicketPaymentPayload<ExtArgs extends runtime.Types.Extensions.Inter
     totalValue: runtime.Decimal
     confirmedAt: Date | null
     pickedUpAt: Date | null
+    paymentIntentId: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["ticketPayment"]>
@@ -1293,6 +1333,7 @@ export interface TicketPaymentFieldRefs {
   readonly totalValue: Prisma.FieldRef<"TicketPayment", 'Decimal'>
   readonly confirmedAt: Prisma.FieldRef<"TicketPayment", 'DateTime'>
   readonly pickedUpAt: Prisma.FieldRef<"TicketPayment", 'DateTime'>
+  readonly paymentIntentId: Prisma.FieldRef<"TicketPayment", 'String'>
   readonly createdAt: Prisma.FieldRef<"TicketPayment", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"TicketPayment", 'DateTime'>
 }

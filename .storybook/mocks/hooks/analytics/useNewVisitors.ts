@@ -1,8 +1,7 @@
-import type { BarChartItemProps } from "@/features/admin/analytics-management/types/barChartItem";
-import type { PeriodLabelProps } from "@/features/admin/analytics-management/types/period";
 import { eventTags } from "@/features/events/event/utils/eventTags";
 import { fakeTickets } from "../users/useTickets";
 import { fakeUsers } from "../users/useUsers";
+import type { BarChartItemProps, PeriodLabelProps } from "@/features/admin/analytics-management";
 
 const fakeConfirmedTickets = fakeTickets.filter((ticket) => ticket.paymentStatus === "confirmed");
 

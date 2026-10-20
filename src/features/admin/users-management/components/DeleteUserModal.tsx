@@ -5,9 +5,8 @@ import { roleBadgeLabels, roleBadgeStyles } from "@/shared/utils/constants/roleB
 import { useMobileContext } from "@/shared/hooks/useMobileContext";
 import { UserAvatar } from "./UserAvatar";
 import { useState } from "react";
-import { useUserContext } from "@/features/users/user/hooks/useUserContext";
+import { useUserContext, UserProps } from "@/features/users/user";
 import { X } from "lucide-react";
-import type { UserProps } from "@/features/users/user/types/user";
 
 interface DeleteUserModalProps {
   isOpen: boolean;
@@ -38,8 +37,22 @@ const DeleteUserModal = ({ isOpen, onClose, user }: DeleteUserModalProps) => {
 
     const deletedUser = await deleteUserMutation(user.id);
 
+    if (deletedUser === "active_orders") {
+      setUserSubmitError(
+        "Este usuário tem ingressos de eventos futuros, vouchers não retirados ou pedidos pendentes. Resolva esses pedidos antes de excluir a conta.",
+      );
+
+      return;
+    }
+
+    if (deletedUser === "last_admin") {
+      setUserSubmitError("Não foi possível deletar o usuário pois é o único administrador do site.");
+
+      return;
+    }
+
     if (!deletedUser) {
-      setUserSubmitError("Não foi possível excluir o usuário. Você não pode excluir a própria conta por este painel.");
+      setUserSubmitError("Você não pode excluir a própria conta por este painel.");
       return;
     }
 
@@ -121,7 +134,10 @@ const DeleteUserModal = ({ isOpen, onClose, user }: DeleteUserModalProps) => {
               <div className="text-red-600/80 font-semibold text-sm sm:text-base md:text-base text-center pt-6 pb-3 space-y-2">
                 <p>Essa ação é permanente e não pode ser desfeita.</p>
 
-                <p>Apaga perfil, pedidos, ingressos, vouchers, avaliações e sessões do usuário</p>
+                <p>
+                  Apaga perfil, avaliações, favoritos, imagens e sessões do usuário. Pedidos, ingressos e vouchers continuam no histórico, mas sem
+                  nenhum dado pessoal.
+                </p>
               </div>
             </div>
 

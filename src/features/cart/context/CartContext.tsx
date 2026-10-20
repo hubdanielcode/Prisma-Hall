@@ -1,9 +1,9 @@
 "use client";
 
-import { cartItemSchema, checkoutCartSchema } from "@/lib/validations/cart/cartItemSchema";
+import { cartItemSchema, paymentMethodSchema } from "@/lib/validations";
 import { createContext, useMemo, useState } from "react";
 import { serviceFee } from "../utils/serviceFee";
-import { useCartItems } from "@/features/cart/hooks/useCartItems";
+import { useCartItems } from "../hooks/useCartItems";
 import type { CartItemProps } from "../types/cartItem";
 import type z from "zod";
 
@@ -33,7 +33,7 @@ interface CartContextType {
   handleIncreaseItemQuantity: (item: CartItemProps) => Promise<void>;
   handleDecreaseItemQuantity: (item: CartItemProps) => Promise<void>;
   handleClearCart: () => Promise<void>;
-  handleCheckout: (checkout: z.infer<typeof checkoutCartSchema>) => Promise<
+  handleCheckout: (payment: z.infer<typeof paymentMethodSchema>) => Promise<
     | {
         ticketOrderId: string | null;
         ticketPaymentId: string | undefined;
@@ -121,7 +121,7 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
   // 6. Finaliza a compra
 
-  const handleCheckout = async (checkout: z.infer<typeof checkoutCartSchema>) => {
+  const handleCheckout = async (checkout: z.infer<typeof paymentMethodSchema>) => {
     return await checkoutCartMutation(checkout);
   };
 

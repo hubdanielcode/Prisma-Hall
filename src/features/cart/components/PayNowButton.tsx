@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { usePayNow } from "@/features/cart/hooks/usePayNow";
+import { usePayNow } from "../hooks/usePayNow";
 import { useState } from "react";
 
 interface PayNowButtonProps {

@@ -1,8 +1,11 @@
 "use client";
 
-import { masks } from "@/shared/utils/functions/masks";
-import { orderStatusBadgeStyles, paymentStatusBadgeStyles } from "@/shared/utils/constants/orderBadgeStyles";
-import type { VoucherOrderProps } from "@/features/users/vouchers/types/voucherOrder";
+import {
+  masks,
+  orderStatusBadgeStyles,
+  paymentStatusBadgeStyles,
+} from "@/shared/utils";
+import type { VoucherOrderProps } from "../types/voucherOrder";
 
 interface VoucherOrderSummaryProps {
   order: VoucherOrderProps;

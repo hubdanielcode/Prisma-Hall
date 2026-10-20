@@ -1,8 +1,12 @@
 /* - Components - */
 
-export { CalendarGrid } from "@/features/events/agenda/components/CalendarGrid";
-export { CalendarHeader } from "@/features/events/agenda/components/CalendarHeader";
+export { CalendarGrid } from "./components/CalendarGrid";
+export { CalendarHeader } from "./components/CalendarHeader";
+
+/* - Context - */
+
+export { CalendarContext, CalendarProvider } from "./context/CalendarContext";
 
 /* - Pages - */
 
-export { Schedule } from "@/features/events/agenda/pages/Schedule";
+export { Schedule } from "./pages/Schedule";

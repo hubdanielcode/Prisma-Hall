@@ -2,13 +2,12 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import { editUserSchema } from "@/lib/validations/admin/user-management/editUserSchema";
-import { roleBadgeOptions, roleBadgeStyles, tierBadgeOptions, tierBadgeStyles } from "@/shared/utils";
+import { roleBadgeOptions, roleBadgeStyles } from "@/shared/utils/constants/roleBadges";
 import { useBlockScroll, useMobileContext } from "@/shared/hooks";
 import { UserAvatar } from "./UserAvatar";
 import { useState } from "react";
-import { useUserContext } from "@/features/users/user/hooks/useUserContext";
+import { useUserContext, UserProps } from "@/features/users/user";
 import { X } from "lucide-react";
-import type { UserProps } from "@/features/users/user/types/user";
 import type z from "zod";
 
 interface EditUserModalProps {
@@ -52,9 +51,6 @@ const EditUserModal = ({ isOpen, onClose }: EditUserModalProps) => {
   /* - Estados dos usuários - */
 
   const [role, setRole] = useState<UserProps["role"]>(userBeingEdited?.role ?? "user");
-  const [verifiedUser, setVerifiedUser] = useState<boolean>(userBeingEdited?.verifiedBadge ?? false);
-  const [frequentUser, setFrequentUser] = useState<UserProps["frequentUser"]>(userBeingEdited?.frequentUser ?? "none");
-  const [oldUser, setOldUser] = useState<UserProps["oldUser"]>(userBeingEdited?.oldUser ?? "none");
   const [forceRevalidation, setForceRevalidation] = useState<boolean>(false);
 
   /* - Estados de erro - */
@@ -88,18 +84,6 @@ const EditUserModal = ({ isOpen, onClose }: EditUserModalProps) => {
       changes.roles = role;
     }
 
-    if (verifiedUser !== userBeingEdited.verifiedBadge) {
-      changes.verifiedUser = verifiedUser;
-    }
-
-    if (frequentUser !== userBeingEdited.frequentUser) {
-      changes.frequentUser = frequentUser;
-    }
-
-    if (oldUser !== userBeingEdited.oldUser) {
-      changes.oldUser = oldUser;
-    }
-
     if (forceRevalidation) {
       changes.forceRevalidation = true;
     }
@@ -130,11 +114,7 @@ const EditUserModal = ({ isOpen, onClose }: EditUserModalProps) => {
 
     setUserNoChangeError("");
     setUserSubmitError("");
-
     setRole(userBeingEdited.role);
-    setVerifiedUser(userBeingEdited.verifiedBadge);
-    setFrequentUser(userBeingEdited.frequentUser);
-    setOldUser(userBeingEdited.oldUser);
     setForceRevalidation(false);
   };
 
@@ -223,90 +203,6 @@ const EditUserModal = ({ isOpen, onClose }: EditUserModalProps) => {
                         whileTap={{ scale: 0.95 }}
                       >
                         {roleOption.title}
-                      </motion.button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* - Selo de verificado - */}
-
-              <div className="flex flex-col gap-1.5">
-                <label className="text-xs text-[#B8860B] uppercase tracking-wide font-semibold mb-1.5">Selo de Verificado</label>
-
-                <div className="flex items-center justify-between rounded-lg px-3 py-2.5">
-                  <div className="flex items-center gap-2">
-                    <div
-                      className={`h-2.5 w-2.5 rounded-full ${
-                        verifiedUser
-                          ? "bg-green-400 shadow-[0_0_6px_2px_rgba(74,222,128,0.6)]"
-                          : "bg-red-400 shadow-[0_0_6px_2px_rgba(248,113,113,0.6)]"
-                      }`}
-                    />
-                    <span className="text-white text-sm font-semibold">{verifiedUser ? "Verificado" : "Não verificado"}</span>
-                  </div>
-
-                  <Toggle
-                    isActive={verifiedUser}
-                    onToggle={() => setVerifiedUser((prev) => !prev)}
-                  />
-                </div>
-              </div>
-
-              {/* - Selo de frequência - */}
-
-              <div className="flex flex-col gap-1.5">
-                <label className="text-xs text-[#B8860B] uppercase tracking-wide font-semibold mb-1.5">Selo de Frequência</label>
-
-                <div className="flex flex-wrap gap-2">
-                  {tierBadgeOptions.map((tier) => {
-                    const badge = tierBadgeStyles[tier.id];
-                    const isSelected = frequentUser === tier.id;
-
-                    return (
-                      <motion.button
-                        className={`px-3 py-1.5 text-xs font-semibold uppercase rounded-full border cursor-pointer transition-colors ${
-                          isSelected
-                            ? `${badge.filterOptionBackground} ${badge.filterOptionText}`
-                            : "bg-transparent border-[#333] text-white/40 hover:border-white/30"
-                        }`}
-                        key={tier.id}
-                        type="button"
-                        onClick={() => setFrequentUser(tier.id)}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        {tier.title}
-                      </motion.button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* - Selo de antiguidade - */}
-
-              <div className="flex flex-col gap-1.5">
-                <label className="text-xs text-[#B8860B] uppercase tracking-wide font-semibold mb-1.5">Selo de Antiguidade</label>
-
-                <div className="flex flex-wrap gap-2">
-                  {tierBadgeOptions.map((tier) => {
-                    const badge = tierBadgeStyles[tier.id];
-                    const isSelected = oldUser === tier.id;
-
-                    return (
-                      <motion.button
-                        className={`px-3 py-1.5 text-xs font-semibold uppercase rounded-full border cursor-pointer transition-colors ${
-                          isSelected
-                            ? `${badge.filterOptionBackground} ${badge.filterOptionText}`
-                            : "bg-transparent border-[#333] text-white/40 hover:border-white/30"
-                        }`}
-                        key={tier.id}
-                        type="button"
-                        onClick={() => setOldUser(tier.id)}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        {tier.title}
                       </motion.button>
                     );
                   })}

@@ -5,7 +5,7 @@ import { ChevronDown } from "lucide-react";
 import { eventTags } from "@/features/events/event/utils/eventTags";
 import { NewBuyersChart } from "../components/NewBuyersChart";
 import { PeriodLabelProps, periodOptions } from "../types/period";
-import { tagFilterSchema } from "@/lib/validations/shared/tagSchema";
+import { tagFilterSchema } from "@/lib/validations/shared/tagFilterSchema";
 import { TicketIncomeChart } from "../components/TicketIncomeChart";
 import { useEffect, useRef, useState } from "react";
 import { useMobileContext } from "@/shared/hooks/useMobileContext";

@@ -1,12 +1,10 @@
 "use server";
 
-import { checkoutCartSchema } from "@/lib/validations/cart/cartItemSchema";
-import { getEventStatus } from "@/lib/server/events/getEventStatus";
-import { getResend } from "@/lib/server/services/resend";
+import { paymentMethodSchema } from "@/lib/validations/cart/paymentMethodSchema";
+import { getEventStatus, getResend, prisma } from "@/lib/server";
 import { OrderConfirmationEmail } from "@/shared/emails/OrderConfirmationEmail";
-import { prisma } from "@/lib/server/services/prisma";
 import { serviceFee } from "@/features/cart/utils/serviceFee";
-import { validateSession } from "@/actions/session/validateSession";
+import { validateSession } from "../session/validateSession";
 import React from "react";
 import type { ItemType } from "@/prisma/generated/prisma/enums";
 import z from "zod";
@@ -18,16 +16,16 @@ interface OrderItemProps {
   unitPrice: number;
 }
 
-const checkoutCart = async (checkout: z.infer<typeof checkoutCartSchema>) => {
+const checkoutCart = async (payment: z.infer<typeof paymentMethodSchema>) => {
   const validSession = await validateSession();
 
   if (!validSession) {
     return false;
   }
 
-  const parsedCheckout = checkoutCartSchema.safeParse(checkout);
+  const parsedPayment = paymentMethodSchema.safeParse(payment);
 
-  if (!parsedCheckout.success) {
+  if (!parsedPayment.success) {
     return false;
   }
 
@@ -90,7 +88,7 @@ const checkoutCart = async (checkout: z.infer<typeof checkoutCartSchema>) => {
             ticketPayments: {
               create: {
                 userId: validSession.user.id,
-                method: parsedCheckout.data.method,
+                method: parsedPayment.data,
                 status: "pending",
                 totalValue: ticketsTotalValue,
               },
@@ -155,7 +153,7 @@ const checkoutCart = async (checkout: z.infer<typeof checkoutCartSchema>) => {
             voucherPayments: {
               create: {
                 userId: validSession.user.id,
-                method: parsedCheckout.data.method,
+                method: parsedPayment.data,
                 status: "pending",
                 totalValue: drinksTotalValue,
               },

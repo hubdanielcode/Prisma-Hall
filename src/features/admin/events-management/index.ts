@@ -1,18 +1,18 @@
 /* - Components - */
 
-export { AttractionsManagementList } from "@/features/admin/events-management/components/AttractionsManagementList";
-export { CancelEventModal } from "@/features/admin/events-management/components/CancelEventModal";
-export { CreateAttractionModal } from "@/features/admin/events-management/components/CreateAttractionModal";
-export { CreateEventModal } from "@/features/admin/events-management/components/CreateEventModal";
-export { DeleteAttractionModal } from "@/features/admin/events-management/components/DeleteAttractionModal";
-export { DeleteEventModal } from "@/features/admin/events-management/components/DeleteEventModal";
-export { EditAttractionModal } from "@/features/admin/events-management/components/EditAttractionModal";
-export { EditEventModal } from "@/features/admin/events-management/components/EditEventModal";
-export { EventsManagementCard } from "@/features/admin/events-management/components/EventsManagementCard";
-export { EventsManagementFilter } from "@/features/admin/events-management/components/EventsManagementFilter";
-export { EventsManagementTable } from "@/features/admin/events-management/components/EventsManagementTable";
-export { EventsTablePagination } from "@/features/admin/events-management/components/EventsTablePagination";
+export { AttractionsManagementList } from "./components/AttractionsManagementList";
+export { CancelEventModal } from "./components/CancelEventModal";
+export { CreateAttractionModal } from "./components/CreateAttractionModal";
+export { CreateEventModal } from "./components/CreateEventModal";
+export { DeleteAttractionModal } from "./components/DeleteAttractionModal";
+export { DeleteEventModal } from "./components/DeleteEventModal";
+export { EditAttractionModal } from "./components/EditAttractionModal";
+export { EditEventModal } from "./components/EditEventModal";
+export { EventsManagementCard } from "./components/EventsManagementCard";
+export { EventsManagementFilter } from "./components/EventsManagementFilter";
+export { EventsManagementTable } from "./components/EventsManagementTable";
+export { EventsTablePagination } from "./components/EventsTablePagination";
 
 /* - Pages - */
 
-export { EventsManagement } from "@/features/admin/events-management/pages/EventsManagement";
+export { EventsManagement } from "./pages/EventsManagement";

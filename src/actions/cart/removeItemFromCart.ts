@@ -1,8 +1,8 @@
 "use server";
 
 import { prisma } from "@/lib/server/services/prisma";
-import { validateSession } from "@/actions/session/validateSession";
-import { cartItemIdSchema } from "@/lib/validations/cart/cartItemSchema";
+import { validateSession } from "../session/validateSession";
+import { cartItemIdSchema } from "@/lib/validations/cart/cartItemIdSchema";
 
 const removeItemFromCart = async (cartItemId: string) => {
   const validSession = await validateSession();

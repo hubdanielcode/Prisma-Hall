@@ -1,5 +1,5 @@
 import { AuthenticationProvider } from "@/features/authentication/context/AuthenticationContext";
-import { fakeVoucherOrder } from "../../../../../.storybook/mocks/hooks/users/useVoucherOrder";
+import { fakeVoucherOrder } from "@/storybook/mocks/hooks/users/useVoucherOrder";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
 import { VoucherOrderDetails } from "./VoucherOrderDetails";
 

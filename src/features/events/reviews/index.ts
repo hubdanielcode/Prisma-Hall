@@ -1,13 +1,13 @@
 /* - Components - */
 
-export { ReviewsSection } from "@/features/events/reviews/components/ReviewsSection";
-export { ReviewCard } from "@/features/events/reviews/components/ReviewCard";
-export { CreateReviewModal } from "@/features/events/reviews/components/CreateReviewModal";
+export { CreateReviewModal } from "./components/CreateReviewModal";
+export { ReviewCard } from "./components/ReviewCard";
+export { ReviewsSection } from "./components/ReviewsSection";
 
 /* - Hooks - */
 
-export { useReviews } from "@/features/events/reviews/hooks/useReviews";
+export { useReviews } from "./hooks/useReviews";
 
 /* - Types - */
 
-export type { ReviewProps, ReviewWithDetails, ReviewBadges } from "@/features/events/reviews/types/reviews";
+export type { ReviewProps, ReviewWithDetails, ReviewBadges } from "./types/reviews";

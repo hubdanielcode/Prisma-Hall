@@ -17,5 +17,3 @@ const updateReviewSchema = createReviewSchema
   );
 
 export { updateReviewSchema };
-{
-}

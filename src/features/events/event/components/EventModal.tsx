@@ -7,9 +7,9 @@ import { motion, AnimatePresence } from "motion/react";
 import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
 import { useBlockScroll } from "@/shared/hooks/useBlockScroll";
 import { useCartContext } from "@/features/cart/hooks/useCartContext";
-import { useFavoriteEvents } from "@/features/events/event/hooks/useFavoriteEvents";
+import { useFavoriteEvents } from "../hooks/useFavoriteEvents";
 import { useRouter } from "next/navigation";
-import type { EventProps } from "@/features/events/event/types/event";
+import type { EventProps } from "../types/event";
 
 interface EventModalProps {
   event: EventProps | null;

@@ -12,7 +12,7 @@ import { Header } from "@/shared/components/layout/Header";
 import { motion } from "motion/react";
 import { useCalendarContext } from "../../event/hooks/useCalendarContext";
 import { useEffect, useState } from "react";
-import { useEvents } from "@/features/events/event/hooks/useEvents";
+import { useEvents } from "../../event/hooks/useEvents";
 
 const Schedule = () => {
   /* - Puxando do context - */

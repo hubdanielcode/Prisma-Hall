@@ -5,6 +5,7 @@ export interface EventProps {
   title: string;
   description: string;
   tag: EventTag;
+  attractionId: string;
   attractionName: string;
   image: string;
   status: EventStatus;

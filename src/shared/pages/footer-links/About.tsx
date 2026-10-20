@@ -1,5 +1,8 @@
-import { contactInformation } from "@/shared/utils/constants/contactInformation";
-import { InformationPage, InformationSection } from "@/shared/components/ui/InformationPage";
+import { contactInformation } from "../../utils/constants/contactInformation";
+import {
+  InformationPage,
+  InformationSection,
+} from "../../components/ui/InformationPage";
 
 const About = () => {
   return (

@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/server/services/prisma";
-import { validateSession } from "@/actions/session/validateSession";
+import { validateSession } from "../../session/validateSession";
 
 const getEventPictures = async () => {
   /* - A galeria é pública: a sessão só serve para saber o que o usuário já curtiu - */

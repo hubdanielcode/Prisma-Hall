@@ -211,6 +211,9 @@ model VoucherPayment {
   confirmedAt DateTime?     @map("confirmed_at")
   pickedUpAt  DateTime?     @map("picked_up_at")
 
+  // 1. Cobrança do Stripe que pagou este pagamento; é o que o reembolso usa para não precisar procurar a cobrança
+  paymentIntentId String? @map("payment_intent_id")
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -261,14 +264,15 @@ model TicketOrder {
 }
 
 model TicketPayment {
-  id          String        @id @default(uuid())
-  userId      String        @map("user_id")
-  orderId     String        @map("order_id")
-  method      PaymentMethod @map("payment_method")
-  status      PaymentStatus
-  totalValue  Decimal       @map("total_value")
-  confirmedAt DateTime?     @map("confirmed_at")
-  pickedUpAt  DateTime?     @map("picked_up_at")
+  id              String        @id @default(uuid())
+  userId          String        @map("user_id")
+  orderId         String        @map("order_id")
+  method          PaymentMethod @map("payment_method")
+  status          PaymentStatus
+  totalValue      Decimal       @map("total_value")
+  confirmedAt     DateTime?     @map("confirmed_at")
+  pickedUpAt      DateTime?     @map("picked_up_at")
+  paymentIntentId String?       @map("payment_intent_id")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -282,28 +286,29 @@ model TicketPayment {
 }
 
 model Event {
-  id             String   @id @default(uuid())
-  title          String
-  description    String
-  tag            EventTag
-  attractionName String   @map("attraction_name")
-  image          String
-  isCancelled    Boolean  @default(false) @map("is_cancelled")
-  price          Decimal
-  startsAt       DateTime @map("starts_at")
-  attendees      Int      @default(0)
-  rating         Decimal  @default(0.0)
+  id           String   @id @default(uuid())
+  title        String
+  description  String
+  tag          EventTag
+  attractionId String   @map("attraction_id")
+  image        String
+  isCancelled  Boolean  @default(false) @map("is_cancelled")
+  price        Decimal
+  startsAt     DateTime @map("starts_at")
+  attendees    Int      @default(0)
+  rating       Decimal  @default(0.0)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   carts      Cart[]
   favorites  FavoriteEvent[]
-  attraction Attraction      @relation(fields: [attractionName], references: [name])
+  attraction Attraction      @relation(fields: [attractionId], references: [id])
   galleries  Gallery[]
   reviews    Review[]
   tickets    Ticket[]
 
+  @@index([attractionId])
   @@map("events")
 }
 

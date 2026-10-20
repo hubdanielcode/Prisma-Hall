@@ -1,9 +1,7 @@
 "use server";
 
-import { checkRateLimit } from "@/lib/server/rate-limit/rateLimiter";
-import { hash } from "@/lib/server/services/bcrypt";
+import { checkRateLimit, hash, prisma } from "@/lib/server";
 import { passwordResetSchema } from "@/lib/validations/authentication/passwordResetSchema";
-import { prisma } from "@/lib/server/services/prisma";
 import z from "zod";
 
 const passwordReset = async (passwordResetRequest: z.infer<typeof passwordResetSchema>) => {

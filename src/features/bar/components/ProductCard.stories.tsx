@@ -1,4 +1,4 @@
-import { fakeProduct } from "../../../../.storybook/mocks/hooks/bar/useProducts";
+import { fakeProduct } from "@/storybook/mocks/hooks/bar/useProducts";
 import { Plus } from "lucide-react";
 import { ProductCard } from "./ProductCard";
 

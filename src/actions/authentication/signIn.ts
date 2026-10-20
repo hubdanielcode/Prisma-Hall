@@ -1,11 +1,8 @@
 "use server";
 
-import { checkRateLimit, resetRateLimit } from "@/lib/server/rate-limit/rateLimiter";
-import { compare, hash } from "../../lib/server/services/bcrypt";
+import { checkRateLimit, resetRateLimit, compare, hash, createSession, prisma } from "@/lib/server";
 import { cookies } from "next/headers";
-import { createSession } from "../../lib/server/session/createSession";
-import { prisma } from "../../lib/server/services/prisma";
-import { signInSchema } from "../../lib/validations/authentication/signInSchema";
+import { signInSchema } from "@/lib/validations/authentication/signInSchema";
 import z from "zod";
 
 /* - Hash falso que é calculado uma vez só e é usado quando o e-mail não existe. Isso serve para o tempo de resposta ser igual ao de um e-mail existente com senha errada, evitando vazar a informação de que o email existe, ou não, no banco de dados - */

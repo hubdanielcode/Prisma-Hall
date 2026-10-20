@@ -1,7 +1,7 @@
 "use client";
 
 import { CustomTextInput } from "@/shared/components/ui/CustomTextInput";
-import { EditProfileModal } from "@/features/users/profiles/components/EditProfileModal";
+import { EditProfileModal } from "./EditProfileModal";
 import { FaUser, FaIdCard, FaCalendarAlt, FaPhone, FaMapMarkerAlt, FaCity, FaHome, FaSortNumericUp, FaTrophy, FaMedal } from "react-icons/fa";
 import { FirstTimeProfileModal } from "./FirstTimeProfileModal";
 import { MdAlternateEmail, MdApartment, MdMyLocation, MdVerified } from "react-icons/md";
@@ -9,7 +9,7 @@ import { motion } from "motion/react";
 import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
 import { useProfileContext } from "../hooks/useProfileContext";
 import { useState, useEffect } from "react";
-import { tierBadgeStyles } from "@/shared/utils";
+import { tierBadgeStyles } from "@/shared/utils/constants/achievementBadges";
 
 const ProfileInformationsSection = () => {
   /* - Puxando do context - */

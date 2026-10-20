@@ -1,9 +1,8 @@
 "use server";
 
-import { prisma } from "@/lib/server/services/prisma";
-import { stripe } from "@/lib/server/services/stripe";
-import { stripeCheckoutSchema } from "@/lib/validations/payments/stripeCheckoutSchema";
-import { validateSession } from "@/actions/session/validateSession";
+import { prisma, stripe } from "@/lib/server";
+import { stripeCheckoutSchema } from "@/lib/validations/cart/stripeCheckoutSchema";
+import { validateSession } from "../session/validateSession";
 import type { PaymentMethod } from "@/prisma/generated/prisma/enums";
 import type Stripe from "stripe";
 import z from "zod";

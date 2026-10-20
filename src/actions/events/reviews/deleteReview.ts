@@ -1,8 +1,7 @@
 "use server";
 
-import { prisma } from "@/lib/server/services/prisma";
-import { recalculateUserBadges } from "@/lib/server/badges/achievementBadges";
-import { validateSession } from "@/actions/session/validateSession";
+import { prisma, recalculateUserBadges } from "@/lib/server";
+import { validateSession } from "../../session/validateSession";
 
 const deleteReview = async (reviewId: string) => {
   const validSession = await validateSession();

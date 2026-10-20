@@ -5,8 +5,8 @@ import { CreateReviewModal } from "./CreateReviewModal";
 import { Quote, Star, Users } from "lucide-react";
 import { ReviewCard } from "./ReviewCard";
 import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
-import { useEvents } from "@/features/events/event/hooks/useEvents";
-import { useReviews } from "@/features/events/reviews/hooks/useReviews";
+import { useEvents } from "../../event/hooks/useEvents";
+import { useReviews } from "../hooks/useReviews";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 

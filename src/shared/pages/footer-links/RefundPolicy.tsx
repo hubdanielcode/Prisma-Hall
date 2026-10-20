@@ -1,16 +1,16 @@
-import { InformationPage, InformationSection } from "@/shared/components/ui/InformationPage";
-import { contactInformation } from "@/shared/utils/constants/contactInformation";
+import { InformationPage, InformationSection } from "../../components/ui/InformationPage";
+import { contactInformation } from "../../utils/constants/contactInformation";
 
 const RefundPolicy = () => {
   return (
     <InformationPage
       title="Política de Reembolso"
-      updatedAt="8 de outubro de 2026"
+      updatedAt="19 de outubro de 2026"
     >
       <InformationSection title="Pedidos de ingressos">
         <p>
-          Você pode cancelar um pedido de ingressos enquanto o evento ainda não tiver acontecido. Depois que o evento acontece, o pedido não pode mais
-          ser cancelado.
+          Você pode cancelar um pedido de ingressos até 24 horas antes do início do evento. Depois desse prazo, ou depois que o evento acontece, o
+          pedido não pode mais ser cancelado.
         </p>
       </InformationSection>
 

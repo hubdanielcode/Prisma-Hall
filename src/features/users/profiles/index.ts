@@ -1,16 +1,20 @@
 /* - Components - */
 
-export { EditProfileModal } from "@/features/users/profiles/components/EditProfileModal";
-export { FirstTimeProfileModal } from "@/features/users/profiles/components/FirstTimeProfileModal";
-export { ProfileInformationsSection } from "@/features/users/profiles/components/ProfileInformationsSection";
-export { ProfileSettingsSection } from "@/features/users/profiles/components/ProfileSettingsSection";
-export { ProfileOrdersSection } from "@/features/users/profiles/components/ProfileOrdersSection";
+export { EditProfileModal } from "./components/EditProfileModal";
+export { FirstTimeProfileModal } from "./components/FirstTimeProfileModal";
+export { ProfileInformationsSection } from "./components/ProfileInformationsSection";
+export { ProfileSettingsSection } from "./components/ProfileSettingsSection";
+export { ProfileOrdersSection } from "./components/ProfileOrdersSection";
 
 /* - Hooks - */
 
-export { useProfileContext } from "@/features/users/profiles/hooks/useProfileContext";
-export { useProfile } from "@/features/users/profiles/hooks/useProfile";
+export { useProfileContext } from "./hooks/useProfileContext";
+export { useProfile } from "./hooks/useProfile";
 
 /* - Pages - */
 
-export { UserProfile } from "@/features/users/profiles/pages/UserProfile";
+export { UserProfile } from "./pages/UserProfile";
+
+/* - Context - */
+
+export { ProfileContext, ProfileProvider } from "./context/ProfileContext";

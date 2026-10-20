@@ -1,13 +1,13 @@
 /* - Components - */
 
-export { DeleteUserModal } from "@/features/admin/users-management/components/DeleteUserModal";
-export { EditUserModal } from "@/features/admin/users-management/components/EditUserModal";
-export { UserAvatar } from "@/features/admin/users-management/components/UserAvatar";
-export { UsersManagementCard } from "@/features/admin/users-management/components/UsersManagementCard";
-export { UsersManagementFilter } from "@/features/admin/users-management/components/UsersManagementFilter";
-export { UsersManagementTable } from "@/features/admin/users-management/components/UsersManagementTable";
-export { UsersTablePagination } from "@/features/admin/users-management/components/UsersTablePagination";
+export { DeleteUserModal } from "./components/DeleteUserModal";
+export { EditUserModal } from "./components/EditUserModal";
+export { UserAvatar } from "./components/UserAvatar";
+export { UsersManagementCard } from "./components/UsersManagementCard";
+export { UsersManagementFilter } from "./components/UsersManagementFilter";
+export { UsersManagementTable } from "./components/UsersManagementTable";
+export { UsersTablePagination } from "./components/UsersTablePagination";
 
 /* - Pages - */
 
-export { UsersManagement } from "@/features/admin/users-management/pages/UsersManagement";
+export { UsersManagement } from "./pages/UsersManagement";

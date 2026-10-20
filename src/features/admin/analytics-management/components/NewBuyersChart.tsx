@@ -1,14 +1,14 @@
 "use client";
 
-import { AnalyticsChartFilter } from "@/features/admin/analytics-management/components/AnalyticsChartFilter";
-import { BarChartList } from "@/features/admin/analytics-management/components/BarChartList";
+import { AnalyticsChartFilter } from "./AnalyticsChartFilter";
+import { BarChartList } from "./BarChartList";
 import { eventTags } from "@/features/events/event/utils/eventTags";
 import { FaUsers } from "react-icons/fa";
 import { formatPeople } from "@/shared/utils/functions/formatters";
-import { tagFilterSchema } from "@/lib/validations/shared/tagSchema";
-import { useNewVisitors } from "@/features/admin/analytics-management/hooks/useNewVisitors";
+import { tagFilterSchema } from "@/lib/validations/shared/tagFilterSchema";
+import { useNewVisitors } from "../hooks/useNewVisitors";
 import { useState } from "react";
-import type { PeriodLabelProps } from "@/features/admin/analytics-management/types/period";
+import type { PeriodLabelProps } from "../types/period";
 import type { z } from "zod";
 
 const NewBuyersChart = () => {

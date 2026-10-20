@@ -3,6 +3,7 @@
 import { checkIsAdmin } from "../checkIsAdmin";
 import { editUserSchema } from "@/lib/validations/admin/user-management/editUserSchema";
 import { prisma } from "@/lib/server/services/prisma";
+import { validateSession } from "@/actions/session/validateSession";
 import z from "zod";
 
 const editUser = async (user: z.infer<typeof editUserSchema>) => {
@@ -18,22 +19,27 @@ const editUser = async (user: z.infer<typeof editUserSchema>) => {
     return false;
   }
 
-  const baseUserData = {
-    role: parsedUser.data.roles,
-    verifiedBadge: parsedUser.data.verifiedUser,
-    frequentUser: parsedUser.data.frequentUser,
-    oldUser: parsedUser.data.oldUser,
-  };
+  const validSession = await validateSession();
+
+  if (!validSession) {
+    return false;
+  }
 
   const forceRevalidation = parsedUser.data.forceRevalidation;
 
   try {
+    /* - Impedindo que o site fique sem nenhum admin - */
+
+    if (parsedUser.data.userId === validSession.user.id) {
+      return false;
+    }
+
     if (forceRevalidation) {
       /* - Se houver revalidação forçada - */
 
       const editedUser = await prisma.user.update({
         where: { id: parsedUser.data.userId },
-        data: { ...baseUserData, validatedAt: null },
+        data: { role: parsedUser.data.roles, validatedAt: null },
       });
 
       return {
@@ -55,7 +61,7 @@ const editUser = async (user: z.infer<typeof editUserSchema>) => {
 
     const editedUser = await prisma.user.update({
       where: { id: parsedUser.data.userId },
-      data: { ...baseUserData },
+      data: { role: parsedUser.data.roles },
     });
 
     return {

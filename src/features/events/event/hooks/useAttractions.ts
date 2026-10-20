@@ -29,7 +29,7 @@ const useAttractions = () => {
   const { mutateAsync: createAttractionMutation } = useMutation({
     mutationFn: createAttractionAction,
     onSuccess: async (createAttractionMutationResult) => {
-      if (createAttractionMutationResult) {
+      if (typeof createAttractionMutationResult === "object") {
         queryClient.invalidateQueries({ queryKey: ["attractions"] });
       }
     },
@@ -40,7 +40,7 @@ const useAttractions = () => {
   const { mutateAsync: editAttractionMutation } = useMutation({
     mutationFn: editAttractionAction,
     onSuccess: async (editAttractionActionReult) => {
-      if (editAttractionActionReult) {
+      if (typeof editAttractionActionReult === "object") {
         queryClient.invalidateQueries({ queryKey: ["attractions"] });
       }
     },

@@ -1,10 +1,9 @@
 "use server";
 
-import { getEventStatus } from "@/lib/server/events/getEventStatus";
+import { getEventStatus, prisma } from "@/lib/server";
 import { mapCartItem } from "@/features/cart/utils/mapCartItem";
-import { prisma } from "@/lib/server/services/prisma";
 import { updateCartItemSchema } from "@/lib/validations/cart/updateCartItemSchema";
-import { validateSession } from "@/actions/session/validateSession";
+import { validateSession } from "../session/validateSession";
 import z from "zod";
 
 const updateItemQuantity = async (item: z.infer<typeof updateCartItemSchema>) => {
@@ -58,7 +57,7 @@ const updateItemQuantity = async (item: z.infer<typeof updateCartItemSchema>) =>
         quantity: parsedItem.data.quantity,
         price: existingItem.product ? existingItem.product.price : existingItem.event!.price,
       },
-      include: { product: true, event: true },
+      include: { product: true, event: { include: { attraction: { select: { name: true } } } } },
     });
 
     return mapCartItem(editedItem);

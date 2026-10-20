@@ -1,6 +1,6 @@
 "use client";
 
-import { getNotificationPreferences, updateNotificationPreferences as updateNotificationPreferencesAction } from "@/actions/";
+import { getNotificationPreferences, updateNotificationPreferences as updateNotificationPreferencesAction } from "@/actions";
 import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 

@@ -1,4 +1,4 @@
-import { fakeVoucherOrders } from "../../../../../.storybook/mocks/hooks/users/useVoucherOrder";
+import { fakeVoucherOrders } from "@/storybook/mocks/hooks/users/useVoucherOrder";
 import { VoucherOrderSummary } from "./VoucherOrderSummary";
 
 export default {

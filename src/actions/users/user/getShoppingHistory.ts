@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/server/services/prisma";
-import { validateSession } from "@/actions/session/validateSession";
+import { validateSession } from "../../session/validateSession";
 
 const getShoppingHistory = async () => {
   const validSession = await validateSession();
@@ -70,14 +70,14 @@ const getShoppingHistory = async () => {
         paymentStatus: payment ? payment.status : null,
         totalValue: payment
           ? payment.totalValue.toNumber()
-          : order.vouchers.reduce((total, voucher) => total + voucher.quantity * voucher.product.price.toNumber(), 0),
+          : order.vouchers.reduce((total, voucher) => total + voucher.quantity * voucher.unitPrice.toNumber(), 0),
 
         items: order.vouchers.map((voucher) => ({
           id: voucher.id,
           name: voucher.product.name,
           image: voucher.product.image,
           quantity: voucher.quantity,
-          unitPrice: voucher.product.price.toNumber(),
+          unitPrice: voucher.unitPrice.toNumber(),
         })),
 
         createdAt: order.createdAt.toISOString(),

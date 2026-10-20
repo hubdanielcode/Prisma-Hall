@@ -1,5 +1,5 @@
 import type { OrderStatus, PaymentMethod, PaymentStatus } from "@/prisma/generated/prisma/enums";
-import type { VoucherProps } from "@/features/users/vouchers/types/voucher";
+import type { VoucherProps } from "./voucher";
 
 export interface VoucherOrderProps {
   id: string;

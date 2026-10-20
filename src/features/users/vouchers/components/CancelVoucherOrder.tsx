@@ -3,7 +3,7 @@
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useVoucherOrder } from "@/features/users/vouchers/hooks/useVoucherOrder";
+import { useVoucherOrder } from "../hooks/useVoucherOrder";
 import { VoucherOrderSummary } from "./VoucherOrderSummary";
 import Link from "next/link";
 

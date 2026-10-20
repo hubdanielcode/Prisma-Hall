@@ -40,13 +40,17 @@ const useProducts = () => {
   /* - Query de leitura - */
 
   const {
-    data: products,
+    data: productsResult,
     isLoading,
     error,
   } = useQuery({
     queryKey: [isAdminArea ? productQueryKey.admin : productQueryKey.user],
     queryFn: () => (isAdminArea ? getAllProductsAdmins() : getAllProductsUsers()),
   });
+
+  // 1. As actions devolvem false quando falham, então a lista vira vazia para quem consome
+
+  const products = productsResult ? productsResult : [];
 
   /* - Mutations - */
 

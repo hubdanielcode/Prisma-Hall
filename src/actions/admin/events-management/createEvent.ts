@@ -3,9 +3,7 @@
 import { checkIsAdmin } from "../checkIsAdmin";
 import { createEventSchema } from "@/lib/validations/admin/events-management/createEventSchema";
 import { del, put } from "@vercel/blob";
-import { getEventStatus } from "@/lib/server/events/getEventStatus";
-import { notifyPromotionsByEmail } from "@/lib/server/notifications/notifyUsers";
-import { prisma } from "@/lib/server/services/prisma";
+import { getEventStatus, notifyPromotionsByEmail, prisma } from "@/lib/server";
 import z from "zod";
 
 const createEvent = async (event: z.infer<typeof createEventSchema>) => {
@@ -43,11 +41,12 @@ const createEvent = async (event: z.infer<typeof createEventSchema>) => {
         title: parsedEvent.data.title,
         description: parsedEvent.data.description,
         tag: parsedEvent.data.tag,
-        attractionName: parsedEvent.data.attractionName,
+        attractionId: parsedEvent.data.attractionId,
         image: blob.url,
         price: parsedEvent.data.price,
         startsAt: parsedEvent.data.startsAt,
       },
+      include: { attraction: { select: { id: true, name: true } } },
     });
 
     /* - A partir daqui o evento já existe e é dono da imagem: o catch não pode mais apagá-la - */
@@ -61,7 +60,7 @@ const createEvent = async (event: z.infer<typeof createEventSchema>) => {
         await notifyPromotionsByEmail({
           type: "new_event",
           title: "Novo evento na agenda",
-          message: `${newEvent.title} com ${newEvent.attractionName} já está na agenda.`,
+          message: `${newEvent.title} com ${newEvent.attraction.name} já está na agenda.`,
         });
       }
     } catch (error) {
@@ -73,7 +72,8 @@ const createEvent = async (event: z.infer<typeof createEventSchema>) => {
       title: newEvent.title,
       description: newEvent.description,
       tag: newEvent.tag,
-      attractionName: newEvent.attractionName,
+      attractionId: newEvent.attraction.id,
+      attractionName: newEvent.attraction.name,
       image: newEvent.image,
       price: newEvent.price.toNumber(),
       startsAt: newEvent.startsAt.toISOString(),

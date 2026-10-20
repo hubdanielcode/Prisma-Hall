@@ -7,7 +7,7 @@ const getAllProductsAdmins = async () => {
   const isAdmin = await checkIsAdmin();
 
   if (!isAdmin) {
-    throw new Error("Acesso negado.");
+    return false;
   }
 
   try {

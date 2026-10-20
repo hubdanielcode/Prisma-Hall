@@ -1,24 +1,24 @@
 /* - Components - */
 
-export { AuthenticationScreenShell } from "@/features/authentication/components/AuthenticationScreenShell";
+export { AuthenticationScreenShell } from "./components/AuthenticationScreenShell";
 
 /* - Context - */
 
-export { AuthenticationContext, AuthenticationProvider } from "@/features/authentication/context/AuthenticationContext";
+export { AuthenticationContext, AuthenticationProvider } from "./context/AuthenticationContext";
 
 /* - Hooks - */
 
-export { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
-export { usePasswordReset } from "@/features/authentication/hooks/usePasswordReset";
-export { useSession } from "@/features/authentication/hooks/useSession";
+export { useAuthenticationContext } from "./hooks/useAuthenticationContext";
+export { usePasswordReset } from "./hooks/usePasswordReset";
+export { useSession } from "./hooks/useSession";
 
 /* - Pages - */
 
-export { Authentication } from "@/features/authentication/pages/Authentication";
-export { Login } from "@/features/authentication/pages/Login";
-export { PasswordReset } from "@/features/authentication/pages/PasswordReset";
+export { Authentication } from "./pages/Authentication";
+export { Login } from "./pages/Login";
+export { PasswordReset } from "./pages/PasswordReset";
 
 /* - Types - */
 
-export type { ProfileProps } from "@/features/authentication/types/profile";
-export type { SessionUserProps } from "@/features/authentication/types/sessionUser";
+export type { ProfileProps } from "./types/profile";
+export type { SessionUserProps } from "./types/sessionUser";

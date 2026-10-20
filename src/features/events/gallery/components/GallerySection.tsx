@@ -1,6 +1,6 @@
 "use client";
 
-import { eventTags } from "@/features/events/event/utils/eventTags";
+import { eventTags } from "../../event/utils/eventTags";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { formattedDateToString } from "@/shared/utils/functions/dates";
 import { Image } from "lucide-react";

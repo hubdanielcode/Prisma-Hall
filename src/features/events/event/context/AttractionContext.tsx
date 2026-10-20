@@ -2,7 +2,7 @@
 
 import { createAttractionSchema, editAttractionSchema } from "@/lib/validations";
 import { createContext } from "react";
-import { useAttractions } from "@/features/events/event/hooks/useAttractions";
+import { useAttractions } from "../hooks/useAttractions";
 import type { AttractionProps } from "../types/attraction";
 import type z from "zod";
 

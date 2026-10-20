@@ -43,6 +43,7 @@ export type VoucherPaymentMinAggregateOutputType = {
   totalValue: runtime.Decimal | null
   confirmedAt: Date | null
   pickedUpAt: Date | null
+  paymentIntentId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -56,6 +57,7 @@ export type VoucherPaymentMaxAggregateOutputType = {
   totalValue: runtime.Decimal | null
   confirmedAt: Date | null
   pickedUpAt: Date | null
+  paymentIntentId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -69,6 +71,7 @@ export type VoucherPaymentCountAggregateOutputType = {
   totalValue: number
   confirmedAt: number
   pickedUpAt: number
+  paymentIntentId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -92,6 +95,7 @@ export type VoucherPaymentMinAggregateInputType = {
   totalValue?: true
   confirmedAt?: true
   pickedUpAt?: true
+  paymentIntentId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -105,6 +109,7 @@ export type VoucherPaymentMaxAggregateInputType = {
   totalValue?: true
   confirmedAt?: true
   pickedUpAt?: true
+  paymentIntentId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -118,6 +123,7 @@ export type VoucherPaymentCountAggregateInputType = {
   totalValue?: true
   confirmedAt?: true
   pickedUpAt?: true
+  paymentIntentId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -218,6 +224,7 @@ export type VoucherPaymentGroupByOutputType = {
   totalValue: runtime.Decimal
   confirmedAt: Date | null
   pickedUpAt: Date | null
+  paymentIntentId: string | null
   createdAt: Date
   updatedAt: Date
   _count: VoucherPaymentCountAggregateOutputType | null
@@ -254,6 +261,7 @@ export type VoucherPaymentWhereInput = {
   totalValue?: Prisma.DecimalFilter<"VoucherPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.DateTimeNullableFilter<"VoucherPayment"> | Date | string | null
   pickedUpAt?: Prisma.DateTimeNullableFilter<"VoucherPayment"> | Date | string | null
+  paymentIntentId?: Prisma.StringNullableFilter<"VoucherPayment"> | string | null
   createdAt?: Prisma.DateTimeFilter<"VoucherPayment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"VoucherPayment"> | Date | string
   order?: Prisma.XOR<Prisma.VoucherOrderScalarRelationFilter, Prisma.VoucherOrderWhereInput>
@@ -269,6 +277,7 @@ export type VoucherPaymentOrderByWithRelationInput = {
   totalValue?: Prisma.SortOrder
   confirmedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   pickedUpAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  paymentIntentId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   order?: Prisma.VoucherOrderOrderByWithRelationInput
@@ -287,6 +296,7 @@ export type VoucherPaymentWhereUniqueInput = Prisma.AtLeast<{
   totalValue?: Prisma.DecimalFilter<"VoucherPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.DateTimeNullableFilter<"VoucherPayment"> | Date | string | null
   pickedUpAt?: Prisma.DateTimeNullableFilter<"VoucherPayment"> | Date | string | null
+  paymentIntentId?: Prisma.StringNullableFilter<"VoucherPayment"> | string | null
   createdAt?: Prisma.DateTimeFilter<"VoucherPayment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"VoucherPayment"> | Date | string
   order?: Prisma.XOR<Prisma.VoucherOrderScalarRelationFilter, Prisma.VoucherOrderWhereInput>
@@ -302,6 +312,7 @@ export type VoucherPaymentOrderByWithAggregationInput = {
   totalValue?: Prisma.SortOrder
   confirmedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   pickedUpAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  paymentIntentId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.VoucherPaymentCountOrderByAggregateInput
@@ -323,6 +334,7 @@ export type VoucherPaymentScalarWhereWithAggregatesInput = {
   totalValue?: Prisma.DecimalWithAggregatesFilter<"VoucherPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"VoucherPayment"> | Date | string | null
   pickedUpAt?: Prisma.DateTimeNullableWithAggregatesFilter<"VoucherPayment"> | Date | string | null
+  paymentIntentId?: Prisma.StringNullableWithAggregatesFilter<"VoucherPayment"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"VoucherPayment"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"VoucherPayment"> | Date | string
 }
@@ -334,6 +346,7 @@ export type VoucherPaymentCreateInput = {
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Date | string | null
   pickedUpAt?: Date | string | null
+  paymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   order: Prisma.VoucherOrderCreateNestedOneWithoutVoucherPaymentsInput
@@ -349,6 +362,7 @@ export type VoucherPaymentUncheckedCreateInput = {
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Date | string | null
   pickedUpAt?: Date | string | null
+  paymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -360,6 +374,7 @@ export type VoucherPaymentUpdateInput = {
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   order?: Prisma.VoucherOrderUpdateOneRequiredWithoutVoucherPaymentsNestedInput
@@ -375,6 +390,7 @@ export type VoucherPaymentUncheckedUpdateInput = {
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -388,6 +404,7 @@ export type VoucherPaymentCreateManyInput = {
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Date | string | null
   pickedUpAt?: Date | string | null
+  paymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -399,6 +416,7 @@ export type VoucherPaymentUpdateManyMutationInput = {
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -412,6 +430,7 @@ export type VoucherPaymentUncheckedUpdateManyInput = {
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -435,6 +454,7 @@ export type VoucherPaymentCountOrderByAggregateInput = {
   totalValue?: Prisma.SortOrder
   confirmedAt?: Prisma.SortOrder
   pickedUpAt?: Prisma.SortOrder
+  paymentIntentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -452,6 +472,7 @@ export type VoucherPaymentMaxOrderByAggregateInput = {
   totalValue?: Prisma.SortOrder
   confirmedAt?: Prisma.SortOrder
   pickedUpAt?: Prisma.SortOrder
+  paymentIntentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -465,6 +486,7 @@ export type VoucherPaymentMinOrderByAggregateInput = {
   totalValue?: Prisma.SortOrder
   confirmedAt?: Prisma.SortOrder
   pickedUpAt?: Prisma.SortOrder
+  paymentIntentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -572,6 +594,7 @@ export type VoucherPaymentCreateWithoutUserInput = {
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Date | string | null
   pickedUpAt?: Date | string | null
+  paymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   order: Prisma.VoucherOrderCreateNestedOneWithoutVoucherPaymentsInput
@@ -585,6 +608,7 @@ export type VoucherPaymentUncheckedCreateWithoutUserInput = {
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Date | string | null
   pickedUpAt?: Date | string | null
+  paymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -627,6 +651,7 @@ export type VoucherPaymentScalarWhereInput = {
   totalValue?: Prisma.DecimalFilter<"VoucherPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.DateTimeNullableFilter<"VoucherPayment"> | Date | string | null
   pickedUpAt?: Prisma.DateTimeNullableFilter<"VoucherPayment"> | Date | string | null
+  paymentIntentId?: Prisma.StringNullableFilter<"VoucherPayment"> | string | null
   createdAt?: Prisma.DateTimeFilter<"VoucherPayment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"VoucherPayment"> | Date | string
 }
@@ -638,6 +663,7 @@ export type VoucherPaymentCreateWithoutOrderInput = {
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Date | string | null
   pickedUpAt?: Date | string | null
+  paymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutVoucherPaymentsInput
@@ -651,6 +677,7 @@ export type VoucherPaymentUncheckedCreateWithoutOrderInput = {
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Date | string | null
   pickedUpAt?: Date | string | null
+  paymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -689,6 +716,7 @@ export type VoucherPaymentCreateManyUserInput = {
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Date | string | null
   pickedUpAt?: Date | string | null
+  paymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -700,6 +728,7 @@ export type VoucherPaymentUpdateWithoutUserInput = {
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   order?: Prisma.VoucherOrderUpdateOneRequiredWithoutVoucherPaymentsNestedInput
@@ -713,6 +742,7 @@ export type VoucherPaymentUncheckedUpdateWithoutUserInput = {
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -725,6 +755,7 @@ export type VoucherPaymentUncheckedUpdateManyWithoutUserInput = {
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -737,6 +768,7 @@ export type VoucherPaymentCreateManyOrderInput = {
   totalValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Date | string | null
   pickedUpAt?: Date | string | null
+  paymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -748,6 +780,7 @@ export type VoucherPaymentUpdateWithoutOrderInput = {
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutVoucherPaymentsNestedInput
@@ -761,6 +794,7 @@ export type VoucherPaymentUncheckedUpdateWithoutOrderInput = {
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -773,6 +807,7 @@ export type VoucherPaymentUncheckedUpdateManyWithoutOrderInput = {
   totalValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pickedUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -788,6 +823,7 @@ export type VoucherPaymentSelect<ExtArgs extends runtime.Types.Extensions.Intern
   totalValue?: boolean
   confirmedAt?: boolean
   pickedUpAt?: boolean
+  paymentIntentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   order?: boolean | Prisma.VoucherOrderDefaultArgs<ExtArgs>
@@ -803,6 +839,7 @@ export type VoucherPaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   totalValue?: boolean
   confirmedAt?: boolean
   pickedUpAt?: boolean
+  paymentIntentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   order?: boolean | Prisma.VoucherOrderDefaultArgs<ExtArgs>
@@ -818,6 +855,7 @@ export type VoucherPaymentSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   totalValue?: boolean
   confirmedAt?: boolean
   pickedUpAt?: boolean
+  paymentIntentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   order?: boolean | Prisma.VoucherOrderDefaultArgs<ExtArgs>
@@ -833,11 +871,12 @@ export type VoucherPaymentSelectScalar = {
   totalValue?: boolean
   confirmedAt?: boolean
   pickedUpAt?: boolean
+  paymentIntentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type VoucherPaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "orderId" | "method" | "status" | "totalValue" | "confirmedAt" | "pickedUpAt" | "createdAt" | "updatedAt", ExtArgs["result"]["voucherPayment"]>
+export type VoucherPaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "orderId" | "method" | "status" | "totalValue" | "confirmedAt" | "pickedUpAt" | "paymentIntentId" | "createdAt" | "updatedAt", ExtArgs["result"]["voucherPayment"]>
 export type VoucherPaymentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   order?: boolean | Prisma.VoucherOrderDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -866,6 +905,7 @@ export type $VoucherPaymentPayload<ExtArgs extends runtime.Types.Extensions.Inte
     totalValue: runtime.Decimal
     confirmedAt: Date | null
     pickedUpAt: Date | null
+    paymentIntentId: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["voucherPayment"]>
@@ -1301,6 +1341,7 @@ export interface VoucherPaymentFieldRefs {
   readonly totalValue: Prisma.FieldRef<"VoucherPayment", 'Decimal'>
   readonly confirmedAt: Prisma.FieldRef<"VoucherPayment", 'DateTime'>
   readonly pickedUpAt: Prisma.FieldRef<"VoucherPayment", 'DateTime'>
+  readonly paymentIntentId: Prisma.FieldRef<"VoucherPayment", 'String'>
   readonly createdAt: Prisma.FieldRef<"VoucherPayment", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"VoucherPayment", 'DateTime'>
 }

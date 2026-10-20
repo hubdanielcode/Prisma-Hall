@@ -1,9 +1,8 @@
 "use server";
 
 import { favoriteEventIdSchema } from "@/lib/validations/events/favoriteEventSchema";
-import { getEventStatus } from "@/lib/server/events/getEventStatus";
-import { prisma } from "@/lib/server/services/prisma";
-import { validateSession } from "@/actions/session/validateSession";
+import { getEventStatus, prisma } from "@/lib/server";
+import { validateSession } from "../../session/validateSession";
 
 const favoriteEvent = async (eventId: string) => {
   const validSession = await validateSession();

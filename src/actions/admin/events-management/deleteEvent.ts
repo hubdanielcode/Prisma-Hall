@@ -2,9 +2,12 @@
 
 import { checkIsAdmin } from "../checkIsAdmin";
 import { del } from "@vercel/blob";
-import { getEventStatus } from "@/lib/server/events/getEventStatus";
-import { getUserIdsThatFavoritedEvent, notifyUsersByEmail } from "@/lib/server/notifications/notifyUsers";
-import { prisma } from "@/lib/server/services/prisma";
+import {
+  getEventStatus,
+  getUserIdsThatFavoritedEvent,
+  notifyUsersByEmail,
+  prisma,
+} from "@/lib/server";
 import type { DeleteEventResult } from "@/features/events/event/types/event";
 
 const deleteEvent = async (eventId: string): Promise<DeleteEventResult> => {

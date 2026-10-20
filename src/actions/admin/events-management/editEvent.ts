@@ -3,19 +3,21 @@
 import { checkIsAdmin } from "../checkIsAdmin";
 import { del, put } from "@vercel/blob";
 import { editEventSchema } from "@/lib/validations/admin/events-management/editEventSchema";
-import { getEventStatus } from "@/lib/server/events/getEventStatus";
-import { getUserIdsThatFavoritedEvent, notifyFavoriteEventByEmail, notifyPromotionsByEmail } from "@/lib/server/notifications/notifyUsers";
-import { prisma } from "@/lib/server/services/prisma";
+import { getEventStatus, getUserIdsThatFavoritedEvent, notifyFavoriteEventByEmail, notifyPromotionsByEmail, prisma } from "@/lib/server";
 import z from "zod";
 
 interface FavoriteEventChangesProps {
   originalEvent: { startsAt: Date; price: number };
-  editedEvent: { id: string; title: string; startsAt: Date; price: number };
+  editedEvent: { id: string; title: string; startsAt: Date; price: number; isCancelled: boolean };
 }
 
 const notifyFavoriteEventChanges = async ({ originalEvent, editedEvent }: FavoriteEventChangesProps) => {
   const dateChanged = originalEvent.startsAt.getTime() !== editedEvent.startsAt.getTime();
   const priceDropped = editedEvent.price < originalEvent.price;
+
+  if (getEventStatus(editedEvent) !== "soon") {
+    return false;
+  }
 
   if (!dateChanged && !priceDropped) {
     return;
@@ -69,7 +71,7 @@ const editEvent = async (event: z.infer<typeof editEventSchema>) => {
     title: parsedEvent.data.title,
     description: parsedEvent.data.description,
     tag: parsedEvent.data.tag,
-    attractionName: parsedEvent.data.attractionName,
+    attractionId: parsedEvent.data.attractionId,
     price: parsedEvent.data.price,
     startsAt: parsedEvent.data.startsAt,
   };
@@ -110,6 +112,7 @@ const editEvent = async (event: z.infer<typeof editEventSchema>) => {
     const editedEvent = await prisma.event.update({
       where: { id: parsedEvent.data.eventId },
       data: { ...baseEventData, ...(newImageUrl && { image: newImageUrl }) },
+      include: { attraction: { select: { id: true, name: true } } },
     });
 
     /* - A edição foi salva e a imagem nova é do evento. A antiga só sai do Blob agora; uma falha na remoção não desfaz a edição - */
@@ -140,7 +143,8 @@ const editEvent = async (event: z.infer<typeof editEventSchema>) => {
       title: editedEvent.title,
       description: editedEvent.description,
       tag: editedEvent.tag,
-      attractionName: editedEvent.attractionName,
+      attractionId: editedEvent.attraction.id,
+      attractionName: editedEvent.attraction.name,
       image: editedEvent.image,
       status: getEventStatus(editedEvent),
       price: editedEvent.price.toNumber(),

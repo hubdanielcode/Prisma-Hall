@@ -5,7 +5,7 @@ import { formattedDate } from "@/shared/utils/functions/dates";
 import { monthNames } from "../../event/utils/monthNames";
 import { motion } from "motion/react";
 import { useCalendarContext } from "../../event/hooks/useCalendarContext";
-import { useEvents } from "@/features/events/event/hooks/useEvents";
+import { useEvents } from "../../event/hooks/useEvents";
 
 const CalendarGrid = () => {
   /* - Puxando do context - */

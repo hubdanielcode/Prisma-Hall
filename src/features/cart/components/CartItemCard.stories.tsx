@@ -1,4 +1,4 @@
-import { fakeCartItems } from "../../../../.storybook/mocks/hooks/cart/useCartItems";
+import { fakeCartItems } from "@/storybook/mocks/hooks/cart/useCartItems";
 import { CartItemCard } from "./CartItemCard";
 
 export default {

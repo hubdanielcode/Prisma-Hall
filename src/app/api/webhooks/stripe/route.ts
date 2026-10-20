@@ -4,21 +4,34 @@ import type Stripe from "stripe";
 
 const runtime = "nodejs";
 
+const maxSessionsToCheck = 500;
+
 // Se o cliente abriu uma sessão nova para o mesmo pedido, o fato de a sessão antiga expirar não pode cancelar o pedido
 
 const hasOtherActiveSession = async (endedSession: Stripe.Checkout.Session) => {
-  const recentSessions = await stripe.checkout.sessions.list({
-    limit: 100,
-    created: { gte: Math.floor(Date.now() / 1000) - 60 * 60 * 48 },
-  });
+  let checkedSessions = 0;
 
-  return recentSessions.data.some(
-    (otherSession) =>
+  for await (const otherSession of stripe.checkout.sessions.list({
+    limit: 500,
+    created: { gte: Math.floor(Date.now() / 1000) - 60 * 60 * 48 },
+  })) {
+    const isSameOrder =
       otherSession.id !== endedSession.id &&
-      (otherSession.status === "open" || otherSession.payment_status === "paid") &&
       otherSession.metadata?.ticketPaymentId === endedSession.metadata?.ticketPaymentId &&
-      otherSession.metadata?.voucherPaymentId === endedSession.metadata?.voucherPaymentId,
-  );
+      otherSession.metadata?.voucherPaymentId === endedSession.metadata?.voucherPaymentId;
+
+    if (isSameOrder && (otherSession.status === "open" || otherSession.payment_status === "paid")) {
+      return true;
+    }
+
+    checkedSessions += 1;
+
+    if (checkedSessions >= maxSessionsToCheck) {
+      break;
+    }
+  }
+
+  return false;
 };
 
 const POST = async (request: Request) => {
@@ -49,9 +62,15 @@ const POST = async (request: Request) => {
         // 1. Crédito ou débito reais, que o Stripe só informa depois do pagamento
 
         const stripeMethod = await getRealCardMethod(checkoutSession);
-        const orderMarkedAsPaid = await markOrderAsPaid({ ticketPaymentId, voucherPaymentId, stripeMethod });
 
-        // 2. Se o banco falhou, responde erro para o Stripe reenviar o evento. O reenvio é seguro: pagamento que já saiu de "pendente" é ignorado
+        // 2. Guarda a cobrança do Stripe no pagamento, para o reembolso encontrá-la direto depois
+
+        const paymentIntentId =
+          typeof checkoutSession.payment_intent === "string" ? checkoutSession.payment_intent : checkoutSession.payment_intent?.id;
+
+        const orderMarkedAsPaid = await markOrderAsPaid({ ticketPaymentId, voucherPaymentId, stripeMethod, paymentIntentId });
+
+        // 3. Se o banco falhou, responde erro para o Stripe reenviar o evento. O reenvio é seguro: pagamento que já saiu de "pendente" é ignorado
 
         if (!orderMarkedAsPaid) {
           return NextResponse.json({ error: "Falha ao confirmar o pagamento" }, { status: 500 });

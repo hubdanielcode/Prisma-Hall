@@ -1,8 +1,7 @@
 "use server";
 
-import { getEventStatus } from "@/lib/server/events/getEventStatus";
-import { prisma } from "@/lib/server/services/prisma";
-import { validateSession } from "@/actions/session/validateSession";
+import { getEventStatus, prisma } from "@/lib/server";
+import { validateSession } from "../../session/validateSession";
 
 const getMyTickets = async () => {
   const validSession = await validateSession();
@@ -15,7 +14,7 @@ const getMyTickets = async () => {
     const tickets = await prisma.ticket.findMany({
       where: { userId: validSession.user.id },
       include: {
-        event: true,
+        event: { include: { attraction: { select: { id: true, name: true } } } },
         order: { include: { ticketPayments: { orderBy: { createdAt: "desc" }, take: 1 } } },
       },
       orderBy: { createdAt: "desc" },
@@ -36,7 +35,8 @@ const getMyTickets = async () => {
         title: ticket.event.title,
         description: ticket.event.description,
         tag: ticket.event.tag,
-        attractionName: ticket.event.attractionName,
+        attractionId: ticket.event.attraction.id,
+        attractionName: ticket.event.attraction.name,
         image: ticket.event.image,
         status: getEventStatus(ticket.event),
         price: ticket.event.price.toNumber(),

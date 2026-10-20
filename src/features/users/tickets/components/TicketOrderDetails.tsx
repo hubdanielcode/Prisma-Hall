@@ -1,13 +1,12 @@
 "use client";
 
 import { IoHelp } from "react-icons/io5";
-import { masks } from "@/shared/utils/functions/masks";
+import { isTicketCancellationOpen, masks, paymentStatusBadgeStyles } from "@/shared/utils";
 import { MdOutlineCancel } from "react-icons/md";
-import { paymentStatusBadgeStyles } from "@/shared/utils/constants/orderBadgeStyles";
 import { PayNowButton } from "@/features/cart/components/PayNowButton";
 import { TicketOrderSummary } from "./TicketOrderSummary";
 import { useEffect } from "react";
-import { useTicketOrder } from "@/features/users/tickets/hooks/useTicketOrder";
+import { useTicketOrder } from "../hooks/useTicketOrder";
 import Link from "next/link";
 import type { PaymentMethod } from "@/prisma/generated/prisma/enums";
 
@@ -25,7 +24,10 @@ const TicketOrderDetails = ({ orderId }: TicketOrderDetailsProps) => {
 
   const isLoadingOrder = isLoading || (order === undefined && !error);
   const pendingPayment = order ? order.payments.find((payment) => payment.status === "pending") : undefined;
-  const canCancel = order ? order.status !== "cancelled" && order.tickets.every((ticket) => ticket.event.status === "soon") : false;
+  const canCancel = order
+    ? order.status !== "cancelled" &&
+      order.tickets.every((ticket) => ticket.event.status === "soon" && isTicketCancellationOpen(ticket.event.startsAt))
+    : false;
   const canPay = order ? order.status !== "cancelled" && Boolean(pendingPayment) : false;
 
   /* - Funções - */

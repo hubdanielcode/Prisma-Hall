@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronDown } from "lucide-react";
-import { periodOptions, type PeriodLabelProps } from "@/features/admin/analytics-management/types/period";
+import { periodOptions, type PeriodLabelProps } from "../types/period";
 import { useEffect, useRef, useState } from "react";
 
 interface AnalyticsChartFilterProps {

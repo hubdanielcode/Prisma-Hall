@@ -1,10 +1,11 @@
 /* - Components - */
 
-export { GallerySection } from "@/features/events/gallery/components/GallerySection";
+export { GallerySection } from "./components/GallerySection";
 
 /* - Hooks - */
 
-export { useGallery } from "@/features/events/gallery/hooks/useGallery";
+export { useGallery } from "./hooks/useGallery";
+
 /* - Types - */
 
-export type { GalleryPictureProps } from "@/features/events/gallery/types/galleryPicture";
+export type { GalleryPictureProps } from "./types/galleryPicture";

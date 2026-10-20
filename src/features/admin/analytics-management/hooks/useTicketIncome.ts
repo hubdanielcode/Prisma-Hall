@@ -2,9 +2,9 @@
 
 import { BarChartItemProps } from "../types/barChartItem";
 import { eventTags } from "@/features/events/event/utils/eventTags";
-import { getTicketIncome } from "@/actions";
+import { getTicketIncome } from "@/actions/admin/analytics-management/getTicketIncome";
 import { PeriodLabelProps } from "../types/period";
-import { tagFilterSchema, tagSchema } from "@/lib/validations/shared/tagSchema";
+import { tagSchema, tagFilterSchema } from "@/lib/validations";
 import { useQueries } from "@tanstack/react-query";
 import type { z } from "zod";
 

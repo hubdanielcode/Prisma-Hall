@@ -1,8 +1,8 @@
 import { BarProvider } from "@/features/bar/context/BarContext";
-import { DeleteProductModal } from "@/features/admin/bar-management/components/DeleteProductModal";
+import { DeleteProductModal } from "./DeleteProductModal";
 import { MobileProvider } from "@/shared/context/MobileContext";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
-import { fakeProduct } from "../../../../../.storybook/mocks/hooks/bar/useProducts";
+import { fakeProduct } from "@/storybook/mocks/hooks/bar/useProducts";
 
 export default {
   title: "Layouts/Admin/Bar Management/Modals",

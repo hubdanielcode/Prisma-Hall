@@ -4,7 +4,7 @@ import { createContext, useState } from "react";
 import { createProductSchema, editProductSchema } from "@/lib/validations";
 import { productCategories } from "../utils/productCategories";
 import { productCategoryIcons } from "../utils/productCategoryIcons";
-import { useProducts } from "@/features/bar/hooks/useProducts";
+import { useProducts } from "../hooks/useProducts";
 import { z } from "zod";
 import type { CategoryProps } from "../types/category";
 import type { ProductProps } from "../types/product";

@@ -1,4 +1,4 @@
-import { fakeCartItems } from "../../../.storybook/mocks/hooks/cart/useCartItems";
+import { fakeCartItems } from "@/storybook/mocks/hooks/cart/useCartItems";
 import { OrderConfirmationEmail } from "./OrderConfirmationEmail";
 import { render } from "@react-email/components";
 import { serviceFee } from "@/features/cart/utils/serviceFee";

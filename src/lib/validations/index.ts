@@ -2,73 +2,72 @@
 
 // 1.  Analytics Management
 
-export { voucherIncomeSchema } from "@/lib/validations/admin/analytics-management/voucherIncomeSchema";
-export { ticketIncomeSchema } from "@/lib/validations/admin/analytics-management/ticketIncomeSchema";
-export { newVisitorsSchema } from "@/lib/validations/admin/analytics-management/newVisitorsSchema";
+export { voucherIncomeSchema } from "./admin/analytics-management/voucherIncomeSchema";
+export { ticketIncomeSchema } from "./admin/analytics-management/ticketIncomeSchema";
+export { newVisitorsSchema } from "./admin/analytics-management/newVisitorsSchema";
 
 // 2. Bar Management
 
-export { createProductSchema } from "@/lib/validations/admin/bar-management/createProductSchema";
-export { editProductSchema } from "@/lib/validations/admin/bar-management/editProductSchema";
+export { createProductSchema } from "./admin/bar-management/createProductSchema";
+export { editProductSchema } from "./admin/bar-management/editProductSchema";
 
 // 3. Events Management
 
-export { cancelEventIdSchema } from "@/lib/validations/admin/events-management/cancelEventSchema";
-export { createAttractionSchema } from "@/lib/validations/admin/events-management/createAttractionSchema";
-export { createEventSchema } from "@/lib/validations/admin/events-management/createEventSchema";
-export { editAttractionSchema } from "@/lib/validations/admin/events-management/editAttractionSchema";
-export { editEventSchema } from "@/lib/validations/admin/events-management/editEventSchema";
+export { cancelEventIdSchema } from "./admin/events-management/cancelEventSchema";
+export { createAttractionSchema } from "./admin/events-management/createAttractionSchema";
+export { createEventSchema } from "./admin/events-management/createEventSchema";
+export { editAttractionSchema } from "./admin/events-management/editAttractionSchema";
+export { editEventSchema } from "./admin/events-management/editEventSchema";
 
 // 4. Users Management
 
-export { badgeLevelSchema } from "@/lib/validations/admin/user-management/badgeLevelSchema";
-export { editUserSchema } from "@/lib/validations/admin/user-management/editUserSchema";
-export { userSchema } from "@/lib/validations/admin/user-management/userSchema";
+export { badgeLevelSchema } from "./admin/user-management/badgeLevelSchema";
+export { editUserSchema } from "./admin/user-management/editUserSchema";
+export { getAllUsersSchema } from "./admin/user-management/getAllUsersSchema";
+export { userSchema } from "./admin/user-management/userSchema";
 
 /* - Authentication - */
 
-export { passwordResetSchema } from "@/lib/validations/authentication/passwordResetSchema";
-export { requestPasswordResetSchema } from "@/lib/validations/authentication/requestPasswordResetSchema";
-export { signInSchema } from "@/lib/validations/authentication/signInSchema";
-export { signUpSchema } from "@/lib/validations/authentication/signUpSchema";
+export { passwordResetSchema } from "./authentication/passwordResetSchema";
+export { requestPasswordResetSchema } from "./authentication/requestPasswordResetSchema";
+export { signInSchema } from "./authentication/signInSchema";
+export { signUpSchema } from "./authentication/signUpSchema";
 
 /* - Cart - */
 
-export { cartItemIdSchema } from "@/lib/validations/cart/cartItemIdSchema";
-export { cartItemSchema } from "@/lib/validations/cart/cartItemSchema";
-export { paymentMethodSchema } from "@/lib/validations/cart/paymentMethodSchema";
-export { updateCartItemSchema } from "@/lib/validations/cart/updateCartItemSchema";
+export { cartItemIdSchema } from "./cart/cartItemIdSchema";
+export { cartItemSchema } from "./cart/cartItemSchema";
+export { paymentMethodSchema } from "./cart/paymentMethodSchema";
+export { stripeCheckoutSchema } from "./cart/stripeCheckoutSchema";
+export { updateCartItemSchema } from "./cart/updateCartItemSchema";
 
 /* - Events - */
 
-export { createReviewSchema } from "@/lib/validations/events/createReviewSchema";
-export { favoriteEventIdSchema } from "@/lib/validations/events/favoriteEventSchema";
-export { updateReviewSchema } from "@/lib/validations/events/updateReviewSchema";
+export { createReviewSchema } from "./events/createReviewSchema";
+export { favoriteEventIdSchema } from "./events/favoriteEventSchema";
+export { updateReviewSchema } from "./events/updateReviewSchema";
 
 /* - Newsletter - */
 
-export { newsletterSchema } from "@/lib/validations/newsletter/newsletterSchema";
-
-/* - Payments - */
-
-export { stripeCheckoutSchema } from "@/lib/validations/payments/stripeCheckoutSchema";
+export { newsletterSchema } from "./newsletter/newsletterSchema";
 
 /* - Shared - */
 
-export { categorySchema } from "@/lib/validations/shared/categorySchema";
-export { imageFileSchema } from "@/lib/validations/shared/imageFileSchema";
-export { periodSchema } from "@/lib/validations/shared/periodSchema";
-export { tagFilterSchema } from "@/lib/validations/shared/tagFilterSchema";
-export { tagSchema } from "@/lib/validations/shared/tagSchema";
+export { categorySchema } from "./shared/categorySchema";
+export { imageFileSchema } from "./shared/imageFileSchema";
+export { periodSchema } from "./shared/periodSchema";
+export { tagFilterSchema } from "./shared/tagFilterSchema";
+export { tagSchema } from "./shared/tagSchema";
 
 /* - Users - */
 
-export { buyTicketsSchema } from "@/lib/validations/users/buyTicketsSchema";
-export { buyVouchersSchema } from "@/lib/validations/users/buyVouchersSchema";
-export { newProfileSchema } from "@/lib/validations/users/newProfileSchema";
-export { notificationIdSchema } from "@/lib/validations/users/notificationIdSchema";
-export { notificationPreferencesSchema } from "@/lib/validations/users/notificationPreferencesSchema";
-export { orderIdSchema } from "@/lib/validations/users/orderIdSchema";
-export { profileSchema } from "@/lib/validations/users/profileSchema";
-export { updateNotificationPreferencesSchema } from "@/lib/validations/users/updateNotificationPreferencesSchema";
-export { updateProfileSchema } from "@/lib/validations/users/updateProfileSchema";
+export { buyTicketsSchema } from "./users/buyTicketsSchema";
+export { buyVouchersSchema } from "./users/buyVouchersSchema";
+export { newProfileSchema } from "./users/newProfileSchema";
+export { notificationIdSchema } from "./users/notificationIdSchema";
+export { notificationPreferencesSchema } from "./users/notificationPreferencesSchema";
+export { orderIdSchema } from "./users/orderIdSchema";
+export { profileSchema } from "./users/profileSchema";
+export { updateNotificationPreferencesSchema } from "./users/updateNotificationPreferencesSchema";
+export { updateProfileSchema } from "./users/updateProfileSchema";
+export { userIdSchema } from "./users/userIdSchema";

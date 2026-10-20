@@ -1,8 +1,10 @@
 import { BarSection } from "@/features/bar/components/BarSection";
-import { EventsSection } from "@/features/events/event/components/EventsSection";
-import { GallerySection } from "@/features/events/gallery/components/GallerySection";
-import { HeroSection } from "@/shared/components/layout/HeroSection";
-import { ReviewsSection } from "@/features/events/reviews/components/ReviewsSection";
+import {
+  EventsSection,
+  GallerySection,
+  ReviewsSection,
+} from "@/features/events";
+import { HeroSection } from "../../components/layout/HeroSection";
 
 const MainContent = () => {
   return (

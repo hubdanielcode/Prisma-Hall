@@ -1,22 +1,22 @@
 /* - Components - */
 
-export { AnalyticsChartFilter } from "@/features/admin/analytics-management/components/AnalyticsChartFilter";
-export { BarChartList } from "@/features/admin/analytics-management/components/BarChartList";
-export { NewBuyersChart } from "@/features/admin/analytics-management/components/NewBuyersChart";
-export { TicketIncomeChart } from "@/features/admin/analytics-management/components/TicketIncomeChart";
-export { VoucherIncomeChart } from "@/features/admin/analytics-management/components/VoucherIncomeChart";
+export { AnalyticsChartFilter } from "./components/AnalyticsChartFilter";
+export { BarChartList } from "./components/BarChartList";
+export { NewBuyersChart } from "./components/NewBuyersChart";
+export { TicketIncomeChart } from "./components/TicketIncomeChart";
+export { VoucherIncomeChart } from "./components/VoucherIncomeChart";
 
 /* - Hooks - */
 
-export { useNewVisitors } from "@/features/admin/analytics-management/hooks/useNewVisitors";
-export { useTicketIncome } from "@/features/admin/analytics-management/hooks/useTicketIncome";
-export { useVoucherIncome } from "@/features/admin/analytics-management/hooks/useVoucherIncome";
+export { useNewVisitors } from "./hooks/useNewVisitors";
+export { useTicketIncome } from "./hooks/useTicketIncome";
+export { useVoucherIncome } from "./hooks/useVoucherIncome";
 
 /* - Pages - */
 
-export { AnalyticsManagement } from "@/features/admin/analytics-management/pages/AnalyticsManagement";
+export { AnalyticsManagement } from "./pages/AnalyticsManagement";
 
 /* - Types - */
 
-export type { BarChartItemProps } from "@/features/admin/analytics-management/types/barChartItem";
-export type { PeriodLabelProps } from "@/features/admin/analytics-management/types/period";
+export type { BarChartItemProps } from "./types/barChartItem";
+export type { PeriodLabelProps } from "./types/period";

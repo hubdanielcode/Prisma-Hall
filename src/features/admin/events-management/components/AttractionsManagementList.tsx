@@ -1,7 +1,7 @@
 "use client";
 
 import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
-import { masks } from "@/shared/utils";
+import { masks } from "@/shared/utils/functions/masks";
 import { motion } from "motion/react";
 import { useAttractionContext } from "@/features/events/event/hooks/useAttractionContext";
 

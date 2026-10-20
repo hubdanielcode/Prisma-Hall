@@ -51,7 +51,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [isOpen, setIsCartOpen]);
 
   // 2. Leva o usuário para a tela de finalização da compra
 

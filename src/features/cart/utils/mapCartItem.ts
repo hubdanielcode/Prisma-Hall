@@ -3,7 +3,7 @@ import { getEventStatus } from "@/lib/server/events/getEventStatus";
 
 type CartItemWithRelations = Cart & {
   product: Product | null;
-  event: Event | null;
+  event: (Event & { attraction: { name: string } }) | null;
 };
 
 /* - Converte o item do carrinho vindo do Prisma (Decimal e Date) em dados que podem chegar no client - */
@@ -31,7 +31,7 @@ const mapCartItem = (cartItem: CartItemWithRelations) => ({
     ? {
         id: cartItem.event.id,
         title: cartItem.event.title,
-        attractionName: cartItem.event.attractionName,
+        attractionName: cartItem.event.attraction.name,
         image: cartItem.event.image,
         startsAt: cartItem.event.startsAt.toISOString(),
         status: getEventStatus(cartItem.event),

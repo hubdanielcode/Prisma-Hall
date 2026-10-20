@@ -1,7 +1,7 @@
 "use client";
 
 import { FaUser, FaStar, FaTicketAlt, FaCalendarAlt } from "react-icons/fa";
-import { useEvents } from "@/features/events";
+import { useEvents } from "@/features/events/event/hooks/useEvents";
 import { useMemo } from "react";
 import { useMobileContext } from "@/shared/hooks/useMobileContext";
 

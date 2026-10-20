@@ -4,9 +4,8 @@ import { createProductSchema } from "@/lib/validations/admin/bar-management/crea
 import { ImagePlus, X } from "lucide-react";
 import { masks } from "@/shared/utils/functions/masks";
 import { motion, AnimatePresence } from "motion/react";
-import { productCategories } from "@/features/bar/utils/productCategories";
+import { productCategories, useBarContext } from "@/features/bar";
 import { productCategoryBadgeStyles } from "../types/productCategoryBadgeStyles";
-import { useBarContext } from "@/features/bar/hooks/useBarContext";
 import { useBlockScroll, useMobileContext } from "@/shared/hooks";
 import { useRef, useState } from "react";
 import z from "zod";

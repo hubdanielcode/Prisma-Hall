@@ -2,7 +2,7 @@
 
 import { createContext } from "react";
 import { updateProfileSchema } from "@/lib/validations/users/updateProfileSchema";
-import { useProfile } from "@/features/users/profiles/hooks/useProfile";
+import { useProfile } from "../hooks/useProfile";
 import { z } from "zod";
 import type { ProfileProps } from "@/features/authentication/types/profile";
 

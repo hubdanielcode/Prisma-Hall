@@ -1,5 +1,5 @@
 import { CartDrawer } from "./CartDrawer";
-import { CartProvider } from "@/features/cart/context/CartContext";
+import { CartProvider } from "../context/CartContext";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
 
 export default {

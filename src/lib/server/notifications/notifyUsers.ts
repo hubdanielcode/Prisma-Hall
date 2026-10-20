@@ -1,6 +1,6 @@
 import "server-only";
-import { getResend } from "@/lib/server/services/resend";
-import { prisma } from "@/lib/server/services/prisma";
+import { getResend } from "../services/resend";
+import { prisma } from "../services/prisma";
 import type { NotificationType } from "@/prisma/generated/prisma/enums";
 
 interface NotificationPayload {

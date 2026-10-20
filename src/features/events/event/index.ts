@@ -1,27 +1,32 @@
 /* - Components - */
 
-export { EventCard } from "@/features/events/event/components/EventCard";
-export { EventListItem } from "@/features/events/event/components/EventListItem";
-export { EventModal } from "@/features/events/event/components/EventModal";
-export { EventsSection } from "@/features/events/event/components/EventsSection";
+export { EventCard } from "./components/EventCard";
+export { EventListItem } from "./components/EventListItem";
+export { EventModal } from "./components/EventModal";
+export { EventsSection } from "./components/EventsSection";
+
+/* - Context - */
+
+export { AttractionContext, AttractionProvider } from "./context/AttractionContext";
+export { EventContext, EventProvider } from "./context/EventContext";
 
 /* - Hooks - */
 
-export { useAttractionContext } from "@/features/events/event/hooks/useAttractionContext";
-export { useAttractions } from "@/features/events/event/hooks/useAttractions";
-export { useCalendarContext } from "@/features/events/event/hooks/useCalendarContext";
-export { useEventContext } from "@/features/events/event/hooks/useEventContext";
-export { useEvents } from "@/features/events/event/hooks/useEvents";
-export { useFavoriteEvents } from "@/features/events/event/hooks/useFavoriteEvents";
+export { useAttractionContext } from "./hooks/useAttractionContext";
+export { useAttractions } from "./hooks/useAttractions";
+export { useCalendarContext } from "./hooks/useCalendarContext";
+export { useEventContext } from "./hooks/useEventContext";
+export { useEvents } from "./hooks/useEvents";
+export { useFavoriteEvents } from "./hooks/useFavoriteEvents";
 
 /* - Types - */
 
-export type { AttractionProps } from "@/features/events/event/types/attraction";
-export type { EventProps } from "@/features/events/event/types/event";
-export type { TagProps } from "@/features/events/event/types/tag";
+export type { AttractionProps } from "./types/attraction";
+export type { EventProps } from "./types/event";
+export type { TagProps } from "./types/tag";
 
 /* - Utils - */
 
-export { dayNames } from "@/features/events/event/utils/dayNames";
-export { eventTags } from "@/features/events/event/utils/eventTags";
-export { monthNames } from "@/features/events/event/utils/monthNames";
+export { dayNames } from "./utils/dayNames";
+export { eventTags } from "./utils/eventTags";
+export { monthNames } from "./utils/monthNames";

@@ -1,5 +1,4 @@
-import { formattedDate } from "@/shared/utils/functions/dates";
-import { masks } from "@/shared/utils/functions/masks";
+import { formattedDate, masks } from "@/shared/utils";
 import type { CartItemProps } from "../types/cartItem";
 
 interface CartItemCardProps {

@@ -119,6 +119,8 @@ const fakeUser = fakeUsers[0];
 
 const useUsers = () => ({
   users: fakeUsers,
+  total: fakeUsers.length,
+  totalPages: 1,
   isLoading: false,
   error: null,
   editUserMutation: fn(),

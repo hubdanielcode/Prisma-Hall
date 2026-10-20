@@ -1,10 +1,9 @@
 "use client";
 
 import { FaMedal, FaPencilAlt, FaTrashAlt, FaTrophy } from "react-icons/fa";
-import { masks } from "@/shared/utils/functions/masks";
+import { masks, roleBadgeLabels, roleBadgeStyles, tierBadgeLabels, tierBadgeStyles } from "@/shared/utils";
 import { MdVerified } from "react-icons/md";
 import { motion } from "motion/react";
-import { roleBadgeLabels, roleBadgeStyles, tierBadgeLabels, tierBadgeStyles } from "@/shared/utils";
 import { useMobileContext } from "@/shared/hooks/useMobileContext";
 import { UserAvatar } from "./UserAvatar";
 import { UsersTablePagination } from "./UsersTablePagination";
@@ -18,16 +17,8 @@ interface UsersManagementTableProps {
 const UsersManagementTable = ({ currentPage, onPageChange }: UsersManagementTableProps) => {
   /* - Puxando do context - */
 
-  const { filteredUsers, setUserBeingEdited, setUserBeingDeleted } = useUserContext();
+  const { users, totalPages, setUserBeingEdited, setUserBeingDeleted } = useUserContext();
   const { isPortraitMobile, isLandscapeMobile } = useMobileContext();
-
-  /* - Definições - */
-
-  const itemsPerPage = 6;
-  const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
-  const startingIndex = (currentPage - 1) * itemsPerPage;
-  const endingIndex = currentPage * itemsPerPage;
-  const paginatedUsers = filteredUsers.slice(startingIndex, endingIndex);
 
   /* - Visão mobile portrait: cards - */
 
@@ -37,7 +28,7 @@ const UsersManagementTable = ({ currentPage, onPageChange }: UsersManagementTabl
         {/* - Lista de usuários em cards - */}
 
         <div className="flex flex-col gap-3 text-white">
-          {paginatedUsers.map((user) => {
+          {users.map((user) => {
             const roleBadge = roleBadgeStyles[user.role];
             const isValidated = user.validatedAt !== null;
             const hasNoBadges = !user.verifiedBadge && user.frequentUser === "none" && user.oldUser === "none";
@@ -195,8 +186,8 @@ const UsersManagementTable = ({ currentPage, onPageChange }: UsersManagementTabl
           {/* - Corpo da tabela - */}
 
           <tbody className="bg-black text-white tracking-wider">
-            {paginatedUsers.map((user, index) => {
-              const isLast = index === paginatedUsers.length - 1;
+            {users.map((user, index) => {
+              const isLast = index === users.length - 1;
               const roleBadge = roleBadgeStyles[user.role];
               const isValidated = user.validatedAt !== null;
               const hasNoBadges = !user.verifiedBadge && user.frequentUser === "none" && user.oldUser === "none";

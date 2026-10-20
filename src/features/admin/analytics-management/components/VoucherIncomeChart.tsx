@@ -1,14 +1,14 @@
 "use client";
 
-import { AnalyticsChartFilter } from "@/features/admin/analytics-management/components/AnalyticsChartFilter";
-import { BarChartList } from "@/features/admin/analytics-management/components/BarChartList";
+import { AnalyticsChartFilter } from "./AnalyticsChartFilter";
+import { BarChartList } from "./BarChartList";
 import { categorySchema } from "@/lib/validations/shared/categorySchema";
 import { FaCocktail } from "react-icons/fa";
 import { formatCurrency } from "@/shared/utils/functions/formatters";
 import { productCategories } from "@/features/bar/utils/productCategories";
 import { useState } from "react";
-import { useVoucherIncome } from "@/features/admin/analytics-management/hooks/useVoucherIncome";
-import type { PeriodLabelProps } from "@/features/admin/analytics-management/types/period";
+import { useVoucherIncome } from "../hooks/useVoucherIncome";
+import type { PeriodLabelProps } from "../types/period";
 import type { z } from "zod";
 
 const VoucherIncomeChart = () => {

@@ -2,10 +2,13 @@
 
 import { cancelEventIdSchema } from "@/lib/validations/admin/events-management/cancelEventSchema";
 import { checkIsAdmin } from "../checkIsAdmin";
-import { getEventStatus } from "@/lib/server/events/getEventStatus";
-import { getUserIdsThatFavoritedEvent, notifyUsersByEmail } from "@/lib/server/notifications/notifyUsers";
-import { prisma } from "@/lib/server/services/prisma";
-import { refundStripePayment } from "@/lib/server/payments/refundStripePayment";
+import {
+  getEventStatus,
+  getUserIdsThatFavoritedEvent,
+  notifyUsersByEmail,
+  prisma,
+  refundStripePayment,
+} from "@/lib/server";
 import { serviceFee } from "@/features/cart/utils/serviceFee";
 
 /* - Cancela um evento que ainda vai acontecer: o evento continua no banco com status de cancelado. Se o evento já está cancelado, só reprocessa os reembolsos que faltam (útil quando o Stripe falhou antes). Devolve quantos pedidos ainda estão sem reembolso - */

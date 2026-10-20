@@ -1,8 +1,8 @@
 "use server";
 
-import { buyVouchersSchema } from "@/lib/validations/users/orderIdSchema";
+import { buyVouchersSchema } from "@/lib/validations/users/buyVouchersSchema";
 import { prisma } from "@/lib/server/services/prisma";
-import { validateSession } from "@/actions/session/validateSession";
+import { validateSession } from "../../session/validateSession";
 import z from "zod";
 
 const buyVouchers = async (voucher: z.infer<typeof buyVouchersSchema>) => {

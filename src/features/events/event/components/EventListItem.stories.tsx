@@ -1,5 +1,5 @@
 import { EventListItem } from "./EventListItem";
-import { fakeEvent } from "../../../../../.storybook/mocks/hooks/events/useEvents";
+import { fakeEvent } from "@/storybook/mocks/hooks/events/useEvents";
 import { fn } from "storybook/test";
 
 export default {

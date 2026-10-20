@@ -1,10 +1,11 @@
 "use client";
 
+import { isTicketCancellationOpen, ticketCancellationDeadlineHours } from "@/shared/utils";
 import { motion } from "motion/react";
 import { TicketOrderSummary } from "./TicketOrderSummary";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useTicketOrder } from "@/features/users/tickets/hooks/useTicketOrder";
+import { useTicketOrder } from "../hooks/useTicketOrder";
 import Link from "next/link";
 
 interface CancelTicketOrderProps {
@@ -30,9 +31,12 @@ const CancelTicketOrder = ({ orderId }: CancelTicketOrderProps) => {
 
   const isLoadingOrder = isLoading || (order === undefined && !error);
 
-  // 1. Espelha a regra da action: só cancela pedido ainda não cancelado e de evento que ainda não aconteceu
+  // 1. Espelha a regra da action: só cancela pedido ainda não cancelado, de evento que ainda não aconteceu e dentro do prazo de cancelamento
 
-  const canCancel = order ? order.status !== "cancelled" && order.tickets.every((ticket) => ticket.event.status === "soon") : false;
+  const eventsAreUpcoming = order ? order.tickets.every((ticket) => ticket.event.status === "soon") : false;
+  const canCancel = order
+    ? order.status !== "cancelled" && eventsAreUpcoming && order.tickets.every((ticket) => isTicketCancellationOpen(ticket.event.startsAt))
+    : false;
 
   // 2. O que acontece com o pagamento depende do estado em que ele está
 
@@ -103,7 +107,9 @@ const CancelTicketOrder = ({ orderId }: CancelTicketOrderProps) => {
                 <p className="text-white/60 text-sm">
                   {order.status === "cancelled"
                     ? "Este pedido já foi cancelado."
-                    : "Este pedido não pode mais ser cancelado, pois o evento já aconteceu."}
+                    : eventsAreUpcoming
+                      ? `Este pedido não pode mais ser cancelado, pois o prazo de cancelamento (até ${ticketCancellationDeadlineHours} horas antes do evento) já passou.`
+                      : "Este pedido não pode mais ser cancelado, pois o evento já aconteceu."}
                 </p>
 
                 <Link

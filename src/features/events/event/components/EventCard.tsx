@@ -2,8 +2,7 @@
 
 import { Calendar, Star, Users } from "lucide-react";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
-import { formattedDate } from "@/shared/utils/functions/dates";
-import { masks } from "@/shared/utils/functions/masks";
+import { formattedDate, masks } from "@/shared/utils";
 import { motion } from "motion/react";
 import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
 import { useFavoriteEvents } from "../hooks/useFavoriteEvents";

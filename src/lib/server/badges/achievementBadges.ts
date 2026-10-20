@@ -1,5 +1,5 @@
 import { frequentEventsByTier, oldAccountYearsByTier, verifiedReviewsRequired } from "@/shared/utils/constants/achievementBadges";
-import { prisma } from "@/lib/server/services/prisma";
+import { prisma } from "../services/prisma";
 import type { UserBadgeLevel } from "@/prisma/generated/prisma/enums";
 
 // 1. Descobre o maior tier cujo limite o valor já atingiu

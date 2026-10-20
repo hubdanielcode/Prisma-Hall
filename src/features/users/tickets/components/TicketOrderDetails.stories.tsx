@@ -1,5 +1,5 @@
-import { AuthenticationProvider } from "@/features/authentication";
-import { fakeTicketOrder } from "../../../../../.storybook/mocks/hooks/users/useTicketOrder";
+import { AuthenticationProvider } from "@/features/authentication/context/AuthenticationContext";
+import { fakeTicketOrder } from "@/storybook/mocks/hooks/users/useTicketOrder";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
 import { TicketOrderDetails } from "./TicketOrderDetails";
 

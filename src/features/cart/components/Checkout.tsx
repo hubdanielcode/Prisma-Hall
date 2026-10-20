@@ -68,7 +68,7 @@ const Checkout = () => {
     setIsSubmitting(true);
 
     try {
-      const checkout = await handleCheckout({ method: selectedMethod });
+      const checkout = await handleCheckout(selectedMethod);
 
       if (!checkout) {
         setCheckoutError("Não foi possível finalizar a compra. Verifique os itens do carrinho e tente novamente.");

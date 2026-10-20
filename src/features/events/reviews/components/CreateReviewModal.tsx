@@ -1,11 +1,11 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { masks } from "@/shared/utils";
+import { masks } from "@/shared/utils/functions/masks";
 import { Star, X } from "lucide-react";
 import { useBlockScroll, useMobileContext } from "@/shared/hooks";
-import { useEvents } from "@/features/events/event/hooks/useEvents";
-import { useReviews } from "@/features/events/reviews/hooks/useReviews";
+import { useEvents } from "../../event/hooks/useEvents";
+import { useReviews } from "../hooks/useReviews";
 import { useState } from "react";
 
 interface CreateReviewModalProps {

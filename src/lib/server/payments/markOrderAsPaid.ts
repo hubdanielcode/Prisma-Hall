@@ -1,8 +1,8 @@
 import "server-only";
-import { getResend } from "@/lib/server/services/resend";
+import { getResend } from "../services/resend";
 import { PaymentConfirmationEmail } from "@/shared/emails/PaymentConfirmationEmail";
-import { prisma } from "@/lib/server/services/prisma";
-import { recalculateUserBadges } from "@/lib/server/badges/achievementBadges";
+import { prisma } from "../services/prisma";
+import { recalculateUserBadges } from "../badges/achievementBadges";
 import React from "react";
 import type { ItemType, PaymentMethod } from "@/prisma/generated/prisma/enums";
 
@@ -10,6 +10,7 @@ interface MarkOrderAsPaidProps {
   ticketPaymentId?: string;
   voucherPaymentId?: string;
   stripeMethod?: PaymentMethod;
+  paymentIntentId?: string;
 }
 
 interface PaymentEmailItemProps {
@@ -122,7 +123,7 @@ const sendPaymentConfirmationEmail = async ({ ticketPaymentId, voucherPaymentId 
 
 /* - Confirma o pagamento e o pedido correspondente. Pagamentos que não estão mais pendentes são ignorados - */
 
-const markOrderAsPaid = async ({ ticketPaymentId, voucherPaymentId, stripeMethod }: MarkOrderAsPaidProps) => {
+const markOrderAsPaid = async ({ ticketPaymentId, voucherPaymentId, stripeMethod, paymentIntentId }: MarkOrderAsPaidProps) => {
   try {
     // 1. Quem acabou de ter o pedido de ingressos confirmado, pra recalcular o badge de frequência
 
@@ -144,7 +145,12 @@ const markOrderAsPaid = async ({ ticketPaymentId, voucherPaymentId, stripeMethod
 
           const confirmedTicketPayment = await transaction.ticketPayment.updateMany({
             where: { id: existingTicketPayment.id, status: "pending" },
-            data: { status: "confirmed", confirmedAt: new Date(), ...getRealMethodUpdate(existingTicketPayment.method, stripeMethod) },
+            data: {
+              status: "confirmed",
+              confirmedAt: new Date(),
+              ...getRealMethodUpdate(existingTicketPayment.method, stripeMethod),
+              ...(paymentIntentId ? { paymentIntentId } : {}),
+            },
           });
 
           if (confirmedTicketPayment.count === 1) {
@@ -167,7 +173,12 @@ const markOrderAsPaid = async ({ ticketPaymentId, voucherPaymentId, stripeMethod
         if (existingVoucherPayment && existingVoucherPayment.status === "pending") {
           const confirmedVoucherPayment = await transaction.voucherPayment.updateMany({
             where: { id: existingVoucherPayment.id, status: "pending" },
-            data: { status: "confirmed", confirmedAt: new Date(), ...getRealMethodUpdate(existingVoucherPayment.method, stripeMethod) },
+            data: {
+              status: "confirmed",
+              confirmedAt: new Date(),
+              ...getRealMethodUpdate(existingVoucherPayment.method, stripeMethod),
+              ...(paymentIntentId ? { paymentIntentId } : {}),
+            },
           });
 
           if (confirmedVoucherPayment.count === 1) {

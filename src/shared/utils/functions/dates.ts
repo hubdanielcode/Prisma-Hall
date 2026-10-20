@@ -1,5 +1,5 @@
 import { PeriodLabelProps } from "@/features/admin/analytics-management/types/period";
-import { regex } from "@/shared/utils/constants/regex";
+import { regex } from "../constants/regex";
 
 // 1 Converte data DD/MM/YYYY (string) para um objeto Date
 

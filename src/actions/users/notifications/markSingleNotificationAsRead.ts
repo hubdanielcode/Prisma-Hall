@@ -1,8 +1,8 @@
 "use server";
 
-import { notificationIdSchema } from "@/lib/validations/users/notificationPreferencesSchema";
+import { notificationIdSchema } from "@/lib/validations/users/notificationIdSchema";
 import { prisma } from "@/lib/server/services/prisma";
-import { validateSession } from "@/actions/session/validateSession";
+import { validateSession } from "../../session/validateSession";
 
 const markSingleNotificationAsRead = async (notificationId: string) => {
   const validSession = await validateSession();

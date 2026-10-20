@@ -1,4 +1,4 @@
-import { Footer } from "@/shared/components/layout/Footer";
+import { Footer } from "./Footer";
 
 export default {
   title: "Components/Shared",

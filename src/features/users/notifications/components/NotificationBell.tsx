@@ -5,7 +5,7 @@ import { Bell, CheckCheck } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { useEffect, useRef, useState } from "react";
-import { useNotifications } from "@/features/users/notifications/hooks/useNotifications";
+import { useNotifications } from "../hooks/useNotifications";
 
 const NotificationBell = () => {
   /* - Puxando do hook - */

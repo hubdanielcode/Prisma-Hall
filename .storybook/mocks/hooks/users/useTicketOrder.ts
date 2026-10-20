@@ -50,6 +50,7 @@ const fakeTicketOrders: TicketOrderProps[] = [
         status: "confirmed",
         totalValue: 165,
         confirmedAt: new Date("2026-09-01").toISOString(),
+        pickedUpAt: null,
 
         createdAt: new Date("2026-09-01").toISOString(),
       },
@@ -89,6 +90,7 @@ const fakeTicketOrders: TicketOrderProps[] = [
         status: "refunded",
         totalValue: 55,
         confirmedAt: new Date("2026-09-02").toISOString(),
+        pickedUpAt: null,
 
         createdAt: new Date("2026-09-02").toISOString(),
       },

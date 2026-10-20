@@ -1,36 +1,31 @@
 "use client";
 
-import { DeleteUserModal, EditUserModal, UsersManagementCard, UsersManagementFilter, UsersManagementTable } from "@/features/admin";
-import { useEffect, useState } from "react";
-import { UserProvider } from "@/features/users/user/context/UserContext";
+import { DeleteUserModal } from "../components/DeleteUserModal";
+import { EditUserModal } from "../components/EditUserModal";
+import { useEffect } from "react";
 import { useMobileContext } from "@/shared/hooks/useMobileContext";
-import { useUserContext } from "@/features/users/user/hooks/useUserContext";
+import { UserProvider, useUserContext } from "@/features/users/user";
+import { UsersManagementCard } from "../components/UsersManagementCard";
+import { UsersManagementFilter } from "../components/UsersManagementFilter";
+import { UsersManagementTable } from "../components/UsersManagementTable";
 
 const UsersManagementContent = () => {
   /* - Puxando do context - */
 
   const { isPortraitMobile, isLandscapeMobile } = useMobileContext();
-  const { filteredUsers, userBeingEdited, setUserBeingEdited, userBeingDeleted, setUserBeingDeleted } = useUserContext();
-
-  /* - Estados de paginação - */
-
-  const [currentPage, setCurrentPage] = useState<number>(1);
-
-  /* - Definições - */
-
-  const itemsPerPage = 6;
+  const { totalPages, currentPage, setCurrentPage, userBeingEdited, setUserBeingEdited, userBeingDeleted, setUserBeingDeleted } = useUserContext();
 
   /* - Funções - */
 
-  // 1. Garantindo que o número de páginas seja recalculado sempre que um item for adicionado ou deletado
+  // 1. Garantindo que a página atual nunca passe do total de páginas, caso um item seja deletado
 
   useEffect(() => {
-    const totalPages = Math.max(Math.ceil(filteredUsers.length / itemsPerPage), 1);
+    const lastPage = Math.max(totalPages, 1);
 
-    if (currentPage > totalPages) {
-      setCurrentPage(totalPages);
+    if (currentPage > lastPage) {
+      setCurrentPage(lastPage);
     }
-  }, [filteredUsers.length, currentPage]);
+  }, [totalPages, currentPage, setCurrentPage]);
 
   return (
     <>

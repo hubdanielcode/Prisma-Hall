@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/server/services/prisma";
-import { validateSession } from "@/actions/session/validateSession";
+import { validateSession } from "../../session/validateSession";
 import type { ProfileProps } from "@/features/authentication/types/profile";
 
 const getProfile = async (): Promise<ProfileProps | false> => {

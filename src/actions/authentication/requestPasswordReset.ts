@@ -1,11 +1,9 @@
 "use server";
 
 import { after } from "next/server";
-import { checkRateLimit } from "@/lib/server/rate-limit/rateLimiter";
-import { getResend } from "@/lib/server/services/resend";
+import { checkRateLimit, getResend, prisma } from "@/lib/server";
 import { PasswordResetEmail } from "@/shared/emails/PasswordResetEmail";
-import { prisma } from "@/lib/server/services/prisma";
-import { requestPasswordResetSchema } from "@/lib/validations/authentication/passwordResetSchema";
+import { requestPasswordResetSchema } from "@/lib/validations/authentication/requestPasswordResetSchema";
 import React from "react";
 
 const requestPasswordReset = async (email: string) => {

@@ -9,6 +9,7 @@ const fakeEvents: EventProps[] = [
     title: "Evento Fake 01",
     description: "Descrição do primeiro evento fake, serve apenas para o mock",
     tag: "eletronica",
+    attractionId: "00000000-0000-4000-8000-000000000001",
     attractionName: "Nome da atração do evento 01",
     image:
       "https://plus.unsplash.com/premium_photo-1669349127520-fa1e30b02055?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -27,6 +28,7 @@ const fakeEvents: EventProps[] = [
     title: "Evento Fake 02",
     description: "Descrição do segundo evento fake, serve apenas para o mock",
     tag: "eletronica",
+    attractionId: "00000000-0000-4000-8000-000000000002",
     attractionName: "Nome da atração do evento 02",
     image:
       "https://plus.unsplash.com/premium_photo-1669349129088-002df7abca61?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -45,6 +47,7 @@ const fakeEvents: EventProps[] = [
     title: "Evento Fake 03",
     description: "Descrição do terceiro evento fake, serve apenas para o mock",
     tag: "metal",
+    attractionId: "00000000-0000-4000-8000-000000000003",
     attractionName: "Nome da atração do evento 03",
     image:
       "https://plus.unsplash.com/premium_photo-1669349127566-9be644ceac6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8M3xlbnwwfHwwfHx8MA%3D%3D",
@@ -63,6 +66,7 @@ const fakeEvents: EventProps[] = [
     title: "Evento Fake 04",
     description: "Descrição do quarto evento fake, serve apenas para o mock",
     tag: "metal",
+    attractionId: "00000000-0000-4000-8000-000000000004",
     attractionName: "Nome da atração do evento 04",
     image:
       "https://images.unsplash.com/photo-1790468354600-68bed467d84c?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -82,6 +86,7 @@ const fakeEvents: EventProps[] = [
     title: "Evento Fake 05",
     description: "Descrição do quinto evento fake, serve apenas para o mock",
     tag: "forro",
+    attractionId: "00000000-0000-4000-8000-000000000005",
     attractionName: "Nome da atração do evento 05",
     image:
       "https://plus.unsplash.com/premium_photo-1669349127530-23d9e3dab307?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -100,6 +105,7 @@ const fakeEvents: EventProps[] = [
     title: "Evento Fake 06",
     description: "Descrição do sexto evento fake, serve apenas para o mock",
     tag: "forro",
+    attractionId: "00000000-0000-4000-8000-000000000006",
     attractionName: "Nome da atração do evento 06",
     image:
       "https://plus.unsplash.com/premium_photo-1669349127561-6e8ae10b8642?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -118,6 +124,7 @@ const fakeEvents: EventProps[] = [
     title: "Evento Fake 07",
     description: "Descrição do sétimo evento fake, serve apenas para o mock",
     tag: "samba_and_pagode",
+    attractionId: "00000000-0000-4000-8000-000000000007",
     attractionName: "Nome da atração do evento 07",
     image:
       "https://plus.unsplash.com/premium_photo-1669349127571-ebf4a6cbdf69?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -136,6 +143,7 @@ const fakeEvents: EventProps[] = [
     title: "Evento Fake 08",
     description: "Descrição do oitavo evento fake, serve apenas para o mock",
     tag: "samba_and_pagode",
+    attractionId: "00000000-0000-4000-8000-000000000008",
     attractionName: "Nome da atração do evento 08",
     image:
       "https://plus.unsplash.com/premium_photo-1669349127580-968bafc64324?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -154,6 +162,7 @@ const fakeEvents: EventProps[] = [
     title: "Evento Fake 09",
     description: "Descrição do nono evento fake, serve apenas para o mock",
     tag: "trap_and_hiphop",
+    attractionId: "00000000-0000-4000-8000-000000000009",
     attractionName: "Nome da atração do evento 09",
     image:
       "https://plus.unsplash.com/premium_photo-1669349127520-fa1e30b02055?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -172,6 +181,7 @@ const fakeEvents: EventProps[] = [
     title: "Evento Fake 10",
     description: "Descrição do décimmo evento fake, serve apenas para o mock",
     tag: "trap_and_hiphop",
+    attractionId: "00000000-0000-4000-8000-000000000010",
     attractionName: "Nome da atração do evento 10",
     image:
       "https://plus.unsplash.com/premium_photo-1669349127520-fa1e30b02055?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -190,6 +200,7 @@ const fakeEvents: EventProps[] = [
     title: "Evento Fake 11",
     description: "Descrição do décimo primeiro evento fake, serve apenas para o mock",
     tag: "rock",
+    attractionId: "00000000-0000-4000-8000-000000000011",
     attractionName: "Nome da atração do evento 11",
     image:
       "https://plus.unsplash.com/premium_photo-1669349127520-fa1e30b02055?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -208,6 +219,7 @@ const fakeEvents: EventProps[] = [
     title: "Evento Fake 12",
     description: "Descrição do décimo segundo evento fake, serve apenas para o mock",
     tag: "funk",
+    attractionId: "00000000-0000-4000-8000-000000000012",
     attractionName: "Nome da atração do evento 12",
     image:
       "https://plus.unsplash.com/premium_photo-1669349127520-fa1e30b02055?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",

@@ -3,7 +3,13 @@
 import { DeleteProductModal } from "../components/DeleteProductModal";
 import { FaPlusCircle } from "react-icons/fa";
 import { motion } from "motion/react";
-import { ProductsManagementTable, ProductsManagementCard, ProductsManagementFilter, CreateProductModal, EditProductModal } from "@/features/admin";
+import { ProductsManagementTable } from "../components/ProductsManagementTable";
+import { ProductsManagementCard } from "../components/ProductsManagementCard";
+import {
+  ProductsManagementFilter,
+} from "../components/ProductsManagementFilter";
+import { CreateProductModal } from "../components/CreateProductModal";
+import { EditProductModal } from "../components/EditProductModal";
 import { useBarContext } from "@/features/bar/hooks/useBarContext";
 import { useEffect, useState } from "react";
 import { useMobileContext } from "@/shared/hooks/useMobileContext";

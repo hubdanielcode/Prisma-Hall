@@ -1,7 +1,6 @@
 "use client";
 
-import { getMySubscription } from "@/actions/newsletter/getMySubscription";
-import { subscribeToNewsletter as subscribeToNewsletterAction } from "@/actions";
+import { subscribeToNewsletter as subscribeToNewsletterAction, getMySubscription } from "@/actions";
 import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 

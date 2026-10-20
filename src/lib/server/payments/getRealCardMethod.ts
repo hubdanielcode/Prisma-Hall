@@ -1,9 +1,9 @@
 import "server-only";
-import { stripe } from "@/lib/server/services/stripe";
+import { stripe } from "../services/stripe";
 import type { PaymentMethod } from "@/prisma/generated/prisma/enums";
 import type Stripe from "stripe";
 
-/* - Tipo real do cartão usado no pagamento. O Stripe não separa crédito de débito na sessão, então o cliente pode pagar com um tipo diferente do escolhido - */
+/* - Busca o tipo real do cartão usado no pagamento. O Stripe não separa crédito de débito na sessão, então o cliente pode pagar com um tipo diferente do escolhido - */
 
 const getRealCardMethod = async (checkoutSession: Stripe.Checkout.Session): Promise<PaymentMethod | undefined> => {
   // 1. Só consulta o Stripe se a sessão foi travada em cartão. Pix não tem cartão

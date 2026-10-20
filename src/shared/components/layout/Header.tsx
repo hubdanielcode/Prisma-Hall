@@ -13,6 +13,14 @@ import { useMobileContext } from "../../hooks/useMobileContext";
 import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
 
+const navLinks = [
+  { id: "schedule", title: "Agenda" },
+  { id: "events", title: "Eventos" },
+  { id: "bar", title: "Bar & Drinks" },
+  { id: "gallery", title: "Galeria" },
+  { id: "about", title: "Sobre" },
+];
+
 const Header = () => {
   /* - Puxando do context - */
 
@@ -29,13 +37,6 @@ const Header = () => {
 
   const router = useRouter();
   const pathname = usePathname();
-  const navLinks = [
-    { id: "schedule", title: "Agenda" },
-    { id: "events", title: "Eventos" },
-    { id: "bar", title: "Bar & Drinks" },
-    { id: "gallery", title: "Galeria" },
-    { id: "about", title: "Sobre" },
-  ];
 
   /* - Observando a sessão ativa enquanto o usuário scrolla na página - */
 

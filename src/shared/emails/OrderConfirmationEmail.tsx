@@ -1,5 +1,5 @@
 import { Body, Button, Column, Container, Head, Heading, Html, Img, Link, Preview, Row, Section, Tailwind, Text } from "@react-email/components";
-import { formatCurrency } from "@/shared/utils/functions/formatters";
+import { formatCurrency } from "../utils/functions/formatters";
 import type { ItemType } from "@/prisma/generated/prisma/enums";
 
 interface OrderConfirmationEmailProps {

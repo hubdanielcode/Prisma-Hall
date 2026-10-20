@@ -1,9 +1,8 @@
 "use server";
 
-import { buyTicketsSchema } from "@/lib/validations/users/orderIdSchema";
-import { getEventStatus } from "@/lib/server/events/getEventStatus";
-import { prisma } from "@/lib/server/services/prisma";
-import { validateSession } from "@/actions/session/validateSession";
+import { buyTicketsSchema } from "@/lib/validations/users/buyTicketsSchema";
+import { getEventStatus, prisma } from "@/lib/server";
+import { validateSession } from "../../session/validateSession";
 import z from "zod";
 
 const buyTickets = async (ticket: z.infer<typeof buyTicketsSchema>) => {

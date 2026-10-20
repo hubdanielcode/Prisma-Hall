@@ -1,8 +1,7 @@
 "use server";
 
-import { getEventStatus } from "@/lib/server/events/getEventStatus";
-import { prisma } from "@/lib/server/services/prisma";
-import { validateSession } from "@/actions/session/validateSession";
+import { getEventStatus, prisma } from "@/lib/server";
+import { validateSession } from "../../session/validateSession";
 
 const getFavoriteEvents = async () => {
   const validSession = await validateSession();
@@ -14,7 +13,7 @@ const getFavoriteEvents = async () => {
   try {
     const favorites = await prisma.favoriteEvent.findMany({
       where: { userId: validSession.user.id },
-      include: { event: true },
+      include: { event: { include: { attraction: { select: { id: true, name: true } } } } },
       orderBy: { event: { startsAt: "asc" } },
     });
 
@@ -23,7 +22,8 @@ const getFavoriteEvents = async () => {
       title: event.title,
       description: event.description,
       tag: event.tag,
-      attractionName: event.attractionName,
+      attractionId: event.attraction.id,
+      attractionName: event.attraction.name,
       image: event.image,
       status: getEventStatus(event),
       price: event.price.toNumber(),

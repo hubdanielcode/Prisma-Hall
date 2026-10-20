@@ -1,6 +1,8 @@
 "use client";
 
-import { CustomPasswordInput } from "@/shared/components";
+import {
+  CustomPasswordInput,
+} from "@/shared/components/ui/CustomPasswordInput";
 import { ImExit } from "react-icons/im";
 import { IoNotifications } from "react-icons/io5";
 import { MdDeleteForever } from "react-icons/md";
@@ -8,7 +10,9 @@ import { motion } from "motion/react";
 import { requestPasswordReset } from "@/actions/authentication/requestPasswordReset";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
-import { useNotificationPreferences } from "@/features/users/notifications/hooks/useNotificationPreferences";
+import {
+  useNotificationPreferences,
+} from "../../notifications/hooks/useNotificationPreferences";
 import { useEffect, useRef, useState } from "react";
 import { useProfileContext } from "../hooks/useProfileContext";
 import { useRouter } from "next/navigation";

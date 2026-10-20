@@ -1,9 +1,9 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { createEventSchema } from "@/lib/validations";
+import { createEventSchema } from "@/lib/validations/admin/events-management/createEventSchema";
 import { CustomDateTimePicker } from "@/shared/components/ui/CustomDateTimePicker";
-import { eventTags, useAttractions, useEventContext } from "@/features/events";
+import { eventTags, useAttractions, useEventContext } from "@/features/events/event";
 import { FaCalendarAlt } from "react-icons/fa";
 import { formattedDate, formattedDateToString, masks } from "@/shared/utils";
 import { ImagePlus, X } from "lucide-react";
@@ -37,7 +37,7 @@ const EditEventModal = ({ isOpen, onClose }: EditEventModalProps) => {
     title: eventBeingEdited?.title ?? "",
     description: eventBeingEdited?.description ?? "",
     tag: eventBeingEdited?.tag ?? "forro",
-    attractionName: eventBeingEdited?.attractionName ?? "",
+    attractionId: eventBeingEdited?.attractionId ?? "",
     price: eventBeingEdited?.price ?? 0,
     startsAt: new Date(eventBeingEdited?.startsAt ?? Date.now()),
   });
@@ -138,7 +138,7 @@ const EditEventModal = ({ isOpen, onClose }: EditEventModalProps) => {
       return false;
     }
 
-    if (!newEvent.attractionName.trim()) {
+    if (!newEvent.attractionId) {
       setEventAttractionError("Selecione uma atração.");
       return false;
     }
@@ -184,7 +184,7 @@ const EditEventModal = ({ isOpen, onClose }: EditEventModalProps) => {
       title: eventBeingEdited.title,
       description: eventBeingEdited.description,
       tag: eventBeingEdited.tag ?? "forro",
-      attractionName: eventBeingEdited.attractionName,
+      attractionId: eventBeingEdited.attractionId,
       price: Number(eventBeingEdited.price),
       startsAt: new Date(eventBeingEdited.startsAt),
     });
@@ -338,7 +338,7 @@ const EditEventModal = ({ isOpen, onClose }: EditEventModalProps) => {
                   )}
 
                   {attractions?.map((attraction) => {
-                    const isSelected = newEvent.attractionName === attraction.name;
+                    const isSelected = newEvent.attractionId === attraction.id;
 
                     return (
                       <li key={attraction.name}>
@@ -350,7 +350,7 @@ const EditEventModal = ({ isOpen, onClose }: EditEventModalProps) => {
                           onClick={() => {
                             setNewEvent((prev) => ({
                               ...prev,
-                              attractionName: attraction.name,
+                              attractionId: attraction.id,
                             }));
                           }}
                         >

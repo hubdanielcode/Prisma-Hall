@@ -22,11 +22,7 @@ const createEventSchema = z.object({
 
   // 4. Nome da atração (banda/artista)
 
-  attractionName: z
-    .string()
-    .regex(regex.eventAttractionName)
-    .min(1, "Digite um nome para a atração do evento.")
-    .max(50, "O nome da atração do evento está muito longo."),
+  attractionId: z.uuid("Selecione uma atração."),
 
   // 5. Imagem
 

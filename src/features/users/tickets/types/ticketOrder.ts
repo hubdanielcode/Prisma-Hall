@@ -27,6 +27,7 @@ export interface TicketOrderProps {
     status: PaymentStatus;
     totalValue: number;
     confirmedAt: string | null;
+    pickedUpAt: string | null;
 
     createdAt: string;
   }[];

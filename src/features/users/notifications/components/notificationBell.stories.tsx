@@ -1,5 +1,5 @@
 import { AuthenticationContext } from "@/features/authentication/context/AuthenticationContext";
-import { fakeUser } from "../../../../../.storybook/mocks/hooks/users/useUsers";
+import { fakeUser } from "@/storybook/mocks/hooks/users/useUsers";
 import { fn } from "storybook/test";
 import { NotificationBell } from "./NotificationBell";
 import { QueryProvider } from "@/shared/providers/QueryProvider";

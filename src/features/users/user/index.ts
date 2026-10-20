@@ -1,8 +1,13 @@
 /* - Hooks - */
 
-export { useUserContext } from "@/features/users/user/hooks/useUserContext";
-export { useUsers } from "@/features/users/user/hooks/useUsers";
+export { useUserContext } from "./hooks/useUserContext";
+export { useUsers } from "./hooks/useUsers";
+export { useUsersStats } from "./hooks/useUsersStats";
 
 /* - Types - */
 
-export type { UserProps } from "@/features/users/user/types/user";
+export type { UserProps } from "./types/user";
+
+/* - Context - */
+
+export { UserContext, UserProvider } from "./context/UserContext";

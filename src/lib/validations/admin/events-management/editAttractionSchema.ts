@@ -12,7 +12,7 @@ const editAttractionSchema = createAttractionSchema
       return atLeastOneFieldUpdated(attractionWithoutId);
     },
 
-    { message: "Para validar a edição, altere pelo menos dos campos" },
+    { message: "Para validar a edição, altere pelo menos um dos campos." },
   );
 
 export { editAttractionSchema };

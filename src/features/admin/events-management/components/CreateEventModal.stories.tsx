@@ -1,6 +1,5 @@
-import { CalendarProvider } from "@/features/events/agenda/context/CalendarContext";
-import { CreateEventModal } from "@/features/admin/events-management/components/CreateEventModal";
-import { EventProvider } from "@/features/events/event/context/EventContext";
+import { CalendarProvider, EventProvider } from "@/features/events";
+import { CreateEventModal } from "./CreateEventModal";
 import { MobileProvider } from "@/shared/context/MobileContext";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
 

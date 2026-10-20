@@ -1,4 +1,4 @@
-import { BarContext } from "@/features/bar/context/BarContext";
+import { BarContext } from "../context/BarContext";
 import { useContext } from "react";
 
 const useBarContext = () => {

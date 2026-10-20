@@ -1,7 +1,7 @@
 "use client";
 
 import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import type { BarChartItemProps } from "@/features/admin/analytics-management/types/barChartItem";
+import type { BarChartItemProps } from "../types/barChartItem";
 
 interface BarChartListProps {
   items: BarChartItemProps[];

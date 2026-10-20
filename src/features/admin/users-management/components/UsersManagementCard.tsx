@@ -2,12 +2,12 @@
 
 import { FaCheckCircle, FaUserClock, FaUserShield, FaUsers } from "react-icons/fa";
 import { useMobileContext } from "@/shared/hooks/useMobileContext";
-import { useUsers } from "@/features/users/user/hooks/useUsers";
+import { useUserContext } from "@/features/users/user";
 
 const UsersManagementCard = () => {
   /* - Puxando do context - */
 
-  const { users } = useUsers();
+  const { users } = useUserContext();
   const { isPortraitMobile, isLandscapeMobile } = useMobileContext();
 
   /* - Definições - */

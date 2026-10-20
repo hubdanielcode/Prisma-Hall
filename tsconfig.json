@@ -20,7 +20,7 @@
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
     "types": ["node"],
-    "paths": { "@/*": ["./src/*"] },
+    "paths": { "@/*": ["./src/*"], "@/storybook/*": ["./.storybook/*"] },
     "plugins": [{ "name": "next" }]
   },
 

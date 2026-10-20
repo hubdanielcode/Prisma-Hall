@@ -1,9 +1,8 @@
 "use server";
 
 import { createReviewSchema } from "@/lib/validations/events/createReviewSchema";
-import { prisma } from "@/lib/server/services/prisma";
-import { recalculateUserBadges } from "@/lib/server/badges/achievementBadges";
-import { validateSession } from "@/actions/session/validateSession";
+import { prisma, recalculateUserBadges } from "@/lib/server";
+import { validateSession } from "../../session/validateSession";
 import z from "zod";
 
 const postReview = async (review: z.infer<typeof createReviewSchema>) => {

@@ -13,6 +13,7 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
+      "@/storybook": path.resolve(dirname, "./.storybook"),
       "@": path.resolve(dirname, "./src"),
     },
   },

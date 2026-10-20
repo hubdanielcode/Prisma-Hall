@@ -1,5 +1,5 @@
 import { CalendarGrid } from "./CalendarGrid";
-import { CalendarProvider } from "@/features/events/agenda/context/CalendarContext";
+import { CalendarProvider } from "../context/CalendarContext";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
 
 export default {

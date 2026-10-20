@@ -4,9 +4,10 @@ import { AnimatePresence, motion } from "motion/react";
 import { createProductSchema } from "@/lib/validations/admin/bar-management/createProductSchema";
 import { ImagePlus, X } from "lucide-react";
 import { masks } from "@/shared/utils/functions/masks";
-import { productCategories } from "@/features/bar/utils/productCategories";
-import { productCategoryBadgeStyles } from "@/features/admin/bar-management/types/productCategoryBadgeStyles";
-import { useBarContext } from "@/features/bar/hooks/useBarContext";
+import { productCategories, useBarContext } from "@/features/bar";
+import {
+  productCategoryBadgeStyles,
+} from "../types/productCategoryBadgeStyles";
 import { useBlockScroll, useMobileContext } from "@/shared/hooks";
 import { useRef, useState } from "react";
 import z from "zod";

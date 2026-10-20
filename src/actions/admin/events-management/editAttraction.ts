@@ -4,6 +4,7 @@ import { checkIsAdmin } from "../checkIsAdmin";
 import { del, put } from "@vercel/blob";
 import { editAttractionSchema } from "@/lib/validations/admin/events-management/editAttractionSchema";
 import { prisma } from "@/lib/server/services/prisma";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import z from "zod";
 
 const editAttraction = async (attraction: z.infer<typeof editAttractionSchema>) => {
@@ -74,7 +75,7 @@ const editAttraction = async (attraction: z.infer<typeof editAttractionSchema>) 
       createdAt: editedAttraction.createdAt.toISOString(),
       updatedAt: editedAttraction.updatedAt.toISOString(),
     };
-  } catch {
+  } catch (error) {
     /* - Se o banco falhou depois do upload, remove a imagem nova para não ficar órfã no Blob - */
 
     if (newImageUrl) {
@@ -83,6 +84,10 @@ const editAttraction = async (attraction: z.infer<typeof editAttractionSchema>) 
       } catch {
         // A imagem nova fica no Blob, mas a edição não foi salva
       }
+    }
+
+    if (error instanceof PrismaClientKnownRequestError && error.code === "P2002") {
+      return "name_is_not_unique";
     }
 
     return false;

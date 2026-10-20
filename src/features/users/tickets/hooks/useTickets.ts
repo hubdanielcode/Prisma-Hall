@@ -1,6 +1,6 @@
 "use client";
 
-import { getMyTickets } from "@/actions";
+import { getMyTickets } from "@/actions/users/tickets/getMyTickets";
 import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
 import { useQuery } from "@tanstack/react-query";
 

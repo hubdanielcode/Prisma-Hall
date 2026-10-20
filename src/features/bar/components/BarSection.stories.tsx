@@ -1,5 +1,5 @@
 import { AuthenticationProvider } from "@/features/authentication/context/AuthenticationContext";
-import { BarProvider } from "@/features/bar/context/BarContext";
+import { BarProvider } from "../context/BarContext";
 import { BarSection } from "./BarSection";
 import { CartProvider } from "@/features/cart/context/CartContext";
 import { QueryProvider } from "@/shared/providers/QueryProvider";

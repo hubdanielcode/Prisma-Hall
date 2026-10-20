@@ -1,13 +1,13 @@
 "use server";
 
 import { prisma } from "@/lib/server/services/prisma";
-import { validateSession } from "@/actions/session/validateSession";
+import { validateSession } from "../../session/validateSession";
 
 const getMyVouchers = async () => {
   const validSession = await validateSession();
 
   if (!validSession) {
-    throw new Error("Acesso negado.");
+    return false;
   }
 
   try {
@@ -35,14 +35,17 @@ const getMyVouchers = async () => {
         category: voucher.product.category,
         description: voucher.product.description,
         image: voucher.product.image,
-        price: voucher.product.price.toNumber(),
+
+        // 1. O preço gravado no voucher no momento da compra, não o do produto, que pode ter sido reajustado depois
+
+        price: voucher.unitPrice.toNumber(),
       },
 
       createdAt: voucher.createdAt.toISOString(),
       updatedAt: voucher.updatedAt.toISOString(),
     }));
   } catch {
-    throw new Error("Erro ao buscar vouchers.");
+    return false;
   }
 };
 

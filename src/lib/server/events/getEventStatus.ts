@@ -3,12 +3,12 @@ import type { EventStatus } from "@/prisma/generated/prisma/enums";
 
 /* - Calcula o status do evento a partir da data; evento cancelado continua cancelado - */
 
-interface EventStatusSourceProps {
+interface EventStatusProps {
   isCancelled: boolean;
   startsAt: Date;
 }
 
-const getEventStatus = ({ isCancelled, startsAt }: EventStatusSourceProps): EventStatus => {
+const getEventStatus = ({ isCancelled, startsAt }: EventStatusProps): EventStatus => {
   if (isCancelled) {
     return "cancelled";
   }

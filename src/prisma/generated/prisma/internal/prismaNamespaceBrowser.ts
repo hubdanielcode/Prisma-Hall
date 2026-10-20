@@ -244,6 +244,7 @@ export const VoucherPaymentScalarFieldEnum = {
   totalValue: 'totalValue',
   confirmedAt: 'confirmedAt',
   pickedUpAt: 'pickedUpAt',
+  paymentIntentId: 'paymentIntentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -286,6 +287,7 @@ export const TicketPaymentScalarFieldEnum = {
   totalValue: 'totalValue',
   confirmedAt: 'confirmedAt',
   pickedUpAt: 'pickedUpAt',
+  paymentIntentId: 'paymentIntentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -298,7 +300,7 @@ export const EventScalarFieldEnum = {
   title: 'title',
   description: 'description',
   tag: 'tag',
-  attractionName: 'attractionName',
+  attractionId: 'attractionId',
   image: 'image',
   isCancelled: 'isCancelled',
   price: 'price',

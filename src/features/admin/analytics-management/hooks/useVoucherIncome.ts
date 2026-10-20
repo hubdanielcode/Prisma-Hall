@@ -2,7 +2,9 @@
 
 import { BarChartItemProps } from "../types/barChartItem";
 import { categorySchema } from "@/lib/validations/shared/categorySchema";
-import { getVoucherIncome } from "@/actions";
+import {
+  getVoucherIncome,
+} from "@/actions/admin/analytics-management/getVoucherIncome";
 import { PeriodLabelProps } from "../types/period";
 import { productCategories } from "@/features/bar/utils/productCategories";
 import { useQueries } from "@tanstack/react-query";

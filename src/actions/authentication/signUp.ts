@@ -1,9 +1,7 @@
 "use server";
 
-import { checkRateLimit } from "@/lib/server/rate-limit/rateLimiter";
+import { checkRateLimit, hash, prisma } from "@/lib/server";
 import { cookies } from "next/headers";
-import { hash } from "@/lib/server/services/bcrypt";
-import { prisma } from "@/lib/server/services/prisma";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import { signUpSchema } from "@/lib/validations/authentication/signUpSchema";
 import z from "zod";

@@ -1,6 +1,6 @@
 import { AuthenticationProvider } from "@/features/authentication/context/AuthenticationContext";
 import { EventCard } from "./EventCard";
-import { fakeEvents } from "../../../../../.storybook/mocks/hooks/events/useEvents";
+import { fakeEvents } from "@/storybook/mocks/hooks/events/useEvents";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
 
 export default {

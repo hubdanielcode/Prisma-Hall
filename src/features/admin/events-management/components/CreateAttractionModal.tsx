@@ -1,9 +1,9 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { createAttractionSchema } from "@/lib/validations";
+import { createAttractionSchema } from "@/lib/validations/admin/events-management/createAttractionSchema";
 import { ImagePlus, X } from "lucide-react";
-import { masks } from "@/shared/utils";
+import { masks } from "@/shared/utils/functions/masks";
 import { useAttractionContext } from "@/features/events/event/hooks/useAttractionContext";
 import { useBlockScroll, useMobileContext } from "@/shared/hooks";
 import { useRef, useState } from "react";
@@ -122,6 +122,11 @@ const CreateAttractionModal = ({ isOpen, onClose }: CreateAttractionModalProps) 
 
     if (!createdAttraction) {
       setAttractionSubmitError("Não foi possível criar a atração.");
+      return false;
+    }
+
+    if (createdAttraction === "name_is_not_unique") {
+      setAttractionSubmitError("Já existe uma atração com esse nome.");
       return false;
     }
     return true;

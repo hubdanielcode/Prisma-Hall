@@ -1,7 +1,6 @@
-import type { BarChartItemProps } from "@/features/admin/analytics-management/types/barChartItem";
-import type { PeriodLabelProps } from "@/features/admin/analytics-management/types/period";
 import { eventTags } from "@/features/events/event/utils/eventTags";
 import { fakeTickets } from "../users/useTickets";
+import type { BarChartItemProps, PeriodLabelProps } from "@/features/admin/analytics-management";
 
 const fakeTicketIncomeByTag: BarChartItemProps[] = eventTags.map((tag) => ({
   id: tag.id,

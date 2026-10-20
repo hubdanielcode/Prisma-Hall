@@ -1,18 +1,24 @@
 /* - Components - */
 
-export { CartDrawer } from "@/features/cart/components/CartDrawer";
-export { CartItemCard } from "@/features/cart/components/CartItemCard";
+export { CartDrawer } from "./components/CartDrawer";
+export { CartItemCard } from "./components/CartItemCard";
+export { Checkout } from "./components/Checkout";
+export { PayNowButton } from "./components/PayNowButton";
+
+/* - Context - */
+
+export { CartContext, CartProvider } from "./context/CartContext";
 
 /* - Hooks - */
 
-export { useCartContext } from "@/features/cart/hooks/useCartContext";
-export { useCartItems } from "@/features/cart/hooks/useCartItems";
+export { useCartContext } from "./hooks/useCartContext";
+export { useCartItems } from "./hooks/useCartItems";
+export { usePayNow } from "./hooks/usePayNow";
 
 /* - Types - */
 
-export type { CartItemProps } from "@/features/cart/types/cartItem";
+export type { CartItemProps } from "./types/cartItem";
 
 /* - Utils - */
 
-export { mapCartItem } from "@/features/cart/utils/mapCartItem";
-export { serviceFee } from "@/features/cart/utils/serviceFee";
+export { serviceFee } from "./utils/serviceFee";

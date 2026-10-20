@@ -1,9 +1,8 @@
 "use server";
 
 import { cartItemSchema } from "@/lib/validations/cart/cartItemSchema";
-import { getEventStatus } from "@/lib/server/events/getEventStatus";
-import { prisma } from "@/lib/server/services/prisma";
-import { validateSession } from "@/actions/session/validateSession";
+import { getEventStatus, prisma } from "@/lib/server";
+import { validateSession } from "../session/validateSession";
 import z from "zod";
 
 const addItemToCart = async (cartItem: z.infer<typeof cartItemSchema>) => {
@@ -126,7 +125,7 @@ const addItemToCart = async (cartItem: z.infer<typeof cartItemSchema>) => {
       return false;
     }
 
-    const event = await prisma.event.findUnique({ where: { id: eventId } });
+    const event = await prisma.event.findUnique({ where: { id: eventId }, include: { attraction: { select: { name: true } } } });
 
     if (!event || getEventStatus(event) !== "soon") {
       return false;
@@ -155,7 +154,7 @@ const addItemToCart = async (cartItem: z.infer<typeof cartItemSchema>) => {
         event: {
           id: event.id,
           title: event.title,
-          attractionName: event.attractionName,
+          attractionName: event.attraction.name,
           image: event.image,
           startsAt: event.startsAt.toISOString(),
           status: getEventStatus(event),
@@ -191,7 +190,7 @@ const addItemToCart = async (cartItem: z.infer<typeof cartItemSchema>) => {
       event: {
         id: event.id,
         title: event.title,
-        attractionName: event.attractionName,
+        attractionName: event.attraction.name,
         image: event.image,
         startsAt: event.startsAt.toISOString(),
         status: getEventStatus(event),

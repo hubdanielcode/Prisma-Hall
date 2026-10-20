@@ -7,7 +7,7 @@ const getSingleUser = async (userId: string) => {
   const isAdmin = await checkIsAdmin();
 
   if (!isAdmin) {
-    throw new Error("Acesso negado.");
+    return false;
   }
 
   try {

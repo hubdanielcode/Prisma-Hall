@@ -25,21 +25,21 @@ const config: StorybookConfig = {
         // 1. Bcrypt
 
         {
-          find: /\/services\/bcrypt$/,
+          find: /^.*\/services\/bcrypt$/,
           replacement: path.resolve(dirname, "./mocks/services/bcrypt.ts"),
         },
 
         // 2. Prisma
 
         {
-          find: /\/services\/prisma$/,
+          find: /^.*\/services\/prisma$/,
           replacement: path.resolve(dirname, "./mocks/services/prisma.ts"),
         },
 
         // 3. Stripe
 
         {
-          find: /\/services\/stripe$/,
+          find: /^.*\/services\/stripe$/,
           replacement: path.resolve(dirname, "./mocks/services/stripe.ts"),
         },
 
@@ -140,6 +140,11 @@ const config: StorybookConfig = {
         {
           find: /^.*\/useUsers$/,
           replacement: path.resolve(dirname, "./mocks/hooks/users/useUsers.ts"),
+        },
+
+        {
+          find: /^.*\/useUsersStats$/,
+          replacement: path.resolve(dirname, "./mocks/hooks/users/useUsersStats.ts"),
         },
 
         {

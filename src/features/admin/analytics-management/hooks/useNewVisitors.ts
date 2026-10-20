@@ -1,10 +1,13 @@
 "use client";
 
 import { eventTags } from "@/features/events/event/utils/eventTags";
-import { getNewVisitors } from "@/actions";
-import { tagFilterSchema } from "@/lib/validations/shared/tagSchema";
+import {
+  getNewVisitors,
+} from "@/actions/admin/analytics-management/getNewVisitors";
+import { tagFilterSchema } from "@/lib/validations/shared/tagFilterSchema";
 import { useQuery } from "@tanstack/react-query";
-import type { BarChartItemProps, PeriodLabelProps } from "@/features/admin/analytics-management";
+import type { BarChartItemProps } from "../types/barChartItem";
+import type { PeriodLabelProps } from "../types/period";
 import type { z } from "zod";
 
 const useNewVisitors = (selectedPeriod: PeriodLabelProps, selectedTag: z.infer<typeof tagFilterSchema>) => {

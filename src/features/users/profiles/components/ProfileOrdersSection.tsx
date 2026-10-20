@@ -4,15 +4,14 @@ import { ChevronDown } from "lucide-react";
 import { EventCard } from "@/features/events/event/components/EventCard";
 import { FaSearch } from "react-icons/fa";
 import { IoTicketOutline, IoHelp } from "react-icons/io5";
-import { masks } from "@/shared/utils/functions/masks";
+import { masks, orderStatusBadgeStyles, paymentStatusBadgeStyles, pickupStatusBadgeStyles } from "@/shared/utils";
 import { MdOutlineCancel } from "react-icons/md";
 import { motion } from "motion/react";
-import { orderStatusBadgeStyles, paymentStatusBadgeStyles, pickupStatusBadgeStyles } from "@/shared/utils/constants/orderBadgeStyles";
 import { ProductCard } from "@/features/bar/components/ProductCard";
 import { useEffect, useRef, useState } from "react";
 import { useMobileContext } from "@/shared/hooks/useMobileContext";
-import { useTickets } from "@/features/users/tickets/hooks/useTickets";
-import { useVouchers } from "@/features/users/vouchers/hooks/useVouchers";
+import { useTickets } from "../../tickets/hooks/useTickets";
+import { useVouchers } from "../../vouchers/hooks/useVouchers";
 import Link from "next/link";
 import type { OrderStatus, PaymentStatus } from "@/prisma/generated/prisma/enums";
 

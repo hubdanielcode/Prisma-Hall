@@ -1,13 +1,13 @@
 /* - Components - */
 
-export { NotificationBell } from "@/features/users/notifications/components/NotificationBell";
+export { NotificationBell } from "./components/NotificationBell";
 
 /* - Hooks - */
 
-export { useNotificationPreferences } from "@/features/users/notifications/hooks/useNotificationPreferences";
-export { useNotifications } from "@/features/users/notifications/hooks/useNotifications";
+export { useNotificationPreferences } from "./hooks/useNotificationPreferences";
+export { useNotifications } from "./hooks/useNotifications";
 
 /* - Types - */
 
-export type { NotificationProps } from "@/features/users/notifications/types/notification";
-export type { NotificationPreferencesProps } from "@/features/users/notifications/types/notificationPreferences";
+export type { NotificationProps } from "./types/notification";
+export type { NotificationPreferencesProps } from "./types/notificationPreferences";

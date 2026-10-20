@@ -1,14 +1,12 @@
 "use client";
 
-import { contactInformation } from "@/shared/utils/constants/contactInformation";
+import { contactInformation, socialLinks, masks } from "../../utils";
 import { FiPhone } from "react-icons/fi";
 import { GoMail } from "react-icons/go";
 import { IoLocationOutline } from "react-icons/io5";
-import { masks } from "../../utils/functions/masks";
 import { MdAlternateEmail } from "react-icons/md";
 import { motion } from "motion/react";
 import { newsletterSchema } from "@/lib/validations/newsletter/newsletterSchema";
-import { socialLinks } from "@/shared/utils/constants/socialLinks";
 import { useNewsletter } from "@/features/newsletter/hooks/useNewsletter";
 import { useState, SubmitEvent } from "react";
 import Image from "next/image";

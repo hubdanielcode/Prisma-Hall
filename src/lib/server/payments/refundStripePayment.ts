@@ -1,6 +1,6 @@
 import "server-only";
-import { prisma } from "@/lib/server/services/prisma";
-import { stripe } from "@/lib/server/services/stripe";
+import { prisma } from "../services/prisma";
+import { stripe } from "../services/stripe";
 
 type PaymentType = "tickets" | "drinks";
 
@@ -15,7 +15,7 @@ interface RefundStripePaymentProps {
 
 const maxSessionToCheck = 500;
 
-/* - Localiza o payment intent da cobrança. A listagem de sessões é consistente (acha pagamentos recém-feitos); a busca do Stripe tem atraso de indexação e fica só como alternativa - */
+/* - Localiza o payment intent de pagamentos antigos, anteriores à coluna paymentIntentId (o webhook passou a gravá-la quando o pagamento é confirmado). A listagem de sessões é consistente (acha pagamentos recém-feitos); a busca do Stripe tem atraso de indexação e fica só como alternativa - */
 
 const findPaymentIntentId = async (paymentId: string, type: PaymentType, paymentCreatedAt: Date) => {
   const metadataKey = type === "tickets" ? "ticketPaymentId" : "voucherPaymentId";
@@ -88,7 +88,9 @@ const refundStripePayment = async ({ paymentId, type, amount, idempotencyKey }: 
       return true;
     }
 
-    const paymentIntentId = await findPaymentIntentId(paymentId, type, existingPayment.createdAt);
+    // 1. O normal é o pagamento já ter a cobrança gravada; a busca no Stripe só roda para pagamentos antigos
+
+    const paymentIntentId = existingPayment.paymentIntentId ?? (await findPaymentIntentId(paymentId, type, existingPayment.createdAt));
 
     if (!paymentIntentId) {
       console.error(`Cobrança não encontrada no Stripe. Pagamento: ${paymentId}`);

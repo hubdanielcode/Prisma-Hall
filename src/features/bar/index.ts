@@ -1,20 +1,24 @@
 /* - Components - */
 
-export { BarSection } from "@/features/bar/components/BarSection";
-export { MotionCard } from "@/features/bar/components/MotionCard";
-export { ProductCard } from "@/features/bar/components/ProductCard";
+export { BarSection } from "./components/BarSection";
+export { MotionCard } from "./components/MotionCard";
+export { ProductCard } from "./components/ProductCard";
+
+/* - Context - */
+
+export { BarContext, BarProvider } from "./context/BarContext";
 
 /* - Hooks - */
 
-export { useBarContext } from "@/features/bar/hooks/useBarContext";
-export { useProducts } from "@/features/bar/hooks/useProducts";
+export { useBarContext } from "./hooks/useBarContext";
+export { useProducts } from "./hooks/useProducts";
 
 /* - Types - */
 
-export type { CategoryProps } from "@/features/bar/types/category";
-export type { ProductProps } from "@/features/bar/types/product";
+export type { CategoryProps } from "./types/category";
+export type { ProductProps } from "./types/product";
 
 /* - Utils - */
 
-export { productCategories } from "@/features/bar/utils/productCategories";
-export { productCategoryIcons } from "@/features/bar/utils/productCategoryIcons";
+export { productCategories } from "./utils/productCategories";
+export { productCategoryIcons } from "./utils/productCategoryIcons";

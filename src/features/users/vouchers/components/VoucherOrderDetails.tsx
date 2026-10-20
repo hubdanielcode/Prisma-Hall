@@ -1,12 +1,11 @@
 "use client";
 
 import { IoHelp } from "react-icons/io5";
-import { masks } from "@/shared/utils/functions/masks";
+import { masks, paymentStatusBadgeStyles } from "@/shared/utils";
 import { MdOutlineCancel } from "react-icons/md";
-import { paymentStatusBadgeStyles } from "@/shared/utils/constants/orderBadgeStyles";
 import { PayNowButton } from "@/features/cart/components/PayNowButton";
 import { useEffect } from "react";
-import { useVoucherOrder } from "@/features/users/vouchers/hooks/useVoucherOrder";
+import { useVoucherOrder } from "../hooks/useVoucherOrder";
 import { VoucherOrderSummary } from "./VoucherOrderSummary";
 import Link from "next/link";
 import { PaymentMethod } from "@/prisma/generated/prisma/enums";

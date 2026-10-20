@@ -1,5 +1,4 @@
-import { CalendarProvider } from "@/features/events/agenda/context/CalendarContext";
-import { EventProvider } from "@/features/events/event/context/EventContext";
+import { CalendarProvider, EventProvider } from "@/features/events";
 import { EventsManagementTable } from "./EventsManagementTable";
 import { MobileProvider } from "@/shared/context/MobileContext";
 import { QueryProvider } from "@/shared/providers/QueryProvider";

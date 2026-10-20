@@ -1,17 +1,24 @@
 "use client";
 
-import { createContext, useState } from "react";
-import { editUserSchema } from "@/lib/validations";
+import { createContext, useEffect, useState } from "react";
+import { editUserSchema } from "@/lib/validations/admin/user-management/editUserSchema";
 import { useUsers } from "../hooks/useUsers";
 import type { UserProps } from "../types/user";
 import type { z } from "zod";
 
 interface UserContextType {
-  /* - Dados dos usuários - */
+  /* - Dados dos usuários (apenas a página atual) - */
 
-  filteredUsers: UserProps[];
+  users: UserProps[];
+  totalUsers: number;
+  totalPages: number;
   isLoading: boolean;
   error: Error | null;
+
+  /* - Estados de paginação - */
+
+  currentPage: number;
+  setCurrentPage: (currentPage: number) => void;
 
   /* - Estados de busca - */
 
@@ -41,23 +48,14 @@ interface UserContextType {
 const UserContext = createContext<UserContextType | null>(null);
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  /* - Dados dos usuários - */
+  /* - Estados de paginação - */
 
-  const {
-    users,
-    isLoading,
-    error,
-    userBeingEdited,
-    setUserBeingEdited,
-    userBeingDeleted,
-    setUserBeingDeleted,
-    editUserMutation,
-    deleteUserMutation,
-  } = useUsers();
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   /* - Estados de busca - */
 
   const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
 
   /* - Estados dos usuários - */
 
@@ -66,25 +64,49 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   /* - Definições - */
 
-  const filteredUsers =
-    users?.filter((user) => {
-      const matchingSearch =
-        user.name.toLowerCase().includes(searchQuery.toLowerCase()) || user.email.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchingRoles = selectedRole === "all_roles" || user.role === selectedRole;
-      const matchingStatus =
-        selectedStatus === "all_status" || (selectedStatus === "validated" ? user.validatedAt !== null : user.validatedAt === null);
+  const itemsPerPage = 6;
 
-      return matchingSearch && matchingRoles && matchingStatus;
-    }) ?? [];
+  /* - Funções - */
+
+  // 1. O input responde na hora, mas a busca só vai para o servidor depois que a pessoa para de digitar
+
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedSearchQuery(searchQuery), 300);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  /* - Dados dos usuários - */
+
+  const {
+    users,
+    total,
+    totalPages,
+    isLoading,
+    error,
+    userBeingEdited,
+    setUserBeingEdited,
+    userBeingDeleted,
+    setUserBeingDeleted,
+    editUserMutation,
+    deleteUserMutation,
+  } = useUsers(currentPage, itemsPerPage, debouncedSearchQuery, selectedRole, selectedStatus);
 
   return (
     <UserContext.Provider
       value={{
         /* - Dados dos usuários - */
 
-        filteredUsers,
+        users,
+        totalUsers: total,
+        totalPages,
         isLoading,
         error,
+
+        /* - Estados de paginação - */
+
+        currentPage,
+        setCurrentPage,
 
         /* - Estados de busca - */
 

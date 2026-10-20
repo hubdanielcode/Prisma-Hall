@@ -1,9 +1,9 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { EventProps, useEventContext } from "@/features/events";
-import { masks } from "@/shared/utils";
-import { useMobileContext } from "@/shared/hooks";
+import { EventProps, useEventContext } from "@/features/events/event";
+import { masks } from "@/shared/utils/functions/masks";
+import { useMobileContext } from "@/shared/hooks/useMobileContext";
 import { useState } from "react";
 import { X } from "lucide-react";
 

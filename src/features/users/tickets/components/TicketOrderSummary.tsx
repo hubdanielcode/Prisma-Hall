@@ -1,9 +1,12 @@
 "use client";
 
-import { formattedDate } from "@/shared/utils/functions/dates";
-import { masks } from "@/shared/utils/functions/masks";
-import { orderStatusBadgeStyles, paymentStatusBadgeStyles } from "@/shared/utils/constants/orderBadgeStyles";
-import type { TicketOrderProps } from "@/features/users/tickets/types/ticketOrder";
+import {
+  formattedDate,
+  masks,
+  orderStatusBadgeStyles,
+  paymentStatusBadgeStyles,
+} from "@/shared/utils";
+import type { TicketOrderProps } from "../types/ticketOrder";
 
 interface TicketOrderSummaryProps {
   order: TicketOrderProps;

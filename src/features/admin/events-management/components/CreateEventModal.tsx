@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { createEventSchema } from "@/lib/validations/admin/events-management/createEventSchema";
 import { CustomDateTimePicker } from "@/shared/components/ui/CustomDateTimePicker";
-import { eventTags, useAttractions, useEventContext } from "@/features/events";
+import { eventTags, useAttractions, useEventContext } from "@/features/events/event";
 import { FaCalendarAlt } from "react-icons/fa";
 import { formattedDate, formattedDateToString, masks } from "@/shared/utils";
 import { ImagePlus, X } from "lucide-react";
@@ -22,7 +22,7 @@ const emptyEvent: EmptyEventType = {
   title: "",
   description: "",
   tag: "rock",
-  attractionName: "",
+  attractionId: "",
   image: null,
   price: 0,
   startsAt: new Date(),
@@ -140,7 +140,7 @@ const CreateEventModal = ({ isOpen, onClose }: CreateEventModalProps) => {
       return false;
     }
 
-    if (!newEvent.attractionName.trim()) {
+    if (!newEvent.attractionId) {
       setEventAttractionError("Selecione uma atração.");
       return false;
     }
@@ -326,7 +326,7 @@ const CreateEventModal = ({ isOpen, onClose }: CreateEventModalProps) => {
                   )}
 
                   {attractions?.map((attraction) => {
-                    const isSelected = newEvent.attractionName === attraction.name;
+                    const isSelected = newEvent.attractionId === attraction.id;
 
                     return (
                       <li key={attraction.name}>
@@ -338,7 +338,7 @@ const CreateEventModal = ({ isOpen, onClose }: CreateEventModalProps) => {
                           onClick={() => {
                             setNewEvent((prev) => ({
                               ...prev,
-                              attractionName: attraction.name,
+                              attractionId: attraction.id,
                             }));
                           }}
                         >

@@ -2,7 +2,7 @@
 
 import { mapCartItem } from "@/features/cart/utils/mapCartItem";
 import { prisma } from "@/lib/server/services/prisma";
-import { validateSession } from "@/actions/session/validateSession";
+import { validateSession } from "../session/validateSession";
 
 const getCartItems = async () => {
   const validSession = await validateSession();
@@ -14,7 +14,7 @@ const getCartItems = async () => {
   try {
     const cartItems = await prisma.cart.findMany({
       where: { userId: validSession.user.id },
-      include: { product: true, event: true },
+      include: { product: true, event: { include: { attraction: { select: { name: true } } } } },
       orderBy: { createdAt: "asc" },
     });
 

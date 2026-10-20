@@ -1,11 +1,10 @@
 "use server";
 
-import { getEventStatus } from "@/lib/server/events/getEventStatus";
-import { prisma } from "@/lib/server/services/prisma";
+import { getEventStatus, prisma } from "@/lib/server";
 
 const getSingleEvent = async (eventId: string) => {
   try {
-    const event = await prisma.event.findUnique({ where: { id: eventId } });
+    const event = await prisma.event.findUnique({ where: { id: eventId }, include: { attraction: { select: { id: true, name: true } } } });
 
     if (!event) {
       return false;
@@ -16,7 +15,8 @@ const getSingleEvent = async (eventId: string) => {
       title: event.title,
       description: event.description,
       tag: event.tag,
-      attractionName: event.attractionName,
+      attractionId: event.attraction.id,
+      attractionName: event.attraction.name,
       image: event.image,
       status: getEventStatus(event),
       price: event.price.toNumber(),

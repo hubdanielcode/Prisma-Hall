@@ -1,12 +1,11 @@
 "use client";
 
-import { CartDrawer } from "@/features/cart/components/CartDrawer";
+import { CartDrawer, useCartContext } from "@/features/cart";
 import { EventCard } from "./EventCard";
 import { motion } from "motion/react";
 import { Ticket } from "lucide-react";
 import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
-import { useCartContext } from "@/features/cart/hooks/useCartContext";
-import { useEvents } from "@/features/events/event/hooks/useEvents";
+import { useEvents } from "../hooks/useEvents";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 

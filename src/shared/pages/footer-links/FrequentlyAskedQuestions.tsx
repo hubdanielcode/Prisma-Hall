@@ -1,4 +1,4 @@
-import { InformationFaqItem, InformationPage } from "@/shared/components/ui/InformationPage";
+import { InformationFaqItem, InformationPage } from "../../components/ui/InformationPage";
 import Link from "next/link";
 
 const FrequentlyAskedQuestions = () => {
@@ -34,8 +34,8 @@ const FrequentlyAskedQuestions = () => {
 
       <InformationFaqItem question="Posso cancelar um pedido?">
         <p>
-          Pedidos de ingressos podem ser cancelados até o evento acontecer. Pedidos de vouchers podem ser cancelados até a primeira retirada. Pedidos
-          já cancelados não podem ser cancelados de novo.
+          Pedidos de ingressos podem ser cancelados até 24 horas antes do evento. Pedidos de vouchers podem ser cancelados até a primeira retirada.
+          Pedidos já cancelados não podem ser cancelados de novo.
         </p>
       </InformationFaqItem>
 

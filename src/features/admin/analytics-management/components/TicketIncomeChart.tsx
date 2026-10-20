@@ -1,14 +1,14 @@
 "use client";
 
-import { AnalyticsChartFilter } from "@/features/admin/analytics-management/components/AnalyticsChartFilter";
-import { BarChartList } from "@/features/admin/analytics-management/components/BarChartList";
+import { AnalyticsChartFilter } from "./AnalyticsChartFilter";
+import { BarChartList } from "./BarChartList";
 import { eventTags } from "@/features/events/event/utils/eventTags";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { formatCurrency } from "@/shared/utils/functions/formatters";
-import { tagFilterSchema } from "@/lib/validations/shared/tagSchema";
+import { tagFilterSchema } from "@/lib/validations/shared/tagFilterSchema";
 import { useState } from "react";
-import { useTicketIncome } from "@/features/admin/analytics-management/hooks/useTicketIncome";
-import type { PeriodLabelProps } from "@/features/admin/analytics-management/types/period";
+import { useTicketIncome } from "../hooks/useTicketIncome";
+import type { PeriodLabelProps } from "../types/period";
 import type { z } from "zod";
 
 const TicketIncomeChart = () => {
