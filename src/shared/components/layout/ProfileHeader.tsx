@@ -49,6 +49,7 @@ const ProfileHeader = ({ activeTab, setActiveTab }: ProfileHeaderProps) => {
 
   const navLinks = [
     { id: "tickets", title: "Minhas Compras", mobileTitle: "Compras" },
+    { id: "reviews", title: "Minhas Avaliações", mobileTitle: "Avaliações" },
     { id: "infos", title: "Minhas Informações", mobileTitle: "Informações" },
     { id: "settings", title: "Configurações", mobileTitle: "Configurações" },
   ];

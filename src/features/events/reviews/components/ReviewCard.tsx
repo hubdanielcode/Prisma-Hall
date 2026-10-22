@@ -4,14 +4,16 @@ import { formatDistanceToNow } from "date-fns";
 import { motion } from "motion/react";
 import { ptBR } from "date-fns/locale";
 import { Quote, Star, Check } from "lucide-react";
+import { type ReactNode } from "react";
 import { type ReviewWithDetails } from "../types/reviews";
 
 interface ReviewCardProps {
   review: ReviewWithDetails;
   index: number;
+  footer?: ReactNode;
 }
 
-const ReviewCard = ({ review, index }: ReviewCardProps) => {
+const ReviewCard = ({ review, index, footer }: ReviewCardProps) => {
   /* - Definições - */
 
   const reviewNameMask = (name?: string | null) => {
@@ -88,6 +90,10 @@ const ReviewCard = ({ review, index }: ReviewCardProps) => {
           </div>
         )}
       </div>
+
+      {/* - Rodapé (ações opcionais) - */}
+
+      {footer}
     </motion.div>
   );
 };

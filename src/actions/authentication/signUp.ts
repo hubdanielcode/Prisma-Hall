@@ -1,7 +1,8 @@
 "use server";
 
-import { checkRateLimit, hash, prisma } from "@/lib/server";
+import { checkRateLimit, hash } from "@/lib/server";
 import { cookies } from "next/headers";
+import { prisma } from "@/lib/server/services/prisma";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import { signUpSchema } from "@/lib/validations/authentication/signUpSchema";
 import z from "zod";
@@ -64,9 +65,11 @@ const signUp = async (user: z.infer<typeof signUpSchema>) => {
     };
   } catch (error) {
     if (error instanceof PrismaClientKnownRequestError && error.code === "P2002") {
-      return "email_is_not_unique";
+      const errorMeta = JSON.stringify(error.meta);
+      if (errorMeta.includes("email")) {
+        return "email_is_not_unique";
+      }
     }
-
     return false;
   }
 };

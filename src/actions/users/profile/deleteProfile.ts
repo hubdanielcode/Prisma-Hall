@@ -2,7 +2,7 @@
 
 import { checkRateLimit, resetRateLimit, compare, prisma } from "@/lib/server";
 import { makeAnonymous } from "@/lib/server/users/makeAnonymous";
-import { validateSession } from "../../session/validateSession";
+import { validateSession } from "../../authentication/validateSession";
 
 const deleteProfile = async (password: string) => {
   /* - Validando a sessão e a senha digitada - */

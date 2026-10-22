@@ -1,6 +1,6 @@
 import { Footer, Header } from "@/shared/components";
 import { redirect } from "next/navigation";
-import { validateSession } from "@/actions/session/validateSession";
+import { validateSession } from "@/actions/authentication/validateSession";
 
 const ProtectedLayout = async ({ children }: { children: React.ReactNode }) => {
   const validatedSession = await validateSession();

@@ -3,12 +3,14 @@
 import { AnimatePresence, motion } from "motion/react";
 import { editUserSchema } from "@/lib/validations/admin/user-management/editUserSchema";
 import { roleBadgeOptions, roleBadgeStyles } from "@/shared/utils/constants/roleBadges";
-import { useBlockScroll, useMobileContext } from "@/shared/hooks";
+import { useBlockScroll } from "@/shared/hooks/useBlockScroll";
+import { useMobileContext } from "@/shared/hooks/useMobileContext";
 import { UserAvatar } from "./UserAvatar";
 import { useState } from "react";
-import { useUserContext, UserProps } from "@/features/users/user";
+import { useUserContext } from "@/features/users/user/hooks/useUserContext";
 import { X } from "lucide-react";
-import type z from "zod";
+import type { UserProps } from "@/features/users/user/types/user";
+import z from "zod";
 
 interface EditUserModalProps {
   isOpen: boolean;
@@ -254,7 +256,10 @@ const EditUserModal = ({ isOpen, onClose }: EditUserModalProps) => {
                 className="px-4 py-2 text-sm text-white/60 font-semibold rounded-lg cursor-pointer hover:text-white transition-colors"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={handleResetForm}
+                onClick={() => {
+                  handleResetForm();
+                  onClose();
+                }}
               >
                 Cancelar
               </motion.button>

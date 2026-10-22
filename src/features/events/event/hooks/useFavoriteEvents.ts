@@ -28,7 +28,7 @@ const useFavoriteEvents = () => {
 
   // 1. FavoriteEventMutation
 
-  const { mutateAsync: favoriteEventMutation } = useMutation({
+  const { mutateAsync: favoriteEventMutation, isPending } = useMutation({
     mutationFn: favoriteEventAction,
     onSuccess: async (favoriteEventMutationResult) => {
       if (favoriteEventMutationResult) {
@@ -44,6 +44,10 @@ const useFavoriteEvents = () => {
     favoriteEventIds,
     isLoading,
     error,
+
+    /* - Estado - */
+
+    isPending,
 
     /* - Mutations - */
 

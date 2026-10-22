@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/server/services/prisma";
-import { validateSession } from "../../session/validateSession";
+import { validateSession } from "../../authentication/validateSession";
 
 const getNotificationPreferences = async () => {
   const validSession = await validateSession();

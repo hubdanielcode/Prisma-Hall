@@ -93,8 +93,8 @@ export { createStripeCheckoutSession } from "./payments/createStripeCheckoutSess
 
 /* - Session - */
 
-export { revokeSession } from "./session/revokeSession";
-export { validateSession } from "./session/validateSession";
+export { revokeSession } from "./authentication/revokeSession";
+export { validateSession } from "./authentication/validateSession";
 
 /* - Users - */
 

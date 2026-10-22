@@ -3,11 +3,15 @@
 import { AnimatePresence, motion } from "motion/react";
 import { createEventSchema } from "@/lib/validations/admin/events-management/createEventSchema";
 import { CustomDateTimePicker } from "@/shared/components/ui/CustomDateTimePicker";
-import { eventTags, useAttractions, useEventContext } from "@/features/events/event";
+import { eventTags } from "@/features/events/event/utils/eventTags";
 import { FaCalendarAlt } from "react-icons/fa";
-import { formattedDate, formattedDateToString, masks } from "@/shared/utils";
+import { formattedDate, formattedDateToString } from "@/shared/utils/functions/dates";
 import { ImagePlus, X } from "lucide-react";
-import { useBlockScroll, useMobileContext } from "@/shared/hooks";
+import { masks } from "@/shared/utils/functions/masks";
+import { useAttractions } from "@/features/events/event/hooks/useAttractions";
+import { useBlockScroll } from "@/shared/hooks/useBlockScroll";
+import { useEventContext } from "@/features/events/event/hooks/useEventContext";
+import { useMobileContext } from "@/shared/hooks/useMobileContext";
 import { useRef, useState } from "react";
 import z from "zod";
 
@@ -517,7 +521,10 @@ const CreateEventModal = ({ isOpen, onClose }: CreateEventModalProps) => {
                 className="px-4 py-2 text-sm text-white/60 font-semibold rounded-lg cursor-pointer hover:text-white transition-colors"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={handleResetForm}
+                onClick={() => {
+                  handleResetForm();
+                  onClose();
+                }}
               >
                 Cancelar
               </motion.button>

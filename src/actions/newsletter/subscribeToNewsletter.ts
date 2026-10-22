@@ -2,7 +2,7 @@
 
 import { newsletterSchema } from "@/lib/validations/newsletter/newsletterSchema";
 import { prisma } from "@/lib/server/services/prisma";
-import { validateSession } from "../session/validateSession";
+import { validateSession } from "../authentication/validateSession";
 import z from "zod";
 
 const subscribeToNewsletter = async (subscription: z.infer<typeof newsletterSchema>) => {

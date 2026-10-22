@@ -2,7 +2,7 @@
 
 import { cartItemSchema } from "@/lib/validations/cart/cartItemSchema";
 import { getEventStatus, prisma } from "@/lib/server";
-import { validateSession } from "../session/validateSession";
+import { validateSession } from "../authentication/validateSession";
 import z from "zod";
 
 const addItemToCart = async (cartItem: z.infer<typeof cartItemSchema>) => {

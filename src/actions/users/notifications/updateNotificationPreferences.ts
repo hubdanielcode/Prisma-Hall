@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/server/services/prisma";
 import { updateNotificationPreferencesSchema } from "@/lib/validations/users/updateNotificationPreferencesSchema";
-import { validateSession } from "../../session/validateSession";
+import { validateSession } from "../../authentication/validateSession";
 import z from "zod";
 
 const updateNotificationPreferences = async (preferences: z.infer<typeof updateNotificationPreferencesSchema>) => {

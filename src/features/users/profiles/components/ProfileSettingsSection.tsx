@@ -1,18 +1,14 @@
 "use client";
 
-import {
-  CustomPasswordInput,
-} from "@/shared/components/ui/CustomPasswordInput";
+import { CustomPasswordInput } from "@/shared/components/ui/CustomPasswordInput";
 import { ImExit } from "react-icons/im";
 import { IoNotifications } from "react-icons/io5";
 import { MdDeleteForever } from "react-icons/md";
 import { motion } from "motion/react";
-import { requestPasswordReset } from "@/actions/authentication/requestPasswordReset";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
-import {
-  useNotificationPreferences,
-} from "../../notifications/hooks/useNotificationPreferences";
+import { useNotificationPreferences } from "../../notifications/hooks/useNotificationPreferences";
+import { usePasswordReset } from "@/features/authentication/hooks/usePasswordReset";
 import { useEffect, useRef, useState } from "react";
 import { useProfileContext } from "../hooks/useProfileContext";
 import { useRouter } from "next/navigation";
@@ -23,6 +19,7 @@ const ProfileSettingsSection = () => {
   const { user, revokeSessionMutation } = useAuthenticationContext();
   const { deleteProfileMutation } = useProfileContext();
   const { preferences, updateNotificationPreferencesMutation } = useNotificationPreferences();
+  const { requestPasswordResetMutation } = usePasswordReset();
 
   /* - Estados de notificação (vêm do banco, não do estado local) - */
 
@@ -63,7 +60,7 @@ const ProfileSettingsSection = () => {
       return;
     }
 
-    const result = await requestPasswordReset(user.email);
+    const result = await requestPasswordResetMutation(user.email);
 
     if (result !== true) {
       return;

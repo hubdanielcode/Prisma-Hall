@@ -2,6 +2,8 @@ import { fn } from "storybook/test";
 import { fakeEvents } from "./useEvents";
 import { useState } from "react";
 
+const fakeFavoriteEvents = [fakeEvents[0], fakeEvents[1]];
+
 const useFavoriteEvents = () => {
   /* - Começa sem nenhum favorito para dar para testar o clique na story - */
 
@@ -14,20 +16,21 @@ const useFavoriteEvents = () => {
     favoriteEventIds,
     isLoading: false,
     error: null,
+    isPending: false,
 
     favoriteEventMutation: fn(async (eventId: string) => {
       const favorited = !favoriteEventIds.has(eventId);
 
-      setFavoriteEventIds((current) => {
-        const next = new Set(current);
+      setFavoriteEventIds((currentFavoriteEventIds) => {
+        const updatedFavoriteEventIds = new Set(currentFavoriteEventIds);
 
-        if (next.has(eventId)) {
-          next.delete(eventId);
+        if (updatedFavoriteEventIds.has(eventId)) {
+          updatedFavoriteEventIds.delete(eventId);
         } else {
-          next.add(eventId);
+          updatedFavoriteEventIds.add(eventId);
         }
 
-        return next;
+        return updatedFavoriteEventIds;
       });
 
       return { eventId, favorited };
@@ -35,4 +38,4 @@ const useFavoriteEvents = () => {
   };
 };
 
-export { useFavoriteEvents };
+export { useFavoriteEvents, fakeFavoriteEvents };

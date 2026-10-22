@@ -2,7 +2,7 @@
 
 import { buyTicketsSchema } from "@/lib/validations/users/buyTicketsSchema";
 import { getEventStatus, prisma } from "@/lib/server";
-import { validateSession } from "../../session/validateSession";
+import { validateSession } from "../../authentication/validateSession";
 import z from "zod";
 
 const buyTickets = async (ticket: z.infer<typeof buyTicketsSchema>) => {

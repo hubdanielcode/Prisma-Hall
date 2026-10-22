@@ -1,7 +1,8 @@
 "use server";
 
-import { prisma, recalculateUserBadges } from "@/lib/server";
-import { validateSession } from "../../session/validateSession";
+import { prisma, recalculateEventRating, recalculateUserBadges } from "@/lib/server";
+import { reviewIdSchema } from "@/lib/validations/events/reviewIdSchema";
+import { validateSession } from "../../authentication/validateSession";
 
 const deleteReview = async (reviewId: string) => {
   const validSession = await validateSession();
@@ -10,8 +11,14 @@ const deleteReview = async (reviewId: string) => {
     return false;
   }
 
+  const parsedReviewId = reviewIdSchema.safeParse(reviewId);
+
+  if (!parsedReviewId.success) {
+    return false;
+  }
+
   try {
-    const existingReview = await prisma.review.findUnique({ where: { id: reviewId } });
+    const existingReview = await prisma.review.findUnique({ where: { id: parsedReviewId.data } });
 
     if (!existingReview || existingReview.userId !== validSession.user.id) {
       return false;
@@ -22,6 +29,10 @@ const deleteReview = async (reviewId: string) => {
     /* - Excluir a avaliação pode fazer o usuário perder o selo de verificado - */
 
     await recalculateUserBadges(validSession.user.id);
+
+    /* - Excluir a avaliação muda a média do evento (sem avaliações, volta para 0) - */
+
+    await recalculateEventRating(existingReview.eventId);
 
     return true;
   } catch {

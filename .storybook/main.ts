@@ -20,29 +20,6 @@ const config: StorybookConfig = {
     viteConfig.resolve = {
       ...viteConfig.resolve,
       alias: [
-        /* - Services - */
-
-        // 1. Bcrypt
-
-        {
-          find: /^.*\/services\/bcrypt$/,
-          replacement: path.resolve(dirname, "./mocks/services/bcrypt.ts"),
-        },
-
-        // 2. Prisma
-
-        {
-          find: /^.*\/services\/prisma$/,
-          replacement: path.resolve(dirname, "./mocks/services/prisma.ts"),
-        },
-
-        // 3. Stripe
-
-        {
-          find: /^.*\/services\/stripe$/,
-          replacement: path.resolve(dirname, "./mocks/services/stripe.ts"),
-        },
-
         /* - Hooks - */
 
         // 1. Analytics
@@ -62,14 +39,26 @@ const config: StorybookConfig = {
           replacement: path.resolve(dirname, "./mocks/hooks/analytics/useVoucherIncome.ts"),
         },
 
-        // 2. Bar
+        // 2. Authentication
+
+        {
+          find: /^.*\/usePasswordReset$/,
+          replacement: path.resolve(dirname, "./mocks/hooks/authentication/usePasswordReset.ts"),
+        },
+
+        {
+          find: /^.*\/useSession$/,
+          replacement: path.resolve(dirname, "./mocks/hooks/authentication/useSession.ts"),
+        },
+
+        // 3. Bar
 
         {
           find: /^.*\/useProducts$/,
           replacement: path.resolve(dirname, "./mocks/hooks/bar/useProducts.ts"),
         },
 
-        // 3. Cart
+        // 4. Cart
 
         {
           find: /^.*\/useCartItems$/,
@@ -81,7 +70,7 @@ const config: StorybookConfig = {
           replacement: path.resolve(dirname, "./mocks/hooks/cart/usePayNow.ts"),
         },
 
-        // 4. Events
+        // 5. Events
 
         {
           find: /^.*\/useAttractions$/,
@@ -94,6 +83,11 @@ const config: StorybookConfig = {
         },
 
         {
+          find: /^.*\/useFavoriteEvents$/,
+          replacement: path.resolve(dirname, "./mocks/hooks/events/useFavoriteEvents.ts"),
+        },
+
+        {
           find: /^.*\/useGallery$/,
           replacement: path.resolve(dirname, "./mocks/hooks/events/useGallery.ts"),
         },
@@ -103,14 +97,14 @@ const config: StorybookConfig = {
           replacement: path.resolve(dirname, "./mocks/hooks/events/useReviews.ts"),
         },
 
-        // 5. Newsletter
+        // 6. Newsletter
 
         {
           find: /^.*\/useNewsletter$/,
           replacement: path.resolve(dirname, "./mocks/hooks/newsletter/useNewsletter.ts"),
         },
 
-        // 6. Users
+        // 7. Users
 
         {
           find: /^.*\/useNotificationPreferences$/,
@@ -157,7 +151,30 @@ const config: StorybookConfig = {
           replacement: path.resolve(dirname, "./mocks/hooks/users/useVouchers.ts"),
         },
 
-        // 4. Aliases originais
+        /* - Services - */
+
+        // 1. Bcrypt
+
+        {
+          find: /^.*\/services\/bcrypt$/,
+          replacement: path.resolve(dirname, "./mocks/services/bcrypt.ts"),
+        },
+
+        // 2. Prisma
+
+        {
+          find: /^.*\/services\/prisma$/,
+          replacement: path.resolve(dirname, "./mocks/services/prisma.ts"),
+        },
+
+        // 3. Stripe
+
+        {
+          find: /^.*\/services\/stripe$/,
+          replacement: path.resolve(dirname, "./mocks/services/stripe.ts"),
+        },
+
+        // 8. Aliases originais
 
         ...normalizedAlias,
       ],

@@ -3,7 +3,7 @@
 import { del, put } from "@vercel/blob";
 import { newProfileSchema, updateProfileSchema } from "@/lib/validations";
 import { prisma } from "@/lib/server/services/prisma";
-import { validateSession } from "../../session/validateSession";
+import { validateSession } from "../../authentication/validateSession";
 import z from "zod";
 
 /* - Quando o perfil ainda não existe, todos os dados dele são obrigatórios (nome e foto ficam no usuário, não no perfil) - */

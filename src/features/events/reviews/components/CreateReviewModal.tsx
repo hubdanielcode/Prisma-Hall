@@ -3,10 +3,13 @@
 import { AnimatePresence, motion } from "motion/react";
 import { masks } from "@/shared/utils/functions/masks";
 import { Star, X } from "lucide-react";
-import { useBlockScroll, useMobileContext } from "@/shared/hooks";
+import { useBlockScroll } from "@/shared/hooks/useBlockScroll";
 import { useEvents } from "../../event/hooks/useEvents";
+import { useMobileContext } from "@/shared/hooks/useMobileContext";
+import { useProfile } from "@/features/users/profiles/hooks/useProfile";
 import { useReviews } from "../hooks/useReviews";
 import { useState } from "react";
+import { useTickets } from "@/features/users/tickets/hooks/useTickets";
 
 interface CreateReviewModalProps {
   isOpen: boolean;
@@ -17,8 +20,10 @@ const CreateReviewModal = ({ isOpen, onClose }: CreateReviewModalProps) => {
   /* - Puxando do context - */
 
   const { isPortraitMobile, isLandscapeMobile } = useMobileContext();
-  const { postReviewMutation } = useReviews();
+  const { profile } = useProfile();
+  const { postReviewMutation, reviews } = useReviews(1, 50, undefined, profile ? profile.id : undefined);
   const { events, isLoading: isLoadingEvents } = useEvents();
+  const { tickets } = useTickets();
 
   /* - Estados da avaliação - */
 
@@ -35,10 +40,16 @@ const CreateReviewModal = ({ isOpen, onClose }: CreateReviewModalProps) => {
 
   /* - Definições - */
 
-  // 1. Só dá para avaliar eventos que já aconteceram, do mais recente para o mais antigo
+  // 1. Só dá para avaliar eventos que já aconteceram, em que o usuário tem ingresso confirmado e que ainda não avaliou, do mais recente para o mais antigo
+
+  const currentUserId = profile ? profile.id : undefined;
+
+  const confirmedEventIds = new Set((tickets ?? []).filter((ticket) => ticket.orderStatus === "confirmed").map((ticket) => ticket.eventId));
+
+  const reviewedEventIds = new Set(reviews.filter((review) => review.userId === currentUserId).map((review) => review.eventId));
 
   const happenedEvents = [...(events ?? [])]
-    .filter((event) => event.status === "happened")
+    .filter((event) => event.status === "happened" && confirmedEventIds.has(event.id) && !reviewedEventIds.has(event.id))
     .sort((a, b) => new Date(b.startsAt).getTime() - new Date(a.startsAt).getTime());
 
   /* - Funções - */
@@ -75,6 +86,10 @@ const CreateReviewModal = ({ isOpen, onClose }: CreateReviewModalProps) => {
       return false;
     }
 
+    if (postedReview === "already_reviewed") {
+      setReviewSubmitError("Você já avaliou este evento.");
+      return false;
+    }
     return true;
   };
 

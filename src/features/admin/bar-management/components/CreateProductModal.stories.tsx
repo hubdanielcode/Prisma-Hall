@@ -1,7 +1,8 @@
 import { BarProvider } from "@/features/bar/context/BarContext";
-import { CreateProductModal } from "./CreateProductModal";
+
 import { MobileProvider } from "@/shared/context/MobileContext";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
+import { CreateProductModal } from "./CreateProductModal";
 
 export default {
   title: "Layouts/Admin/Bar Management/Modals",

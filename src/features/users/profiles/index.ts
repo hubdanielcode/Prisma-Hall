@@ -5,6 +5,8 @@ export { FirstTimeProfileModal } from "./components/FirstTimeProfileModal";
 export { ProfileInformationsSection } from "./components/ProfileInformationsSection";
 export { ProfileSettingsSection } from "./components/ProfileSettingsSection";
 export { ProfileOrdersSection } from "./components/ProfileOrdersSection";
+export { ProfileReviewsSection } from "./components/ProfileReviewsSection";
+export { ProfileReviewsActions } from "./components/ProfileReviewsActions";
 
 /* - Hooks - */
 

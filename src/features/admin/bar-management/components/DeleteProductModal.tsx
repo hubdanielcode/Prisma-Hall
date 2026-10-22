@@ -2,13 +2,12 @@
 
 import { masks } from "@/shared/utils/functions/masks";
 import { motion, AnimatePresence } from "motion/react";
-import {
-  productCategoryBadgeStyles,
-} from "../types/productCategoryBadgeStyles";
-import { useBarContext, ProductProps } from "@/features/bar";
+import { productCategoryBadgeStyles } from "../types/productCategoryBadgeStyles";
+import { useBarContext } from "@/features/bar/hooks/useBarContext";
 import { useMobileContext } from "@/shared/hooks/useMobileContext";
 import { useState } from "react";
 import { X } from "lucide-react";
+import type { ProductProps } from "@/features/bar/types/product";
 
 interface DeleteProductModalProps {
   isOpen: boolean;

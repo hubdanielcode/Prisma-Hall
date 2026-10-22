@@ -1,11 +1,12 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { AttractionProps, useAttractionContext } from "@/features/events/event";
 import { masks } from "@/shared/utils/functions/masks";
+import { useAttractionContext } from "@/features/events/event/hooks/useAttractionContext";
 import { useMobileContext } from "@/shared/hooks/useMobileContext";
 import { useState } from "react";
 import { X } from "lucide-react";
+import type { AttractionProps } from "@/features/events/event/types/attraction";
 
 interface DeleteAttractionModalProps {
   isOpen: boolean;

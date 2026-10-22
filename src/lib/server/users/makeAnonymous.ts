@@ -5,7 +5,7 @@ import { prisma } from "../services/prisma";
 import { expireStripeCheckoutSessions } from "../payments/expireStripeCheckoutSessions";
 import { randomUUID } from "crypto";
 import { userIdSchema } from "@/lib/validations/users/userIdSchema";
-import { validateSession } from "@/actions/session/validateSession";
+import { validateSession } from "@/actions/authentication/validateSession";
 import z from "zod";
 
 const makeAnonymous = async (userId: z.infer<typeof userIdSchema>) => {

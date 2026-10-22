@@ -45,6 +45,8 @@ export { updateCartItemSchema } from "./cart/updateCartItemSchema";
 
 export { createReviewSchema } from "./events/createReviewSchema";
 export { favoriteEventIdSchema } from "./events/favoriteEventSchema";
+export { getAllReviewsSchema } from "./events/getAllReviewsSchema";
+export { reviewIdSchema } from "./events/reviewIdSchema";
 export { updateReviewSchema } from "./events/updateReviewSchema";
 
 /* - Newsletter - */

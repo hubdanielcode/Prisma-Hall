@@ -1,6 +1,6 @@
 import { AuthenticationProvider } from "@/features/authentication/context/AuthenticationContext";
 import { CartProvider } from "@/features/cart/context/CartContext";
-import { EventModal } from "./EventModal";
+import { EventDetailsModal } from "./EventDetailsModal";
 import { fakeEvents } from "@/storybook/mocks/hooks/events/useEvents";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
 
@@ -10,7 +10,7 @@ const soonEvent = fakeEvents[4];
 
 export default {
   title: "Layouts/Public/Schedule/Events",
-  component: EventModal,
+  component: EventDetailsModal,
   parameters: {
     layout: "fullscreen",
     nextjs: {
@@ -24,7 +24,7 @@ const Modal = () => {
     <QueryProvider>
       <AuthenticationProvider>
         <CartProvider>
-          <EventModal
+          <EventDetailsModal
             event={soonEvent}
             isOpen={true}
             onClose={() => {}}
@@ -35,4 +35,4 @@ const Modal = () => {
   );
 };
 
-export { Modal as "Event Modal" };
+export { Modal as "Event Details Modal" };

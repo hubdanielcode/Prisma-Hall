@@ -1,10 +1,11 @@
 /* - Badges - */
 
-export { recalculateUserBadges } from "./badges/achievementBadges";
+export { recalculateOldUserBadges, recalculateUserBadges } from "./badges/achievementBadges";
 
 /* - Events - */
 
 export { getEventStatus } from "./events/getEventStatus";
+export { recalculateEventRating } from "./events/recalculateEventRating";
 
 /* - Notifications - */
 

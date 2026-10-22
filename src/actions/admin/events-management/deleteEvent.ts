@@ -2,12 +2,7 @@
 
 import { checkIsAdmin } from "../checkIsAdmin";
 import { del } from "@vercel/blob";
-import {
-  getEventStatus,
-  getUserIdsThatFavoritedEvent,
-  notifyUsersByEmail,
-  prisma,
-} from "@/lib/server";
+import { getEventStatus, getUserIdsThatFavoritedEvent, notifyUsersByEmail, prisma } from "@/lib/server";
 import type { DeleteEventResult } from "@/features/events/event/types/event";
 
 const deleteEvent = async (eventId: string): Promise<DeleteEventResult> => {
@@ -66,7 +61,7 @@ const deleteEvent = async (eventId: string): Promise<DeleteEventResult> => {
   try {
     await notifyUsersByEmail(usersToNotify, {
       type: "event_update",
-      title: "Evento cancelado",
+      title: "Evento favorito cancelado",
       message: `${eventTitle} foi cancelado.`,
     });
   } catch (error) {

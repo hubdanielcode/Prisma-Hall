@@ -2,7 +2,7 @@
 
 import { orderIdSchema } from "@/lib/validations/users/orderIdSchema";
 import { prisma } from "@/lib/server/services/prisma";
-import { validateSession } from "../../session/validateSession";
+import { validateSession } from "../../authentication/validateSession";
 import type { VoucherOrderProps } from "@/features/users/vouchers/types/voucherOrder";
 
 const getVoucherOrder = async (orderId: string): Promise<VoucherOrderProps | false> => {

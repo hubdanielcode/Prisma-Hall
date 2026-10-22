@@ -17,7 +17,7 @@ interface EventCardProps {
 const EventCard = ({ event, index, footer }: EventCardProps) => {
   /* - Puxando do context - */
 
-  const { favoriteEventIds, favoriteEventMutation } = useFavoriteEvents();
+  const { favoriteEventIds, isPending, favoriteEventMutation } = useFavoriteEvents();
   const { isAuthenticated } = useAuthenticationContext();
 
   /* - Definições - */
@@ -59,8 +59,9 @@ const EventCard = ({ event, index, footer }: EventCardProps) => {
 
       {isAuthenticated && event.status === "soon" && (
         <button
-          className="absolute top-4 right-4 flex items-center justify-center w-10 h-10 bg-black/80 border border-black/30 rounded-full cursor-pointer"
+          className="absolute top-4 right-4 flex items-center justify-center w-10 h-10 bg-black/80 border border-black/30 rounded-full cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           aria-label={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+          disabled={isPending}
           onClick={handleToggleFavorite}
         >
           {isFavorite ? <FaHeart className="text-red-600" /> : <FaRegHeart className="text-red-600" />}

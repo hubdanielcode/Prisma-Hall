@@ -3,7 +3,7 @@
 import { checkIsAdmin } from "../checkIsAdmin";
 import { makeAnonymous } from "@/lib/server/users/makeAnonymous";
 import { userIdSchema } from "@/lib/validations/users/userIdSchema";
-import { validateSession } from "../../session/validateSession";
+import { validateSession } from "../../authentication/validateSession";
 import z from "zod";
 
 const deleteUser = async (userId: z.infer<typeof userIdSchema>) => {

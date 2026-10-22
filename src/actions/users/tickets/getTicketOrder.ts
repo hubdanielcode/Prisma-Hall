@@ -2,7 +2,7 @@
 
 import { getEventStatus, prisma } from "@/lib/server";
 import { orderIdSchema } from "@/lib/validations/users/orderIdSchema";
-import { validateSession } from "../../session/validateSession";
+import { validateSession } from "../../authentication/validateSession";
 import type { TicketOrderProps } from "@/features/users/tickets/types/ticketOrder";
 
 const getTicketOrder = async (orderId: string): Promise<TicketOrderProps | false> => {

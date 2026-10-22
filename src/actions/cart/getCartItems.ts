@@ -2,7 +2,7 @@
 
 import { mapCartItem } from "@/features/cart/utils/mapCartItem";
 import { prisma } from "@/lib/server/services/prisma";
-import { validateSession } from "../session/validateSession";
+import { validateSession } from "../authentication/validateSession";
 
 const getCartItems = async () => {
   const validSession = await validateSession();

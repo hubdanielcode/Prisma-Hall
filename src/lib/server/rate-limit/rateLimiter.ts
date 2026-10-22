@@ -2,7 +2,7 @@ import "server-only";
 import { createHash } from "crypto";
 import { headers } from "next/headers";
 import { prisma } from "../services/prisma";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
+import { PrismaClientKnownRequestError } from "@/prisma/generated/prisma/internal/prismaNamespace";
 
 interface CheckRateLimitProps {
   action: string;

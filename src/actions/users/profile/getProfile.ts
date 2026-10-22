@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/server/services/prisma";
-import { validateSession } from "../../session/validateSession";
+import { validateSession } from "../../authentication/validateSession";
 import type { ProfileProps } from "@/features/authentication/types/profile";
 
 const getProfile = async (): Promise<ProfileProps | false> => {
@@ -15,6 +15,7 @@ const getProfile = async (): Promise<ProfileProps | false> => {
     const userData = await prisma.user.findUnique({
       where: { id: validSession.user.id },
       select: {
+        id: true,
         name: true,
         profilePicture: true,
         role: true,

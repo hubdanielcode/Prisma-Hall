@@ -2,7 +2,7 @@
 
 import { Calendar, ChevronLeft, ChevronRight, Ticket } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { rotatingImages } from "../../utils/constants/rotatingImages";
+import { rotatingImages } from "@/shared/utils/constants/rotatingImages";
 import { useEffect, useState } from "react";
 
 const HeroSection = () => {

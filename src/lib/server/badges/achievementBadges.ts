@@ -60,10 +60,15 @@ const recalculateUserBadges = async (userId: string) => {
         select: { eventId: true, comment: true },
       }),
 
-      // 2. Participou = comprou o ingresso e o pedido foi confirmado
+      // 2. Participou = ingresso ativo (não cancelado), pedido confirmado e evento que já aconteceu (e não foi cancelado)
 
       prisma.ticket.findMany({
-        where: { userId, order: { status: "confirmed" } },
+        where: {
+          userId,
+          status: "active",
+          order: { status: "confirmed" },
+          event: { isCancelled: false, startsAt: { lt: new Date() } },
+        },
         select: { eventId: true },
         distinct: ["eventId"],
       }),
@@ -89,4 +94,43 @@ const recalculateUserBadges = async (userId: string) => {
   }
 };
 
-export { recalculateUserBadges };
+/* - Recalcula só o badge de tempo de conta de todos os usuários. Roda periodicamente, porque o tempo passa mesmo que o usuário não faça nenhuma ação - */
+
+const recalculateOldUserBadges = async () => {
+  try {
+    // 1. Usuários anonimizados ficam de fora, o badge deles é sempre "none"
+
+    const existingUsers = await prisma.user.findMany({
+      where: { email: { not: { endsWith: "@prismahall.invalid" } } },
+      select: { id: true, createdAt: true, oldUser: true },
+    });
+
+    // 2. Separa por tier só quem mudou, assim o banco não escreve em quem já está certo
+
+    const today = new Date();
+
+    const userIdsByLevel: Record<UserBadgeLevel, string[]> = { none: [], bronze: [], silver: [], gold: [] };
+
+    for (const existingUser of existingUsers) {
+      const oldUserBadge = getOldUserBadge(existingUser.createdAt, today);
+
+      if (oldUserBadge !== existingUser.oldUser) {
+        userIdsByLevel[oldUserBadge].push(existingUser.id);
+      }
+    }
+
+    // 3. Uma atualização por tier, todas na mesma transação
+
+    const levelsToUpdate = (Object.keys(userIdsByLevel) as UserBadgeLevel[]).filter((level) => userIdsByLevel[level].length > 0);
+
+    await prisma.$transaction(
+      levelsToUpdate.map((level) => prisma.user.updateMany({ where: { id: { in: userIdsByLevel[level] } }, data: { oldUser: level } })),
+    );
+
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+export { recalculateOldUserBadges, recalculateUserBadges };

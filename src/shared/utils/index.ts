@@ -24,4 +24,5 @@ export { getTicketCancellationDeadline, isTicketCancellationOpen, ticketCancella
 export { formatCurrency, formatPeople } from "./functions/formatters";
 export { getTheme, saveTheme, applyTheme } from "./functions/theme";
 export { masks } from "./functions/masks";
+export { getReviewEditDeadline, isReviewEditOpen, reviewEditWindowMinutes } from "./functions/reviewEditPolicy";
 export { parsedDate, formattedDate, formattedDateToString, formattedDateToISOString } from "./functions/dates";

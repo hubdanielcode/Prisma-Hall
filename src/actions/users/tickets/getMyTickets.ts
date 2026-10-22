@@ -1,7 +1,7 @@
 "use server";
 
 import { getEventStatus, prisma } from "@/lib/server";
-import { validateSession } from "../../session/validateSession";
+import { validateSession } from "../../authentication/validateSession";
 
 const getMyTickets = async () => {
   const validSession = await validateSession();

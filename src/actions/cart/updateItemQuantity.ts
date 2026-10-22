@@ -3,7 +3,7 @@
 import { getEventStatus, prisma } from "@/lib/server";
 import { mapCartItem } from "@/features/cart/utils/mapCartItem";
 import { updateCartItemSchema } from "@/lib/validations/cart/updateCartItemSchema";
-import { validateSession } from "../session/validateSession";
+import { validateSession } from "../authentication/validateSession";
 import z from "zod";
 
 const updateItemQuantity = async (item: z.infer<typeof updateCartItemSchema>) => {

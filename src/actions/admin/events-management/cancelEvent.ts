@@ -2,14 +2,15 @@
 
 import { cancelEventIdSchema } from "@/lib/validations/admin/events-management/cancelEventSchema";
 import { checkIsAdmin } from "../checkIsAdmin";
-import {
-  getEventStatus,
-  getUserIdsThatFavoritedEvent,
-  notifyUsersByEmail,
-  prisma,
-  refundStripePayment,
-} from "@/lib/server";
+import { getEventStatus, getUserIdsThatFavoritedEvent, notifyUsersByEmail, prisma, refundStripePayment } from "@/lib/server";
 import { serviceFee } from "@/features/cart/utils/serviceFee";
+
+interface NotifyCancelledEventUsersProps {
+  eventId: string;
+  eventTitle: string;
+  alreadyNotifiedUserIds: string[];
+  failedRefundUserIds: string[];
+}
 
 /* - Cancela um evento que ainda vai acontecer: o evento continua no banco com status de cancelado. Se o evento já está cancelado, só reprocessa os reembolsos que faltam (útil quando o Stripe falhou antes). Devolve quantos pedidos ainda estão sem reembolso - */
 
@@ -44,32 +45,39 @@ const cancelEvent = async (eventId: string) => {
     const isRetry = eventStatus === "cancelled";
 
     if (!isRetry) {
-      const usersToNotify = await getUserIdsThatFavoritedEvent(eventToCancel.id);
-
       await prisma.event.update({ where: { id: eventToCancel.id }, data: { isCancelled: true } });
-
-      /* - Uma falha no aviso não desfaz o cancelamento - */
-
-      try {
-        await notifyUsersByEmail(usersToNotify, {
-          type: "event_update",
-          title: "Evento cancelado",
-          message: `${eventToCancel.title} foi cancelado.`,
-        });
-      } catch (error) {
-        console.error("[cancelEvent] Falha ao avisar os favoritos:", error);
-      }
     }
 
     /* - Uma falha no reembolso não desfaz o cancelamento - */
 
     let pendingRefunds = 0;
+    let alreadyNotifiedUserIds: string[] = [];
+    let failedRefundUserIds: string[] = [];
 
     try {
-      pendingRefunds = await refundCancelledEventTicketPayments(eventToCancel.id, eventToCancel.title);
+      const refundResult = await refundCancelledEventTicketPayments(eventToCancel.id, eventToCancel.title);
+
+      pendingRefunds = refundResult.failedOrders;
+      alreadyNotifiedUserIds = refundResult.notifiedUserIds;
+      failedRefundUserIds = refundResult.failedRefundUserIds;
     } catch (error) {
       console.error("[cancelEvent] Falha ao processar os reembolsos:", error);
       pendingRefunds = -1;
+    }
+
+    /* - Os avisos de cancelamento saem só na primeira tentativa, depois dos reembolsos, para saber quem já foi avisado pelo próprio pedido. Reprocessar o cancelamento não repete nenhum aviso. Uma falha no aviso não desfaz o cancelamento - */
+
+    if (!isRetry) {
+      try {
+        await notifyCancelledEventUsers({
+          eventId: eventToCancel.id,
+          eventTitle: eventToCancel.title,
+          alreadyNotifiedUserIds,
+          failedRefundUserIds,
+        });
+      } catch (error) {
+        console.error("[cancelEvent] Falha ao avisar os usuários:", error);
+      }
     }
 
     return { pendingRefunds };
@@ -78,7 +86,33 @@ const cancelEvent = async (eventId: string) => {
   }
 };
 
-/* - Devolve quantos pedidos não puderam ser reembolsados (podem ser reprocessados chamando o cancelEvent de novo) - */
+/* - Cada usuário recebe um único aviso: quem já foi avisado pelo próprio pedido (reembolso ou pedido pendente cancelado) não recebe outro. Quem teve o reembolso falhado é avisado do cancelamento, sem promessa de reembolso, que ainda não aconteceu. Por último, os favoritos que ainda não foram avisados - */
+
+const notifyCancelledEventUsers = async ({ eventId, eventTitle, alreadyNotifiedUserIds, failedRefundUserIds }: NotifyCancelledEventUsersProps) => {
+  // 1. Reembolso falhado: o aviso não depende do notifyFavoriteEvents, é consequência do pedido
+
+  const usersWithFailedRefund = failedRefundUserIds.filter((userId) => !alreadyNotifiedUserIds.includes(userId));
+
+  await notifyUsersByEmail(usersWithFailedRefund, {
+    type: "event_update",
+    title: "Evento cancelado",
+    message: `${eventTitle} foi cancelado.`,
+  });
+
+  // 2. Favoritos: a busca já filtra por quem ativou o notifyFavoriteEvents
+
+  const favoriteUserIds = await getUserIdsThatFavoritedEvent(eventId);
+
+  const favoritesToNotify = favoriteUserIds.filter((userId) => !alreadyNotifiedUserIds.includes(userId) && !usersWithFailedRefund.includes(userId));
+
+  await notifyUsersByEmail(favoritesToNotify, {
+    type: "event_update",
+    title: "Evento favorito cancelado",
+    message: `${eventTitle} foi cancelado.`,
+  });
+};
+
+/* - Devolve quantos pedidos não puderam ser reembolsados (podem ser reprocessados chamando o cancelEvent de novo), quem já foi avisado pelo próprio pedido e quem teve o reembolso falhado - */
 
 const refundCancelledEventTicketPayments = async (eventId: string, eventTitle: string) => {
   /* - Pedido já cancelado (ex: pelo próprio usuário) não entra: os ingressos dele podem continuar "active" - */
@@ -89,6 +123,9 @@ const refundCancelledEventTicketPayments = async (eventId: string, eventTitle: s
   });
 
   let failedOrders = 0;
+
+  const notifiedUserIds = new Set<string>();
+  const failedRefundUserIds = new Set<string>();
 
   for (const order of ordersToRefund) {
     try {
@@ -122,6 +159,18 @@ const refundCancelledEventTicketPayments = async (eventId: string, eventTitle: s
           }),
         ]);
 
+        // 4. O pedido pendente era cancelado em silêncio: agora o usuário é avisado, tenha ou não favoritado o evento
+
+        const pendingOrderNotified = await notifyUsersByEmail([order.userId], {
+          type: "order_cancelled",
+          title: "Pedido cancelado",
+          message: `O evento ${eventTitle} foi cancelado, então o seu pedido pendente também foi cancelado.`,
+        });
+
+        if (pendingOrderNotified) {
+          notifiedUserIds.add(order.userId);
+        }
+
         continue;
       }
 
@@ -152,6 +201,7 @@ const refundCancelledEventTicketPayments = async (eventId: string, eventTitle: s
       if (!successfullyRefunded) {
         console.error(`Reembolso no Stripe falhou. Pedido: ${order.id}`);
         failedOrders += 1;
+        failedRefundUserIds.add(order.userId);
         continue;
       }
 
@@ -187,18 +237,23 @@ const refundCancelledEventTicketPayments = async (eventId: string, eventTitle: s
         });
       }
 
-      await notifyUsersByEmail([order.userId], {
+      const refundNotified = await notifyUsersByEmail([order.userId], {
         type: "order_cancelled",
         title: "Pedido reembolsado",
         message: `O evento ${eventTitle} foi cancelado e R$ ${valueToRefund.toFixed(2)} serão reembolsados`,
       });
+
+      if (refundNotified) {
+        notifiedUserIds.add(order.userId);
+      }
     } catch (error) {
       failedOrders += 1;
+      failedRefundUserIds.add(order.userId);
       console.error(`Cancelamento do pedido falhou. Pedido: ${order.id}`, error);
     }
   }
 
-  return failedOrders;
+  return { failedOrders, notifiedUserIds: [...notifiedUserIds], failedRefundUserIds: [...failedRefundUserIds] };
 };
 
 export { cancelEvent };

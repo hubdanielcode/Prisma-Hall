@@ -1,6 +1,6 @@
 "use server";
 
-import { validateSession } from "../session/validateSession";
+import { validateSession } from "../authentication/validateSession";
 
 const checkIsAdmin = async () => {
   const validSession = await validateSession();

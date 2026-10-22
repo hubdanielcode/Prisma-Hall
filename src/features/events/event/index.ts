@@ -1,8 +1,8 @@
 /* - Components - */
 
 export { EventCard } from "./components/EventCard";
+export { EventDetailsModal } from "./components/EventDetailsModal";
 export { EventListItem } from "./components/EventListItem";
-export { EventModal } from "./components/EventModal";
 export { EventsSection } from "./components/EventsSection";
 
 /* - Context - */

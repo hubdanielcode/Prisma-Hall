@@ -9,7 +9,6 @@ const rotatingImages = [
     price: "60,00",
     image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=1200&h=600&fit=crop",
   },
-
   {
     id: 2,
     title: "Noite do Rock Alternativo",
@@ -20,7 +19,6 @@ const rotatingImages = [
     price: "60,00",
     image: "https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?w=1200&h=600&fit=crop",
   },
-
   {
     id: 3,
     title: "Underground House Party",
@@ -31,7 +29,6 @@ const rotatingImages = [
     price: "80,00",
     image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1200&h=600&fit=crop",
   },
-
   {
     id: 4,
     title: "Prisma Fest",
@@ -42,7 +39,6 @@ const rotatingImages = [
     price: "65,00",
     image: "https://images.unsplash.com/photo-1692271931628-adc2b16670dd?w=1200&h=600&fit=crop",
   },
-
   {
     id: 5,
     title: "Latin Night Experience",

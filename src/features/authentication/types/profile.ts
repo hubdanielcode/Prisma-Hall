@@ -1,6 +1,7 @@
 import { UserBadgeLevel, UserRole } from "@/prisma/generated/prisma/enums";
 
 export interface ProfileProps {
+  id: string;
   name: string;
   profilePicture: string | null;
   phoneNumber?: string;

@@ -3,7 +3,7 @@
 import { checkIsAdmin } from "../checkIsAdmin";
 import { editUserSchema } from "@/lib/validations/admin/user-management/editUserSchema";
 import { prisma } from "@/lib/server/services/prisma";
-import { validateSession } from "@/actions/session/validateSession";
+import { validateSession } from "@/actions/authentication/validateSession";
 import z from "zod";
 
 const editUser = async (user: z.infer<typeof editUserSchema>) => {

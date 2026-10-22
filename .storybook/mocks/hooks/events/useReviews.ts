@@ -112,6 +112,8 @@ const fakeReview = fakeReviews[0];
 
 const useReviews = () => ({
   reviews: fakeReviews,
+  total: fakeReviews.length,
+  totalPages: 1,
   isLoading: false,
   error: null,
   averageRating: fakeReviews.reduce((accumulator, review) => accumulator + review.rating, 0) / fakeReviews.length,

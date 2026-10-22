@@ -5,7 +5,8 @@ import { createAttractionSchema } from "@/lib/validations/admin/events-managemen
 import { ImagePlus, X } from "lucide-react";
 import { masks } from "@/shared/utils/functions/masks";
 import { useAttractionContext } from "@/features/events/event/hooks/useAttractionContext";
-import { useBlockScroll, useMobileContext } from "@/shared/hooks";
+import { useBlockScroll } from "@/shared/hooks/useBlockScroll";
+import { useMobileContext } from "@/shared/hooks/useMobileContext";
 import { useRef, useState } from "react";
 import z from "zod";
 
@@ -295,7 +296,10 @@ const EditAttractionModal = ({ isOpen, onClose }: EditAttractionModalProps) => {
                 className="px-4 py-2 text-sm text-white/60 font-semibold rounded-lg cursor-pointer hover:text-white transition-colors"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={handleResetForm}
+                onClick={() => {
+                  handleResetForm();
+                  onClose();
+                }}
               >
                 Cancelar
               </motion.button>

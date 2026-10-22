@@ -1,11 +1,11 @@
 "use client";
 
 import { CartItemCard } from "./CartItemCard";
-import { createStripeCheckoutSession } from "@/actions/payments/createStripeCheckoutSession";
 import { GiShoppingCart } from "react-icons/gi";
 import { motion } from "motion/react";
 import { useCartContext } from "../hooks/useCartContext";
 import { useEffect, useState } from "react";
+import { usePayNow } from "../hooks/usePayNow";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import type { PaymentMethod } from "@/prisma/generated/prisma/enums";
@@ -32,6 +32,7 @@ const Checkout = () => {
     serviceFee,
     totalPrice,
   } = useCartContext();
+  const { createStripeCheckoutSessionMutation } = usePayNow();
 
   /* - Estados do pagamento - */
 
@@ -75,7 +76,7 @@ const Checkout = () => {
         return;
       }
 
-      const paymentUrl = await createStripeCheckoutSession({
+      const paymentUrl = await createStripeCheckoutSessionMutation({
         ticketPaymentId: checkout.ticketPaymentId,
         voucherPaymentId: checkout.voucherPaymentId,
       });

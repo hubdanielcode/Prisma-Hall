@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 import type Stripe from "stripe";
 
 const runtime = "nodejs";
-
 const maxSessionsToCheck = 500;
 
 // Se o cliente abriu uma sessão nova para o mesmo pedido, o fato de a sessão antiga expirar não pode cancelar o pedido

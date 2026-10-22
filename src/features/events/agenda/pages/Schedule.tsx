@@ -4,7 +4,7 @@ import { Calendar, List } from "lucide-react";
 import { CalendarGrid } from "../components/CalendarGrid";
 import { CalendarHeader } from "../components/CalendarHeader";
 import { EventListItem } from "../../event/components/EventListItem";
-import { EventModal } from "../../event/components/EventModal";
+import { EventDetailsModal } from "../../event/components/EventDetailsModal";
 import { EventProps } from "../../event/types/event";
 import { eventTags } from "../../event/utils/eventTags";
 import { formattedDate } from "@/shared/utils/functions/dates";
@@ -18,7 +18,7 @@ const Schedule = () => {
   /* - Puxando do context - */
 
   const { selectedYear, selectedMonth, selectedDay } = useCalendarContext();
-  const { events } = useEvents();
+  const { events: fetchedEvents, isLoading } = useEvents();
 
   /* - Estados de vizualização - */
 
@@ -31,10 +31,11 @@ const Schedule = () => {
   /* - Estados do modal - */
 
   const [selectedEvent, setSelectedEvent] = useState<EventProps | null>(null);
-  const [isEventModalOpen, setIsEventModalOpen] = useState<boolean>(false);
+  const [isEventDetailsModalOpen, setIsEventDetailsModalOpen] = useState<boolean>(false);
 
   /* - Definições - */
 
+  const events = fetchedEvents ?? [];
   const filterList = [{ id: "all_tags", title: "Todos" }, ...eventTags];
 
   /* - Funções - */
@@ -47,25 +48,13 @@ const Schedule = () => {
 
   // 2. Filtra os eventos com base no dia exato (DD/MMMM/AA)
 
-  if (!events) {
-    return false;
-  }
-
   const filteredEvents = events.filter((event) => {
     const { dayNumber, month, year } = formattedDate(event.startsAt);
 
     return dayNumber === selectedDay && month === selectedMonth.toLowerCase() && year === selectedYear;
   });
 
-  // 3. Mostra os eventos do dia selecionado
-
-  const todayEvents = filteredEvents.filter((event) => {
-    const { dayNumber, month, year } = formattedDate(event.startsAt);
-
-    return dayNumber === selectedDay && month === selectedMonth.toLowerCase() && year === selectedYear;
-  });
-
-  // 4. Mostra os eventos do mês selecionado na visão de lista, filtrados por categoria
+  // 3. Mostra os eventos do mês selecionado na visão de lista, filtrados por categoria
 
   const monthEvents = events
     .filter((event) => {
@@ -182,15 +171,17 @@ const Schedule = () => {
 
             {/* - Eventos do dia selecionado - */}
 
-            {todayEvents.length > 0 ? (
+            {isLoading ? (
+              <span className="text-white/40 text-sm">Carregando eventos...</span>
+            ) : filteredEvents.length > 0 ? (
               <div className="flex flex-col w-full max-w-5xl gap-2">
-                {todayEvents.map((event, index) => (
+                {filteredEvents.map((event, index) => (
                   <EventListItem
                     key={index}
                     event={event}
                     onSelect={() => {
                       setSelectedEvent(event);
-                      setIsEventModalOpen(true);
+                      setIsEventDetailsModalOpen(true);
                     }}
                   />
                 ))}
@@ -205,14 +196,16 @@ const Schedule = () => {
 
         {viewState === "List" && (
           <div className="flex flex-col w-full max-w-5xl gap-2">
-            {monthEvents.length > 0 ? (
+            {isLoading ? (
+              <span className="text-white/40 text-sm text-center">Carregando eventos...</span>
+            ) : monthEvents.length > 0 ? (
               monthEvents.map((event, index) => (
                 <EventListItem
                   key={index}
                   event={event}
                   onSelect={() => {
                     setSelectedEvent(event);
-                    setIsEventModalOpen(true);
+                    setIsEventDetailsModalOpen(true);
                   }}
                 />
               ))
@@ -224,12 +217,12 @@ const Schedule = () => {
 
         {/* - Modal do evento selecionado - */}
 
-        <EventModal
+        <EventDetailsModal
           event={selectedEvent}
-          isOpen={isEventModalOpen}
+          isOpen={isEventDetailsModalOpen}
           onClose={() => {
             setSelectedEvent(null);
-            setIsEventModalOpen(false);
+            setIsEventDetailsModalOpen(false);
           }}
         />
       </div>

@@ -3,7 +3,7 @@
 import { expireStripeCheckoutSessions, notifyUsersByEmail, prisma, recalculateUserBadges, refundStripePayment, retryOnFailure } from "@/lib/server";
 import { isTicketCancellationOpen } from "@/shared/utils/functions/cancellationPolicy";
 import { orderIdSchema } from "@/lib/validations/users/orderIdSchema";
-import { validateSession } from "../../session/validateSession";
+import { validateSession } from "../../authentication/validateSession";
 
 const cancelTicketOrder = async (orderId: string) => {
   const validSession = await validateSession();

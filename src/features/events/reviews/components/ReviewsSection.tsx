@@ -10,16 +10,20 @@ import { useReviews } from "../hooks/useReviews";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+const initialReviewsPerPage = 6;
+
+const maxReviewsPerPage = 50;
+
 const ReviewsSection = () => {
-  /* - Puxando os reviews - */
-
-  const { reviews, isLoading, error, averageRating } = useReviews();
-  const { events } = useEvents();
-  const { isAuthenticated } = useAuthenticationContext();
-
   /* - Estados das avaliações - */
 
   const [showMore, setShowMore] = useState<boolean>(false);
+
+  /* - Puxando os reviews - */
+
+  const { reviews, total, isLoading, error, averageRating } = useReviews(1, showMore ? maxReviewsPerPage : initialReviewsPerPage);
+  const { events } = useEvents();
+  const { isAuthenticated } = useAuthenticationContext();
 
   /* - Estados do modal - */
 
@@ -31,7 +35,7 @@ const ReviewsSection = () => {
 
   const reviewBadges = [
     { label: "Avaliação Média", value: averageRating.toFixed(1), icon: Star },
-    { label: "Total de Avaliações", value: `${reviews.length}`, icon: Quote },
+    { label: "Total de Avaliações", value: `${total}`, icon: Quote },
     { label: "Eventos Realizados", value: `${(events ?? []).length}`, icon: Star },
     { label: "Clientes Satisfeitos", value: "98%", icon: Users },
   ];
@@ -136,16 +140,13 @@ const ReviewsSection = () => {
         <p className="text-white/60 text-center p-12">Ainda não há avaliações. Seja o primeiro a avaliar!</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 h-fit gap-4">
-          {[...reviews]
-            .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-            .slice(0, showMore ? reviews.length : 6)
-            .map((review, index) => (
-              <ReviewCard
-                key={review.id}
-                review={review}
-                index={index}
-              />
-            ))}
+          {reviews.map((review, index) => (
+            <ReviewCard
+              key={review.id}
+              review={review}
+              index={index}
+            />
+          ))}
         </div>
       )}
 

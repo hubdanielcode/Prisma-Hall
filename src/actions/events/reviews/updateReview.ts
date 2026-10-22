@@ -1,8 +1,9 @@
 "use server";
 
-import { prisma, recalculateUserBadges } from "@/lib/server";
+import { isReviewEditOpen } from "@/shared/utils/functions/reviewEditPolicy";
+import { prisma, recalculateEventRating, recalculateUserBadges } from "@/lib/server";
 import { updateReviewSchema } from "@/lib/validations/events/updateReviewSchema";
-import { validateSession } from "../../session/validateSession";
+import { validateSession } from "../../authentication/validateSession";
 import z from "zod";
 
 const updateReview = async (review: z.infer<typeof updateReviewSchema>) => {
@@ -25,6 +26,12 @@ const updateReview = async (review: z.infer<typeof updateReviewSchema>) => {
       return false;
     }
 
+    /* - A avaliação só pode ser editada nos primeiros minutos depois de criada (excluir continua liberado) - */
+
+    if (!isReviewEditOpen(existingReview.createdAt)) {
+      return "edit_window_expired";
+    }
+
     const editedReview = await prisma.review.update({
       where: { id: existingReview.id },
       data: {
@@ -40,6 +47,10 @@ const updateReview = async (review: z.infer<typeof updateReviewSchema>) => {
     /* - Editar o comentário pode fazer o usuário ganhar ou perder o selo de verificado - */
 
     const recalculatedBadges = await recalculateUserBadges(validSession.user.id);
+
+    /* - Editar a nota muda a média do evento - */
+
+    await recalculateEventRating(editedReview.eventId);
 
     return {
       id: editedReview.id,

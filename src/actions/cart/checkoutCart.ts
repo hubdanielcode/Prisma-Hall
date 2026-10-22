@@ -4,7 +4,7 @@ import { paymentMethodSchema } from "@/lib/validations/cart/paymentMethodSchema"
 import { getEventStatus, getResend, prisma } from "@/lib/server";
 import { OrderConfirmationEmail } from "@/shared/emails/OrderConfirmationEmail";
 import { serviceFee } from "@/features/cart/utils/serviceFee";
-import { validateSession } from "../session/validateSession";
+import { validateSession } from "../authentication/validateSession";
 import React from "react";
 import type { ItemType } from "@/prisma/generated/prisma/enums";
 import z from "zod";

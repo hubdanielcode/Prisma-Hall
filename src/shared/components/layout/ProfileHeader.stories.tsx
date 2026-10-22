@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { AuthenticationProvider } from "@/features/authentication/context/AuthenticationContext";
+import { CartProvider } from "@/features/cart/context/CartContext";
+import { ProfileProvider } from "@/features/users/profiles/context/ProfileContext";
+import { QueryProvider } from "@/shared/providers/QueryProvider";
 import { MobileProvider } from "../../context/MobileContext";
 import { ProfileHeader } from "./ProfileHeader";
-import { ProfileProvider } from "@/features/users/profiles/context/ProfileContext";
-import { QueryProvider } from "../../providers/QueryProvider";
 
 export default {
   title: "Layouts/Protected/Profile",
@@ -15,21 +17,25 @@ export default {
   },
 };
 
-const ProfilePageHeader = () => {
+const Profile = () => {
+  const [activeTab, setActiveTab] = useState<string>("tickets");
+
   return (
     <QueryProvider>
       <AuthenticationProvider>
-        <MobileProvider>
-          <ProfileProvider>
-            <ProfileHeader
-              activeTab=""
-              setActiveTab={() => {}}
-            />
-          </ProfileProvider>
-        </MobileProvider>
+        <CartProvider>
+          <MobileProvider>
+            <ProfileProvider>
+              <ProfileHeader
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+              />
+            </ProfileProvider>
+          </MobileProvider>
+        </CartProvider>
       </AuthenticationProvider>
     </QueryProvider>
   );
 };
 
-export { ProfilePageHeader as "Profile Page Header" };
+export { Profile as "Profile Header" };

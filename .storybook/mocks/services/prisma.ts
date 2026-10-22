@@ -36,4 +36,28 @@ const prisma = new Proxy(
   },
 );
 
-export { prisma };
+/* - Mockando o erro do runtime do Prisma (usado nas actions: instanceof PrismaClientKnownRequestError) - */
+
+class PrismaClientKnownRequestError extends Error {
+  code: string;
+  meta?: Record<string, unknown>;
+
+  constructor(message: string, options?: { code?: string; meta?: Record<string, unknown> }) {
+    super(message);
+    this.name = "PrismaClientKnownRequestError";
+    this.code = options?.code ?? "P0000";
+    this.meta = options?.meta;
+  }
+}
+
+/* - Mock do "next/server" (requestPasswordReset usa "after"; o módulo real usa __dirname e quebra no navegador) - */
+
+const after = (_callback: unknown) => {};
+
+class NextResponse extends Response {
+  static json(body: unknown, init?: ResponseInit) {
+    return new Response(JSON.stringify(body), init);
+  }
+}
+
+export { prisma, PrismaClientKnownRequestError, after, NextResponse };

@@ -2,6 +2,7 @@ import { fn } from "storybook/test";
 import type { ProfileProps } from "@/features/authentication/types/profile";
 
 const fakeProfile: ProfileProps = {
+  id: "Qualquer-id-fake",
   name: "Maria Aparecida da Silva Sauro",
   profilePicture: null,
   phoneNumber: "(21) 98765-4321",

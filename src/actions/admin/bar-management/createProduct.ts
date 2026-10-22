@@ -4,7 +4,7 @@ import { checkIsAdmin } from "../checkIsAdmin";
 import { createProductSchema } from "@/lib/validations/admin/bar-management/createProductSchema";
 import { del, put } from "@vercel/blob";
 import { prisma } from "@/lib/server/services/prisma";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
+import { PrismaClientKnownRequestError } from "@/prisma/generated/prisma/internal/prismaNamespace";
 import z from "zod";
 
 const createProduct = async (product: z.infer<typeof createProductSchema>) => {

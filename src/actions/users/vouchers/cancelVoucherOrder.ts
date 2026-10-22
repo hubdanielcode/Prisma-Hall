@@ -2,7 +2,7 @@
 
 import { expireStripeCheckoutSessions, notifyUsersByEmail, prisma, refundStripePayment, retryOnFailure } from "@/lib/server";
 import { orderIdSchema } from "@/lib/validations/users/orderIdSchema";
-import { validateSession } from "../../session/validateSession";
+import { validateSession } from "../../authentication/validateSession";
 
 const cancelVoucherOrder = async (orderId: string) => {
   const validSession = await validateSession();

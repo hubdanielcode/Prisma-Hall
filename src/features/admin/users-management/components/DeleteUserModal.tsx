@@ -5,8 +5,9 @@ import { roleBadgeLabels, roleBadgeStyles } from "@/shared/utils/constants/roleB
 import { useMobileContext } from "@/shared/hooks/useMobileContext";
 import { UserAvatar } from "./UserAvatar";
 import { useState } from "react";
-import { useUserContext, UserProps } from "@/features/users/user";
+import { useUserContext } from "@/features/users/user/hooks/useUserContext";
 import { X } from "lucide-react";
+import type { UserProps } from "@/features/users/user/types/user";
 
 interface DeleteUserModalProps {
   isOpen: boolean;
