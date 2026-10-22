@@ -42,6 +42,11 @@ const config: StorybookConfig = {
         // 2. Authentication
 
         {
+          find: /^.*\/useAccountValidation$/,
+          replacement: path.resolve(dirname, "./mocks/hooks/authentication/useAccountValidation.ts"),
+        },
+
+        {
           find: /^.*\/usePasswordReset$/,
           replacement: path.resolve(dirname, "./mocks/hooks/authentication/usePasswordReset.ts"),
         },

@@ -33,17 +33,19 @@ model RateLimit {
 }
 
 model User {
-  id             String         @id @default(uuid())
-  name           String
-  email          String         @unique
-  password       String
-  role           UserRole       @default(user)
-  verifiedBadge  Boolean        @default(false) @map("verified_user")
-  frequentUser   UserBadgeLevel @default(none) @map("frequent_user")
-  oldUser        UserBadgeLevel @default(none) @map("old_user")
-  token          String?        @unique
-  tokenExpiresAt DateTime?      @map("token_expires_at")
-  profilePicture String?
+  id                       String         @id @default(uuid())
+  name                     String
+  email                    String         @unique
+  password                 String
+  role                     UserRole       @default(user)
+  verifiedBadge            Boolean        @default(false) @map("verified_user")
+  frequentUser             UserBadgeLevel @default(none) @map("frequent_user")
+  oldUser                  UserBadgeLevel @default(none) @map("old_user")
+  token                    String?        @unique
+  tokenExpiresAt           DateTime?      @map("token_expires_at")
+  validationToken          String?        @unique @map("validation_token")
+  validationTokenExpiresAt DateTime?      @map("validation_token_expires_at")
+  profilePicture           String?
 
   createdAt   DateTime  @default(now()) @map("created_at")
   validatedAt DateTime? @map("validated_at")

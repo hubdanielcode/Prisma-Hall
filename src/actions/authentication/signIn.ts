@@ -55,6 +55,12 @@ const signIn = async ({ typedEmail, typedPassword, rememberMe }: z.infer<typeof 
     return false;
   }
 
+  /* - Conta sem validação não recebe sessão. Isso só é dito depois de a senha estar correta, então não revela nada para quem não é o dono da conta - */
+
+  if (!validUser.validatedAt) {
+    return "account_not_validated";
+  }
+
   try {
     const cookieStore = await cookies();
     const validSessionCookie = cookieStore.get("validSession");

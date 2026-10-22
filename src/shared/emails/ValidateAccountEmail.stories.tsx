@@ -1,16 +1,16 @@
 import { render } from "@react-email/components";
 import { useEffect, useState } from "react";
-import { VlidateAccountEmail } from "./ValidateAccountEmail";
+import { ValidateAccountEmail } from "./ValidateAccountEmail";
 
 export default {
   title: "Components/Emails/Templates",
-  component: VlidateAccountEmail,
+  component: ValidateAccountEmail,
   parameters: {
     layout: "fullscreen",
   },
 };
 
-type ValidateAccountEmailProps = React.ComponentProps<typeof VlidateAccountEmail>;
+type ValidateAccountEmailProps = React.ComponentProps<typeof ValidateAccountEmail>;
 
 /* - Renderizando o email em HTML, que é o que chega na caixa de entrada - */
 
@@ -20,7 +20,7 @@ const ValidateAccountEmailTemplate = ({ name, validationLink }: ValidateAccountE
   useEffect(() => {
     const generateHtml = async () => {
       const result = await render(
-        <VlidateAccountEmail
+        <ValidateAccountEmail
           name={name}
           validationLink={validationLink}
         />,

@@ -1,6 +1,7 @@
 /* - Components - */
 
 export { AuthenticationScreenShell } from "./components/AuthenticationScreenShell";
+export { ResendValidationButton } from "./components/ResendValidationButton";
 
 /* - Context - */
 
@@ -8,6 +9,7 @@ export { AuthenticationContext, AuthenticationProvider } from "./context/Authent
 
 /* - Hooks - */
 
+export { useAccountValidation } from "./hooks/useAccountValidation";
 export { useAuthenticationContext } from "./hooks/useAuthenticationContext";
 export { usePasswordReset } from "./hooks/usePasswordReset";
 export { useSession } from "./hooks/useSession";
@@ -17,6 +19,7 @@ export { useSession } from "./hooks/useSession";
 export { Authentication } from "./pages/Authentication";
 export { Login } from "./pages/Login";
 export { PasswordReset } from "./pages/PasswordReset";
+export { ValidateAccount } from "./pages/ValidateAccount";
 
 /* - Types - */
 

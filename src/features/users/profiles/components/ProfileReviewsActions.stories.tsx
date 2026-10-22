@@ -3,7 +3,7 @@ import { fn } from "storybook/test";
 import { ProfileReviewsActions } from "./ProfileReviewsActions";
 
 export default {
-  title: "Layouts/Protected/Profile/Sections",
+  title: "Layouts/Protected/Profile/Actions",
   component: ProfileReviewsActions,
   parameters: {
     layout: "fullscreen",

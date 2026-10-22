@@ -50,6 +50,17 @@ const recoverPasswordShell = () => {
   );
 };
 
+/* - Simulando o componente de validação de conta - */
+
+const validateAccountShell = () => {
+  return (
+    <AuthenticationScreenShell image="/images/ph-mezanino.png">
+      <ExempleCard title="Validar Conta" />
+    </AuthenticationScreenShell>
+  );
+};
+
 export { signUpShell as "Authentication Screen Shell" };
 export { signInShell as "Login Screen Shell" };
 export { recoverPasswordShell as "Recover Password Screen Shell" };
+export { validateAccountShell as "Validate Account Screen Shell" };

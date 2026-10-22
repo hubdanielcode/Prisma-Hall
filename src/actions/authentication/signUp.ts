@@ -1,7 +1,7 @@
 "use server";
 
-import { checkRateLimit, hash } from "@/lib/server";
-import { cookies } from "next/headers";
+import { after } from "next/server";
+import { checkRateLimit, hash, sendValidationEmail } from "@/lib/server";
 import { prisma } from "@/lib/server/services/prisma";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import { signUpSchema } from "@/lib/validations/authentication/signUpSchema";
@@ -21,48 +21,37 @@ const signUp = async (user: z.infer<typeof signUpSchema>) => {
   }
 
   const validPassword = parsedSignUpUser.data.password;
-  const expiresAt = new Date(Date.now() + 60 * 60 * 2 * 1000);
 
   try {
     const hashedUserPassword = await hash(validPassword, 10);
-    const { newUser, newSession } = await prisma.$transaction(async (transaction) => {
-      /* - Criando o usuário - */
 
-      const newlyCreatedUser = await transaction.user.create({
-        data: {
-          name: parsedSignUpUser.data.name,
-          email: parsedSignUpUser.data.email,
-          password: hashedUserPassword,
-        },
-      });
+    /* - Criando o usuário. Não existe sessão nem cookie aqui: o usuário só consegue entrar depois de validar o e-mail - */
 
-      /* - Criando a sessão - */
-
-      const newlyCreatedSession = await transaction.session.create({
-        data: {
-          userId: newlyCreatedUser.id,
-          expiresAt: expiresAt,
-        },
-      });
-
-      return { newUser: newlyCreatedUser, newSession: newlyCreatedSession };
+    const newUser = await prisma.user.create({
+      data: {
+        name: parsedSignUpUser.data.name,
+        email: parsedSignUpUser.data.email,
+        password: hashedUserPassword,
+      },
     });
 
-    const cookieStore = await cookies();
+    /* - O e-mail do cadastro conta como o primeiro envio nos limites do reenvio (intervalo de 60 segundos e máximo de 4 por hora) - */
 
-    cookieStore.set("validSession", newSession.id, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "lax",
-      expires: expiresAt,
+    await checkRateLimit({ action: "validation-cooldown", identifier: newUser.email, limit: 1, windowSeconds: 60, includeIp: false });
+    await checkRateLimit({ action: "validation-request", identifier: newUser.email, limit: 4, windowSeconds: 60 * 60, includeIp: false });
+
+    /* - Envia o link de validação depois da resposta. Se falhar, o usuário pede outro pelo botão de reenvio - */
+
+    after(async () => {
+      try {
+        await sendValidationEmail({ userId: newUser.id, name: newUser.name, email: newUser.email });
+      } catch (error) {
+        // O cadastro continua válido mesmo sem o e-mail. O erro só vai para o log do servidor, nunca para o usuário
+        console.error("[validation-email] signUp:", error);
+      }
     });
 
-    return {
-      id: newUser.id,
-      name: newUser.name,
-      email: newUser.email,
-      role: newUser.role,
-    };
+    return true;
   } catch (error) {
     if (error instanceof PrismaClientKnownRequestError && error.code === "P2002") {
       const errorMeta = JSON.stringify(error.meta);

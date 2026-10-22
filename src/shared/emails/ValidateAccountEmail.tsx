@@ -5,7 +5,7 @@ interface VlidateAccountEmailProps {
   validationLink: string;
 }
 
-const VlidateAccountEmail = ({ name, validationLink }: VlidateAccountEmailProps) => {
+const ValidateAccountEmail = ({ name, validationLink }: VlidateAccountEmailProps) => {
   /* - Definições - */
 
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "";
@@ -58,7 +58,7 @@ const VlidateAccountEmail = ({ name, validationLink }: VlidateAccountEmailProps)
 
             {/* - Rodapé do email - */}
 
-            <Text className="text-xs text-white/40 leading-relaxed text-center mx-6 mt-0 mb-2">Este link expira em 24 horas.</Text>
+            <Text className="text-xs text-white/40 leading-relaxed text-center mx-6 mt-0 mb-2">Este link expira em 15 minutos.</Text>
 
             <Text className="text-xs text-white/40 leading-relaxed text-center mx-6 mt-0 mb-2">
               Se o botão não funcionar, copie e cole o endereço abaixo no seu navegador:
@@ -77,4 +77,4 @@ const VlidateAccountEmail = ({ name, validationLink }: VlidateAccountEmailProps)
   );
 };
 
-export { VlidateAccountEmail };
+export { ValidateAccountEmail };

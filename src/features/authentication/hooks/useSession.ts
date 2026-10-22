@@ -68,14 +68,7 @@ const useSession = () => {
 
   // 2. SignUpMutation
 
-  const { mutateAsync: signUpMutation } = useMutation({
-    mutationFn: signUpAction,
-    onSuccess: async (signUpMutationResult) => {
-      if (typeof signUpMutationResult === "object") {
-        await invalidateAllSessionQueries();
-      }
-    },
-  });
+  const { mutateAsync: signUpMutation } = useMutation({ mutationFn: signUpAction });
 
   // 3. RevokeSessionMutation
 

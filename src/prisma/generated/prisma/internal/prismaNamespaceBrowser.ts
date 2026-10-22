@@ -122,6 +122,8 @@ export const UserScalarFieldEnum = {
   oldUser: 'oldUser',
   token: 'token',
   tokenExpiresAt: 'tokenExpiresAt',
+  validationToken: 'validationToken',
+  validationTokenExpiresAt: 'validationTokenExpiresAt',
   profilePicture: 'profilePicture',
   createdAt: 'createdAt',
   validatedAt: 'validatedAt',

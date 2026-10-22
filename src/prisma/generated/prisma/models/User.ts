@@ -35,6 +35,8 @@ export type UserMinAggregateOutputType = {
   oldUser: $Enums.UserBadgeLevel | null
   token: string | null
   tokenExpiresAt: Date | null
+  validationToken: string | null
+  validationTokenExpiresAt: Date | null
   profilePicture: string | null
   createdAt: Date | null
   validatedAt: Date | null
@@ -52,6 +54,8 @@ export type UserMaxAggregateOutputType = {
   oldUser: $Enums.UserBadgeLevel | null
   token: string | null
   tokenExpiresAt: Date | null
+  validationToken: string | null
+  validationTokenExpiresAt: Date | null
   profilePicture: string | null
   createdAt: Date | null
   validatedAt: Date | null
@@ -69,6 +73,8 @@ export type UserCountAggregateOutputType = {
   oldUser: number
   token: number
   tokenExpiresAt: number
+  validationToken: number
+  validationTokenExpiresAt: number
   profilePicture: number
   createdAt: number
   validatedAt: number
@@ -88,6 +94,8 @@ export type UserMinAggregateInputType = {
   oldUser?: true
   token?: true
   tokenExpiresAt?: true
+  validationToken?: true
+  validationTokenExpiresAt?: true
   profilePicture?: true
   createdAt?: true
   validatedAt?: true
@@ -105,6 +113,8 @@ export type UserMaxAggregateInputType = {
   oldUser?: true
   token?: true
   tokenExpiresAt?: true
+  validationToken?: true
+  validationTokenExpiresAt?: true
   profilePicture?: true
   createdAt?: true
   validatedAt?: true
@@ -122,6 +132,8 @@ export type UserCountAggregateInputType = {
   oldUser?: true
   token?: true
   tokenExpiresAt?: true
+  validationToken?: true
+  validationTokenExpiresAt?: true
   profilePicture?: true
   createdAt?: true
   validatedAt?: true
@@ -212,6 +224,8 @@ export type UserGroupByOutputType = {
   oldUser: $Enums.UserBadgeLevel
   token: string | null
   tokenExpiresAt: Date | null
+  validationToken: string | null
+  validationTokenExpiresAt: Date | null
   profilePicture: string | null
   createdAt: Date
   validatedAt: Date | null
@@ -250,6 +264,8 @@ export type UserWhereInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFilter<"User"> | $Enums.UserBadgeLevel
   token?: Prisma.StringNullableFilter<"User"> | string | null
   tokenExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  validationToken?: Prisma.StringNullableFilter<"User"> | string | null
+  validationTokenExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   profilePicture?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   validatedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
@@ -283,6 +299,8 @@ export type UserOrderByWithRelationInput = {
   oldUser?: Prisma.SortOrder
   token?: Prisma.SortOrderInput | Prisma.SortOrder
   tokenExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  validationToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  validationTokenExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   profilePicture?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   validatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -309,6 +327,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   email?: string
   token?: string
+  validationToken?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
@@ -319,6 +338,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   frequentUser?: Prisma.EnumUserBadgeLevelFilter<"User"> | $Enums.UserBadgeLevel
   oldUser?: Prisma.EnumUserBadgeLevelFilter<"User"> | $Enums.UserBadgeLevel
   tokenExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  validationTokenExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   profilePicture?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   validatedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
@@ -339,7 +359,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   notifications?: Prisma.NotificationListRelationFilter
   notificationPreferences?: Prisma.XOR<Prisma.NotificationPreferenceNullableScalarRelationFilter, Prisma.NotificationPreferenceWhereInput> | null
   newsletters?: Prisma.NewsletterListRelationFilter
-}, "id" | "email" | "token">
+}, "id" | "email" | "token" | "validationToken">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -352,6 +372,8 @@ export type UserOrderByWithAggregationInput = {
   oldUser?: Prisma.SortOrder
   token?: Prisma.SortOrderInput | Prisma.SortOrder
   tokenExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  validationToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  validationTokenExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   profilePicture?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   validatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -375,6 +397,8 @@ export type UserScalarWhereWithAggregatesInput = {
   oldUser?: Prisma.EnumUserBadgeLevelWithAggregatesFilter<"User"> | $Enums.UserBadgeLevel
   token?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   tokenExpiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  validationToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  validationTokenExpiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   profilePicture?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   validatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
@@ -392,6 +416,8 @@ export type UserCreateInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -425,6 +451,8 @@ export type UserUncheckedCreateInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -458,6 +486,8 @@ export type UserUpdateInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -491,6 +521,8 @@ export type UserUncheckedUpdateInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -524,6 +556,8 @@ export type UserCreateManyInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -541,6 +575,8 @@ export type UserUpdateManyMutationInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -558,6 +594,8 @@ export type UserUncheckedUpdateManyInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -580,6 +618,8 @@ export type UserCountOrderByAggregateInput = {
   oldUser?: Prisma.SortOrder
   token?: Prisma.SortOrder
   tokenExpiresAt?: Prisma.SortOrder
+  validationToken?: Prisma.SortOrder
+  validationTokenExpiresAt?: Prisma.SortOrder
   profilePicture?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   validatedAt?: Prisma.SortOrder
@@ -597,6 +637,8 @@ export type UserMaxOrderByAggregateInput = {
   oldUser?: Prisma.SortOrder
   token?: Prisma.SortOrder
   tokenExpiresAt?: Prisma.SortOrder
+  validationToken?: Prisma.SortOrder
+  validationTokenExpiresAt?: Prisma.SortOrder
   profilePicture?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   validatedAt?: Prisma.SortOrder
@@ -614,6 +656,8 @@ export type UserMinOrderByAggregateInput = {
   oldUser?: Prisma.SortOrder
   token?: Prisma.SortOrder
   tokenExpiresAt?: Prisma.SortOrder
+  validationToken?: Prisma.SortOrder
+  validationTokenExpiresAt?: Prisma.SortOrder
   profilePicture?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   validatedAt?: Prisma.SortOrder
@@ -871,6 +915,8 @@ export type UserCreateWithoutSessionsInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -903,6 +949,8 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -951,6 +999,8 @@ export type UserUpdateWithoutSessionsInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -983,6 +1033,8 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1015,6 +1067,8 @@ export type UserCreateWithoutNotificationPreferencesInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -1047,6 +1101,8 @@ export type UserUncheckedCreateWithoutNotificationPreferencesInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -1095,6 +1151,8 @@ export type UserUpdateWithoutNotificationPreferencesInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1127,6 +1185,8 @@ export type UserUncheckedUpdateWithoutNotificationPreferencesInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1159,6 +1219,8 @@ export type UserCreateWithoutNotificationsInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -1191,6 +1253,8 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -1239,6 +1303,8 @@ export type UserUpdateWithoutNotificationsInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1271,6 +1337,8 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1303,6 +1371,8 @@ export type UserCreateWithoutProfilesInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -1335,6 +1405,8 @@ export type UserUncheckedCreateWithoutProfilesInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -1383,6 +1455,8 @@ export type UserUpdateWithoutProfilesInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1415,6 +1489,8 @@ export type UserUncheckedUpdateWithoutProfilesInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1447,6 +1523,8 @@ export type UserCreateWithoutCartsInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -1479,6 +1557,8 @@ export type UserUncheckedCreateWithoutCartsInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -1527,6 +1607,8 @@ export type UserUpdateWithoutCartsInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1559,6 +1641,8 @@ export type UserUncheckedUpdateWithoutCartsInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1591,6 +1675,8 @@ export type UserCreateWithoutVouchersInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -1623,6 +1709,8 @@ export type UserUncheckedCreateWithoutVouchersInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -1671,6 +1759,8 @@ export type UserUpdateWithoutVouchersInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1703,6 +1793,8 @@ export type UserUncheckedUpdateWithoutVouchersInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1735,6 +1827,8 @@ export type UserCreateWithoutVoucherOrdersInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -1767,6 +1861,8 @@ export type UserUncheckedCreateWithoutVoucherOrdersInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -1815,6 +1911,8 @@ export type UserUpdateWithoutVoucherOrdersInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1847,6 +1945,8 @@ export type UserUncheckedUpdateWithoutVoucherOrdersInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1879,6 +1979,8 @@ export type UserCreateWithoutVoucherPaymentsInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -1911,6 +2013,8 @@ export type UserUncheckedCreateWithoutVoucherPaymentsInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -1959,6 +2063,8 @@ export type UserUpdateWithoutVoucherPaymentsInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1991,6 +2097,8 @@ export type UserUncheckedUpdateWithoutVoucherPaymentsInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2023,6 +2131,8 @@ export type UserCreateWithoutTicketsInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -2055,6 +2165,8 @@ export type UserUncheckedCreateWithoutTicketsInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -2103,6 +2215,8 @@ export type UserUpdateWithoutTicketsInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2135,6 +2249,8 @@ export type UserUncheckedUpdateWithoutTicketsInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2167,6 +2283,8 @@ export type UserCreateWithoutTicketOrdersInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -2199,6 +2317,8 @@ export type UserUncheckedCreateWithoutTicketOrdersInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -2247,6 +2367,8 @@ export type UserUpdateWithoutTicketOrdersInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2279,6 +2401,8 @@ export type UserUncheckedUpdateWithoutTicketOrdersInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2311,6 +2435,8 @@ export type UserCreateWithoutTicketPaymentsInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -2343,6 +2469,8 @@ export type UserUncheckedCreateWithoutTicketPaymentsInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -2391,6 +2519,8 @@ export type UserUpdateWithoutTicketPaymentsInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2423,6 +2553,8 @@ export type UserUncheckedUpdateWithoutTicketPaymentsInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2455,6 +2587,8 @@ export type UserCreateWithoutReviewsInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -2487,6 +2621,8 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -2535,6 +2671,8 @@ export type UserUpdateWithoutReviewsInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2567,6 +2705,8 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2599,6 +2739,8 @@ export type UserCreateWithoutGalleriesInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -2631,6 +2773,8 @@ export type UserUncheckedCreateWithoutGalleriesInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -2679,6 +2823,8 @@ export type UserUpdateWithoutGalleriesInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2711,6 +2857,8 @@ export type UserUncheckedUpdateWithoutGalleriesInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2743,6 +2891,8 @@ export type UserCreateWithoutGalleryLikesInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -2775,6 +2925,8 @@ export type UserUncheckedCreateWithoutGalleryLikesInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -2823,6 +2975,8 @@ export type UserUpdateWithoutGalleryLikesInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2855,6 +3009,8 @@ export type UserUncheckedUpdateWithoutGalleryLikesInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2887,6 +3043,8 @@ export type UserCreateWithoutFavoriteEventsInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -2919,6 +3077,8 @@ export type UserUncheckedCreateWithoutFavoriteEventsInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -2967,6 +3127,8 @@ export type UserUpdateWithoutFavoriteEventsInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2999,6 +3161,8 @@ export type UserUncheckedUpdateWithoutFavoriteEventsInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3031,6 +3195,8 @@ export type UserCreateWithoutNewslettersInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -3063,6 +3229,8 @@ export type UserUncheckedCreateWithoutNewslettersInput = {
   oldUser?: $Enums.UserBadgeLevel
   token?: string | null
   tokenExpiresAt?: Date | string | null
+  validationToken?: string | null
+  validationTokenExpiresAt?: Date | string | null
   profilePicture?: string | null
   createdAt?: Date | string
   validatedAt?: Date | string | null
@@ -3111,6 +3279,8 @@ export type UserUpdateWithoutNewslettersInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3143,6 +3313,8 @@ export type UserUncheckedUpdateWithoutNewslettersInput = {
   oldUser?: Prisma.EnumUserBadgeLevelFieldUpdateOperationsInput | $Enums.UserBadgeLevel
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3323,6 +3495,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   oldUser?: boolean
   token?: boolean
   tokenExpiresAt?: boolean
+  validationToken?: boolean
+  validationTokenExpiresAt?: boolean
   profilePicture?: boolean
   createdAt?: boolean
   validatedAt?: boolean
@@ -3357,6 +3531,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   oldUser?: boolean
   token?: boolean
   tokenExpiresAt?: boolean
+  validationToken?: boolean
+  validationTokenExpiresAt?: boolean
   profilePicture?: boolean
   createdAt?: boolean
   validatedAt?: boolean
@@ -3374,6 +3550,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   oldUser?: boolean
   token?: boolean
   tokenExpiresAt?: boolean
+  validationToken?: boolean
+  validationTokenExpiresAt?: boolean
   profilePicture?: boolean
   createdAt?: boolean
   validatedAt?: boolean
@@ -3391,13 +3569,15 @@ export type UserSelectScalar = {
   oldUser?: boolean
   token?: boolean
   tokenExpiresAt?: boolean
+  validationToken?: boolean
+  validationTokenExpiresAt?: boolean
   profilePicture?: boolean
   createdAt?: boolean
   validatedAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "verifiedBadge" | "frequentUser" | "oldUser" | "token" | "tokenExpiresAt" | "profilePicture" | "createdAt" | "validatedAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "verifiedBadge" | "frequentUser" | "oldUser" | "token" | "tokenExpiresAt" | "validationToken" | "validationTokenExpiresAt" | "profilePicture" | "createdAt" | "validatedAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   carts?: boolean | Prisma.User$cartsArgs<ExtArgs>
   favoriteEvents?: boolean | Prisma.User$favoriteEventsArgs<ExtArgs>
@@ -3451,6 +3631,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     oldUser: $Enums.UserBadgeLevel
     token: string | null
     tokenExpiresAt: Date | null
+    validationToken: string | null
+    validationTokenExpiresAt: Date | null
     profilePicture: string | null
     createdAt: Date
     validatedAt: Date | null
@@ -3904,6 +4086,8 @@ export interface UserFieldRefs {
   readonly oldUser: Prisma.FieldRef<"User", 'UserBadgeLevel'>
   readonly token: Prisma.FieldRef<"User", 'String'>
   readonly tokenExpiresAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly validationToken: Prisma.FieldRef<"User", 'String'>
+  readonly validationTokenExpiresAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly profilePicture: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly validatedAt: Prisma.FieldRef<"User", 'DateTime'>

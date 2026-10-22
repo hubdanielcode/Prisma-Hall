@@ -36,8 +36,10 @@ export { getSingleUser } from "./admin/users-management/getSingleUser";
 
 export { passwordReset } from "./authentication/passwordReset";
 export { requestPasswordReset } from "./authentication/requestPasswordReset";
+export { resendValidationEmail } from "./authentication/resendValidationEmail";
 export { signIn } from "./authentication/signIn";
 export { signUp } from "./authentication/signUp";
+export { validateAccount } from "./authentication/validateAccount";
 
 /* - Bar - */
 

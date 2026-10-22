@@ -37,10 +37,19 @@ const editUser = async (user: z.infer<typeof editUserSchema>) => {
     if (forceRevalidation) {
       /* - Se houver revalidação forçada - */
 
-      const editedUser = await prisma.user.update({
-        where: { id: parsedUser.data.userId },
-        data: { role: parsedUser.data.roles, validatedAt: null },
-      });
+      const [editedUser] = await prisma.$transaction([
+        prisma.user.update({
+          where: { id: parsedUser.data.userId },
+          data: { role: parsedUser.data.roles, validatedAt: null, validationToken: null, validationTokenExpiresAt: null },
+        }),
+
+        /* - Revogando as sessões daquele usuário, para ele ser desconectado e só voltar a entrar depois de validar o e-mail de novo - */
+
+        prisma.session.updateMany({
+          where: { userId: parsedUser.data.userId, revokedAt: null },
+          data: { revokedAt: new Date() },
+        }),
+      ]);
 
       return {
         id: editedUser.id,

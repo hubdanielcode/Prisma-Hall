@@ -1,3 +1,7 @@
+/* - Authentication - */
+
+export { createSession } from "./authentication/createSession";
+
 /* - Badges - */
 
 export { recalculateOldUserBadges, recalculateUserBadges } from "./badges/achievementBadges";
@@ -30,13 +34,10 @@ export { getResend } from "./services/resend";
 export { prisma } from "./services/prisma";
 export { stripe } from "./services/stripe";
 
-/* - Session - */
-
-export { createSession } from "./session/createSession";
-
 /* - Users - */
 
 export { makeAnonymous } from "./users/makeAnonymous";
+export { sendValidationEmail } from "./users/sendValidationEmail";
 
 /* - Utils - */
 

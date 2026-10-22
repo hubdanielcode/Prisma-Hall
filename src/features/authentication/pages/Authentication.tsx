@@ -7,6 +7,7 @@ import { CustomTextInput, CustomPasswordInput } from "@/shared/components";
 import { FaUser } from "react-icons/fa";
 import { MdAlternateEmail } from "react-icons/md";
 import { regex, masks } from "@/shared/utils";
+import { ResendValidationButton } from "../components/ResendValidationButton";
 import { useRouter } from "next/navigation";
 import { useSession } from "../hooks/useSession";
 import { useState, useRef, useEffect } from "react";
@@ -29,6 +30,7 @@ const Authentication = () => {
 
   const [signUpError, setSignUpError] = useState<string>("");
   const [signUpSuccess, setSignUpSuccess] = useState<boolean>(false);
+  const [registeredEmail, setRegisteredEmail] = useState<string>("");
 
   /* - Definições - */
 
@@ -90,6 +92,7 @@ const Authentication = () => {
     }
 
     setSignUpSuccess(true);
+    setRegisteredEmail(email);
 
     setName("");
     setEmail("");
@@ -98,22 +101,19 @@ const Authentication = () => {
     setConfirmPassword("");
   };
 
-  // 2. Redireciona para a página home depois que o usuário conseguir criar a conta
+  // 2. Esconde o aviso de sucesso depois de alguns segundos
 
   useEffect(() => {
     if (!signUpSuccess) {
       return;
     }
 
-    const timer = setTimeout(() => {
-      setSignUpSuccess(false);
-      router.replace("/");
-    }, 3500);
+    const timer = setTimeout(() => setSignUpSuccess(false), 3500);
 
     return () => {
       clearTimeout(timer);
     };
-  }, [signUpSuccess, router]);
+  }, [signUpSuccess]);
 
   // 3. Fecha o erro ao clicar fora
 
@@ -132,36 +132,90 @@ const Authentication = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  return (
-    <>
-      <AnimatePresence>
-        {signUpSuccess && (
-          <motion.div
-            className="bg-[#B8860B] border border-black rounded-lg h-20 w-72 md:w-80 p-4"
-            style={{ position: "fixed", top: 24, right: 24, zIndex: 9999 }}
-            initial={{ x: 120, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: 120, opacity: 0 }}
-          >
-            <div>
-              <div className="flex items-center text-black font-semibold mb-2">
-                <CircleCheck className="h-5 w-5 mr-2 mb-2" />
+  /* - Aviso de sucesso - */
 
-                <p className="mb-2">Conta criada com sucesso!</p>
-              </div>
+  const signUpSuccessToast = (
+    <AnimatePresence>
+      {signUpSuccess && (
+        <motion.div
+          className="bg-[#B8860B] border border-black rounded-lg w-72 md:w-80 p-4 shadow-lg shadow-black/40"
+          style={{ position: "fixed", top: 24, right: 24, zIndex: 9999 }}
+          initial={{ x: 120, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: 120, opacity: 0 }}
+        >
+          <div className="flex items-start gap-3">
+            <CircleCheck className="h-6 w-6 shrink-0 text-black" />
 
-              <div className="w-full h-1.5 bg-[#7A5A08] rounded-full overflow-hidden">
-                <motion.div
-                  className="h-full bg-black rounded-full"
-                  initial={{ width: "100%" }}
-                  animate={{ width: "0%" }}
-                  transition={{ duration: 3.5, ease: "linear" }}
+            <div className="flex flex-col">
+              <p className="text-black font-bold leading-tight">Conta criada!</p>
+
+              <p className="text-black/80 text-sm font-medium leading-snug mt-1">
+                Enviamos um link para o seu e-mail. Valide a conta para poder entrar.
+              </p>
+            </div>
+          </div>
+
+          <div className="w-full h-1.5 bg-[#7A5A08] rounded-full overflow-hidden mt-3">
+            <motion.div
+              className="h-full bg-black rounded-full"
+              initial={{ width: "100%" }}
+              animate={{ width: "0%" }}
+              transition={{ duration: 3.5, ease: "linear" }}
+            />
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+
+  /* - Depois do cadastro: pede para validar o e-mail e oferece o reenvio - */
+
+  if (registeredEmail) {
+    return (
+      <>
+        {signUpSuccessToast}
+
+        <AuthenticationScreenShell image="/images/ph-palco.png">
+          <div className="flex flex-col items-center w-full mb-14 sm:my-3">
+            <div className="bg-black/70 rounded-lg p-6 text-white w-[90%] md:w-[25%] border-2 border-[#B8860B] sm:max-h-[80vh] sm:overflow-y-auto sm:mt-auto">
+              <p className="text-white text-2xl sm:text-lg font-bold text-center">Valide o seu e-mail</p>
+
+              <p className="text-sm text-white mt-6 text-center">
+                Enviamos um link de validação para <span className="font-bold">{registeredEmail}</span>. O link expira em 15 minutos.
+              </p>
+
+              <p className="text-sm text-white/60 mt-4 text-center">Você só poderá entrar na sua conta depois de validar o e-mail.</p>
+
+              {/* - Botão de reenvio - */}
+
+              <div className="my-4">
+                <ResendValidationButton
+                  email={registeredEmail}
+                  startWithCooldown
                 />
               </div>
+
+              {/* - Link para a página de login - */}
+
+              <div className="flex justify-center items-center text-sm text-white font-semibold">
+                <span
+                  className="font-bold hover:bg-clip-text hover:text-transparent hover:bg-linear-to-br hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700 hover:underline cursor-pointer"
+                  onClick={() => router.replace("/login")}
+                >
+                  Ir para a tela de Login!
+                </span>
+              </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </AuthenticationScreenShell>
+      </>
+    );
+  }
+
+  return (
+    <>
+      {signUpSuccessToast}
 
       <AuthenticationScreenShell image="/images/ph-palco.png">
         <div className="flex flex-col items-center w-full mb-14 sm:my-3">

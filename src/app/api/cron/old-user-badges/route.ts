@@ -1,7 +1,7 @@
 import { recalculateOldUserBadges } from "@/lib/server/badges/achievementBadges";
 import { NextResponse } from "next/server";
 
-const runtime = "nodejs";
+export const runtime = "nodejs";
 
 const GET = async (request: Request) => {
   // 1. Só o cron da Vercel pode chamar essa rota. Sem a variável configurada, ninguém passa
@@ -19,4 +19,4 @@ const GET = async (request: Request) => {
   return NextResponse.json({ success: true });
 };
 
-export { GET, runtime };
+export { GET };

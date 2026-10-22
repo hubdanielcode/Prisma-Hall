@@ -4,7 +4,7 @@ import { ProfileContext } from "../context/ProfileContext";
 import { ProfileSettingsSection } from "./ProfileSettingsSection";
 
 export default {
-  title: "Layouts/Protected/Profile/Sections/Profile Information",
+  title: "Layouts/Protected/Profile/Sections",
   component: ProfileSettingsSection,
   parameters: {
     layout: "fullscreen",

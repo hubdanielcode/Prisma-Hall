@@ -5,6 +5,7 @@ import { CustomTextInput, CustomPasswordInput } from "@/shared/components";
 import { MdAlternateEmail } from "react-icons/md";
 import { motion } from "motion/react";
 import { regex, masks } from "@/shared/utils";
+import { ResendValidationButton } from "../components/ResendValidationButton";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "../hooks/useSession";
 import { useState, useRef, useEffect } from "react";
@@ -24,6 +25,7 @@ const Login = () => {
   /* - Estados de erro - */
 
   const [signInError, setSignInError] = useState<string>("");
+  const [needsAccountValidation, setNeedsAccountValidation] = useState<boolean>(false);
 
   /* - Definições - */
 
@@ -38,6 +40,8 @@ const Login = () => {
 
   const handleLoginWithAccount = async (e: React.MouseEvent) => {
     e.preventDefault();
+
+    setNeedsAccountValidation(false);
 
     if (!email.trim() || !password.trim()) {
       setSignInError("Preencha todos os campos.");
@@ -58,6 +62,12 @@ const Login = () => {
 
     if (result === "too_many_attempts") {
       setSignInError("Muitas tentativas. Tente novamente em alguns minutos.");
+      return;
+    }
+
+    if (result === "account_not_validated") {
+      setNeedsAccountValidation(true);
+      setSignInError("Valide o seu e-mail para entrar. Enviamos um link quando você criou a conta.");
       return;
     }
 
@@ -169,6 +179,14 @@ const Login = () => {
                 <p className="flex items-center justify-center h-12 rounded-xl bg-red-100 border border-red-300 text-red-700 text-sm font-semibold px-4 text-center">
                   {signInError}
                 </p>
+              )}
+
+              {/* - Reenvio do link de validação - */}
+
+              {needsAccountValidation && (
+                <div className="my-4">
+                  <ResendValidationButton email={email} />
+                </div>
               )}
             </div>
 
