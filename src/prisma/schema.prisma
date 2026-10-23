@@ -33,23 +33,26 @@ model RateLimit {
 }
 
 model User {
-  id                       String         @id @default(uuid())
-  name                     String
-  email                    String         @unique
-  password                 String
-  role                     UserRole       @default(user)
-  verifiedBadge            Boolean        @default(false) @map("verified_user")
-  frequentUser             UserBadgeLevel @default(none) @map("frequent_user")
-  oldUser                  UserBadgeLevel @default(none) @map("old_user")
-  token                    String?        @unique
-  tokenExpiresAt           DateTime?      @map("token_expires_at")
-  validationToken          String?        @unique @map("validation_token")
-  validationTokenExpiresAt DateTime?      @map("validation_token_expires_at")
-  profilePicture           String?
+  id                    String         @id @default(uuid())
+  name                  String
+  email                 String         @unique
+  password              String
+  role                  UserRole       @default(user)
+  profilePicture        String?
+  verifiedUserBadge     Boolean        @default(false) @map("verified_user_badge")
+  frequentUserBadge     UserBadgeLevel @default(none) @map("frequent_user_badge")
+  oldUserBadge          UserBadgeLevel @default(none) @map("old_user_badge")
+  needsRevalidation     Boolean        @default(false) @map("needs_revalidation")
+  token                 String?        @unique
+  validationToken       String?        @unique @map("validation_token")
+  validationBrowserHash String?        @map("validation_browser_hash")
 
-  createdAt   DateTime  @default(now()) @map("created_at")
-  validatedAt DateTime? @map("validated_at")
-  updatedAt   DateTime  @updatedAt @map("updated_at")
+  createdAt                DateTime  @default(now()) @map("created_at")
+  validatedAt              DateTime? @map("validated_at")
+  revalidatedAt            DateTime? @map("revalidated_at")
+  updatedAt                DateTime  @updatedAt @map("updated_at")
+  tokenExpiresAt           DateTime? @map("token_expires_at")
+  validationTokenExpiresAt DateTime? @map("validation_token_expires_at")
 
   carts                   Cart[]
   favoriteEvents          FavoriteEvent[]

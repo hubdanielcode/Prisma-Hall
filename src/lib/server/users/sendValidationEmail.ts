@@ -8,17 +8,18 @@ interface SendValidationEmailProps {
   userId: string;
   name: string;
   email: string;
+  validationBrowserHash?: string | null;
 }
 
-/* - Gera um token novo (que invalida o anterior), grava no banco e envia o link por e-mail. O token fica em colunas próprias, separadas das da recuperação de senha, para os dois fluxos nunca se misturarem - */
+/* - Gera um token novo (que invalida o anterior), grava no banco e envia o link por e-mail. O token fica em colunas próprias, separadas das da recuperação de senha, para os dois fluxos nunca se misturarem. O hash da amarração com o navegador (quando existe) também é trocado junto com o token, então um link novo nunca herda a amarração do anterior - */
 
-const sendValidationEmail = async ({ userId, name, email }: SendValidationEmailProps) => {
+const sendValidationEmail = async ({ userId, name, email, validationBrowserHash }: SendValidationEmailProps) => {
   const validationToken = crypto.randomUUID();
   const validationTokenExpiresAt = new Date(Date.now() + 60 * 15 * 1000);
 
   await prisma.user.update({
     where: { id: userId },
-    data: { validationToken, validationTokenExpiresAt },
+    data: { validationToken, validationTokenExpiresAt, validationBrowserHash: validationBrowserHash ?? null },
   });
 
   const validationLink = `${process.env.NEXT_PUBLIC_APP_URL}/validar-conta?token=${validationToken}`;

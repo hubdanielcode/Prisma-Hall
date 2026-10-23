@@ -40,7 +40,7 @@ const editUser = async (user: z.infer<typeof editUserSchema>) => {
       const [editedUser] = await prisma.$transaction([
         prisma.user.update({
           where: { id: parsedUser.data.userId },
-          data: { role: parsedUser.data.roles, validatedAt: null, validationToken: null, validationTokenExpiresAt: null },
+          data: { role: parsedUser.data.roles, needsRevalidation: true, validationToken: null, validationTokenExpiresAt: null },
         }),
 
         /* - Revogando as sessões daquele usuário, para ele ser desconectado e só voltar a entrar depois de validar o e-mail de novo - */
@@ -56,10 +56,10 @@ const editUser = async (user: z.infer<typeof editUserSchema>) => {
         name: editedUser.name,
         email: editedUser.email,
         role: editedUser.role,
-        verifiedBadge: editedUser.verifiedBadge,
-        frequentUser: editedUser.frequentUser,
-        oldUser: editedUser.oldUser,
-        validatedAt: editedUser.validatedAt ? editedUser.validatedAt.toISOString() : null,
+        verifiedBadge: editedUser.verifiedUserBadge,
+        frequentUser: editedUser.frequentUserBadge,
+        oldUser: editedUser.oldUserBadge,
+        validatedAt: editedUser.validatedAt && !editedUser.needsRevalidation ? editedUser.validatedAt.toISOString() : null,
 
         createdAt: editedUser.createdAt.toISOString(),
         updatedAt: editedUser.updatedAt.toISOString(),
@@ -78,10 +78,10 @@ const editUser = async (user: z.infer<typeof editUserSchema>) => {
       name: editedUser.name,
       email: editedUser.email,
       role: editedUser.role,
-      verifiedBadge: editedUser.verifiedBadge,
-      frequentUser: editedUser.frequentUser,
-      oldUser: editedUser.oldUser,
-      validatedAt: editedUser.validatedAt ? editedUser.validatedAt.toISOString() : null,
+      verifiedBadge: editedUser.verifiedUserBadge,
+      frequentUser: editedUser.frequentUserBadge,
+      oldUser: editedUser.oldUserBadge,
+      validatedAt: editedUser.validatedAt && !editedUser.needsRevalidation ? editedUser.validatedAt.toISOString() : null,
 
       createdAt: editedUser.createdAt.toISOString(),
       updatedAt: editedUser.updatedAt.toISOString(),

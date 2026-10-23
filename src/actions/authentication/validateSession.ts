@@ -50,12 +50,13 @@ const validateSession = async () => {
         email: true,
         role: true,
         validatedAt: true,
+        needsRevalidation: true,
       },
     });
 
     /* - Sessão de conta sem validação (por exemplo, depois de uma revalidação forçada pelo admin) não vale para nenhuma action - */
 
-    if (!user || !user.validatedAt) {
+    if (!user || !user.validatedAt || user.needsRevalidation) {
       return false;
     } else {
       return { session, user: { id: user.id, name: user.name, email: user.email, role: user.role } };

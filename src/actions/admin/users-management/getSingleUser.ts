@@ -25,6 +25,7 @@ const getSingleUser = async (userId: string) => {
         oldUser: true,
         profilePicture: true,
         validatedAt: true,
+        needsRevalidation: true,
         createdAt: true,
         updatedAt: true,
       },
@@ -43,7 +44,7 @@ const getSingleUser = async (userId: string) => {
       frequentUser: user.frequentUser,
       oldUser: user.oldUser,
       profilePicture: user.profilePicture,
-      validatedAt: user.validatedAt ? user.validatedAt.toISOString() : null,
+      validatedAt: user.validatedAt && !user.needsRevalidation ? user.validatedAt.toISOString() : null,
 
       createdAt: user.createdAt.toISOString(),
       updatedAt: user.updatedAt.toISOString(),

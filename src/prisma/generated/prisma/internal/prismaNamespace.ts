@@ -2057,17 +2057,20 @@ export const UserScalarFieldEnum = {
   email: 'email',
   password: 'password',
   role: 'role',
-  verifiedBadge: 'verifiedBadge',
-  frequentUser: 'frequentUser',
-  oldUser: 'oldUser',
-  token: 'token',
-  tokenExpiresAt: 'tokenExpiresAt',
-  validationToken: 'validationToken',
-  validationTokenExpiresAt: 'validationTokenExpiresAt',
   profilePicture: 'profilePicture',
+  verifiedUserBadge: 'verifiedUserBadge',
+  frequentUserBadge: 'frequentUserBadge',
+  oldUserBadge: 'oldUserBadge',
+  needsRevalidation: 'needsRevalidation',
+  token: 'token',
+  validationToken: 'validationToken',
+  validationBrowserHash: 'validationBrowserHash',
   createdAt: 'createdAt',
   validatedAt: 'validatedAt',
-  updatedAt: 'updatedAt'
+  revalidatedAt: 'revalidatedAt',
+  updatedAt: 'updatedAt',
+  tokenExpiresAt: 'tokenExpiresAt',
+  validationTokenExpiresAt: 'validationTokenExpiresAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]

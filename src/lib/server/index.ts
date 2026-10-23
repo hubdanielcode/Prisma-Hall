@@ -1,6 +1,13 @@
 /* - Authentication - */
 
 export { createSession } from "./authentication/createSession";
+export {
+  clearValidationBrowserCookie,
+  doesValidationBrowserMatch,
+  readValidationBrowserHash,
+  renewValidationBrowser,
+  startValidationBrowser,
+} from "./authentication/validationBrowser";
 
 /* - Badges - */
 

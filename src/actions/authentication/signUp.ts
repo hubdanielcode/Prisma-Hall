@@ -1,7 +1,7 @@
 "use server";
 
 import { after } from "next/server";
-import { checkRateLimit, hash, sendValidationEmail } from "@/lib/server";
+import { checkRateLimit, hash, sendValidationEmail, startValidationBrowser } from "@/lib/server";
 import { prisma } from "@/lib/server/services/prisma";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import { signUpSchema } from "@/lib/validations/authentication/signUpSchema";
@@ -40,11 +40,21 @@ const signUp = async (user: z.infer<typeof signUpSchema>) => {
     await checkRateLimit({ action: "validation-cooldown", identifier: newUser.email, limit: 1, windowSeconds: 60, includeIp: false });
     await checkRateLimit({ action: "validation-request", identifier: newUser.email, limit: 4, windowSeconds: 60 * 60, includeIp: false });
 
+    /* - Amarra o link de validação a este navegador. Se o cookie falhar, o cadastro continua válido e o link só valida a conta (o usuário entra com a senha) - */
+
+    let validationBrowserHash: string | null = null;
+
+    try {
+      validationBrowserHash = await startValidationBrowser();
+    } catch {
+      validationBrowserHash = null;
+    }
+
     /* - Envia o link de validação depois da resposta. Se falhar, o usuário pede outro pelo botão de reenvio - */
 
     after(async () => {
       try {
-        await sendValidationEmail({ userId: newUser.id, name: newUser.name, email: newUser.email });
+        await sendValidationEmail({ userId: newUser.id, name: newUser.name, email: newUser.email, validationBrowserHash });
       } catch (error) {
         // O cadastro continua válido mesmo sem o e-mail. O erro só vai para o log do servidor, nunca para o usuário
         console.error("[validation-email] signUp:", error);

@@ -57,7 +57,7 @@ const signIn = async ({ typedEmail, typedPassword, rememberMe }: z.infer<typeof 
 
   /* - Conta sem validação não recebe sessão. Isso só é dito depois de a senha estar correta, então não revela nada para quem não é o dono da conta - */
 
-  if (!validUser.validatedAt) {
+  if (!validUser.validatedAt || validUser.needsRevalidation) {
     return "account_not_validated";
   }
 

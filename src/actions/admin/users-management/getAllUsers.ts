@@ -37,8 +37,8 @@ const getAllUsers = async (allUsers: z.infer<typeof getAllUsersSchema>) => {
           }
         : {}),
       ...(selectedRole !== "all_roles" ? { role: selectedRole } : {}),
-      ...(selectedStatus === "validated" ? { validatedAt: { not: null } } : {}),
-      ...(selectedStatus === "not_validated" ? { validatedAt: null } : {}),
+      ...(selectedStatus === "validated" ? { validatedAt: { not: null }, needsRevalidation: false } : {}),
+      ...(selectedStatus === "not_validated" ? { NOT: { validatedAt: { not: null }, needsRevalidation: false } } : {}),
     };
 
     /* - Select restrito: password, token e tokenExpiresAt nunca saem do banco - */
@@ -57,6 +57,7 @@ const getAllUsers = async (allUsers: z.infer<typeof getAllUsersSchema>) => {
           oldUser: true,
           profilePicture: true,
           validatedAt: true,
+          needsRevalidation: true,
           createdAt: true,
           updatedAt: true,
         },
@@ -76,7 +77,7 @@ const getAllUsers = async (allUsers: z.infer<typeof getAllUsersSchema>) => {
         frequentUser: user.frequentUser,
         oldUser: user.oldUser,
         profilePicture: user.profilePicture,
-        validatedAt: user.validatedAt ? user.validatedAt.toISOString() : null,
+        validatedAt: user.validatedAt && !user.needsRevalidation ? user.validatedAt.toISOString() : null,
 
         createdAt: user.createdAt.toISOString(),
         updatedAt: user.updatedAt.toISOString(),

@@ -1,7 +1,7 @@
 "use server";
 
 import { after } from "next/server";
-import { checkRateLimit, prisma, sendValidationEmail } from "@/lib/server";
+import { checkRateLimit, prisma, renewValidationBrowser, sendValidationEmail } from "@/lib/server";
 import { resendValidationEmailSchema } from "@/lib/validations/authentication/resendValidationEmailSchema";
 
 const resendValidationEmail = async (email: string) => {
@@ -44,14 +44,18 @@ const resendValidationEmail = async (email: string) => {
     return "too_many_attempts";
   }
 
+  /* - Se este navegador é o que fez o cadastro, o link novo continua amarrado a ele. Isso depende só do cookie, nunca de o e-mail existir, então a resposta continua igual para qualquer e-mail - */
+
+  const validationBrowserHash = await renewValidationBrowser().catch(() => null);
+
   const user = await prisma.user.findUnique({ where: { email: validEmail.data } });
 
   /* - Daqui em diante a resposta é sempre true, exista o e-mail ou não, e a conta já esteja validada ou não. O trabalho de verdade (token + envio) roda depois da resposta, para que nem o resultado nem o tempo de resposta entreguem se o e-mail existe - */
 
-  if (user && !user.validatedAt) {
+  if (user && (!user.validatedAt || user.needsRevalidation)) {
     after(async () => {
       try {
-        await sendValidationEmail({ userId: user.id, name: user.name, email: user.email });
+        await sendValidationEmail({ userId: user.id, name: user.name, email: user.email, validationBrowserHash });
       } catch (error) {
         // O usuário não pode saber se o e-mail existe, então o erro só vai para o log do servidor
         console.error("[validation-email] resend:", error);
