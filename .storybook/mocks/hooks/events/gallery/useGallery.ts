@@ -113,6 +113,9 @@ const useGallery = () => ({
   isLoading: false,
   error: null,
   likePictureMutation: fn(async (pictureId: string) => ({ pictureId, liked: true })),
+  createPictureMutation: fn(async (_picture: unknown) => true as const),
+  editPictureMutation: fn(async (_picture: unknown) => true as const),
+  deletePictureMutation: fn(async (_pictureId: string) => true as const),
 });
 
 export { useGallery, fakePictures };

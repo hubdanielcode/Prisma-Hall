@@ -1,29 +1,39 @@
 "use client";
 
+import { CreateGalleryPictureModal, DeleteGalleryPictureModal, EditGalleryPictureModal } from "@/features/admin";
 import { eventTags } from "../../event/utils/eventTags";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { formattedDateToString } from "@/shared/utils/functions/dates";
-import { Image } from "lucide-react";
+import { Image, ImagePlus, Pencil, Trash2 } from "lucide-react";
 import { motion } from "motion/react";
 import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
 import { useGallery } from "../hooks/useGallery";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import type { GalleryPictureProps } from "../types/galleryPicture";
 
 const GallerySection = () => {
   /* - Puxando do context - */
 
   const { pictures, isLoading, error, likePictureMutation } = useGallery();
-  const { isAuthenticated } = useAuthenticationContext();
+  const { isAuthenticated, user } = useAuthenticationContext();
 
   /* - Estados de categoria - */
 
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [showMore, setShowMore] = useState<boolean>(false);
 
+  /* - Estados dos modais do admin - */
+
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState<boolean>(false);
+  const [pictureBeingEdited, setPictureBeingEdited] = useState<GalleryPictureProps | null>(null);
+  const [pictureBeingDeleted, setPictureBeingDeleted] = useState<GalleryPictureProps | null>(null);
+
   /* - Definições - */
 
   const router = useRouter();
+
+  const isAdmin = user?.role === "admin";
 
   const categories = [{ id: "all", name: "Todos" }, ...eventTags.map((tag) => ({ id: tag.id, name: tag.title }))];
 
@@ -98,6 +108,23 @@ const GallerySection = () => {
         ))}
       </div>
 
+      {/* - Botão de enviar foto (somente admin) - */}
+
+      {isAdmin && (
+        <div className="flex justify-center w-full pb-6">
+          <motion.button
+            className="flex justify-center items-center w-fit px-4 py-2 font-semibold bg-[#3D2B0A] hover:bg-[#4A350D] border border-[#B8860B] rounded-lg cursor-pointer"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setIsCreateModalOpen(true)}
+          >
+            <ImagePlus className="w-5 h-5 mr-2 text-[#B8860B]" />
+
+            <span className="text-[#B8860B]">Enviar Foto</span>
+          </motion.button>
+        </div>
+      )}
+
       {/* - Estados de carregamento, erro e lista vazia - */}
 
       {isLoading && !error && <p className="text-white/60 text-center p-12">Carregando fotos...</p>}
@@ -122,6 +149,30 @@ const GallerySection = () => {
                 src={photo.image}
                 alt={photo.title}
               />
+
+              {/* - Editar e excluir a foto (somente admin) - */}
+
+              {isAdmin && (
+                <div className="absolute top-3 right-3 flex gap-2">
+                  <motion.button
+                    className="flex justify-center items-center h-9 w-9 bg-black/70 border border-[#B8860B] rounded-lg cursor-pointer"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setPictureBeingEdited(photo)}
+                  >
+                    <Pencil className="h-4 w-4 text-[#B8860B]" />
+                  </motion.button>
+
+                  <motion.button
+                    className="flex justify-center items-center h-9 w-9 bg-black/70 border border-[#DF1212] rounded-lg cursor-pointer"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setPictureBeingDeleted(photo)}
+                  >
+                    <Trash2 className="h-4 w-4 text-[#FF9595]" />
+                  </motion.button>
+                </div>
+              )}
 
               <div className="flex items-center w-full p-5">
                 <div className="flex flex-col">
@@ -172,6 +223,34 @@ const GallerySection = () => {
           <span className="text-white">{showMore ? "Mostrar Menos" : "Carregar Mais Fotos"}</span>
         </motion.button>
       </div>
+
+      {/* - Modais do admin - */}
+
+      {isAdmin && (
+        <>
+          <CreateGalleryPictureModal
+            isOpen={isCreateModalOpen}
+            onClose={() => setIsCreateModalOpen(false)}
+          />
+
+          {pictureBeingEdited && (
+            <EditGalleryPictureModal
+              key={pictureBeingEdited.id}
+              isOpen={true}
+              onClose={() => setPictureBeingEdited(null)}
+              picture={pictureBeingEdited}
+            />
+          )}
+
+          {pictureBeingDeleted && (
+            <DeleteGalleryPictureModal
+              isOpen={true}
+              onClose={() => setPictureBeingDeleted(null)}
+              picture={pictureBeingDeleted}
+            />
+          )}
+        </>
+      )}
     </div>
   );
 };

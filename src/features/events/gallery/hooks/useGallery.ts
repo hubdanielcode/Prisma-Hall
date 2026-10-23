@@ -1,6 +1,13 @@
 "use client";
 
-import { getEventPictures, likeEventPicture as likeEventPictureAction } from "@/actions";
+import {
+  createGalleryPicture as createGalleryPictureAction,
+  deleteGalleryPicture as deleteGalleryPictureAction,
+  editGalleryPicture as editGalleryPictureAction,
+  getEventPictures,
+  likeEventPicture as likeEventPictureAction,
+} from "@/actions";
+
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const useGallery = () => {
@@ -27,6 +34,39 @@ const useGallery = () => {
     },
   });
 
+  // 2. CreatePictureMutation
+
+  const { mutateAsync: createPictureMutation } = useMutation({
+    mutationFn: createGalleryPictureAction,
+    onSuccess: async (createPictureMutationResult) => {
+      if (createPictureMutationResult) {
+        queryClient.invalidateQueries({ queryKey: ["gallery"] });
+      }
+    },
+  });
+
+  // 3. EditPictureMutation
+
+  const { mutateAsync: editPictureMutation } = useMutation({
+    mutationFn: editGalleryPictureAction,
+    onSuccess: async (editPictureMutationResult) => {
+      if (editPictureMutationResult) {
+        queryClient.invalidateQueries({ queryKey: ["gallery"] });
+      }
+    },
+  });
+
+  // 4. DeletePictureMutation
+
+  const { mutateAsync: deletePictureMutation } = useMutation({
+    mutationFn: deleteGalleryPictureAction,
+    onSuccess: async (deletePictureMutationResult) => {
+      if (deletePictureMutationResult) {
+        queryClient.invalidateQueries({ queryKey: ["gallery"] });
+      }
+    },
+  });
+
   return {
     /* - Query de leitura - */
 
@@ -37,6 +77,9 @@ const useGallery = () => {
     /* - Mutations - */
 
     likePictureMutation,
+    createPictureMutation,
+    editPictureMutation,
+    deletePictureMutation,
   };
 };
 
