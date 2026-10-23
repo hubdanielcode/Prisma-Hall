@@ -1,8 +1,5 @@
 import { contactInformation } from "../../utils/constants/contactInformation";
-import {
-  InformationPage,
-  InformationSection,
-} from "../../components/ui/InformationPage";
+import { InformationPage, InformationSection } from "../../components/ui/InformationPage";
 import Link from "next/link";
 
 const TermsOfUse = () => {
@@ -17,7 +14,7 @@ const TermsOfUse = () => {
 
       <InformationSection title="Sua conta">
         <p>
-          Você deve informationrmar dados verdadeiros no cadastro e manter a sua senha em segurança. Tudo o que for feito com a sua conta é de sua
+          Você deve informar dados verdadeiros no cadastro e manter a sua senha em segurança. Tudo o que for feito com a sua conta é de sua
           responsabilidade. Se perceber um uso indevido, avise a gente o quanto antes.
         </p>
       </InformationSection>

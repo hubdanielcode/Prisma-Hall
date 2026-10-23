@@ -1,4 +1,4 @@
-import { fakeTicketOrders } from "@/storybook/mocks/hooks/users/useTicketOrder";
+import { fakeTicketOrders } from "@/storybook/mocks/hooks/users/tickets/useTicketOrder";
 import { TicketOrderSummary } from "./TicketOrderSummary";
 
 export default {

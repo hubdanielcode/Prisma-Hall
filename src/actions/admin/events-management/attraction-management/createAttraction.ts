@@ -1,7 +1,7 @@
 "use server";
 
-import { checkIsAdmin } from "../checkIsAdmin";
-import { createAttractionSchema } from "@/lib/validations/admin/events-management/createAttractionSchema";
+import { checkIsAdmin } from "../../checkIsAdmin";
+import { createAttractionSchema } from "@/lib/validations/admin/events-management/attraction-management/createAttractionSchema";
 import { del, put } from "@vercel/blob";
 import { prisma } from "@/lib/server/services/prisma";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";

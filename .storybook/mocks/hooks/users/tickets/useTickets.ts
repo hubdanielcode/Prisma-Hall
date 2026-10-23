@@ -1,5 +1,5 @@
 import type { TicketProps } from "@/features/users/tickets/types/ticket";
-import { fakeEvents } from "../events/event/useEvents";
+import { fakeEvents } from "../../events/event/useEvents";
 
 const fakeTickets: TicketProps[] = [
   {

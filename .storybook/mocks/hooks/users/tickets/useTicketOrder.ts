@@ -1,4 +1,4 @@
-import { fakeEvents } from "../events/event/useEvents";
+import { fakeEvents } from "../../events/event/useEvents";
 import { fn } from "storybook/test";
 import type { TicketOrderProps } from "@/features/users/tickets/types/ticketOrder";
 
