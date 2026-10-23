@@ -7,21 +7,18 @@ export { EventsSection } from "./components/EventsSection";
 
 /* - Context - */
 
-export { AttractionContext, AttractionProvider } from "./context/AttractionContext";
 export { EventContext, EventProvider } from "./context/EventContext";
 
 /* - Hooks - */
 
-export { useAttractionContext } from "./hooks/useAttractionContext";
-export { useAttractions } from "./hooks/useAttractions";
-export { useCalendarContext } from "./hooks/useCalendarContext";
+export { useAttractionContext } from "../attractions/hooks/useAttractionContext";
+export { useAttractions } from "../attractions/hooks/useAttractions";
 export { useEventContext } from "./hooks/useEventContext";
 export { useEvents } from "./hooks/useEvents";
 export { useFavoriteEvents } from "./hooks/useFavoriteEvents";
 
 /* - Types - */
 
-export type { AttractionProps } from "./types/attraction";
 export type { EventProps } from "./types/event";
 export type { TagProps } from "./types/tag";
 

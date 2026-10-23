@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext } from "react";
-import { updateProfileSchema } from "@/lib/validations/users/updateProfileSchema";
+import { updateProfileSchema } from "@/lib/validations/users/profile/updateProfileSchema";
 import { useProfile } from "../hooks/useProfile";
 import { z } from "zod";
 import type { ProfileProps } from "@/features/authentication/types/profile";

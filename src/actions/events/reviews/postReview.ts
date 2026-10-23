@@ -1,6 +1,6 @@
 "use server";
 
-import { createReviewSchema } from "@/lib/validations/events/createReviewSchema";
+import { createReviewSchema } from "@/lib/validations/events/reviews/createReviewSchema";
 import { prisma, recalculateEventRating, recalculateUserBadges } from "@/lib/server";
 import { PrismaClientKnownRequestError } from "@/prisma/generated/prisma/internal/prismaNamespace";
 import { validateSession } from "../../authentication/validateSession";

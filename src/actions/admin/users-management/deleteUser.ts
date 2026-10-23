@@ -2,7 +2,7 @@
 
 import { checkIsAdmin } from "../checkIsAdmin";
 import { makeAnonymous } from "@/lib/server/users/makeAnonymous";
-import { userIdSchema } from "@/lib/validations/users/userIdSchema";
+import { userIdSchema } from "@/lib/validations/users/user/userIdSchema";
 import { validateSession } from "../../authentication/validateSession";
 import z from "zod";
 

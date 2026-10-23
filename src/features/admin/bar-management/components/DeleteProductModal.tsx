@@ -2,7 +2,7 @@
 
 import { masks } from "@/shared/utils/functions/masks";
 import { motion, AnimatePresence } from "motion/react";
-import { productCategoryBadgeStyles } from "../types/productCategoryBadgeStyles";
+import { productCategoryBadgeStyles } from "../constants/productCategoryBadgeStyles";
 import { useBarContext } from "@/features/bar/hooks/useBarContext";
 import { useMobileContext } from "@/shared/hooks/useMobileContext";
 import { useState } from "react";

@@ -2,7 +2,7 @@
 
 import { isReviewEditOpen } from "@/shared/utils/functions/reviewEditPolicy";
 import { prisma, recalculateEventRating, recalculateUserBadges } from "@/lib/server";
-import { updateReviewSchema } from "@/lib/validations/events/updateReviewSchema";
+import { updateReviewSchema } from "@/lib/validations/events/reviews/updateReviewSchema";
 import { validateSession } from "../../authentication/validateSession";
 import z from "zod";
 

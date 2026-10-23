@@ -1,7 +1,7 @@
 "use server";
 
 import { getEventStatus, prisma } from "@/lib/server";
-import { orderIdSchema } from "@/lib/validations/users/orderIdSchema";
+import { orderIdSchema } from "@/lib/validations/users/user/orderIdSchema";
 import { validateSession } from "../../authentication/validateSession";
 import type { TicketOrderProps } from "@/features/users/tickets/types/ticketOrder";
 

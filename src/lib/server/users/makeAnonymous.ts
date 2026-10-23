@@ -4,7 +4,7 @@ import { hash } from "../services/bcrypt";
 import { prisma } from "../services/prisma";
 import { expireStripeCheckoutSessions } from "../payments/expireStripeCheckoutSessions";
 import { randomUUID } from "crypto";
-import { userIdSchema } from "@/lib/validations/users/userIdSchema";
+import { userIdSchema } from "@/lib/validations/users/user/userIdSchema";
 import { validateSession } from "@/actions/authentication/validateSession";
 import z from "zod";
 

@@ -1,6 +1,6 @@
 "use server";
 
-import { getAllReviewsSchema } from "@/lib/validations/events/getAllReviewsSchema";
+import { getAllReviewsSchema } from "@/lib/validations/events/reviews/getAllReviewsSchema";
 import { prisma } from "@/lib/server/services/prisma";
 import z from "zod";
 

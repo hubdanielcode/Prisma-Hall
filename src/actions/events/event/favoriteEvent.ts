@@ -1,6 +1,6 @@
 "use server";
 
-import { favoriteEventIdSchema } from "@/lib/validations/events/favoriteEventSchema";
+import { favoriteEventIdSchema } from "@/lib/validations/events/event/favoriteEventSchema";
 import { getEventStatus, prisma } from "@/lib/server";
 import { validateSession } from "../../authentication/validateSession";
 

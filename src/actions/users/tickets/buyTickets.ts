@@ -1,6 +1,6 @@
 "use server";
 
-import { buyTicketsSchema } from "@/lib/validations/users/buyTicketsSchema";
+import { buyTicketsSchema } from "@/lib/validations/users/tickets/buyTicketsSchema";
 import { getEventStatus, prisma } from "@/lib/server";
 import { validateSession } from "../../authentication/validateSession";
 import z from "zod";

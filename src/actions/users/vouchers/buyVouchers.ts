@@ -1,6 +1,6 @@
 "use server";
 
-import { buyVouchersSchema } from "@/lib/validations/users/buyVouchersSchema";
+import { buyVouchersSchema } from "@/lib/validations/users/vouchers/buyVouchersSchema";
 import { prisma } from "@/lib/server/services/prisma";
 import { validateSession } from "../../authentication/validateSession";
 import z from "zod";

@@ -1,5 +1,5 @@
 import { EditReviewModal } from "./EditReviewModal";
-import { fakeReview } from "@/storybook/mocks/hooks/events/useReviews";
+import { fakeReview } from "@/storybook/mocks/hooks/events/reviews/useReviews";
 import { MobileProvider } from "@/shared/context/MobileContext";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
 

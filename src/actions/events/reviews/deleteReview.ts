@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma, recalculateEventRating, recalculateUserBadges } from "@/lib/server";
-import { reviewIdSchema } from "@/lib/validations/events/reviewIdSchema";
+import { reviewIdSchema } from "@/lib/validations/events/reviews/reviewIdSchema";
 import { validateSession } from "../../authentication/validateSession";
 
 const deleteReview = async (reviewId: string) => {

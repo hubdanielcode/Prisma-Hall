@@ -1,6 +1,6 @@
 import { eventTags } from "@/features/events/event/utils/eventTags";
 import { fakeTickets } from "../users/useTickets";
-import { fakeUsers } from "../users/useUsers";
+import { fakeUsers } from "../users/user/useUsers";
 import type { BarChartItemProps, PeriodLabelProps } from "@/features/admin/analytics-management";
 
 const fakeConfirmedTickets = fakeTickets.filter((ticket) => ticket.paymentStatus === "confirmed");

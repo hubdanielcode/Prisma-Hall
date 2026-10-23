@@ -3,7 +3,7 @@
 import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import { masks } from "@/shared/utils/functions/masks";
 import { motion } from "motion/react";
-import { productCategoryBadgeStyles } from "../types/productCategoryBadgeStyles";
+import { productCategoryBadgeStyles } from "../constants/productCategoryBadgeStyles";
 import { ProductsTablePagination } from "./ProductsTablePagination";
 import { useBarContext } from "@/features/bar/hooks/useBarContext";
 import { useMobileContext } from "@/shared/hooks/useMobileContext";

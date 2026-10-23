@@ -1,7 +1,7 @@
 "use server";
 
 import { expireStripeCheckoutSessions, notifyUsersByEmail, prisma, refundStripePayment, retryOnFailure } from "@/lib/server";
-import { orderIdSchema } from "@/lib/validations/users/orderIdSchema";
+import { orderIdSchema } from "@/lib/validations/users/user/orderIdSchema";
 import { validateSession } from "../../authentication/validateSession";
 
 const cancelVoucherOrder = async (orderId: string) => {

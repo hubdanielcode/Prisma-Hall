@@ -1,6 +1,6 @@
 import { masks } from "@/shared/utils/functions/masks";
 import { MotionCard } from "./MotionCard";
-import { productCategoryBadgeStyles } from "@/features/admin/bar-management/types/productCategoryBadgeStyles";
+import { productCategoryBadgeStyles } from "@/features/admin/bar-management/constants/productCategoryBadgeStyles";
 import Image from "next/image";
 import type { ProductProps } from "../types/product";
 

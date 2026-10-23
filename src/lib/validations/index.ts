@@ -13,11 +13,16 @@ export { editProductSchema } from "./admin/bar-management/editProductSchema";
 
 // 3. Events Management
 
-export { cancelEventIdSchema } from "./admin/events-management/cancelEventSchema";
-export { createAttractionSchema } from "./admin/events-management/createAttractionSchema";
-export { createEventSchema } from "./admin/events-management/createEventSchema";
-export { editAttractionSchema } from "./admin/events-management/editAttractionSchema";
-export { editEventSchema } from "./admin/events-management/editEventSchema";
+// 3.1 Attraction
+
+export { createAttractionSchema } from "./admin/events-management/attraction-management/createAttractionSchema";
+export { editAttractionSchema } from "./admin/events-management/attraction-management/editAttractionSchema";
+
+// 3.2 Event
+
+export { cancelEventIdSchema } from "./admin/events-management/event-management/cancelEventSchema";
+export { createEventSchema } from "./admin/events-management/event-management/createEventSchema";
+export { editEventSchema } from "./admin/events-management/event-management/editEventSchema";
 
 // 4. Users Management
 
@@ -25,6 +30,11 @@ export { badgeLevelSchema } from "./admin/user-management/badgeLevelSchema";
 export { editUserSchema } from "./admin/user-management/editUserSchema";
 export { getAllUsersSchema } from "./admin/user-management/getAllUsersSchema";
 export { userSchema } from "./admin/user-management/userSchema";
+
+// 5. Pickup Management
+
+export { findPickupOrdersSchema } from "./admin/pickup-management/findPickupOrdersSchema";
+export { registerPickupSchema } from "./admin/pickup-management/registerPickupSchema";
 
 /* - Authentication - */
 
@@ -43,11 +53,18 @@ export { updateCartItemSchema } from "./cart/updateCartItemSchema";
 
 /* - Events - */
 
-export { createReviewSchema } from "./events/createReviewSchema";
-export { favoriteEventIdSchema } from "./events/favoriteEventSchema";
-export { getAllReviewsSchema } from "./events/getAllReviewsSchema";
-export { reviewIdSchema } from "./events/reviewIdSchema";
-export { updateReviewSchema } from "./events/updateReviewSchema";
+// 1. Event
+
+export { favoriteEventIdSchema } from "./events/event/favoriteEventSchema";
+
+// 2. Gallery
+
+// 3. Reviews
+
+export { createReviewSchema } from "./events/reviews/createReviewSchema";
+export { getAllReviewsSchema } from "./events/reviews/getAllReviewsSchema";
+export { reviewIdSchema } from "./events/reviews/reviewIdSchema";
+export { updateReviewSchema } from "./events/reviews/updateReviewSchema";
 
 /* - Newsletter - */
 
@@ -63,13 +80,27 @@ export { tagSchema } from "./shared/tagSchema";
 
 /* - Users - */
 
-export { buyTicketsSchema } from "./users/buyTicketsSchema";
-export { buyVouchersSchema } from "./users/buyVouchersSchema";
-export { newProfileSchema } from "./users/newProfileSchema";
-export { notificationIdSchema } from "./users/notificationIdSchema";
-export { notificationPreferencesSchema } from "./users/notificationPreferencesSchema";
-export { orderIdSchema } from "./users/orderIdSchema";
-export { profileSchema } from "./users/profileSchema";
-export { updateNotificationPreferencesSchema } from "./users/updateNotificationPreferencesSchema";
-export { updateProfileSchema } from "./users/updateProfileSchema";
-export { userIdSchema } from "./users/userIdSchema";
+// 1. Notification
+
+export { notificationIdSchema } from "./users/notifications/notificationIdSchema";
+export { notificationPreferencesSchema } from "./users/notifications/notificationPreferencesSchema";
+export { updateNotificationPreferencesSchema } from "./users/notifications/updateNotificationPreferencesSchema";
+
+// 2. Profile
+
+export { newProfileSchema } from "./users/profile/newProfileSchema";
+export { profileSchema } from "./users/profile/profileSchema";
+export { updateProfileSchema } from "./users/profile/updateProfileSchema";
+
+// 3. Tickets
+
+export { buyTicketsSchema } from "./users/tickets/buyTicketsSchema";
+
+// 4. User
+
+export { orderIdSchema } from "./users/user/orderIdSchema";
+export { userIdSchema } from "./users/user/userIdSchema";
+
+// 5. Vouchers
+
+export { buyVouchersSchema } from "./users/vouchers/buyVouchersSchema";

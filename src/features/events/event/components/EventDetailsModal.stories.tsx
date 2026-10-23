@@ -1,7 +1,7 @@
 import { AuthenticationProvider } from "@/features/authentication/context/AuthenticationContext";
 import { CartProvider } from "@/features/cart/context/CartContext";
 import { EventDetailsModal } from "./EventDetailsModal";
-import { fakeEvents } from "@/storybook/mocks/hooks/events/useEvents";
+import { fakeEvents } from "@/storybook/mocks/hooks/events/event/useEvents";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
 
 /* - Evento que ainda vai acontecer, que é o único que mostra o botão de favoritar - */

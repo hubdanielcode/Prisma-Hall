@@ -1,6 +1,6 @@
 import { AuthenticationProvider } from "@/features/authentication/context/AuthenticationContext";
 import { CancelVoucherOrder } from "./CancelVoucherOrder";
-import { fakeVoucherOrder } from "@/storybook/mocks/hooks/users/useVoucherOrder";
+import { fakeVoucherOrder } from "@/storybook/mocks/hooks/users/vouchers/useVoucherOrder";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
 
 export default {

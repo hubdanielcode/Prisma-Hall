@@ -17,13 +17,24 @@ export { getAllProductsAdmins } from "./admin/bar-management/getAllProductsAdmin
 
 // 3. Events Management
 
-export { cancelEvent } from "./admin/events-management/cancelEvent";
-export { createAttraction } from "./admin/events-management/createAttraction";
-export { createEvent } from "./admin/events-management/createEvent";
-export { deleteAttraction } from "./admin/events-management/deleteAttraction";
-export { deleteEvent } from "./admin/events-management/deleteEvent";
-export { editAttraction } from "./admin/events-management/editAttraction";
-export { editEvent } from "./admin/events-management/editEvent";
+// 3.1 Attraction Management
+
+export { createAttraction } from "./admin/events-management/attraction-management/createAttraction";
+export { deleteAttraction } from "./admin/events-management/attraction-management/deleteAttraction";
+export { editAttraction } from "./admin/events-management/attraction-management/editAttraction";
+
+// 3.2 Event Management
+
+export { cancelEvent } from "./admin/events-management/event-management/cancelEvent";
+export { createEvent } from "./admin/events-management/event-management/createEvent";
+export { deleteEvent } from "./admin/events-management/event-management/deleteEvent";
+export { editEvent } from "./admin/events-management/event-management/editEvent";
+
+// 3.3 Gallery Management
+
+export { createGalleryPicture } from "./admin/events-management/gallery-management/createGalleryPicture";
+export { editGalleryPicture } from "./admin/events-management/gallery-management/editGalleryPicture";
+export { deleteGalleryPicture } from "./admin/events-management/gallery-management/deleteGalleryPicture";
 
 // 4. Users Management
 
@@ -31,6 +42,11 @@ export { deleteUser } from "./admin/users-management/deleteUser";
 export { editUser } from "./admin/users-management/editUser";
 export { getAllUsers } from "./admin/users-management/getAllUsers";
 export { getSingleUser } from "./admin/users-management/getSingleUser";
+
+// 5. Pickup Management
+
+export { findPickupOrders } from "./admin/pickup-management/findPickupOrders";
+export { registerPickup } from "./admin/pickup-management/registerPickup";
 
 /* - Authentication - */
 

@@ -1,21 +1,17 @@
 "use client";
 
-import {
-  AttractionProvider,
-  useAttractionContext,
-  useEventContext,
-} from "@/features/events/event";
-import { AttractionsManagementList } from "../components/AttractionsManagementList";
-import { CancelEventModal } from "../components/CancelEventModal";
-import { CreateAttractionModal } from "../components/CreateAttractionModal";
-import { DeleteAttractionModal } from "../components/DeleteAttractionModal";
-import { DeleteEventModal } from "../components/DeleteEventModal";
-import { EditAttractionModal } from "../components/EditAttractionModal";
-import { EventsManagementTable } from "../components/EventsManagementTable";
-import { EventsManagementCard } from "../components/EventsManagementCard";
-import { EventsManagementFilter } from "../components/EventsManagementFilter";
-import { CreateEventModal } from "../components/CreateEventModal";
-import { EditEventModal } from "../components/EditEventModal";
+import { AttractionProvider, useAttractionContext, useEventContext } from "@/features/events/event";
+import { AttractionsManagementList } from "../attraction-management/components/AttractionsManagementList";
+import { CancelEventModal } from "../event-management/components/CancelEventModal";
+import { CreateAttractionModal } from "../attraction-management/components/CreateAttractionModal";
+import { DeleteAttractionModal } from "../attraction-management/components/DeleteAttractionModal";
+import { DeleteEventModal } from "../event-management/components/DeleteEventModal";
+import { EditAttractionModal } from "../attraction-management/components/EditAttractionModal";
+import { EventsManagementTable } from "../event-management/components/EventsManagementTable";
+import { EventsManagementCard } from "../event-management/components/EventsManagementCard";
+import { EventsManagementFilter } from "../event-management/components/EventsManagementFilter";
+import { CreateEventModal } from "../event-management/components/CreateEventModal";
+import { EditEventModal } from "../event-management/components/EditEventModal";
 import { FaPlusCircle } from "react-icons/fa";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";

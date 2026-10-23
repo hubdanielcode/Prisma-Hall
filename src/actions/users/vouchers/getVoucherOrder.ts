@@ -1,6 +1,6 @@
 "use server";
 
-import { orderIdSchema } from "@/lib/validations/users/orderIdSchema";
+import { orderIdSchema } from "@/lib/validations/users/user/orderIdSchema";
 import { prisma } from "@/lib/server/services/prisma";
 import { validateSession } from "../../authentication/validateSession";
 import type { VoucherOrderProps } from "@/features/users/vouchers/types/voucherOrder";

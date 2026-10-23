@@ -5,7 +5,7 @@ import { createProductSchema } from "@/lib/validations/admin/bar-management/crea
 import { ImagePlus, X } from "lucide-react";
 import { masks } from "@/shared/utils/functions/masks";
 import { productCategories } from "@/features/bar/utils/productCategories";
-import { productCategoryBadgeStyles } from "../types/productCategoryBadgeStyles";
+import { productCategoryBadgeStyles } from "../constants/productCategoryBadgeStyles";
 import { useBarContext } from "@/features/bar/hooks/useBarContext";
 import { useBlockScroll } from "@/shared/hooks/useBlockScroll";
 import { useMobileContext } from "@/shared/hooks/useMobileContext";

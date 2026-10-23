@@ -1,4 +1,4 @@
-import { fakeEvents } from "../events/useEvents";
+import { fakeEvents } from "../events/event/useEvents";
 import { fakeProducts } from "../bar/useProducts";
 import { fn } from "storybook/test";
 import type { CartItemProps } from "@/features/cart/types/cartItem";

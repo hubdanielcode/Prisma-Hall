@@ -1,18 +1,28 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
+
 import { FaUser } from "react-icons/fa";
+
 import { ImExit } from "react-icons/im";
+
 import { Menu, ShieldCheck } from "lucide-react";
+
 import { NotificationBell } from "@/features/users/notifications/components/NotificationBell";
+
 import { useAuthenticationContext } from "@/features/authentication/hooks/useAuthenticationContext";
+
 import { useMobileContext } from "../../hooks/useMobileContext";
+
 import { useRouter } from "next/navigation";
+
 import { useState } from "react";
+
 import Image from "next/image";
 
 interface AdminHeaderProps {
   activeTab: string;
+
   setActiveTab: (activeTab: string) => void;
 }
 
@@ -20,6 +30,7 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
   /* - Puxando do context - */
 
   const { isPortraitMobile } = useMobileContext();
+
   const { isAuthenticated, isLoading, revokeSessionMutation } = useAuthenticationContext();
 
   /* - Estados do menu - */
@@ -29,11 +40,17 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
   /* - Definições - */
 
   const router = useRouter();
+
   const navLinks = [
     { title: "Bar", id: "bar" },
+
     { title: "Eventos", id: "events" },
+
     { title: "Estatísticas", id: "analytics" },
+
     { title: "Usuários", id: "users" },
+
+    { title: "Retirada", id: "pickup" },
   ];
 
   return (
@@ -46,17 +63,25 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
 
               <motion.div
                 className="flex items-center gap-2 cursor-pointer"
+
                 whileHover={{ scale: 1.05 }}
+
                 whileTap={{ scale: 0.95 }}
+
                 role="button"
+
                 onClick={() => router.replace("/")}
               >
                 <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-linear-to-tr from-yellow-500 via-black/60 to-yellow-700 rounded-lg flex items-center justify-between shadow-xs shadow-black">
                   <Image
                     className="mx-auto"
+
                     src="/logo/ph-logo.png"
+
                     alt="PrismaHall Logo"
+
                     width={50}
+
                     height={50}
                   />
                 </div>
@@ -81,9 +106,13 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
                           ? "bg-clip-text text-transparent bg-linear-to-br from-yellow-500 via-yellow-600 to-yellow-700 underline"
                           : "text-white"
                       }`}
+
                       key={index}
+
                       onClick={() => setActiveTab(link.id)}
+
                       whileHover={{ scale: 1.05 }}
+
                       whileTap={{ scale: 0.95 }}
                     >
                       {link.title}
@@ -105,9 +134,13 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
 
                 <motion.button
                   className="relative group border bg-[#0A0A0A] hover:bg-[#1A1A1A] border-[#B8860B] rounded-full p-2 cursor-pointer"
+
                   whileHover={{ scale: 1.05 }}
+
                   whileTap={{ scale: 0.95 }}
+
                   onClick={() => router.push("/")}
+
                   aria-label="Ir para o início"
                 >
                   <ShieldCheck className="h-6 w-6 text-[#B8860B] group-hover:text-[#DDAE56]" />
@@ -120,6 +153,7 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
             <div className="sm:hidden md:hidden flex items-center">
               <Menu
                 className="h-8 w-8 text-white cursor-pointer"
+
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               />
             </div>
@@ -140,8 +174,11 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
                   {isAuthenticated && (
                     <motion.button
                       className="flex justify-center items-center w-fit bg-[#1A1A1A] hover:bg-[#333] border border-[#B8860B] hover:border-[#B8860B] text-white text-sm font-semibold px-4 py-2 rounded-lg cursor-pointer"
+
                       whileHover={{ scale: 1.05 }}
+
                       whileTap={{ scale: 0.95 }}
+
                       onClick={() => router.push("/perfil")}
                     >
                       <FaUser className="mr-2 h-4 w-4" />
@@ -153,8 +190,11 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
 
                   <motion.button
                     className="flex justify-center items-center w-fit h-fit bg-[#B8860B] hover:bg-[#7A5A08] shadow-sm shadow-[#B8860B] hover:shadow-[#7A5A08] text-black text-sm font-semibold px-4 py-2 rounded-lg cursor-pointer"
+
                     whileHover={{ scale: 1.05 }}
+
                     whileTap={{ scale: 0.95 }}
+
                     onClick={() => {
                       if (isAuthenticated) {
                         revokeSessionMutation();
@@ -178,17 +218,24 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
         {isPortraitMobile && isMobileMenuOpen && (
           <motion.div
             className="fixed top-20 sm:top-22 right-0 left-auto w-40 flex flex-col bg-black/80 backdrop-blur-lg border rounded-lg border-[#B8860B] z-40"
+
             initial={{ x: "100%" }}
+
             animate={{ x: 0 }}
+
             exit={{ x: "100%" }}
+
             transition={{ duration: 0.6 }}
           >
             <ul>
               {navLinks.map((link, index) => (
                 <li
                   key={index}
+
                   className="px-6 py-4 text-white font-semibold border-b border-[#B8870B60] last:border-none cursor-pointer"
+
                   role="button"
+
                   onClick={() => setActiveTab(link.id)}
                 >
                   {link.title}
@@ -201,8 +248,11 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
                 ) : (
                   <motion.button
                     className="flex justify-center items-center text-white font-semibold cursor-pointer"
+
                     whileHover={{ scale: 1.05 }}
+
                     whileTap={{ scale: 0.95 }}
+
                     onClick={() => {
                       if (isAuthenticated) {
                         revokeSessionMutation();
@@ -212,6 +262,7 @@ const AdminHeader = ({ activeTab, setActiveTab }: AdminHeaderProps) => {
                     }}
                   >
                     <ImExit className="mr-2 h-4 w-4" />
+
                     {isAuthenticated ? "Sair" : "Entrar"}
                   </motion.button>
                 )}

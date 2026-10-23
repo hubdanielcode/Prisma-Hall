@@ -1,6 +1,6 @@
 "use client";
 
-import { AnalyticsManagement, BarManagement, EventsManagement, UsersManagement } from "@/features/admin";
+import { AnalyticsManagement, BarManagement, EventsManagement, UsersManagement, PickupManagement } from "@/features/admin";
 import { useBarContext } from "@/features/bar/hooks/useBarContext";
 import { useEffect, useState } from "react";
 import { useMobileContext } from "../../hooks/useMobileContext";
@@ -78,6 +78,14 @@ const Admin = () => {
         {activeTab === "users" && (
           <div>
             <UsersManagement />
+          </div>
+        )}
+
+        {/* - Área de retirada dos pedidos - */}
+
+        {activeTab === "pickup" && (
+          <div>
+            <PickupManagement />
           </div>
         )}
       </div>

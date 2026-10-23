@@ -1,4 +1,4 @@
-import { fakeVouchers } from "../users/useVouchers";
+import { fakeVouchers } from "../users/vouchers/useVouchers";
 import { productCategories } from "@/features/bar/utils/productCategories";
 import type { BarChartItemProps, PeriodLabelProps } from "@/features/admin/analytics-management";
 

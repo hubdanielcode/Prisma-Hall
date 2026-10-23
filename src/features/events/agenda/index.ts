@@ -7,6 +7,10 @@ export { CalendarHeader } from "./components/CalendarHeader";
 
 export { CalendarContext, CalendarProvider } from "./context/CalendarContext";
 
+/* - Hooks - */
+
+export { useCalendarContext } from "./hooks/useCalendarContext";
+
 /* - Pages - */
 
 export { Schedule } from "./pages/Schedule";

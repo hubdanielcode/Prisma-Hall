@@ -14,4 +14,4 @@ export { BarManagement } from "./pages/BarManagement";
 
 /* - Types - */
 
-export { productCategoryBadgeStyles } from "./types/productCategoryBadgeStyles";
+export { productCategoryBadgeStyles } from "./constants/productCategoryBadgeStyles";

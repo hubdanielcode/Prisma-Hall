@@ -1,4 +1,4 @@
-import { fakeReview } from "@/storybook/mocks/hooks/events/useReviews";
+import { fakeReview } from "@/storybook/mocks/hooks/events/reviews/useReviews";
 import { ReviewCard } from "./ReviewCard";
 
 export default {
