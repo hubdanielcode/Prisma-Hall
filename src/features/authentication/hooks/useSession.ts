@@ -95,6 +95,10 @@ const useSession = () => {
     signInMutation,
     signUpMutation,
     revokeSessionMutation,
+
+    /* - Funções - */
+
+    invalidateAllSessionQueries,
   };
 };
 

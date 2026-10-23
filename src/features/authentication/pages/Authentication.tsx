@@ -151,7 +151,7 @@ const Authentication = () => {
               <p className="text-black font-bold leading-tight">Conta criada!</p>
 
               <p className="text-black/80 text-sm font-medium leading-snug mt-1">
-                Enviamos um link para o seu e-mail. Valide a conta para poder entrar.
+                Enviamos um link para o seu e-mail. Valide a conta para poder entrar e, se não encontrar, verifique também a caixa de spam.
               </p>
             </div>
           </div>
@@ -182,7 +182,8 @@ const Authentication = () => {
               <p className="text-white text-2xl sm:text-lg font-bold text-center">Valide o seu e-mail</p>
 
               <p className="text-sm text-white mt-6 text-center">
-                Enviamos um link de validação para <span className="font-bold">{registeredEmail}</span>. O link expira em 15 minutos.
+                Enviamos um link de validação para <span className="font-bold">{registeredEmail}</span>. O link expira em 15 minutos. Se não encontrar
+                o e-mail, verifique também a caixa de spam.
               </p>
 
               <p className="text-sm text-white/60 mt-4 text-center">Você só poderá entrar na sua conta depois de validar o e-mail.</p>

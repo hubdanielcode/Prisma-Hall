@@ -56,7 +56,8 @@ const ResendValidationButton = ({ email, startWithCooldown = false }: ResendVali
       setSecondsLeft(resendCooldownSeconds);
       setFeedback({
         type: "success",
-        message: "Se o e-mail estiver cadastrado e ainda não validado, enviamos um novo link. Ele expira em 15 minutos.",
+        message:
+          "Se o e-mail estiver cadastrado e ainda não validado, enviamos um novo link. Ele expira em 15 minutos. Se não encontrar o e-mail, verifique a caixa de spam.",
       });
     } catch {
       setFeedback({ type: "error", message: "Não foi possível reenviar o e-mail. Tente novamente." });
@@ -88,11 +89,15 @@ const ResendValidationButton = ({ email, startWithCooldown = false }: ResendVali
         {isSending ? "Enviando..." : secondsLeft > 0 ? `Reenviar e-mail (${secondsLeft}s)` : "Reenviar e-mail de validação"}
       </button>
 
-      {feedback ? (
-        <span className={feedback.type === "success" ? "text-[#DDAE56] text-sm text-center" : "text-red-400 text-sm text-center"}>
-          {feedback.message}
-        </span>
-      ) : null}
+      {/* - Espaço reservado para o aviso, para o card não crescer quando ele aparece - */}
+
+      <div className="flex justify-center w-full min-h-20">
+        {feedback ? (
+          <span className={feedback.type === "success" ? "text-[#DDAE56] text-sm text-center" : "text-red-400 text-sm text-center"}>
+            {feedback.message}
+          </span>
+        ) : null}
+      </div>
     </div>
   );
 };

@@ -26,6 +26,7 @@ const useSession = () => ({
   signInMutation: fn(),
   signUpMutation: fn(),
   revokeSessionMutation: fn(),
+  invalidateAllSessionQueries: fn(async () => {}),
 });
 
 export { useSession, fakeSession, fakeSessionUser };

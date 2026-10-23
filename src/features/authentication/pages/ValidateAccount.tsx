@@ -8,6 +8,7 @@ import { MdAlternateEmail } from "react-icons/md";
 import { masks } from "@/shared/utils";
 import { ResendValidationButton } from "../components/ResendValidationButton";
 import { useAccountValidation } from "../hooks/useAccountValidation";
+import { useSession } from "../hooks/useSession";
 import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -17,11 +18,13 @@ const ValidateAccount = () => {
   /* - Puxando do hook - */
 
   const { validateAccountMutation } = useAccountValidation();
+  const { invalidateAllSessionQueries } = useSession();
 
   /* - Estados de validação - */
 
   const [validationStatus, setValidationStatus] = useState<ValidationStatusProps>("loading");
   const [resendEmail, setResendEmail] = useState<string>("");
+  const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
 
   /* - Definições - */
 
@@ -55,6 +58,15 @@ const ValidateAccount = () => {
           return;
         }
 
+        if (validateAccountResult === "validated_and_signed_in") {
+          setIsSignedIn(true);
+          setValidationStatus("success");
+
+          // O servidor já criou a sessão: atualiza o que o app guardou dela para a página inicial abrir com o usuário logado
+          await invalidateAllSessionQueries().catch(() => undefined);
+          return;
+        }
+
         setValidationStatus(validateAccountResult ? "success" : "error");
       } catch {
         setValidationStatus("error");
@@ -62,19 +74,19 @@ const ValidateAccount = () => {
     };
 
     validateAccountFromLink();
-  }, [token, validateAccountMutation]);
+  }, [token, validateAccountMutation, invalidateAllSessionQueries]);
 
-  // 2. Depois de validar, leva o usuário para a página de login
+  // 2. Depois de validar, leva o usuário para a página inicial (se a sessão foi criada) ou para a página de login
 
   useEffect(() => {
     if (validationStatus !== "success") {
       return;
     }
 
-    const timer = setTimeout(() => router.replace("/login"), 3500);
+    const timer = setTimeout(() => router.replace(isSignedIn ? "/" : "/login"), 3500);
 
     return () => clearTimeout(timer);
-  }, [validationStatus, router]);
+  }, [validationStatus, isSignedIn, router]);
 
   return (
     <>
@@ -95,7 +107,11 @@ const ValidateAccount = () => {
               <div className="flex flex-col">
                 <p className="text-black font-bold leading-tight">Conta validada!</p>
 
-                <p className="text-black/80 text-sm font-medium leading-snug mt-1">Tudo certo! Estamos te levando para a tela de login.</p>
+                <p className="text-black/80 text-sm font-medium leading-snug mt-1">
+                  {isSignedIn
+                    ? "Tudo certo! Você já está logado e estamos te levando para a página inicial."
+                    : "Tudo certo! Estamos te levando para a tela de login."}
+                </p>
               </div>
             </div>
 
@@ -124,7 +140,9 @@ const ValidateAccount = () => {
 
             {validationStatus === "success" && (
               <p className="text-sm text-white mt-6 mb-4 text-center">
-                Tudo certo! Você já pode entrar na sua conta. Estamos te levando para a tela de login.
+                {isSignedIn
+                  ? "Tudo certo! Você já está logado na sua conta. Seja bem-vindo(a) ao Prisma Hall!"
+                  : "Tudo certo! Você já pode entrar na sua conta. Estamos te levando para a tela de login!"}
               </p>
             )}
 
@@ -169,9 +187,9 @@ const ValidateAccount = () => {
             <div className="flex justify-center items-center text-sm text-white font-semibold mt-4">
               <span
                 className="font-bold hover:bg-clip-text hover:text-transparent hover:bg-linear-to-br hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700 hover:underline cursor-pointer"
-                onClick={() => router.replace("/login")}
+                onClick={() => router.replace(isSignedIn ? "/" : "/login")}
               >
-                Voltar para a tela de Login!
+                {isSignedIn ? "Ir para a página inicial!" : "Voltar para a tela de Login!"}
               </span>
             </div>
           </div>
