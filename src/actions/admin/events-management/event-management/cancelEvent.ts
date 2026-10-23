@@ -1,7 +1,7 @@
 "use server";
 
 import { cancelEventIdSchema } from "@/lib/validations/admin/events-management/event-management/cancelEventSchema";
-import { checkIsAdmin } from "../checkIsAdmin";
+import { checkIsAdmin } from "../../checkIsAdmin";
 import { getEventStatus, getUserIdsThatFavoritedEvent, notifyUsersByEmail, prisma, refundStripePayment } from "@/lib/server";
 import { serviceFee } from "@/features/cart/utils/serviceFee";
 

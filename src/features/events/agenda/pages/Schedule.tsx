@@ -10,7 +10,7 @@ import { eventTags } from "../../event/utils/eventTags";
 import { formattedDate } from "@/shared/utils/functions/dates";
 import { Header } from "@/shared/components/layout/Header";
 import { motion } from "motion/react";
-import { useCalendarContext } from "../../event/hooks/useCalendarContext";
+import { useCalendarContext } from "../hooks/useCalendarContext";
 import { useEffect, useState } from "react";
 import { useEvents } from "../../event/hooks/useEvents";
 

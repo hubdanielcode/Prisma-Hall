@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useState, type ReactNode } from "react";
+import { monthNames } from "../../event/utils/monthNames";
 
 interface CalendarContextType {
   /* - Estados de data - */
@@ -25,8 +26,8 @@ const CalendarContext = createContext<CalendarContextType | null>(null);
 const CalendarProvider = ({ children }: { children: ReactNode }) => {
   /* - Estados de data - */
 
-  const [selectedYear, setSelectedYear] = useState<number>(2026);
-  const [selectedMonth, setSelectedMonth] = useState<string>("Maio");
+  const [selectedYear, setSelectedYear] = useState<number>(() => new Date().getFullYear());
+  const [selectedMonth, setSelectedMonth] = useState<string>(() => monthNames[new Date().getMonth()]);
   const [selectedDay, setSelectedDay] = useState<number>(0);
 
   /* - Estados de vizualização - */

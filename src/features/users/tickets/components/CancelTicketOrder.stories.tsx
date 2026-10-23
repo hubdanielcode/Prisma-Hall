@@ -1,6 +1,6 @@
 import { AuthenticationProvider } from "@/features/authentication/context/AuthenticationContext";
 import { CancelTicketOrder } from "./CancelTicketOrder";
-import { fakeTicketOrder } from "@/storybook/mocks/hooks/users/useTicketOrder";
+import { fakeTicketOrder } from "@/storybook/mocks/hooks/users/tickets/useTicketOrder";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
 
 export default {

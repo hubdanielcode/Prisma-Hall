@@ -1,7 +1,4 @@
-import {
-  InformationPage,
-  InformationSection,
-} from "../../components/ui/InformationPage";
+import { InformationPage, InformationSection } from "../../components/ui/InformationPage";
 import { contactInformation } from "../../utils/constants/contactInformation";
 
 const PrivacyPolicy = () => {
@@ -24,8 +21,7 @@ const PrivacyPolicy = () => {
         </p>
 
         <p>
-          <strong className="text-white">Perfil:</strong> telefone, data de nascimento, CPF, endereço e foto, quando você preenche essas
-          informationrmações.
+          <strong className="text-white">Perfil:</strong> telefone, data de nascimento, CPF, endereço e foto, quando você preenche essas informações.
         </p>
 
         <p>
@@ -37,7 +33,7 @@ const PrivacyPolicy = () => {
         </p>
 
         <p>
-          <strong className="text-white">Newsletter:</strong> o e-mail que você informationrma no rodapé do site, vinculado à sua conta.
+          <strong className="text-white">Newsletter:</strong> o e-mail que você informa no rodapé do site, vinculado à sua conta.
         </p>
 
         <p>
@@ -56,11 +52,13 @@ const PrivacyPolicy = () => {
       <InformationSection title="Com quem os dados passam">
         <p>Para o site funcionar, usamos serviços de terceiros que processam dados em nosso nome:</p>
 
-        <p>Envio de e-mails (confirmação de pedido, redefinição de senha e avisos): Resend.</p>
+        <p>Pagamentos (cartão e Pix): Stripe.</p>
 
-        <p>Hospedagem do site e armazenamento das imagens enviadas: Vercel.</p>
+        <p>Envio de e-mails (validação da conta, confirmação de pedido, redefinição de senha e avisos): Brevo.</p>
 
-        <p>Banco de dados: PostgreSQL, por meio do Supabase.</p>
+        <p>Hospedagem do site e armazenamento das imagens enviadas (Vercel Blob): Vercel.</p>
+
+        <p>Banco de dados: PostgreSQL.</p>
       </InformationSection>
 
       <InformationSection title="Por quanto tempo guardamos">
