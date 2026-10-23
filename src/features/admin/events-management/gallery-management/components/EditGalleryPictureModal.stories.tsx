@@ -1,5 +1,5 @@
 import { EditGalleryPictureModal } from "./EditGalleryPictureModal";
-import { fakePictures } from "@/storybook/mocks/hooks/events/useGallery";
+import { fakePictures } from "@/storybook/mocks/hooks/events/gallery/useGallery";
 import { MobileProvider } from "@/shared/context/MobileContext";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
 

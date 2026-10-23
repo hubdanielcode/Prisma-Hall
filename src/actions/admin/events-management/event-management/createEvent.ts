@@ -1,7 +1,7 @@
 "use server";
 
-import { checkIsAdmin } from "../checkIsAdmin";
-import { createEventSchema } from "@/lib/validations/admin/events-management/createEventSchema";
+import { checkIsAdmin } from "../../checkIsAdmin";
+import { createEventSchema } from "@/lib/validations/admin/events-management/event-management/createEventSchema";
 import { del, put } from "@vercel/blob";
 import { getEventStatus, notifyPromotionsByEmail, prisma } from "@/lib/server";
 import z from "zod";
