@@ -26,6 +26,7 @@ const TicketOrderDetails = ({ orderId }: TicketOrderDetailsProps) => {
   const pendingPayment = order ? order.payments.find((payment) => payment.status === "pending") : undefined;
   const canCancel = order
     ? order.status !== "cancelled" &&
+      order.payments.every((payment) => !payment.pickedUpAt) &&
       order.tickets.every((ticket) => ticket.event.status === "soon" && isTicketCancellationOpen(ticket.event.startsAt))
     : false;
   const canPay = order ? order.status !== "cancelled" && Boolean(pendingPayment) : false;
@@ -92,6 +93,10 @@ const TicketOrderDetails = ({ orderId }: TicketOrderDetailsProps) => {
                           ? `Confirmado em ${new Date(payment.confirmedAt).toLocaleDateString("pt-BR")}`
                           : `Criado em ${new Date(payment.createdAt).toLocaleDateString("pt-BR")}`}
                       </span>
+
+                      {payment.pickedUpAt && (
+                        <span className="text-blue-400 text-xs">Retirado em {new Date(payment.pickedUpAt).toLocaleDateString("pt-BR")}</span>
+                      )}
                     </div>
 
                     <div className="flex items-center gap-3">

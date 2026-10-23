@@ -22,6 +22,10 @@ export { recalculateEventRating } from "./events/recalculateEventRating";
 
 export { notifyUsersByEmail, notifyPromotionsByEmail, getUserIdsThatFavoritedEvent, notifyFavoriteEventByEmail } from "./notifications/notifyUsers";
 
+/* - Orders - */
+
+export { getPickupBlockReason } from "./orders/getPickupBlockReason";
+
 /* - Payments - */
 
 export { cancelUnpaidOrders } from "./payments/cancelUnpaidOrders";

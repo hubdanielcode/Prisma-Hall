@@ -34,8 +34,12 @@ const CancelTicketOrder = ({ orderId }: CancelTicketOrderProps) => {
   // 1. Espelha a regra da action: só cancela pedido ainda não cancelado, de evento que ainda não aconteceu e dentro do prazo de cancelamento
 
   const eventsAreUpcoming = order ? order.tickets.every((ticket) => ticket.event.status === "soon") : false;
+  const isPickedUp = order ? order.payments.some((payment) => payment.pickedUpAt) : false;
   const canCancel = order
-    ? order.status !== "cancelled" && eventsAreUpcoming && order.tickets.every((ticket) => isTicketCancellationOpen(ticket.event.startsAt))
+    ? order.status !== "cancelled" &&
+      !isPickedUp &&
+      eventsAreUpcoming &&
+      order.tickets.every((ticket) => isTicketCancellationOpen(ticket.event.startsAt))
     : false;
 
   // 2. O que acontece com o pagamento depende do estado em que ele está
@@ -107,9 +111,11 @@ const CancelTicketOrder = ({ orderId }: CancelTicketOrderProps) => {
                 <p className="text-white/60 text-sm">
                   {order.status === "cancelled"
                     ? "Este pedido já foi cancelado."
-                    : eventsAreUpcoming
-                      ? `Este pedido não pode mais ser cancelado, pois o prazo de cancelamento (até ${ticketCancellationDeadlineHours} horas antes do evento) já passou.`
-                      : "Este pedido não pode mais ser cancelado, pois o evento já aconteceu."}
+                    : isPickedUp
+                      ? "Este pedido não pode mais ser cancelado, pois a retirada já foi registrada."
+                      : eventsAreUpcoming
+                        ? `Este pedido não pode mais ser cancelado, pois o prazo de cancelamento (até ${ticketCancellationDeadlineHours} horas antes do evento) já passou.`
+                        : "Este pedido não pode mais ser cancelado, pois o evento já aconteceu."}
                 </p>
 
                 <Link
