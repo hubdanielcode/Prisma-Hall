@@ -4,7 +4,7 @@ import { dayNames } from "../../event/utils/dayNames";
 import { formattedDate } from "@/shared/utils/functions/dates";
 import { monthNames } from "../../event/utils/monthNames";
 import { motion } from "motion/react";
-import { useCalendarContext } from "../../event/hooks/useCalendarContext";
+import { useCalendarContext } from "../hooks/useCalendarContext";
 import { useEvents } from "../../event/hooks/useEvents";
 
 const CalendarGrid = () => {

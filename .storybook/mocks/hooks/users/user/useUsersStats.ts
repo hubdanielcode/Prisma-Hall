@@ -1,4 +1,4 @@
-import { fakeUsers } from "./user/useUsers";
+import { fakeUsers } from "./useUsers";
 
 const useUsersStats = () => ({
   stats: {

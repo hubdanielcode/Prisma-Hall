@@ -1,4 +1,4 @@
-import { imageFileSchema } from "../shared/imageFileSchema";
+import { imageFileSchema } from "../../shared/imageFileSchema";
 import { parsedDate, regex } from "@/shared/utils";
 import { z } from "zod";
 
