@@ -3,7 +3,8 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { formattedDateToISOString, masks, regex } from "../../utils";
 import { GoClock } from "react-icons/go";
-import { monthNames, dayNames, useCalendarContext } from "@/features/events/event";
+import { monthNames, dayNames } from "@/features/events/event";
+import { useCalendarContext } from "@/features/events/agenda/hooks/useCalendarContext";
 import { useState } from "react";
 
 interface CustomDateTimePickerProps {

@@ -1,19 +1,20 @@
 "use client";
 
-import { AttractionProvider, useAttractionContext, useEventContext } from "@/features/events/event";
+import { AttractionProvider } from "@/features/events/attractions/context/AttractionContext";
 import { AttractionsManagementList } from "../attraction-management/components/AttractionsManagementList";
 import { CancelEventModal } from "../event-management/components/CancelEventModal";
 import { CreateAttractionModal } from "../attraction-management/components/CreateAttractionModal";
+import { CreateEventModal } from "../event-management/components/CreateEventModal";
 import { DeleteAttractionModal } from "../attraction-management/components/DeleteAttractionModal";
 import { DeleteEventModal } from "../event-management/components/DeleteEventModal";
 import { EditAttractionModal } from "../attraction-management/components/EditAttractionModal";
-import { EventsManagementTable } from "../event-management/components/EventsManagementTable";
+import { EditEventModal } from "../event-management/components/EditEventModal";
 import { EventsManagementCard } from "../event-management/components/EventsManagementCard";
 import { EventsManagementFilter } from "../event-management/components/EventsManagementFilter";
-import { CreateEventModal } from "../event-management/components/CreateEventModal";
-import { EditEventModal } from "../event-management/components/EditEventModal";
+import { EventsManagementTable } from "../event-management/components/EventsManagementTable";
 import { FaPlusCircle } from "react-icons/fa";
 import { motion } from "motion/react";
+import { useAttractionContext, useEventContext } from "@/features/events/event";
 import { useEffect, useState } from "react";
 import { useMobileContext } from "@/shared/hooks/useMobileContext";
 

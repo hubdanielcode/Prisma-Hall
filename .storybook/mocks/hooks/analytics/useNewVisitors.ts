@@ -1,5 +1,5 @@
 import { eventTags } from "@/features/events/event/utils/eventTags";
-import { fakeTickets } from "../users/useTickets";
+import { fakeTickets } from "../users/tickets/useTickets";
 import { fakeUsers } from "../users/user/useUsers";
 import type { BarChartItemProps, PeriodLabelProps } from "@/features/admin/analytics-management";
 

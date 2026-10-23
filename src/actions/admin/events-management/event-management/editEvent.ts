@@ -1,6 +1,6 @@
 "use server";
 
-import { checkIsAdmin } from "../checkIsAdmin";
+import { checkIsAdmin } from "../../checkIsAdmin";
 import { del, put } from "@vercel/blob";
 import { editEventSchema } from "@/lib/validations/admin/events-management/event-management/editEventSchema";
 import { getEventStatus, getUserIdsThatFavoritedEvent, notifyFavoriteEventByEmail, notifyPromotionsByEmail, prisma } from "@/lib/server";
