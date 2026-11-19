@@ -87,7 +87,11 @@ const Login = () => {
     setEmail("");
     setPassword("");
 
-    router.replace(from || "/");
+    /* - Só aceita caminhos internos (começam com uma única "/"), para o "from" nunca mandar o usuário para outro site - */
+
+    const safeFrom = from && from.startsWith("/") && !from.startsWith("//") ? from : "/";
+
+    router.replace(safeFrom);
   };
 
   // 2. Fecha o erro ao clicar fora

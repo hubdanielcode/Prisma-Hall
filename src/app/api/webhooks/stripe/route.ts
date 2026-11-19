@@ -34,13 +34,13 @@ const hasOtherActiveSession = async (endedSession: Stripe.Checkout.Session) => {
 };
 
 const POST = async (request: Request) => {
+  const body = await request.text();
   const signature = request.headers.get("stripe-signature");
 
   if (!signature) {
     return NextResponse.json({ error: "Assinatura ausente" }, { status: 400 });
   }
 
-  const body = await request.text();
   let event: Stripe.Event;
 
   try {

@@ -43,7 +43,7 @@ const getTicketIncome = async (ticketIncome: z.infer<typeof ticketIncomeSchema>)
 
     const totalIncome = tickets.reduce((accumulator, ticket) => accumulator + ticket.quantity * ticket.unitPrice.toNumber(), 0);
 
-    return { totalIncome };
+    return { totalIncome: Math.round(totalIncome * 100) / 100 };
   } catch {
     return false;
   }

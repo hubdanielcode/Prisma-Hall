@@ -1,17 +1,17 @@
-{
+﻿{
   "name": "site-para-casa-de-show",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "node init && next dev",
-    "build": "node init && next build",
-    "start": "node init && next start",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "lint": "eslint .",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "node init && storybook build",
+    "build-storybook": "storybook build",
     "zod": "tsx --env-file=.env.local src/lib/validations/signInSchema"
   },
   "dependencies": {

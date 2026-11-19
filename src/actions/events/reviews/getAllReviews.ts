@@ -24,27 +24,26 @@ const getAllReviews = async (allReviews: z.infer<typeof getAllReviewsSchema>) =>
       ...(userId ? { userId } : {}),
     };
 
-    /* - A média e o total saem do banco, para valerem para todas as avaliações do filtro e não só para a página - */
+    /* - A média e o total saem do banco, para valerem para todas as avaliações do filtro e não só para a página. As duas consultas rodam separadas, sem $transaction. - */
 
-    const [reviewsAggregate, reviews] = await prisma.$transaction([
-      prisma.review.aggregate({
-        where,
-        _avg: { rating: true },
-        _count: true,
-      }),
-      prisma.review.findMany({
-        where,
-        include: {
-          event: { select: { title: true } },
-          user: { select: { name: true, profilePicture: true, verifiedBadge: true } },
-        },
-        orderBy: [{ createdAt: "desc" }, { id: "asc" }],
-        skip: (currentPage - 1) * itemsPerPage,
-        take: itemsPerPage,
-      }),
-    ]);
+    const reviewsAggregate = await prisma.review.aggregate({
+      where,
+      _avg: { rating: true },
+      _count: { _all: true },
+    });
 
-    const total = reviewsAggregate._count;
+    const reviews = await prisma.review.findMany({
+      where,
+      include: {
+        event: { select: { title: true } },
+        user: { select: { name: true, profilePicture: true, verifiedBadge: true } },
+      },
+      orderBy: [{ createdAt: "desc" }, { id: "asc" }],
+      skip: (currentPage - 1) * itemsPerPage,
+      take: itemsPerPage,
+    });
+
+    const total = reviewsAggregate._count._all;
 
     return {
       reviews: reviews.map((review) => ({
