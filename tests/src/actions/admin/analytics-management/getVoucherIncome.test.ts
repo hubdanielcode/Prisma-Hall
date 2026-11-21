@@ -1,20 +1,12 @@
-import { beforeEach, vi, type Mock } from "vitest";
+import { beforeEach, expect, test, vi, type Mock } from "vitest";
 import { getVoucherIncome } from "@/actions/admin/analytics-management/getVoucherIncome";
 import { checkIsAdmin } from "@/actions/admin/checkIsAdmin";
 import { formattedStringToDate } from "@/shared/utils/functions/dates";
 import { prisma } from "@/lib/server/services/prisma";
 
-/* - Mocks das dependências externas - */
-
-vi.mock("@/actions/admin/checkIsAdmin", () => ({ checkIsAdmin: vi.fn() }));
+/* - Mocks das dependências externas (checkIsAdmin e prisma vêm do vitest.setup) - */
 
 vi.mock("@/shared/utils/functions/dates", () => ({ formattedStringToDate: vi.fn() }));
-
-vi.mock("@/lib/server/services/prisma", () => ({
-  prisma: {
-    voucher: { findMany: vi.fn() },
-  },
-}));
 
 const mockCheckIsAdmin = checkIsAdmin as unknown as Mock;
 const mockFormattedStringToDate = formattedStringToDate as unknown as Mock;
@@ -41,8 +33,6 @@ const buildVoucher = (productName: string, price: number, quantity: number) => (
 });
 
 beforeEach(() => {
-  vi.clearAllMocks();
-
   mockCheckIsAdmin.mockResolvedValue(true);
   mockFormattedStringToDate.mockReturnValue({ intervalStart, intervalEnd });
   mockFindMany.mockResolvedValue([]);
@@ -95,22 +85,15 @@ test("should look for vouchers of the selected category paid since the interval 
   });
 });
 
-test("should also filter by the product name when a name is given", async () => {
-  await getVoucherIncome(buildInput({ name: "Heineken" }));
+test.each([
+  ["a name is given", { name: "Heineken" }, { category: "beers", name: "Heineken" }],
+  ["no name is given", {}, { category: "beers" }],
+])("should build the product filter correctly when %s", async (_description, overrides, expectedProduct) => {
+  await getVoucherIncome(buildInput(overrides));
 
   expect(mockFindMany).toHaveBeenCalledWith(
     expect.objectContaining({
-      where: expect.objectContaining({ product: { category: "beers", name: "Heineken" } }),
-    }),
-  );
-});
-
-test("should not filter by the product name when no name is given", async () => {
-  await getVoucherIncome(buildInput());
-
-  expect(mockFindMany).toHaveBeenCalledWith(
-    expect.objectContaining({
-      where: expect.objectContaining({ product: { category: "beers" } }),
+      where: expect.objectContaining({ product: expectedProduct }),
     }),
   );
 });
@@ -125,48 +108,31 @@ test("should return false when fetching vouchers fails", async () => {
 
 /* - Testando o cálculo da receita - */
 
-test("should return zero income and no products when there are no vouchers", async () => {
-  const result = await getVoucherIncome(buildInput());
-
-  expect(result).toEqual({ totalIncome: 0, products: [] });
-});
-
-test("should multiply the quantity by the product price", async () => {
-  mockFindMany.mockResolvedValue([buildVoucher("Heineken", 10, 3)]);
-
-  const result = await getVoucherIncome(buildInput());
-
-  expect(result).toEqual({ totalIncome: 30, products: [{ name: "Heineken", income: 30 }] });
-});
-
-test("should group the income of vouchers from the same product", async () => {
-  mockFindMany.mockResolvedValue([buildVoucher("Heineken", 10, 2), buildVoucher("Heineken", 10, 3)]);
-
-  const result = await getVoucherIncome(buildInput());
-
-  expect(result).toEqual({ totalIncome: 50, products: [{ name: "Heineken", income: 50 }] });
-});
-
-test("should return one entry per product and sum them in the total", async () => {
-  mockFindMany.mockResolvedValue([buildVoucher("Heineken", 10, 2), buildVoucher("Corona", 12.5, 4), buildVoucher("Heineken", 10, 1)]);
-
-  const result = await getVoucherIncome(buildInput());
-
+test.each([
+  ["there are no vouchers", [], { totalIncome: 0, products: [] }],
+  ["the vouchers are free", [buildVoucher("Água", 0, 5)], { totalIncome: 0, products: [{ name: "Água", income: 0 }] }],
+  ["there is a single voucher", [buildVoucher("Heineken", 10, 3)], { totalIncome: 30, products: [{ name: "Heineken", income: 30 }] }],
+  [
+    "vouchers are from the same product",
+    [buildVoucher("Heineken", 10, 2), buildVoucher("Heineken", 10, 3)],
+    { totalIncome: 50, products: [{ name: "Heineken", income: 50 }] },
+  ],
   // Heineken: (2 x 10) + (1 x 10) = 30, Corona: 4 x 12.5 = 50
-
-  expect(result).toEqual({
-    totalIncome: 80,
-    products: [
-      { name: "Heineken", income: 30 },
-      { name: "Corona", income: 50 },
-    ],
-  });
-});
-
-test("should return zero income when the vouchers are free", async () => {
-  mockFindMany.mockResolvedValue([buildVoucher("Água", 0, 5)]);
+  [
+    "there are several products",
+    [buildVoucher("Heineken", 10, 2), buildVoucher("Corona", 12.5, 4), buildVoucher("Heineken", 10, 1)],
+    {
+      totalIncome: 80,
+      products: [
+        { name: "Heineken", income: 30 },
+        { name: "Corona", income: 50 },
+      ],
+    },
+  ],
+])("should return the correct income and products when %s", async (_description, vouchers, expected) => {
+  mockFindMany.mockResolvedValue(vouchers);
 
   const result = await getVoucherIncome(buildInput());
 
-  expect(result).toEqual({ totalIncome: 0, products: [{ name: "Água", income: 0 }] });
+  expect(result).toEqual(expected);
 });

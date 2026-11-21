@@ -4,18 +4,9 @@ import { formattedStringToDate } from "@/shared/utils/functions/dates";
 import { prisma } from "@/lib/server";
 import { tagSchema } from "@/lib/validations/shared/tagSchema";
 
-/* - Mocks das dependências externas - */
-
-vi.mock("@/actions/admin/checkIsAdmin", () => ({ checkIsAdmin: vi.fn() }));
+/* - Mocks das dependências externas (checkIsAdmin e prisma vêm do vitest.setup) - */
 
 vi.mock("@/shared/utils/functions/dates", () => ({ formattedStringToDate: vi.fn() }));
-
-vi.mock("@/lib/server/services/prisma", () => ({
-  prisma: {
-    user: { count: vi.fn() },
-    ticketPayment: { findMany: vi.fn() },
-  },
-}));
 
 const mockCheckIsAdmin = checkIsAdmin as unknown as Mock;
 const mockFormattedStringToDate = formattedStringToDate as unknown as Mock;
@@ -56,8 +47,6 @@ const payments = [
 ];
 
 beforeEach(() => {
-  vi.clearAllMocks();
-
   mockCheckIsAdmin.mockResolvedValue(true);
   mockFormattedStringToDate.mockReturnValue({ intervalStart, intervalEnd });
   mockUserCount.mockResolvedValue(0);
@@ -116,16 +105,11 @@ test("should look for the first confirmed payment of each user", async () => {
   );
 });
 
-test("should return false when counting users fails", async () => {
-  mockUserCount.mockRejectedValue(new Error("db error"));
-
-  const result = await getNewVisitors(buildInput());
-
-  expect(result).toBe(false);
-});
-
-test("should return false when fetching payments fails", async () => {
-  mockFindMany.mockRejectedValue(new Error("db error"));
+test.each([
+  ["counting users", () => mockUserCount],
+  ["fetching payments", () => mockFindMany],
+])("should return false when %s fails", async (_description, getMock) => {
+  getMock().mockRejectedValue(new Error("db error"));
 
   const result = await getNewVisitors(buildInput());
 
@@ -142,22 +126,14 @@ test("should return the new users count from the database", async () => {
   expect(result).toMatchObject({ newUsers: 42 });
 });
 
-test("should count each buyer only once in the total", async () => {
+test("should count each buyer only once in the total and return the buyers of every tag", async () => {
   mockFindMany.mockResolvedValue(payments);
 
   const result = await getNewVisitors(buildInput());
 
   // user 1, user 2, user 3 e user 5 (o user 4 comprou antes do período)
 
-  expect(result).toMatchObject({ buyers: 4 });
-});
-
-test("should return the buyers of every tag", async () => {
-  mockFindMany.mockResolvedValue(payments);
-
-  const result = await getNewVisitors(buildInput());
-
-  expect(result).toMatchObject({ buyersByTag: buildBuyersByTag({ rock: 3, pop: 2 }) });
+  expect(result).toMatchObject({ buyers: 4, buyersByTag: buildBuyersByTag({ rock: 3, pop: 2 }) });
 });
 
 test("should return zeros when there are no payments", async () => {
@@ -168,28 +144,16 @@ test("should return zeros when there are no payments", async () => {
 
 /* - Testando as regras de quem conta como comprador - */
 
-test("should ignore users whose first purchase was before the interval start", async () => {
-  mockFindMany.mockResolvedValue([buildPayment("old", new Date(intervalStart - 1), ["rock"])]);
+test.each([
+  ["a first purchase before the interval start", new Date(intervalStart - 1), 0],
+  ["a purchase made exactly at the interval start", new Date(intervalStart), 1],
+  ["a payment without a confirmation date", null, 0],
+])("should handle %s", async (_description, confirmedAt, expectedBuyers) => {
+  mockFindMany.mockResolvedValue([buildPayment("user 1", confirmedAt, ["rock"])]);
 
   const result = await getNewVisitors(buildInput());
 
-  expect(result).toMatchObject({ buyers: 0 });
-});
-
-test("should count a purchase made exactly at the interval start", async () => {
-  mockFindMany.mockResolvedValue([buildPayment("user 1", new Date(intervalStart), ["rock"])]);
-
-  const result = await getNewVisitors(buildInput());
-
-  expect(result).toMatchObject({ buyers: 1 });
-});
-
-test("should ignore payments without a confirmation date", async () => {
-  mockFindMany.mockResolvedValue([buildPayment("user 1", null, ["rock"])]);
-
-  const result = await getNewVisitors(buildInput());
-
-  expect(result).toMatchObject({ buyers: 0 });
+  expect(result).toMatchObject({ buyers: expectedBuyers });
 });
 
 test("should count a buyer once per tag even with several tickets of the same tag", async () => {
@@ -210,20 +174,15 @@ test("should count a buyer in every tag they bought but once in the total", asyn
 
 /* - Testando o resultado com uma tag específica - */
 
-test("should return only the selected tag in buyersByTag", async () => {
+test.each([
+  ["pop", 2],
+  ["rock", 3],
+])("should return only the %s tag in buyersByTag and use its buyers as the total", async (tag, expectedBuyers) => {
   mockFindMany.mockResolvedValue(payments);
 
-  const result = await getNewVisitors(buildInput({ tag: "pop" }));
+  const result = await getNewVisitors(buildInput({ tag: tag as NewVisitorInput["tag"] }));
 
-  expect(result).toMatchObject({ buyersByTag: [{ tag: "pop", totalBuyers: 2 }] });
-});
-
-test("should use the buyers of the selected tag as the buyers total", async () => {
-  mockFindMany.mockResolvedValue(payments);
-
-  const result = await getNewVisitors(buildInput({ tag: "rock" }));
-
-  expect(result).toMatchObject({ buyers: 3 });
+  expect(result).toMatchObject({ buyers: expectedBuyers, buyersByTag: [{ tag, totalBuyers: expectedBuyers }] });
 });
 
 test("should return zero buyers when nobody bought the selected tag", async () => {

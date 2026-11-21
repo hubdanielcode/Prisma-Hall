@@ -1,20 +1,12 @@
-import { beforeEach, vi, type Mock } from "vitest";
+import { beforeEach, expect, test, vi, type Mock } from "vitest";
 import { getTicketIncome } from "@/actions/admin/analytics-management/getTicketIncome";
 import { checkIsAdmin } from "@/actions/admin/checkIsAdmin";
 import { formattedStringToDate } from "@/shared/utils/functions/dates";
 import { prisma } from "@/lib/server/services/prisma";
 
-/* - Mocks das dependências externas - */
-
-vi.mock("@/actions/admin/checkIsAdmin", () => ({ checkIsAdmin: vi.fn() }));
+/* - Mocks das dependências externas (checkIsAdmin e prisma vêm do vitest.setup) - */
 
 vi.mock("@/shared/utils/functions/dates", () => ({ formattedStringToDate: vi.fn() }));
-
-vi.mock("@/lib/server/services/prisma", () => ({
-  prisma: {
-    ticket: { findMany: vi.fn() },
-  },
-}));
 
 const mockCheckIsAdmin = checkIsAdmin as unknown as Mock;
 const mockFormattedStringToDate = formattedStringToDate as unknown as Mock;
@@ -41,8 +33,6 @@ const buildTicket = (quantity: number, unitPrice: number) => ({
 });
 
 beforeEach(() => {
-  vi.clearAllMocks();
-
   mockCheckIsAdmin.mockResolvedValue(true);
   mockFormattedStringToDate.mockReturnValue({ intervalStart, intervalEnd });
   mockFindMany.mockResolvedValue([]);
@@ -97,22 +87,15 @@ test("should look for tickets of the selected tag paid inside the interval", asy
   });
 });
 
-test("should also filter by the event title when a name is given", async () => {
-  await getTicketIncome(buildInput({ name: "Rock in Rio" }));
+test.each([
+  ["a name is given", { name: "Rock in Rio" }, { tag: "rock", title: "Rock in Rio" }],
+  ["no name is given", {}, { tag: "rock" }],
+])("should build the event filter correctly when %s", async (_description, overrides, expectedEvent) => {
+  await getTicketIncome(buildInput(overrides));
 
   expect(mockFindMany).toHaveBeenCalledWith(
     expect.objectContaining({
-      where: expect.objectContaining({ event: { tag: "rock", title: "Rock in Rio" } }),
-    }),
-  );
-});
-
-test("should not filter by the event title when no name is given", async () => {
-  await getTicketIncome(buildInput());
-
-  expect(mockFindMany).toHaveBeenCalledWith(
-    expect.objectContaining({
-      where: expect.objectContaining({ event: { tag: "rock" } }),
+      where: expect.objectContaining({ event: expectedEvent }),
     }),
   );
 });
@@ -127,44 +110,16 @@ test("should return false when fetching tickets fails", async () => {
 
 /* - Testando o cálculo da receita - */
 
-test("should return zero income when there are no tickets", async () => {
-  const result = await getTicketIncome(buildInput());
-
-  expect(result).toEqual({ totalIncome: 0 });
-});
-
-test("should multiply the quantity by the unit price", async () => {
-  mockFindMany.mockResolvedValue([buildTicket(2, 50)]);
-
-  const result = await getTicketIncome(buildInput());
-
-  expect(result).toEqual({ totalIncome: 100 });
-});
-
-test("should sum the income of every ticket", async () => {
-  mockFindMany.mockResolvedValue([buildTicket(2, 50), buildTicket(3, 25.5), buildTicket(1, 120)]);
+test.each([
+  ["there are no tickets", [], 0],
+  ["the tickets are free", [buildTicket(5, 0)], 0],
+  ["there is a single ticket", [buildTicket(2, 50)], 100], // (2 x 50) + (3 x 25.5) + (1 x 120) => 100 + 76.5 + 120 = 296.5
+  ["there are several tickets", [buildTicket(2, 50), buildTicket(3, 25.5), buildTicket(1, 120)], 296.5], // 3 x 19.9 = 59.699999999999996 em JS, o esperado é 59.7
+  ["the prices have cents", [buildTicket(3, 19.9)], 59.7],
+])("should return the correct total income when %s", async (_description, tickets, expectedIncome) => {
+  mockFindMany.mockResolvedValue(tickets);
 
   const result = await getTicketIncome(buildInput());
 
-  // (2 x 50) + (3 x 25.5) + (1 x 120) => 100 + 76.5 + 120 = 296.5
-
-  expect(result).toEqual({ totalIncome: 296.5 });
-});
-
-test("should return zero income when the tickets are free", async () => {
-  mockFindMany.mockResolvedValue([buildTicket(5, 0)]);
-
-  const result = await getTicketIncome(buildInput());
-
-  expect(result).toEqual({ totalIncome: 0 });
-});
-
-test("should avoid floating point errors when summing prices with cents", async () => {
-  mockFindMany.mockResolvedValue([buildTicket(3, 19.9)]);
-
-  const result = await getTicketIncome(buildInput());
-
-  // 3 x 19.9 dá 59.699999999999996 em JavaScript, o esperado é 59.7
-
-  expect(result).toEqual({ totalIncome: 59.7 });
+  expect(result).toEqual({ totalIncome: expectedIncome });
 });

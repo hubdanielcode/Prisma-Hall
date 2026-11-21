@@ -1,3 +1,4 @@
+import { expect, test } from "vitest";
 import { NextRequest } from "next/server";
 import { proxy } from "@/proxy";
 
@@ -18,20 +19,19 @@ const callProxy = async (path: string, hasSession: boolean) => {
   };
 };
 
-const protectedRoutes = ["/perfil", "/carrinho", "/admin"];
+const protectedRoutes = ["/perfil", "/carrinho", "/admin", "/pedidos/123/detalhes-do-pedido"];
 const publicRoutes = ["/", "/agenda", "/cadastro", "/sobre"];
+
+// Cada caso é [rota, tem sessão]: as protegidas com sessão e as públicas sem sessão devem passar direto
+
+const passThroughCases: [string, boolean][] = [
+  ...protectedRoutes.map((path): [string, boolean] => [path, true]),
+  ...publicRoutes.map((path): [string, boolean] => [path, false]),
+];
 
 /* - Testando rotas protegidas sem sessão - */
 
 test.each(protectedRoutes)("should redirect %s to login when there's no session", async (path) => {
-  const { redirectUrl } = await callProxy(path, false);
-
-  expect(redirectUrl?.pathname).toBe("/login");
-  expect(redirectUrl?.searchParams.get("from")).toBe(path);
-});
-
-test("should redirect nested order routes to login when there's no session", async () => {
-  const path = "/pedidos/123/detalhes-do-pedido";
   const { redirectUrl } = await callProxy(path, false);
 
   expect(redirectUrl?.pathname).toBe("/login");
@@ -46,19 +46,10 @@ test("should keep only the pathname in the from param", async () => {
   expect(redirectUrl?.search).not.toContain("aba");
 });
 
-/* - Testando rotas protegidas com sessão - */
+/* - Testando as rotas que devem passar direto - */
 
-test.each(protectedRoutes)("should let %s through when there's a session cookie", async (path) => {
-  const { redirectUrl, passedThrough } = await callProxy(path, true);
-
-  expect(redirectUrl).toBeNull();
-  expect(passedThrough).toBe(true);
-});
-
-/* - Testando rotas públicas - */
-
-test.each(publicRoutes)("should let %s through even without a session", async (path) => {
-  const { redirectUrl, passedThrough } = await callProxy(path, false);
+test.each(passThroughCases)("should let %s through when the session is %s", async (path, hasSession) => {
+  const { redirectUrl, passedThrough } = await callProxy(path, hasSession);
 
   expect(redirectUrl).toBeNull();
   expect(passedThrough).toBe(true);
@@ -66,17 +57,14 @@ test.each(publicRoutes)("should let %s through even without a session", async (p
 
 /* - Testando a rota de login - */
 
-test("should not redirect users who are accessing /login", async () => {
-  const { redirectUrl, passedThrough } = await callProxy("/login", false);
+test.each([
+  ["/login", "/login"],
+  ["/login with a huge from param", `/login?from=${"%252F".repeat(500)}`],
+])("should not redirect users who are accessing %s", async (_description, path) => {
+  const { redirectUrl, passedThrough } = await callProxy(path, false);
 
   expect(redirectUrl).toBeNull();
   expect(passedThrough).toBe(true);
-});
-
-test("should not redirect users accessing /login even with a huge from param", async () => {
-  const { redirectUrl } = await callProxy(`/login?from=${"%252F".repeat(500)}`, false);
-
-  expect(redirectUrl).toBeNull();
 });
 
 /* - Testando o loop de redirecionamento - */
