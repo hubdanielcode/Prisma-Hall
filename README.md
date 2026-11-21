@@ -4,6 +4,7 @@ Aplicação web **full-stack** para uma **casa de show**, desenvolvida com Next.
 
 O projeto foi desenvolvido com foco em boas práticas de arquitetura, organização escalável por features, modelagem de dados relacional com Prisma e PostgreSQL e uma suíte ampla de testes automatizados.
 
+🔗 Deploy: https://prisma-hall-daniel-lorenzos-projects.vercel.app/
 🔗 Repositório: https://github.com/hubdanielcode/Prisma-Hall
 
 ---
