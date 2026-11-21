@@ -1,8 +1,8 @@
 # 🎶 PrismaHall
 
-Aplicação web **full-stack** para uma **casa de show**, desenvolvida com Next.js, React e TypeScript, permitindo a consulta da agenda de eventos, a montagem de pedidos com ingressos e itens do bar e a administração completa da operação da casa.
+Aplicação web **full-stack** para uma **casa de show**, desenvolvida com Next.js, React e TypeScript, permitindo a consulta da agenda de eventos, a compra de ingressos e vouchers do bar com pagamento online, a retirada dos pedidos na casa e a administração completa da operação.
 
-O projeto foi desenvolvido com foco em boas práticas de arquitetura, organização escalável por features e modelagem de dados relacional com Prisma e PostgreSQL.
+O projeto foi desenvolvido com foco em boas práticas de arquitetura, organização escalável por features, modelagem de dados relacional com Prisma e PostgreSQL e uma suíte ampla de testes automatizados.
 
 🔗 Repositório: https://github.com/hubdanielcode/Prisma-Hall
 
@@ -12,13 +12,19 @@ O projeto foi desenvolvido com foco em boas práticas de arquitetura, organizaç
 
 O sistema permite:
 
-- Cadastro, login e recuperação de senha por e-mail
+- Cadastro com validação da conta por e-mail, login e recuperação de senha
 - Consulta da agenda de eventos com filtro por gênero musical
 - Visualização dos detalhes de cada evento e de suas atrações
-- Adição de ingressos e itens do bar ao carrinho
+- Favoritar eventos
+- Carrinho com ingressos e itens do bar
+- Pagamento online com Stripe (Pix e cartão)
+- Histórico de pedidos, detalhes do pedido e cancelamento com reembolso
 - Avaliações e galeria de fotos dos eventos
-- Edição do perfil do usuário
-- Painel administrativo com gestão de eventos, atrações, produtos do bar e usuários
+- Notificações dentro do site, com preferências configuráveis
+- Inscrição na newsletter
+- Badges de conquista por usuário (verificado, frequente e antigo)
+- Edição e exclusão do perfil
+- Painel administrativo com gestão de eventos, atrações, galeria, produtos do bar, usuários e retirada de pedidos
 - Analytics de receita de ingressos, receita de vouchers e novos visitantes
 
 ---
@@ -34,6 +40,7 @@ O projeto foi estruturado seguindo o padrão de organização por **features**, 
 - `features/bar`
 - `features/cart`
 - `features/events`
+- `features/newsletter`
 - `features/users`
 - `lib`
 - `prisma`
@@ -42,13 +49,17 @@ O projeto foi estruturado seguindo o padrão de organização por **features**, 
 ### Principais decisões técnicas:
 
 - Server Actions para todas as mutações e consultas, com validação Zod antes de acessar o banco
-- Separação clara entre lógica, UI e serviços
+- Código de servidor isolado em `lib/server` (Prisma, Stripe, e-mail, pagamentos, badges, notificações e rate limit)
+- Schemas Zod centralizados em `lib/validations`, organizados pelo mesmo domínio das actions
 - Rotas do App Router agrupadas por contexto: `(Public)`, `(Authentication)`, `(Protected)` e `(Admin)`
-- Camada de services para comunicação com o Supabase
-- Context API para gerenciamento de estado (carrinho, bar e agenda)
+- `proxy.ts` como primeira barreira das rotas protegidas e validação real da sessão nos layouts
+- Webhook do Stripe para confirmar, expirar e cancelar pagamentos de forma idempotente
+- Cron job diário na Vercel para recalcular os badges de tempo de conta
+- Context API para estado de interface (carrinho, bar, agenda, evento, perfil, tema e mobile)
 - TanStack Query para estado de servidor
 - Hooks customizados para abstração de lógica
 - Componentização reutilizável, documentada de forma isolada no Storybook
+- Regras de negócio isoladas em funções puras e testáveis (política de cancelamento, janela de edição de avaliações e bloqueio de retirada)
 - Estrutura preparada para crescimento e manutenção futura
 
 ---
@@ -59,12 +70,30 @@ Implementada do zero com Server Actions, sem serviço de autenticação de terce
 
 - Registro e login com e-mail e senha
 - Senhas protegidas com hash bcrypt
+- Validação da conta por e-mail, com reenvio do link
+- Link de validação só cria sessão no mesmo navegador do cadastro (chave em cookie `httpOnly` e hash no banco, comparado em tempo constante)
 - Sessões persistidas no banco de dados
 - Cookie `httpOnly`, `secure` e `sameSite`
 - Opção "lembrar de mim" (sessão de 7 dias ou de 2 horas)
 - Perfis de acesso `user` e `admin`
-- Recuperação de senha com token e e-mail transacional (Resend e React Email)
+- Recuperação de senha com token e e-mail transacional (Brevo e React Email)
+- Rate limit persistido no banco para login, cadastro, validação, recuperação de senha e exclusão de perfil, com contador atômico e identificador em hash
 - Validação dos dados com Zod
+
+---
+
+## 💳 Pagamentos e Pedidos
+
+O fluxo de compra combina Server Actions, Stripe e regras de negócio isoladas:
+
+- Checkout do carrinho com ingressos e vouchers do bar em pedidos separados
+- Sessão de pagamento no Stripe (Pix e cartão), com confirmação, expiração e falha tratadas pelo webhook
+- Cancelamento de pedidos não pagos de forma segura contra concorrência entre o usuário e o webhook
+- Cancelamento de ingressos permitido até 24 horas antes do evento, com reembolso no Stripe
+- Retirada dos pedidos no balcão, liberada apenas para pedidos não cancelados, com pagamento confirmado e ainda não retirados
+- E-mails transacionais de confirmação de pedido, confirmação de pagamento e reembolso
+- Taxa de serviço aplicada no carrinho
+- Exclusão de conta que anonimiza os dados e é bloqueada enquanto houver ingressos de eventos futuros ou vouchers pagos não retirados, e também para o último administrador
 
 ---
 
@@ -72,38 +101,66 @@ Implementada do zero com Server Actions, sem serviço de autenticação de terce
 
 ✔ Agenda de eventos com filtro por gênero  
 ✔ Página de detalhes do evento e atrações  
+✔ Eventos favoritos  
 ✔ Carrinho com ingressos e itens do bar  
-✔ Avaliações de eventos  
+✔ Checkout com Stripe (Pix e cartão)  
+✔ Pedidos, detalhes do pedido e cancelamento com reembolso  
+✔ Avaliações de eventos (edição liberada por 3 minutos após a criação)  
 ✔ Galeria de fotos com curtidas  
+✔ Notificações e preferências de notificação  
+✔ Newsletter  
+✔ Badges de conquista (verificado, frequente e antigo)  
 ✔ Perfil do usuário  
-✔ Recuperação de senha por e-mail  
-✔ CRUD de eventos e atrações  
+✔ Validação de conta e recuperação de senha por e-mail  
+✔ CRUD de eventos, atrações e fotos da galeria  
+✔ Cancelamento de eventos com notificação dos usuários  
 ✔ CRUD de produtos do bar  
-✔ Gestão de usuários  
+✔ Gestão de usuários e dos níveis de badge  
+✔ Gestão de retirada de pedidos  
 ✔ Filtros e paginação nas tabelas administrativas  
 ✔ Upload de imagens com Vercel Blob  
 ✔ Analytics administrativo (receita de ingressos, receita de vouchers e novos visitantes)  
-✔ Páginas institucionais (sobre, central de ajuda, perguntas frequentes, trabalhe conosco, termos de uso, política de privacidade e política de reembolso)
+✔ Páginas institucionais (sobre, central de ajuda, perguntas frequentes, trabalhe conosco, termos de uso, política de privacidade e política de reembolso)  
+✔ Página 404 personalizada  
+✔ Testes automatizados com Vitest  
+✔ Componentes documentados no Storybook
 
 ---
 
 ## 🗄️ Banco de Dados
 
-Schema relacional modelado com Prisma e PostgreSQL, com 16 modelos:
+Schema relacional modelado com Prisma e PostgreSQL, com 21 modelos e 20 migrations versionadas:
 
 - **Usuários:** `User`, `Profile`, `Session`
-- **Eventos:** `Event`, `Attraction`, `Review`, `Gallery`, `GalleryLikes`
+- **Eventos:** `Event`, `Attraction`, `Review`, `Gallery`, `GalleryLikes`, `FavoriteEvent`
 - **Ingressos:** `Ticket`, `TicketOrder`, `TicketPayment`
 - **Vouchers:** `Voucher`, `VoucherOrder`, `VoucherPayment`
 - **Bar e carrinho:** `Product`, `Cart`
+- **Comunicação:** `Notification`, `NotificationPreference`, `Newsletter`
+- **Infraestrutura:** `RateLimit`
 
-O histórico de alterações do banco é versionado em migrations, em `src/prisma/migrations`.
+O histórico de alterações do banco é versionado em `src/prisma/migrations` e o client é gerado em `src/prisma/generated`.
+
+---
+
+## 🧪 Testes
+
+O projeto possui mais de 120 arquivos de teste, com a estrutura de pastas espelhando a de `src`:
+
+- **Actions** — admin (eventos, atrações, galeria, bar, usuários, retirada e analytics), autenticação, bar, carrinho, eventos, avaliações, galeria, newsletter, pagamentos, notificações, perfil, ingressos e vouchers
+- **Rotas de API** — webhook do Stripe e cron de badges
+- **Lib de servidor** — badges, rate limit, sessão, validação por navegador, pagamentos, reembolso, notificações, anonimização de usuários, status de eventos, regra de retirada e serviços (Prisma, bcrypt, Stripe e e-mail)
+- **Validações** — schemas Zod de todos os domínios
+- **Funções utilitárias** — políticas de cancelamento e de edição de avaliações, datas, formatadores, máscaras e tema
+- **Proxy** — proteção das rotas privadas
+
+Os testes utilizam `vitest-mock-extended` para isolar o Prisma, mocks dos serviços externos (Stripe, bcrypt, Vercel Blob) e `vi.useFakeTimers()` nas regras que dependem de tempo.
 
 ---
 
 ## 📚 Storybook
 
-Os componentes são documentados e testados visualmente de forma isolada com o Storybook, que conta com mais de 45 stories e com o addon de acessibilidade.
+Os componentes são documentados e testados visualmente de forma isolada com o Storybook, que conta com mais de 80 stories, mocks dos hooks e serviços e o addon de acessibilidade.
 
 ---
 
@@ -114,14 +171,18 @@ Os componentes são documentados e testados visualmente de forma isolada com o S
 - TypeScript
 - Tailwind CSS
 - Prisma
-- PostgreSQL
-- Supabase
+- PostgreSQL (Supabase)
+- Stripe
 - TanStack Query
 - Zod
 - bcrypt
-- Resend + React Email
+- Brevo + React Email
 - Vercel Blob
+- Recharts
+- Motion
+- Vitest + React Testing Library
 - Storybook
+- Vercel (hospedagem e cron jobs)
 - Git & GitHub
 
 ---
@@ -147,9 +208,16 @@ Crie um arquivo `.env.local` com suas credenciais:
 DATABASE_URL=your_database_url
 DIRECT_URL=your_direct_url
 NEXT_PUBLIC_APP_URL=http://localhost:3000
-RESEND_API_KEY=your_resend_key
+STRIPE_SECRET_KEY=your_stripe_secret_key
+STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
+BREVO_API_KEY=your_brevo_key
+EMAIL_FROM="Prisma Hall <naoresponda@seudominio.com>"
+EMAIL_FROM_ADDRESS=naoresponda@seudominio.com
 BLOB_READ_WRITE_TOKEN=your_blob_token
+CRON_SECRET=your_cron_secret
 ```
+
+> `DIRECT_URL` é usada pelo Prisma nas migrations. O remetente (`EMAIL_FROM_ADDRESS`) precisa ser um endereço validado no Brevo. `CRON_SECRET` protege a rota do cron: sem ela, a rota recusa qualquer chamada.
 
 Aplique as migrations e gere o client do Prisma:
 
@@ -170,6 +238,24 @@ Acesse no navegador:
 http://localhost:3000
 ```
 
+Receba os webhooks do Stripe localmente:
+
+```
+stripe listen --forward-to localhost:3000/api/webhooks/stripe
+```
+
+Execute os testes:
+
+```
+npm run test
+```
+
+Abra a interface do Vitest:
+
+```
+npm run test:ui
+```
+
 Execute o Storybook:
 
 ```
@@ -186,9 +272,14 @@ npm run storybook
 - Autenticação e sessões implementadas do zero
 - Modelagem relacional e migrations com Prisma
 - Validação de dados com schemas Zod
-- Gerenciamento de estado com Hooks, Context API e TanStack Query
+- Integração com gateway de pagamento e webhooks idempotentes
+- Controle de concorrência com transações e operações atômicas
+- Rate limit persistido em banco
 - Controle de acesso por perfil (usuário e administrador)
+- Regras de negócio isoladas em funções puras
+- Cron jobs e rotas protegidas por segredo
 - E-mails transacionais com templates em React
+- Testes automatizados de actions, rotas de API, serviços e validações
 - Documentação de componentes com Storybook
 - Boas práticas de estruturação de projeto full-stack
 
@@ -198,176 +289,87 @@ npm run storybook
 
 ```
 PrismaHall/
-├── .git/
-├── node_modules/
 ├── .storybook/
 │   ├── mocks/
-│   │   ├── bcrypt.ts
-│   │   ├── prisma.ts
-│   │   ├── useAuthentication.ts
-│   │   ├── useProducts.ts
-│   │   └── useProfile.ts
+│   │   ├── hooks/
+│   │   └── services/
+│   │       ├── bcrypt.ts
+│   │       ├── prisma.ts
+│   │       └── stripe.ts
 │   │
 │   ├── main.ts
 │   └── preview.tsx
 │
 ├── public/
-│   ├── checkbox/
-│   │   └── checkmark.svg
-│   │
-│   ├── images/
-│   │   ├── ph-bar.png
-│   │   ├── ph-mezanino.png
-│   │   ├── ph-palco.png
-│   │   └── ph-quinas.png
-│   │
-│   └── logo/
-│       ├── ph-icon.png
-│       └── ph-logo.png
 │
 ├── src/
 │   ├── actions/
 │   │   ├── admin/
 │   │   │   ├── analytics-management/
-│   │   │   │   ├── getNewVisitors.ts
-│   │   │   │   ├── getTicketIncome.ts
-│   │   │   │   └── getVoucherIncome.ts
-│   │   │   │
 │   │   │   ├── bar-management/
-│   │   │   │   ├── createProduct.ts
-│   │   │   │   ├── deleteProduct.ts
-│   │   │   │   └── editProduct.ts
-│   │   │   │
 │   │   │   ├── events-management/
-│   │   │   │   ├── createAttraction.ts
-│   │   │   │   ├── createEvent.ts
-│   │   │   │   ├── deleteAttraction.ts
-│   │   │   │   ├── deleteEvent.ts
-│   │   │   │   ├── editAttraction.ts
-│   │   │   │   └── editEvent.ts
-│   │   │   │
+│   │   │   │   ├── attraction-management/
+│   │   │   │   ├── event-management/
+│   │   │   │   └── gallery-management/
+│   │   │   ├── pickup-management/
 │   │   │   ├── users-management/
-│   │   │   │   ├── deleteUser.ts
-│   │   │   │   └── editUser.ts
-│   │   │   │
 │   │   │   └── checkIsAdmin.ts
 │   │   │
 │   │   ├── authentication/
-│   │   │   ├── passwordReset.ts
-│   │   │   ├── requestPasswordReset.ts
-│   │   │   ├── signIn.ts
-│   │   │   └── signUp.ts
-│   │   │
 │   │   ├── bar/
-│   │   │   ├── getAllProducts.ts
-│   │   │   └── getSingleProduct.ts
-│   │   │
 │   │   ├── cart/
-│   │   │   ├── addItemToCart.ts
-│   │   │   ├── getCartItems.ts
-│   │   │   ├── removeItemFromCart.ts
-│   │   │   └── updateItemQuantity.ts
-│   │   │
 │   │   ├── events/
 │   │   │   ├── agenda/
-│   │   │   │   ├── getAllAttractions.ts
-│   │   │   │   └── getSingleAttraction.ts
-│   │   │   │
 │   │   │   ├── event/
-│   │   │   │   ├── getAllEvents.ts
-│   │   │   │   └── getSingleEvent.ts
-│   │   │   │
 │   │   │   ├── gallery/
-│   │   │   │   ├── getEventPictures.ts
-│   │   │   │   └── likeEventPicture.ts
-│   │   │   │
 │   │   │   └── reviews/
-│   │   │       ├── deleteReview.ts
-│   │   │       ├── postReview.ts
-│   │   │       └── updateReview.ts
-│   │   │
-│   │   ├── session/
-│   │   │   ├── createSession.ts
-│   │   │   ├── revokeSession.ts
-│   │   │   └── validateSession.ts
-│   │   │
+│   │   ├── newsletter/
+│   │   ├── payments/
 │   │   ├── users/
+│   │   │   ├── notifications/
 │   │   │   ├── profile/
-│   │   │   │   ├── deleteProfile.ts
-│   │   │   │   ├── getProfile.ts
-│   │   │   │   └── updateProfile.ts
-│   │   │   │
 │   │   │   ├── tickets/
-│   │   │   │   ├── buyTickets.ts
-│   │   │   │   ├── cancelTicketOrder.ts
-│   │   │   │   ├── getMyTickets.ts
-│   │   │   │   └── getTicketOrder.ts
-│   │   │   │
-│   │   │   ├── vouchers/
-│   │   │   │   ├── buyVouchers.ts
-│   │   │   │   ├── cancelVoucherOrder.ts
-│   │   │   │   ├── getMyVouchers.ts
-│   │   │   │   └── getVoucherOrder.ts
-│   │   │   │
-│   │   │   └── getShoppingHistory.ts
+│   │   │   ├── user/
+│   │   │   └── vouchers/
 │   │   │
 │   │   └── index.ts
 │   │
 │   ├── app/
 │   │   ├── (Admin)/
 │   │   │   └── admin/
-│   │   │       ├── layout.tsx
-│   │   │       └── page.tsx
 │   │   │
 │   │   ├── (Authentication)/
 │   │   │   ├── cadastro/
-│   │   │   │   └── page.tsx
-│   │   │   │
 │   │   │   ├── login/
-│   │   │   │   └── page.tsx
-│   │   │   │
-│   │   │   └── recuperar-senha/
-│   │   │       └── page.tsx
+│   │   │   ├── recuperar-senha/
+│   │   │   └── validar-conta/
 │   │   │
 │   │   ├── (Protected)/
 │   │   │   ├── carrinho/
-│   │   │   │   └── page.tsx
-│   │   │   │
 │   │   │   ├── pedidos/
-│   │   │   │   └── page.tsx
-│   │   │   │
+│   │   │   │   └── [orderId]/
+│   │   │   │       ├── cancelar-pedidos/
+│   │   │   │       └── detalhes-do-pedido/
 │   │   │   ├── perfil/
-│   │   │   │   └── page.tsx
-│   │   │   │
 │   │   │   └── layout.tsx
 │   │   │
 │   │   ├── (Public)/
 │   │   │   ├── agenda/
-│   │   │   │   └── page.tsx
-│   │   │   │
 │   │   │   ├── central-de-ajuda/
-│   │   │   │   └── page.tsx
-│   │   │   │
 │   │   │   ├── perguntas-frequentes/
-│   │   │   │   └── page.tsx
-│   │   │   │
 │   │   │   ├── politica-de-privacidade/
-│   │   │   │   └── page.tsx
-│   │   │   │
 │   │   │   ├── politica-de-reembolso/
-│   │   │   │   └── page.tsx
-│   │   │   │
 │   │   │   ├── sobre/
-│   │   │   │   └── page.tsx
-│   │   │   │
 │   │   │   ├── termos-de-uso/
-│   │   │   │   └── page.tsx
-│   │   │   │
 │   │   │   ├── trabalhe-conosco/
-│   │   │   │   └── page.tsx
-│   │   │   │
 │   │   │   ├── layout.tsx
 │   │   │   └── page.tsx
+│   │   │
+│   │   ├── api/
+│   │   │   ├── cron/
+│   │   │   │   └── old-user-badges/
+│   │   │   └── webhooks/
+│   │   │       └── stripe/
 │   │   │
 │   │   ├── globals.css
 │   │   ├── layout.tsx
@@ -376,437 +378,148 @@ PrismaHall/
 │   ├── features/
 │   │   ├── admin/
 │   │   │   ├── analytics-management/
-│   │   │   │   ├── components/
-│   │   │   │   │
-│   │   │   │   ├── pages/
-│   │   │   │   │   └── AnalyticsManagement.tsx
-│   │   │   │   │
-│   │   │   │   ├── types/
-│   │   │   │   │   └── labels.ts
-│   │   │   │   │
-│   │   │   │   └── index.ts
-│   │   │   │
 │   │   │   ├── bar-management/
-│   │   │   │   ├── components/
-│   │   │   │   │   ├── CreateProductModal.stories.tsx
-│   │   │   │   │   ├── CreateProductModal.tsx
-│   │   │   │   │   ├── DeleteProductModal.stories.tsx
-│   │   │   │   │   ├── DeleteProductModal.tsx
-│   │   │   │   │   ├── EditProductModal.stories.tsx
-│   │   │   │   │   ├── EditProductModal.tsx
-│   │   │   │   │   ├── ProductsManagementCard.stories.tsx
-│   │   │   │   │   ├── ProductsManagementCard.tsx
-│   │   │   │   │   ├── ProductsManagementFilter.stories.tsx
-│   │   │   │   │   ├── ProductsManagementFilter.tsx
-│   │   │   │   │   ├── ProductsManagementTable.stories.tsx
-│   │   │   │   │   ├── ProductsManagementTable.tsx
-│   │   │   │   │   ├── ProductsTablePagination.stories.tsx
-│   │   │   │   │   └── ProductsTablePagination.tsx
-│   │   │   │   │
-│   │   │   │   ├── pages/
-│   │   │   │   │   └── BarManagement.tsx
-│   │   │   │   │
-│   │   │   │   ├── types/
-│   │   │   │   │   └── productCategoryBadges.ts
-│   │   │   │   │
-│   │   │   │   └── index.ts
-│   │   │   │
 │   │   │   ├── events-management/
-│   │   │   │   ├── components/
-│   │   │   │   │   ├── CreateAttractionModal.stories.tsx
-│   │   │   │   │   ├── CreateAttractionModal.tsx
-│   │   │   │   │   ├── CreateEventModal.stories.tsx
-│   │   │   │   │   ├── CreateEventModal.tsx
-│   │   │   │   │   ├── DeleteAttractionModal.stories.tsx
-│   │   │   │   │   ├── DeleteAttractionModal.tsx
-│   │   │   │   │   ├── DeleteEventModal.stories.tsx
-│   │   │   │   │   ├── DeleteEventModal.tsx
-│   │   │   │   │   ├── EditAttractionModal.stories.tsx
-│   │   │   │   │   ├── EditAttractionModal.tsx
-│   │   │   │   │   ├── EditEventModal.stories.tsx
-│   │   │   │   │   ├── EditEventModal.tsx
-│   │   │   │   │   ├── EventsManagementCard.stories.tsx
-│   │   │   │   │   ├── EventsManagementCard.tsx
-│   │   │   │   │   ├── EventsManagementFilter.stories.tsx
-│   │   │   │   │   ├── EventsManagementFilter.tsx
-│   │   │   │   │   ├── EventsManagementTable.stories.tsx
-│   │   │   │   │   ├── EventsManagementTable.tsx
-│   │   │   │   │   ├── EventsTablePagination.stories.tsx
-│   │   │   │   │   └── EventsTablePagination.tsx
-│   │   │   │   │
-│   │   │   │   ├── pages/
-│   │   │   │   │   └── EventsManagement.tsx
-│   │   │   │   │
-│   │   │   │   └── index.ts
-│   │   │   │
+│   │   │   ├── pickup-management/
 │   │   │   ├── users-management/
-│   │   │   │   ├── components/
-│   │   │   │   │   ├── DeleteUserModal.stories.tsx
-│   │   │   │   │   ├── DeleteUserModal.tsx
-│   │   │   │   │   ├── EditUserModal.stories.tsx
-│   │   │   │   │   └── EditUserModal.tsx
-│   │   │   │   │
-│   │   │   │   ├── pages/
-│   │   │   │   │   └── UsersManagement.tsx
-│   │   │   │   │
-│   │   │   │   └── index.ts
-│   │   │   │
 │   │   │   └── index.ts
 │   │   │
 │   │   ├── authentication/
-│   │   │   ├── components/
-│   │   │   │   ├── AuthenticationScreenShell.stories.tsx
-│   │   │   │   └── AuthenticationScreenShell.tsx
-│   │   │   │
-│   │   │   ├── context/
-│   │   │   │   └── AuthenticationContext.tsx
-│   │   │   │
-│   │   │   ├── hooks/
-│   │   │   │   ├── useAuthenticationContext.ts
-│   │   │   │   ├── usePasswordReset.ts
-│   │   │   │   └── useSession.ts
-│   │   │   │
-│   │   │   ├── pages/
-│   │   │   │   ├── Authentication.tsx
-│   │   │   │   ├── Login.tsx
-│   │   │   │   └── PasswordReset.tsx
-│   │   │   │
-│   │   │   ├── types/
-│   │   │   │   ├── profile.ts
-│   │   │   │   └── sessionUser.ts
-│   │   │   │
-│   │   │   └── index.ts
-│   │   │
 │   │   ├── bar/
-│   │   │   ├── components/
-│   │   │   │   ├── BarSection.stories.tsx
-│   │   │   │   ├── BarSection.tsx
-│   │   │   │   ├── MotionCard.stories.tsx
-│   │   │   │   ├── MotionCard.tsx
-│   │   │   │   ├── ProductCard.stories.tsx
-│   │   │   │   └── ProductCard.tsx
-│   │   │   │
-│   │   │   ├── context/
-│   │   │   │   └── BarContext.tsx
-│   │   │   │
-│   │   │   ├── hooks/
-│   │   │   │   ├── useBarContext.ts
-│   │   │   │   └── useProducts.ts
-│   │   │   │
-│   │   │   ├── types/
-│   │   │   │   ├── category.ts
-│   │   │   │   └── product.ts
-│   │   │   │
-│   │   │   ├── utils/
-│   │   │   │   ├── productCategories.ts
-│   │   │   │   └── productCategoryIcons.ts
-│   │   │   │
-│   │   │   └── index.ts
-│   │   │
 │   │   ├── cart/
-│   │   │   ├── components/
-│   │   │   │   ├── CartDrawer.stories.tsx
-│   │   │   │   ├── CartDrawer.tsx
-│   │   │   │   ├── CartItemCard.stories.tsx
-│   │   │   │   └── CartItemCard.tsx
-│   │   │   │
-│   │   │   ├── context/
-│   │   │   │   └── CartContext.tsx
-│   │   │   │
-│   │   │   ├── hooks/
-│   │   │   │   ├── useCartContext.ts
-│   │   │   │   └── useCartItems.ts
-│   │   │   │
-│   │   │   ├── services/
-│   │   │   │   └── cartServices.ts
-│   │   │   │
-│   │   │   ├── types/
-│   │   │   │   └── cartItem.ts
-│   │   │   │
-│   │   │   └── index.ts
-│   │   │
 │   │   ├── events/
 │   │   │   ├── agenda/
-│   │   │   │   ├── components/
-│   │   │   │   │   ├── CalendarGrid.stories.tsx
-│   │   │   │   │   ├── CalendarGrid.tsx
-│   │   │   │   │   ├── CalendarHeader.stories.tsx
-│   │   │   │   │   └── CalendarHeader.tsx
-│   │   │   │   │
-│   │   │   │   ├── context/
-│   │   │   │   │   └── CalendarContext.tsx
-│   │   │   │   │
-│   │   │   │   ├── hooks/
-│   │   │   │   │   └── useCalendarContext.ts
-│   │   │   │   │
-│   │   │   │   ├── pages/
-│   │   │   │   │   └── Schedule.tsx
-│   │   │   │   │
-│   │   │   │   └── index.ts
-│   │   │   │
+│   │   │   ├── attractions/
 │   │   │   ├── event/
-│   │   │   │   ├── components/
-│   │   │   │   │   ├── EventCard.stories.tsx
-│   │   │   │   │   ├── EventCard.tsx
-│   │   │   │   │   ├── EventListItem.stories.tsx
-│   │   │   │   │   ├── EventListItem.tsx
-│   │   │   │   │   ├── EventModal.stories.tsx
-│   │   │   │   │   ├── EventModal.tsx
-│   │   │   │   │   ├── EventsSection.stories.tsx
-│   │   │   │   │   └── EventsSection.tsx
-│   │   │   │   │
-│   │   │   │   ├── hooks/
-│   │   │   │   │   └── useEvents.ts
-│   │   │   │   │
-│   │   │   │   ├── services/
-│   │   │   │   │   └── eventsServices.ts
-│   │   │   │   │
-│   │   │   │   ├── types/
-│   │   │   │   │   └── event.ts
-│   │   │   │   │
-│   │   │   │   ├── utils/
-│   │   │   │   │   ├── dayNames.ts
-│   │   │   │   │   ├── eventTags.ts
-│   │   │   │   │   └── monthNames.ts
-│   │   │   │   │
-│   │   │   │   └── index.ts
-│   │   │   │
 │   │   │   ├── gallery/
-│   │   │   │   ├── components/
-│   │   │   │   │   ├── GallerySection.stories.tsx
-│   │   │   │   │   └── GallerySection.tsx
-│   │   │   │   │
-│   │   │   │   └── index.ts
-│   │   │   │
-│   │   │   ├── reviews/
-│   │   │   │   ├── components/
-│   │   │   │   │   ├── ReviewCard.stories.tsx
-│   │   │   │   │   ├── ReviewCard.tsx
-│   │   │   │   │   ├── ReviewsSection.stories.tsx
-│   │   │   │   │   └── ReviewsSection.tsx
-│   │   │   │   │
-│   │   │   │   ├── hooks/
-│   │   │   │   │   └── useReviews.ts
-│   │   │   │   │
-│   │   │   │   ├── services/
-│   │   │   │   │   └── reviewServices.ts
-│   │   │   │   │
-│   │   │   │   ├── types/
-│   │   │   │   │   └── reviews.ts
-│   │   │   │   │
-│   │   │   │   └── index.ts
-│   │   │   │
-│   │   │   └── index.ts
-│   │   │
+│   │   │   └── reviews/
+│   │   ├── newsletter/
 │   │   └── users/
+│   │       ├── notifications/
 │   │       ├── profiles/
-│   │       │   ├── components/
-│   │       │   │   ├── EditProfileModal.stories.tsx
-│   │       │   │   ├── EditProfileModal.tsx
-│   │       │   │   ├── FirstTimeProfileModal.stories.tsx
-│   │       │   │   ├── FirstTimeProfileModal.tsx
-│   │       │   │   ├── ProfileInformationsSection.stories.tsx
-│   │       │   │   ├── ProfileInformationsSection.tsx
-│   │       │   │   ├── ProfileSettingsSection.stories.tsx
-│   │       │   │   ├── ProfileSettingsSection.tsx
-│   │       │   │   ├── ProfileTicketsSection.stories.tsx
-│   │       │   │   └── ProfileTicketsSection.tsx
-│   │       │   │
-│   │       │   ├── context/
-│   │       │   │   └── ProfileContext.tsx
-│   │       │   │
-│   │       │   ├── hooks/
-│   │       │   │   ├── useProfile.ts
-│   │       │   │   └── useProfileContext.ts
-│   │       │   │
-│   │       │   ├── pages/
-│   │       │   │   └── UserProfile.tsx
-│   │       │   │
-│   │       │   └── index.ts
-│   │       │
 │   │       ├── tickets/
-│   │       │   ├── hooks/
-│   │       │   │   └── useTickets.ts
-│   │       │   │
-│   │       │   ├── services/
-│   │       │   │   └── ticketsServices.ts
-│   │       │   │
-│   │       │   ├── types/
-│   │       │   │   └── ticket.ts
-│   │       │   │
-│   │       │   └── index.ts
-│   │       │
-│   │       └── index.ts
+│   │       ├── user/
+│   │       └── vouchers/
 │   │
 │   ├── lib/
-│   │   ├── validations/
-│   │   │   ├── admin/
-│   │   │   │   ├── analytics-management/
-│   │   │   │   │   ├── newVisitorsSchema.ts
-│   │   │   │   │   ├── ticketIncomeSchema.ts
-│   │   │   │   │   └── voucherIncomeSchema.ts
-│   │   │   │   │
-│   │   │   │   ├── bar-management/
-│   │   │   │   │   ├── createProductSchema.ts
-│   │   │   │   │   └── editProductSchema.ts
-│   │   │   │   │
-│   │   │   │   ├── events-management/
-│   │   │   │   │   ├── createAttractionSchema.ts
-│   │   │   │   │   ├── createEventSchema.ts
-│   │   │   │   │   ├── editAttractionSchema.ts
-│   │   │   │   │   └── editEventSchema.ts
-│   │   │   │   │
-│   │   │   │   └── user-management/
-│   │   │   │       └── editUserSchema.ts
-│   │   │   │
+│   │   ├── server/
 │   │   │   ├── authentication/
-│   │   │   │   ├── passwordResetSchemas.ts
-│   │   │   │   ├── signInSchema.ts
-│   │   │   │   └── signUpSchema.ts
-│   │   │   │
-│   │   │   ├── cart/
-│   │   │   │   └── cartItemSchema.ts
-│   │   │   │
+│   │   │   │   ├── createSession.ts
+│   │   │   │   └── validationBrowser.ts
+│   │   │   ├── badges/
 │   │   │   ├── events/
-│   │   │   │   ├── createReviewSchema.ts
-│   │   │   │   └── updateReviewSchema.ts
-│   │   │   │
-│   │   │   ├── shared/
-│   │   │   │   ├── imageFileSchema.ts
-│   │   │   │   ├── periodSchema.ts
-│   │   │   │   └── tagSchema.ts
-│   │   │   │
+│   │   │   ├── notifications/
+│   │   │   ├── orders/
+│   │   │   ├── payments/
+│   │   │   ├── rate-limit/
+│   │   │   ├── services/
+│   │   │   │   ├── bcrypt.ts
+│   │   │   │   ├── prisma.ts
+│   │   │   │   ├── resend.ts
+│   │   │   │   └── stripe.ts
 │   │   │   ├── users/
-│   │   │   │   ├── buyTicketsSchema.ts
-│   │   │   │   ├── profileSchema.ts
-│   │   │   │   └── updateProfileSchema.ts
-│   │   │   │
+│   │   │   ├── utils/
 │   │   │   └── index.ts
 │   │   │
-│   │   ├── prisma.ts
-│   │   └── resend.ts
+│   │   └── validations/
+│   │       ├── admin/
+│   │       ├── authentication/
+│   │       ├── cart/
+│   │       ├── events/
+│   │       ├── newsletter/
+│   │       ├── shared/
+│   │       ├── users/
+│   │       └── index.ts
 │   │
 │   ├── prisma/
 │   │   ├── generated/
-│   │   │
 │   │   ├── migrations/
-│   │   │   ├── 20260901224000_init/
-│   │   │   │   └── migration.sql
-│   │   │   │
-│   │   │   ├── 20260908000137_adjusted_photo_field_inside_model_user_to_be_optional_and_declared_verified_badge_default_value_as_false/
-│   │   │   │   └── migration.sql
-│   │   │   │
-│   │   │   ├── 20260909012722_added_unique_constraint_to_field_token_inside_model_user/
-│   │   │   │   └── migration.sql
-│   │   │   │
-│   │   │   ├── 20260917194257_renamed_photo_to_profile_picture_on_model_user/
-│   │   │   │   └── migration.sql
-│   │   │   │
-│   │   │   ├── 20260918200444_cpf_cep_and_uf_are_now_all_caps/
-│   │   │   │   └── migration.sql
-│   │   │   │
-│   │   │   ├── 20260918203311_renamed_cpf_to_social_security_number_cep_to_zip_code_and_uf_to_state/
-│   │   │   │   └── migration.sql
-│   │   │   │
-│   │   │   └── migration_lock.toml
-│   │   │
 │   │   └── schema.prisma
 │   │
-│   └── shared/
-│       ├── components/
-│       │   ├── layout/
-│       │   │   ├── AdminHeader.stories.tsx
-│       │   │   ├── AdminHeader.tsx
-│       │   │   ├── Footer.stories.tsx
-│       │   │   ├── Footer.tsx
-│       │   │   ├── Header.stories.tsx
-│       │   │   ├── Header.tsx
-│       │   │   ├── HeroSection.stories.tsx
-│       │   │   ├── HeroSection.tsx
-│       │   │   ├── ProfileHeader.stories.tsx
-│       │   │   └── ProfileHeader.tsx
-│       │   │
-│       │   ├── ui/
-│       │   │   ├── CustomPasswordInput.stories.tsx
-│       │   │   ├── CustomPasswordInput.tsx
-│       │   │   ├── CustomTextInput.stories.tsx
-│       │   │   └── CustomTextInput.tsx
-│       │   │
-│       │   └── index.ts
-│       │
-│       ├── context/
-│       │   ├── index.ts
-│       │   ├── MobileContext.tsx
-│       │   └── ThemeContext.tsx
-│       │
-│       ├── emails/
-│       │   ├── PasswordResetEmail.stories.tsx
-│       │   └── PasswordResetEmail.tsx
-│       │
-│       ├── hooks/
-│       │   ├── index.ts
-│       │   ├── useBlockScroll.ts
-│       │   ├── useMobileContext.ts
-│       │   └── useThemeContext.ts
-│       │
-│       ├── pages/
-│       │   ├── content-pages/
-│       │   │   ├── Admin.tsx
-│       │   │   └── MainContent.tsx
-│       │   │
-│       │   ├── footer-links/
-│       │   │   ├── About.tsx
-│       │   │   ├── FrequentlyAskedQuestions.tsx
-│       │   │   ├── HelpingCentral.tsx
-│       │   │   ├── PrivacyPolicy.tsx
-│       │   │   ├── RefundPolicy.tsx
-│       │   │   ├── TermsOfUse.tsx
-│       │   │   └── WorkWithUs.tsx
-│       │   │
-│       │   └── index.ts
-│       │
-│       ├── providers/
-│       │   └── QueryProvider.tsx
-│       │
-│       └── utils/
-│           ├── constants/
-│           │   ├── badges.ts
-│           │   ├── photos.ts
-│           │   ├── regex.ts
-│           │   └── rotatingImages.ts
-│           │
-│           ├── functions/
-│           │   ├── atLeastOneFieldUpdated.ts
-│           │   ├── dates.ts
-│           │   ├── masks.ts
-│           │   └── theme.ts
-│           │
-│           └── index.ts
+│   ├── shared/
+│   │   ├── components/
+│   │   │   ├── layout/
+│   │   │   └── ui/
+│   │   ├── context/
+│   │   ├── emails/
+│   │   │   ├── OrderConfirmationEmail.tsx
+│   │   │   ├── PasswordResetEmail.tsx
+│   │   │   ├── PaymentConfirmationEmail.tsx
+│   │   │   ├── RefundConfirmationEmail.tsx
+│   │   │   └── ValidateAccountEmail.tsx
+│   │   ├── hooks/
+│   │   ├── pages/
+│   │   │   ├── content-pages/
+│   │   │   └── footer-links/
+│   │   ├── providers/
+│   │   │   └── QueryProvider.tsx
+│   │   └── utils/
+│   │       ├── constants/
+│   │       └── functions/
+│   │           ├── atLeastOneFieldUpdated.ts
+│   │           ├── cancellationPolicy.ts
+│   │           ├── dates.ts
+│   │           ├── formatters.ts
+│   │           ├── masks.ts
+│   │           ├── reviewEditPolicy.ts
+│   │           └── theme.ts
+│   │
+│   └── proxy.ts
 │
-├── .env.local
+├── tests/
+│   ├── src/
+│   │   ├── actions/
+│   │   ├── app/
+│   │   │   └── api/
+│   │   ├── lib/
+│   │   │   ├── server/
+│   │   │   └── validations/
+│   │   ├── shared/
+│   │   │   └── utils/
+│   │   │       └── functions/
+│   │   └── proxy.test.ts
+│   │
+│   └── setup.ts
+│
 ├── .gitignore
 ├── eslint.config.js
-├── globals.d.ts
-├── next-env.d.ts
 ├── next.config.ts
-├── package-lock.json
 ├── package.json
+├── package-lock.json
 ├── postcss.config.ts
 ├── prisma.config.ts
-├── README.md
-├── skills-lock.json
 ├── tsconfig.json
+├── vercel.json
 ├── vite.config.ts
-└── vitest.shims.d.ts
+└── README.md
 ```
+
+---
+
+## 🌍 Deploy
+
+O projeto é preparado para publicação na Vercel, garantindo:
+
+- Deploy automático via GitHub
+- Build otimizado para produção
+- Cron job diário (`0 3 * * *`) para recalcular os badges de tempo de conta
+- Ambiente seguro com variáveis de ambiente configuradas no painel da Vercel
+
+---
+
+## 📱 Responsividade
+
+A aplicação possui adaptação para diferentes tamanhos de tela, com layouts e componentes ajustados para desktop e mobile, incluindo as tabelas e os formulários do painel administrativo.
 
 ---
 
 ## 📌 Observações
 
-O projeto está em desenvolvimento ativo.  
-As Server Actions de compra e cancelamento de ingressos e vouchers já estão implementadas, mas a integração com a interface (checkout e página de pedidos) ainda está em andamento.  
-O painel de analytics e alguns fluxos administrativos também estão sendo finalizados, e uma refatoração do projeto está em andamento.
+- As rotas `/perfil`, `/carrinho`, `/pedidos` e `/admin` exigem login, e `/admin` exige o perfil de administrador
+- Os badges de verificado e frequente são recalculados a partir da atividade do usuário, e o de tempo de conta é atualizado pelo cron diário
+- Cancelamentos de ingressos só são aceitos até 24 horas antes do evento, e a edição de uma avaliação só até 3 minutos após sua criação (a exclusão continua liberada)
+- Se o valor do prazo de cancelamento mudar, a Política de Reembolso e o FAQ também precisam ser atualizados
+- As variáveis de ambiente são obrigatórias para o funcionamento local, e as chaves nunca devem ser commitadas
 
 ---
 
